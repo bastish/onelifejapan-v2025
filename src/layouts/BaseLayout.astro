@@ -3,13 +3,16 @@
 import HeadComponent from "../components/Head/HeadComponent.astro";
 import TopNav from "../components/TopNav/TopNav.astro";
 import Footer from "../components/Footer/Footer.astro";
+import TopSlider from '../components/TopSlider.astro';
 
 import "../styles/global.css";
 
 const { 
     title = "OneLifeJapan", 
-    description = "OneLife Japan: Hike, Bike and Walking Adventures in Rural Japan" 
+    description = "OneLife Japan: Hike, Bike and Walking Adventures in Rural Japan",
+    page = "index"
 } = Astro.props;
+
 
 ---
 <!DOCTYPE html>
@@ -19,9 +22,10 @@ const {
     <HeadComponent title={title} description={description} />
     <slot name="head" />
   </head>
-  
+
   <body>
     <TopNav />
+    <TopSlider page={page} />
     <slot />
     <Footer />
   </body>

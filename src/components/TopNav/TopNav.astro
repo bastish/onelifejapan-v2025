@@ -3,30 +3,18 @@
 
 import NavUtilities from "./NavUtilities.astro";
 import "../../styles/global.css";
+import logo from "../../assets/olj_logo.png";
 
 
 
 ---
 
-<nav class="navbar navbar-expand-lg navbar-light flex-column bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light flex-column">
     <div class="container-fluid py-2">
         <div class="d-flex w-100 justify-content-between align-items-center">
             <!-- Logo / Brand -->
             <a class="navbar-brand ms-2" href="#">
-                <!-- Dummy Logo SVG (replace with your own as needed) -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="159" height="65">
-                    <rect width="200" height="80" fill="#0056b3"></rect>
-                    <text
-                        x="50%"
-                        y="50%"
-                        dominant-baseline="middle"
-                        text-anchor="middle"
-                        fill="#fff"
-                        font-size="24"
-                    >
-                        Logo
-                    </text>
-                </svg>
+                <img src={logo.src} alt="Logo" width="226" height="58" />
             </a>
             <NavUtilities />
             <!-- Mobile Toggler -->
@@ -93,10 +81,11 @@ import "../../styles/global.css";
 
 <style>
     .navbar {
-        background-color: var(--primary-color);
+        /* background-color: var(--primary-color); */
+        background-color: #fff;
     }
     .navbar .nav-link {
-        color: #fff !important;
+        color: var(--primary-color);
         font-weight: 500;
     }
     .navbar .nav-link:hover,

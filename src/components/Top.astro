@@ -3,6 +3,15 @@ import astroLogo from '../assets/astro.svg';
 import background from '../assets/background.svg';
 ---
 
+<style>
+#background {
+  background-color: transparent; /* ensure no background is applied */
+  -webkit-filter: hue-rotate(200deg) brightness(1.1) blur(4px);
+  opacity: 0.5;
+  filter: hue-rotate(190deg) brightness(1.1) blur(100px);
+}
+</style>
+
 <div id="container">
 	<img id="background" src={background.src} alt="" fetchpriority="high" />
 	<main>
