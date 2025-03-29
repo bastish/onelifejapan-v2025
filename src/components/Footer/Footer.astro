@@ -1,4 +1,136 @@
-        <!-- Bootstrap Bundle JS (with Popper) -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- FontAwesome JS for icons -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+---
+// Astro will bundle and optimize this automatically
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js?url';
+---
+
+<style lang="scss">
+    .footer {
+        padding-top: 1.5em;
+        margin-top: 40px;
+        border-top: #222;
+    }
+    /* Add any custom styles here */
+    .footer,
+    .copyright {
+        width: 100%; /* Ensure footer takes the full width */
+        padding-left: 0;
+        padding-right: 0;
+        background: var(--bs-footer);
+        color: #dadada;
+        background: #528c1f;
+        background: #585f69;
+        padding: 20px 0 30px;
+    }
+
+    .footer p {
+        color: #dadada;
+    }
+    .footer p,
+    .footer a {
+        font-size: 0.9em;
+    }
+    .headline {
+        border-bottom: 2px solid var(--bs-primary-dark);
+        margin-bottom: 2em;
+    }
+    .headline h2 {
+        color: #dadada;
+        font-size: 1.3em;
+    }
+    .frame {
+        border: 1px solid #aaa;
+        padding: 5px;
+        border: solid 1px var(--bs-border-light);
+    }
+    .copyright {
+        padding: 11px 0 7px;
+        background: #3e4753;
+        background: var(--bs-footer-dark);
+        border-top: solid 1px #777;
+    }
+    .copyright p {
+        color: #dadada;
+        margin-top: 12px;
+        font-size: 0.9em;
+    }
+    .emph {
+        color: var(--bs-primary-light);
+    }
+
+    // @include respond-to(medium) {
+    //     .footer .row {
+    //         display: flex;
+    //         flex-direction: column;
+    //     }
+    //     .footer .map-container {
+    //         order: 3; /* Move map to the bottom */
+    //     }
+    // }
+</style>
+
+<footer class="footer">
+    <div class="custom-container content">
+        <div class="container-fluid">
+            <!-- Use .container-fluid for a full width container, spanning the entire width of the viewport -->
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <!-- Use mb-4 for margin bottom on devices smaller than md, mb-md-0 removes margin bottom on md and larger devices -->
+                    <!-- About -->
+                    <div class="headline"><h2>About</h2></div>
+                    <p>
+                        One Life Japan provides active, educational customizable bicycle and walking tours in rural
+                        Japan. We use bicycles as a vehicle for exploration of culture and expanding comfort-zones.
+                    </p>
+                    <p>
+                        The OneLife Japan home base is located in the northern most area of Nagano prefecture - <span
+                            class="emph">worlds away from the sprawling cities</span
+                        > of the east coast in terms of culture and environment, yet connected by ultra efficient transportation
+                        system. The starting point for most trips is <span class="emph"
+                            >within three hours from Tokyo</span
+                        >.
+                    </p>
+                    <p>
+                        The majority of our trips are organized in this region, however we also provide trips closer to
+                        the Kyoto / Osaka area upon request and in early spring or late autumn.
+                    </p>
+                </div><!-- /col-md-4 -->
+
+                <div class="col-md-4 mb-4 mb-md-0 map-container">
+                    <div class="headline"><h2>Locations</h2></div>
+                    <div class="frame" style="text-align: center;">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2187884.0128002535!2d137.99361613323822!3d36.634075209711284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff60649a54eba2b%3A0xbb0c1aa795dfc40f!2s3327+Sakai!5e1!3m2!1sen!2s!4v1398427769223"
+                            style="border:0; width: 100%; max-width: 100%; height: 400px;"
+                            allowfullscreen=""
+                            loading="lazy"></iframe>
+                    </div>
+                </div><!-- /col-md-4 -->
+
+                <div class="col-md-4">
+                    <!-- Contact Us -->
+                    <div class="headline"><h2>Contact Us</h2></div>
+                    <p>
+                        <b>One Life Japan</b><br />
+                        3327 Sakai, Sakae-mura,<br />
+                        Nagano 389-2703<br />
+                        <a href="mailto:info@onelifejapan.com">info@onelifejapan.com</a><br />
+                        090-3337-3248
+                    </p>
+                    <p>
+                        <b>ワン・ライフ・ジャパン</b><br />
+                        389-2703　長野県下水内郡栄村堺３３２７<br />
+                        <a href="mailto:info@onelifejapan.com">info@onelifejapan.com</a><br />
+                        090-3337-3248
+                    </p>
+                </div><!-- /col-md-4-->
+            </div>
+        </div>
+    </div>
+</footer><!--/footer-->
+
+<script src={bootstrap}></script>
+
+<!-- Bootstrap Bundle JS (with Popper) -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+<!-- FontAwesome JS for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>

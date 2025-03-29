@@ -1,0 +1,152 @@
+---
+// PurchaseBlock.astro
+
+const itinerary = Astro.props.itinerary;
+const page = Astro.props.page;
+let slogan = Astro.props.slogan;
+let pageBlurb = Astro.props.pageBlurb;
+
+if (itinerary) {
+    slogan = itinerary.shortSlogan;
+    pageBlurb = itinerary.pageBlurb;
+}
+let height;
+let backgroundImage;
+let backgroundSize;
+
+switch (page) {
+    case 'Xindex':
+        //slogan = '193px'; // Set the height for 'about' page
+        //pageBlurb = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    case 'adventures':
+        slogan = 'Find the Adventure for You'; // Set the height for 'about' page
+        pageBlurb = ''; // Set image for 'about' page
+        break;
+    case 'faq':
+        slogan = 'Frequently Asked Questions'; // Set the height for 'about' page
+        pageBlurb = ''; // Set image for 'about' page
+        break;
+    case 'about':
+        slogan = '';
+        //pageBlurb = '';
+        break;
+
+    case 'contact':
+        slogan = 'Contact One Life Japan '; // Set the height for 'about' page
+        pageBlurb = ''; // Set image for 'about' page
+        break;
+    case 'custom':
+        slogan = 'Custom Hike, Bike, & Walking Adventures in Japan'; // Set the height for 'about' page
+        pageBlurb = ''; // Set image for 'about' page
+        break;
+    default:
+        slogan = 'Active Hike, Bike, & Walking Adventure in Rural Japan';
+        pageBlurb = `One life Japan has twenty years experience providing <span class="emph">fun, learningful adventure</span> itineraries in Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
+        break;
+}
+
+const fadeInClass = page !== 'about' ? 'animate__customFadeIn' : '';
+const hiddenClass = page == 'contact' ? 'hidden' : '';
+---
+
+<style>
+    @keyframes customFadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(var(--startX));
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .animate__customFadeIn {
+        animation-name: customFadeIn;
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+
+    .animate__customFadeIn--left {
+        --startX: -10%;
+    }
+    .animate__customFadeIn--right {
+        --startX: 10%;
+    }
+
+    .btn-buy {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .btn-buy a {
+        border: 1px solid var(--bs-primary-light);
+        background-color: var(--bs-primary);
+        color: white;
+        text-decoration: none;
+        padding: 5px 15px;
+        border-radius: 5px;
+        font-size: 1em;
+        font-weight: normal;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+    }
+    .btn-buy a:hover {
+        border: 1px solid var(--bs-primary-light);
+        background-color: var(--bs-primary-light);
+    }
+
+    .container {
+        padding-top: 15px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    @media only screen and (max-width: 765px) {
+        .btn-container {
+            justify-content: center !important;
+            margin-top: 5px;
+        }
+
+        .container .row {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container .col-md-3 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1em;
+        }
+        h1 {
+            text-align: center;
+        }
+    }
+</style>
+
+<div class=`container 
+    ${hiddenClass}`>
+    <div class="row">
+        <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
+            <h1>{slogan}</h1>
+            <p set:html={pageBlurb} />
+        </div>
+        <div
+            class=`col-md-3 d-flex 
+                        align-items-center 
+                        justify-content-end
+                        btn-buy 
+                        btn-container
+                        ${fadeInClass}  
+                        animate__customFadeIn--right`
+        >
+            <a href="/contact" class="btn-u btn-u-lg rounded5"><i class="fa fa-arrow-right"></i> Book An Adventure</a>
+        </div>
+    </div>
+</div>

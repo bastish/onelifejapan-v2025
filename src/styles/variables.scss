@@ -1,0 +1,21 @@
+:root {
+    --primary-color: #0056b3;
+    --primary-hover-color: #004494; /* darken for hover */
+    --text-light: #fff;
+    --text-dark: #333;
+    /* Add other variables as needed */
+
+    --bs-primary: #9ab390;
+    --bs-primary-dark: #7b8f73;
+    --bs-primary-ultradark: #496125;
+    --bs-primary-light: #bdd09f;
+    --bs-primary-ultralight: #f5f1ea; /* Later definition takes precedence */
+
+    --bs-primary-secondary: #cc4c14; /* Last definition takes precedence */
+    --bs-border-color: var(--bs-primary);
+    --bs-link-color: var(--bs-primary-secondary);
+    --bs-link-hover-color: #628132;
+
+    --bs-footer: #323232;
+    --bs-footer-dark: #3e4753;
+}

@@ -1,5 +1,11 @@
-// @ts-check
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+    style: {
+        sass: {
+            // Tell Sass to look in the node_modules directory for imports
+            includePaths: ['./node_modules'],
+        },
+    },
+});

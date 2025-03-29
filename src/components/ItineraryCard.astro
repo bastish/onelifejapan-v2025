@@ -1,0 +1,238 @@
+---
+// ItineraryCard.astro
+const id = Astro.props.id;
+import { loadItinerary } from '../utils/loadItinerary.ts';
+//const itinerary = await import(`../../data/itinerary_${id}.json`);
+
+// import MapModal from './MapModal.astro';
+// import DifficultyModal from './DifficultyModal.astro';
+const itinerary = await loadItinerary(id);
+const {
+    title,
+    slug,
+    description,
+    mainImage,
+    imageUrl,
+    detailsUrl,
+    priceRange,
+    participants,
+    location_link,
+    locationText,
+    activityLevel,
+    when,
+    days,
+} = itinerary;
+
+let itineraryLink = `/itinerary/${id}/${slug}/`;
+if (itinerary.comming_soon_status) {
+    itineraryLink = 'javascript:void(0)';
+}
+
+const baseUrl = 'http://localhost:3020/';
+---
+
+<div class="col-lg-6 col-xl-4 cardmain">
+    <div class="card mb-5 mb-xl-0 custom-shadow">
+        <div class="card-body p-3">
+            <h3>
+                <a
+                    class="card-title-link"
+                    href={itinerary.comming_soon_status ? 'javascript:void(0)' : itineraryLink}
+                    {...itinerary.comming_soon_status && {
+                        'data-bs-toggle': 'modal',
+                        'data-bs-target': '#comingSoonModal',
+                    }}>{title} &#8250;&#8250;</a
+                >
+            </h3>
+            <a
+                href={itineraryLink}
+                class="thumbnail-link"
+                {...itinerary.comming_soon_status && {
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#comingSoonModal',
+                }}
+            >
+                <div class="thumbnail-img" data-astro-cid-zubhzpn2>
+                    <div class="overflow-hidden" data-astro-cid-zubhzpn2>
+                        {
+                            mainImage ? (
+                                <img class="img-responsive" src={baseUrl + mainImage.large} alt="" />
+                            ) : (
+                                <img class="img-responsive" src={baseUrl + imageUrl} alt="" />
+                            )
+                        }
+                    </div>
+                    <div class="btn-more-container">
+                        {
+                            itinerary.comming_soon_status ? (
+                                <span class="btn-more">Details Coming Soon</span>
+                            ) : (
+                                <span class="btn-more">Learn More &#8250;&#8250;</span>
+                            )
+                        }
+                    </div>
+                </div>
+            </a>
+            <p set:html={description} />
+
+            <ul class="checklist">
+                <li>{when}</li>
+                <li>{days} days</li>
+                <li>{priceRange}</li>
+                <li>{participants}</li>
+                <!-- <li><MapModal itinerary={itinerary} /></li>
+                    <li><DifficultyModal itinerary={itinerary} /></li> -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+{
+    itinerary.comming_soon_status && (
+        <div
+            class="modal fade"
+            id="comingSoonModal"
+            tabindex="-1"
+            aria-labelledby="comingSoonModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="comingSoonModalLabel">
+                            Summary Coming Soon
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                    </div>
+                    <div class="modal-body">
+                        <p>We're working writing up the summary of this adventure.</p>
+                        <p>
+                            <a href="/contact/">Please contact One Life Japan</a> if this area is someplace you think
+                            you would be interested to visit.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+<style>
+    .thumbnail-img img {
+        border: 1px solid var(--bs-primary-light);
+        padding: 5px;
+    }
+    .checklist {
+        padding-top: 5px;
+    }
+
+    @media only screen and (max-width: 480px) {
+        h3 {
+            font-size: 1.2em;
+        }
+    }
+
+    .cardmain {
+        margin-bottom: 20px;
+    }
+</style>
+
+<style>
+    p {
+        margin-top: 10px;
+    }
+    .frame {
+        border: 1px solid #eeecec;
+        padding: 5px;
+        border: solid 1px var(--bs-border-light);
+    }
+
+    .custom-shadow {
+        transition: box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(156, 156, 156, 0.15);
+    }
+
+    .custom-shadow:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    h3 {
+        font-size: clamp(16px, calc(16px + (4 * ((100vw - 320px) / 680))), 1.2em);
+    }
+
+    h3 a {
+        text-decoration: none;
+    }
+
+    .thumbnail-img.frame {
+        position: relative;
+    }
+
+    .btn-more {
+        position: absolute;
+        top: 70%;
+        right: -30px; /* Half outside the image container */
+        border: 1px solid var(--bs-primary-light);
+        background-color: var(--bs-primary);
+        color: white;
+        text-decoration: none;
+        padding: 5px 15px;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: normal;
+        transition: all 0.5s ease;
+        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+
+        border: 1px solid var(--bs-primary-ultradark);
+        color: var(--bs-primary-ultralight);
+        background: var(--bs-primary-dark);
+        color: #fff;
+    }
+
+    .btn-more:hover {
+        right: -15px; /* Moves slightly to the left on hover */
+        background: var(--bs-link-color);
+    }
+
+    /* Adjust for larger screens where there might be 3 cards per row */
+    @media (min-width: 992px) {
+        /* Corresponds to Bootstrap's 'lg' breakpoint */
+        .btn-more {
+            top: 70%; /* for 3 cards layout */
+        }
+    }
+
+    .img-responsive,
+    .img-fluid {
+        width: 100%;
+        height: auto; /* Maintains the aspect ratio */
+        max-width: none; /* Overrides Bootstrap's default to allow growing beyond original size */
+    }
+
+    .details-button a {
+        border: 1px solid var(--bs-primary-ultradark);
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        width: 30%;
+        color: var(--bs-primary-ultralight);
+        background: var(--bs-primary-dark);
+        color: #fff;
+        position: relative;
+    }
+
+    .thumbnail-link {
+        text-decoration: none;
+        position: relative;
+    }
+
+    .thumbnail-link:hover .btn-more {
+        right: -15px;
+        background: var(--bs-link-color);
+    }
+</style>

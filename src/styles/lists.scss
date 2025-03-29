@@ -1,0 +1,24 @@
+@import './variables.scss';
+
+ul.checklist {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+ul.checklist li {
+    padding-left: 1.5em;
+    position: relative;
+}
+
+ul.checklist li:before {
+    content: '\f058'; /* Font Awesome check icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900; /* Use 900 for solid */
+    font-weight: 400; /* Use 400 for circle and check */
+    color: var(--bs-primary-ultradark);
+    font-size: 1em;
+    position: absolute;
+    left: 0;
+    top: 0;
+}

@@ -1,36 +1,42 @@
 ---
-// BaseLayout.astro
-import HeadComponent from "../components/Head/HeadComponent.astro";
-import TopNav from "../components/TopNav/TopNav.astro";
-import Footer from "../components/Footer/Footer.astro";
+import HeadComponent from '../components/Head/HeadComponent.astro';
+import TopNav from '../components/TopNav/TopNav.astro';
+import Footer from '../components/Footer/Footer.astro';
 import TopSlider from '../components/TopSlider.astro';
+import BottomBanner from '../components/BottomBanner.astro';
+import PurchaseBlock from '../components/PurchaseBlock.astro';
 
-import "../styles/global.css";
+import background from '../assets/background.svg';
+import '../styles/global.scss';
 
-const { 
-    title = "OneLifeJapan", 
-    description = "OneLife Japan: Hike, Bike and Walking Adventures in Rural Japan",
-    page = "index"
+const {
+    title = 'OneLifeJapan',
+    description = 'OneLife Japan: Hike, Bike and Walking Adventures in Rural Japan',
+    page = 'index',
 } = Astro.props;
-
-
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
-<!-- In BaseLayout.astro -->
-<head>
-    <HeadComponent title={title} description={description} />
-    <slot name="head" />
-  </head>
+    <head>
+        <HeadComponent title={title} description={description} />
+        <slot name="head" />
+    </head>
+    <body>
+        <img id="background" src={background.src} alt="" fetchpriority="high" />
 
-  <body>
-    <TopNav />
-    <TopSlider page={page} />
-    <slot />
-    <Footer />
-  </body>
+        <div class="custom-container">
+            <TopNav />
+        </div>
+
+        <TopSlider page={page} />
+
+        <PurchaseBlock page={'index'} />
+        <main class="custom-container">
+            <slot />
+        </main>
+
+        <!-- <BottomBanner /> -->
+        <Footer />
+    </body>
 </html>
-
-
-
-

@@ -1,9 +1,12 @@
 ---
 import Top from '../components/Top.astro';
 import Layout from '../layouts/BaseLayout.astro';
+import { loadItineraries } from '../utils/loadItineraries.ts';
+//import PurchaseBlock from "../components/PurchaseBlock.astro";
 
+const itineraries = await loadItineraries('top'); // Fetch itineraries for the 'top' slug
 ---
 
 <Layout>
-	<Top />
+    <Top itineraries={itineraries} />
 </Layout>
