@@ -240,3 +240,11 @@ code {
     //border: 1px solid var(--bs-border-color);
     border-radius: 5px;
 }
+
+.emph {
+    font-weight: 700;
+    color: var(--bs-primary-ultradark);
+    text-shadow: none;
+    font-weight: 700;
+    line-height: 1.2;
+}

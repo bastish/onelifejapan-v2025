@@ -42,7 +42,7 @@ switch (page) {
         break;
     default:
         slogan = 'Active Hike, Bike, & Walking Adventure in Rural Japan';
-        pageBlurb = `One life Japan has twenty years experience providing <span class="emph">fun, learningful adventure</span> itineraries in Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
+        pageBlurb = `We have <span class="emph">twenty years of experience</span> providing <span class="emph">fun, learningful adventure</span> itineraries in the small village we call home, and throughout Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
         break;
 }
 
@@ -144,9 +144,21 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
                         btn-buy 
                         btn-container
                         ${fadeInClass}  
-                        animate__customFadeIn--right`
+                        animate__customFadeIn--right
+                         book-link`
         >
-            <a href="/contact" class="btn-u btn-u-lg rounded5"><i class="fa fa-arrow-right"></i> Book An Adventure</a>
+            <a href="/contact" class="btn-u btn-u-lg rounded5 book-link">
+                Find an Adventure <i class="fa fa-arrow-right"></i></a
+            >
         </div>
     </div>
 </div>
+
+<style>
+    a.book-link {
+        font-size: 1.5em;
+    }
+    .book-link {
+        font-size: 1.5em;
+    }
+</style>

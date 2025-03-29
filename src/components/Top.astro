@@ -16,14 +16,15 @@ function chunk(arr: any, size: any) {
     }
     return result;
 }
-const rows = chunk(itineraries, 3);
+const row3 = chunk(itineraries, 3);
+const row4 = chunk(itineraries, 4);
 ---
 
-<div class="container content">
+<div id="row3" class="container content">
     {
         page == 'index' ? (
             <div class="itinerary-cards">
-                {rows.map((row) => (
+                {row3.map((row) => (
                     <div class="row margin-bottom-30">
                         {row.map((itinerary: any) => (
                             <ItineraryCard key={itinerary.id} id={itinerary.id} />
@@ -36,3 +37,37 @@ const rows = chunk(itineraries, 3);
         )
     }
 </div>
+
+<div id="row4" class="container content">
+    {
+        page == 'index' ? (
+            <div class="itinerary-cards">
+                {row4.map((row) => (
+                    <div class="row margin-bottom-30">
+                        {row.map((itinerary: any) => (
+                            <ItineraryCard key={itinerary.id} id={itinerary.id} />
+                        ))}
+                    </div>
+                ))}
+            </div>
+        ) : (
+            ''
+        )
+    }
+</div>
+
+<style>
+    /* render twice and hide unneeded one so when 3/3 becoems 2/1 it changes to 2/2 and 2/2  */
+    #row4 {
+        display: none;
+    }
+
+    @media (max-width: 1200px) {
+        #row3 {
+            display: none;
+        }
+        #row4 {
+            display: block;
+        }
+    }
+</style>

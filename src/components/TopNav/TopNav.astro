@@ -57,9 +57,9 @@ import logo from '../../assets/olj_logo.png';
                 <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="http://localhost:4321/reference/index.html" target="_blank">o</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -118,10 +118,25 @@ import logo from '../../assets/olj_logo.png';
     }
 
     .dropdown-menu {
-        background-color: #fff;
+        background-color: var(--bs-light);
         .dropdown-item {
             color: #333 !important;
+            border-bottom: 1px solid #e0e0e0;
         }
+    }
+
+    .navbar a {
+        color: var(--bs-link-color);
+        font-size: 1.2em;
+    }
+    .navbar a:hover {
+        color: var(--bs-link-hover-color);
+    }
+    .nav-item {
+        border-right: 1px solid var(--bs-link-hover-color);
+    }
+    .nav-item:last-child {
+        border-right: 0px solid var(--bs-link-hover-color);
     }
 
     /* Mobile adjustments: override container constraints to span full width */
@@ -137,6 +152,12 @@ import logo from '../../assets/olj_logo.png';
         .custom-navbar-nav {
             margin-left: 0 !important;
             width: 100%;
+        }
+        .nav-link {
+        }
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 0px solid var(--bs-link-hover-color);
         }
     }
 </style>
