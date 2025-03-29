@@ -1,0 +1,32 @@
+---
+// BaseLayout.astro
+import HeadComponent from "../components/Head/HeadComponent.astro";
+import TopNav from "../components/TopNav/TopNav.astro";
+import Footer from "../components/Footer/Footer.astro";
+
+import "../styles/global.css";
+
+const { 
+    title = "OneLifeJapan", 
+    description = "OneLife Japan: Hike, Bike and Walking Adventures in Rural Japan" 
+} = Astro.props;
+
+---
+<!DOCTYPE html>
+<html lang="en">
+<!-- In BaseLayout.astro -->
+<head>
+    <HeadComponent title={title} description={description} />
+    <slot name="head" />
+  </head>
+  
+  <body>
+    <TopNav />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+
+
+

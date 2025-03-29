@@ -1,0 +1,45 @@
+---
+// src/components/Head/SeoMetaTags.astro
+
+import { defaultKeywordsList } from "./keywords";
+
+const {
+  title, 
+  description, 
+  image, 
+  canonical,
+  openGraph = {},
+  twitter = {},
+  keywords,
+  robots,
+} = Astro.props;
+
+
+
+const defaultCanonical = Astro.url.href;
+const defaultTitle = "OneLife Japan: Rural Hiking and Adventure Tours in Japan";
+const defaultDescription = "Explore OneLife Japan's rural hiking, biking, and walking tours across Japan. Discover off-the-beaten-path adventures.";
+const defaultImage = "/assets/og.jpg";
+const defaultKeywords = defaultKeywordsList;
+const defaultRobots = "index, follow";
+---
+
+<!-- SEO Meta Tags -->
+<meta name="description" content={description || defaultDescription} />
+<meta name="keywords" content={keywords || defaultKeywords} />
+<meta name="robots" content={robots || defaultRobots} />
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content={title || defaultTitle} />
+<meta property="og:description" content={description || defaultDescription} />
+<meta property="og:image" content={image || defaultImage} />
+<meta property="og:url" content={canonical || defaultCanonical} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="One Life Japan" />
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:title" content={title || defaultTitle} />
+<meta name="twitter:description" content={description || defaultDescription} />
+<meta name="twitter:image" content={image || defaultImage} />
+<meta name="twitter:card" content="summary_large_image" />
+

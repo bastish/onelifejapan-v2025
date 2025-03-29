@@ -1,0 +1,50 @@
+---
+// NavUtilities.astro
+import "../../styles/global.css";
+---
+
+<!-- Top External Links & Search (Desktop) -->
+<div class="d-none d-lg-flex align-items-center">
+    <a href="#" class="text-white ms-4" target="_blank">FAQ</a>
+    <a href="#" class="text-white ms-4" target="_blank">Book</a>
+    <a href="#" class="text-white ms-4 me-4" target="_blank">Contact</a>
+    <a href="#" class="text-white me-4">
+        <!-- Dummy News Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="17" viewBox="0 0 29 20">
+            <rect width="29" height="20" fill="#fff"></rect>
+            <text
+                x="50%"
+                y="50%"
+                dominant-baseline="middle"
+                text-anchor="middle"
+                fill="#0056b3"
+                font-size="10"
+            >
+                News
+            </text>
+        </svg>
+        News
+    </a>
+
+    <!-- Search Form -->
+    <form class="d-flex" role="search">
+        <div class="collapse" id="searchContainer">
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+            />
+        </div>
+        <button
+            class="btn btn-sm"
+            type="submit"
+            data-bs-toggle="collapse"
+            data-bs-target="#searchContainer"
+            aria-expanded="false"
+            aria-controls="searchContainer"
+        >
+            <i class="fas fa-search text-white"></i>
+        </button>
+    </form>
+</div>

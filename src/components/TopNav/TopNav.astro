@@ -1,0 +1,116 @@
+---
+// TopNav.astro
+
+import NavUtilities from "./NavUtilities.astro";
+import "../../styles/global.css";
+
+
+
+---
+
+<nav class="navbar navbar-expand-lg navbar-light flex-column bg-primary">
+    <div class="container-fluid py-2">
+        <div class="d-flex w-100 justify-content-between align-items-center">
+            <!-- Logo / Brand -->
+            <a class="navbar-brand ms-2" href="#">
+                <!-- Dummy Logo SVG (replace with your own as needed) -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="159" height="65">
+                    <rect width="200" height="80" fill="#0056b3"></rect>
+                    <text
+                        x="50%"
+                        y="50%"
+                        dominant-baseline="middle"
+                        text-anchor="middle"
+                        fill="#fff"
+                        font-size="24"
+                    >
+                        Logo
+                    </text>
+                </svg>
+            </a>
+            <NavUtilities />
+            <!-- Mobile Toggler -->
+            <div class="d-lg-none">
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarMain"
+                    aria-controls="navbarMain"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+        <!-- Horizontal Rule for Desktop -->
+        <div class="d-none d-lg-block mt-2 mb-0">
+            <hr class="text-white w-100" />
+        </div>
+    </div>
+    <!-- Main Navigation Links -->
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <!-- Earthquake Dropdown -->
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        data-bs-toggle="dropdown"
+                        role="button"
+                        aria-expanded="false"
+                    >
+                        Adventures & Tours
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Japan Family Bike Adventure</a></li>
+                        <li><a class="dropdown-item" href="#">Autumn Bike & HIke</a></li>
+                        <li><a class="dropdown-item" href="#">Three Day Rural Immerison</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">Custom Adventures</a></li>
+                        <li><a class="dropdown-item" href="#">One Month Across Japan</a></li>
+                        <li><a class="dropdown-item" href="#">10 Days Kanazawa & Noto</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">Intensity</a></li>
+                        <li><a class="dropdown-item" href="#">Photos</a></li>
+                    </ul>
+                </li>
+                <!-- Other Nav Items -->
+                <li class="nav-item"><a class="nav-link" href="#">Self-Guided</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navigation -->
+
+<style>
+    .navbar {
+        background-color: var(--primary-color);
+    }
+    .navbar .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+    }
+    .navbar .nav-link:hover,
+    .navbar .nav-link:focus {
+        color: #e0e0e0 !important;
+    }
+    .dropdown-menu {
+        background-color: #fff;
+    }
+    .dropdown-menu .dropdown-item {
+        color: #333 !important;
+    }
+    /* Dummy Logo Styling */
+    .navbar-brand svg {
+        display: block;
+    }
+</style>

@@ -1,0 +1,13 @@
+---
+const isDev = import.meta.env.DEV;
+console.log('isDev:', isDev);
+---
+
+<script>
+    (function () {
+        var script = document.createElement('script');
+        script.src = '/_vercel/insights/script.js'; // This is the new Vercel Analytics script URL
+        script.async = true;
+        document.body.appendChild(script);
+    })();
+</script>
