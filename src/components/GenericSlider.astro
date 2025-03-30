@@ -1,6 +1,7 @@
 ---
 // GenerciSlider.astro
 import { loadSliderImage } from '../utils/loadSliderImage.ts';
+import { baseHost } from '../utils/utilities.ts';
 import '../styles/global.scss';
 
 let {
@@ -23,10 +24,8 @@ height = `${height}px`;
 // console.log('sliderImage: ', sliderImageId, sliderImage)
 // console.log('uid: ', uid)
 
-const baseUrl = 'http://localhost:3020/';
-
 if (sliderImage) {
-    backgroundImage = baseUrl + sliderImage.compiled_image; // Set image for the page
+    backgroundImage = `${baseHost}/${sliderImage.compiled_image}`;
     // Use uid directly if provided, otherwise fallback to the default uniqueId format
     uniqueId = uid || `${sliderImage.id}-${Date.now()}`;
 }

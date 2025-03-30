@@ -2,6 +2,7 @@
 // ItineraryCard.astro
 const id = Astro.props.id;
 import { loadItinerary } from '../utils/loadItinerary.ts';
+import { baseHost } from '../utils/utilities.ts';
 //const itinerary = await import(`../../data/itinerary_${id}.json`);
 
 // import MapModal from './MapModal.astro';
@@ -27,8 +28,6 @@ let itineraryLink = `/itinerary/${id}/${slug}/`;
 if (itinerary.comming_soon_status) {
     itineraryLink = 'javascript:void(0)';
 }
-
-const baseUrl = 'http://localhost:3020/';
 ---
 
 <div class="col-lg-6 col-xl-4 cardmain">
@@ -56,9 +55,9 @@ const baseUrl = 'http://localhost:3020/';
                     <div class="overflow-hidden" data-astro-cid-zubhzpn2>
                         {
                             mainImage ? (
-                                <img class="img-responsive" src={baseUrl + mainImage.large} alt="" />
+                                <img class="img-responsive" src={baseHost + mainImage.large} alt="" />
                             ) : (
-                                <img class="img-responsive" src={baseUrl + imageUrl} alt="" />
+                                <img class="img-responsive" src={baseHost + imageUrl} alt="" />
                             )
                         }
                     </div>

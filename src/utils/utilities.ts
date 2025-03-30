@@ -8,3 +8,6 @@ export function convertLineBreaksToParagraphs(text: string | undefined) {
         .map((paragraph) => `<p>${paragraph}</p>`)
         .join('');
 }
+
+console.log(import.meta.env);
+export const baseHost = `http://${import.meta.env.DEV_HOST}:3020`;

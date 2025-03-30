@@ -1,24 +1,5 @@
 import { defineConfig } from 'vite';
-
-const SCSS_Logger = {
-    warn(message: string, options: any) {
-        console.log('######################');
-        console.log('######################');
-        console.log('######################');
-        console.log('######################');
-        console.log('SCSS Logger triggered:', message, options);
-        // Mute "Mixed Declarations" warning
-        if (message.includes('Deprecation Warning')) {
-            return;
-        }
-        if (options.deprecation && message.includes('mixed-decls')) {
-            return;
-        }
-        // List all other warnings
-        console.warn(`▲ [WARNING]: ${message}`);
-    },
-};
-
+console.log('host: ', process.env.DEV_HOST);
 export default defineConfig({
     // server: {
     //     proxy: {
@@ -29,13 +10,7 @@ export default defineConfig({
     //         },
     //     },
     // },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                logger: SCSS_Logger,
-                api: 'modern',
-                silenceDeprecations: ['mixed-decls'],
-            },
-        },
+    define: {
+        __DEV_HOST__: JSON.stringify(process.env.DEV_HOST || 'localhost'),
     },
 });

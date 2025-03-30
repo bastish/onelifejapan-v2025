@@ -40,7 +40,7 @@ main {
     width: 90%;
     display: flex;
     justify-content: center;
-    border: 1px solid green;
+    //border: 1px solid green;
 }
 
 #hero {
@@ -199,63 +199,105 @@ code {
     }
 }
 
-.custom-container {
-    //@extend .container; // Inherit Bootstrap's container styles
+// .custom-container {
+//     //@extend .container; // Inherit Bootstrap's container styles
 
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid red;
-    height: auto; // This ensures the container grows to fit the content
-    //min-height: 100%;
+//     padding-left: 0px;
+//     padding-right: 0px;
+//     margin-left: auto;
+//     margin-right: auto;
+//     //border: 1px solid red;
+//     height: auto; // This ensures the container grows to fit the content
+//     //min-height: 100%;
 
-    // border: 0px solid red;
-    // @include media-breakpoint-down(lg) {
-    //     width: 100%;
-    //     max-width: 100%;
-    //     padding-left: 20px;
-    //     padding-right: 20px;
-    //     //border: 1px solid blue;
-    // }
+//     // border: 0px solid red;
+//     // @include media-breakpoint-down(lg) {
+//     //     width: 100%;
+//     //     max-width: 100%;
+//     //     padding-left: 20px;
+//     //     padding-right: 20px;
+//     //     //border: 1px solid blue;
+//     // }
 
-    // @include media-breakpoint-down(sm) {
-    //     // Override for small screens
-    //     padding-left: 5px;
-    //     padding-right: 5px;
-    // }
-}
+//     // @include media-breakpoint-down(sm) {
+//     //     // Override for small screens
+//     //     padding-left: 5px;
+//     //     padding-right: 5px;
+//     // }
+// }
+
+// .custom-container {
+//     width: 100%;
+//     padding-right: 1.5rem;
+//     padding-left: 1.5rem;
+//     margin-right: auto;
+//     margin-left: auto;
+// }
+// @media (min-width: 576px) {
+//     .custom-container {
+//         max-width: 540px;
+//     }
+// }
+// @media (min-width: 768px) {
+//     .custom-container {
+//         max-width: 720px;
+//     }
+// }
+// @media (min-width: 992px) {
+//     .custom-container {
+//         max-width: 960px;
+//     }
+// }
+// @media (min-width: 1200px) {
+//     .custom-container {
+//         max-width: 1140px;
+//     }
+// }
+// @media (min-width: 1400px) {
+//     .custom-container {
+//         max-width: 1320px;
+//     }
+// }
+
+$container-sm: 540px;
+$container-md: 720px;
+$container-lg: 960px;
+$container-xl: 1140px;
+$container-xxl: 1320px;
 
 .custom-container {
     width: 100%;
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
-    margin-right: auto;
+    // padding-left: 1.5rem;
+    // padding-right: 1.5rem;
     margin-left: auto;
+    margin-right: auto;
+    //border: 1px solid red;
+    height: auto;
 }
-@media (min-width: 576px) {
+
+@media (min-width: $small-screen) {
     .custom-container {
-        max-width: 540px;
+        max-width: $container-sm;
     }
 }
-@media (min-width: 768px) {
+@media (min-width: $medium-screen) {
     .custom-container {
-        max-width: 720px;
+        max-width: $container-md;
     }
 }
-@media (min-width: 992px) {
+@media (min-width: $large-screen) {
     .custom-container {
-        max-width: 960px;
+        max-width: $container-lg;
     }
 }
-@media (min-width: 1200px) {
+@media (min-width: $xlarge-screen) {
     .custom-container {
-        max-width: 1140px;
+        max-width: $container-xl;
     }
 }
-@media (min-width: 1400px) {
+@media (min-width: $xxlarge-screen) {
     .custom-container {
-        max-width: 1320px;
+        max-width: $container-xxl;
     }
 }
 

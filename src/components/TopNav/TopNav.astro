@@ -95,11 +95,11 @@ import logo from '../../assets/olj_logo.png';
         transition: width 0.3s ease;
     }
 
-    // @include media-breakpoint-down(lg) {
-    //     .custom-navbar-brand img {
-    //         width: 175px;
-    //     }
-    // }
+    @include respond-to(large) {
+        .custom-navbar-brand img {
+            width: 175px;
+        }
+    }
 
     // .custom-navbar-collapse {
     //     display: flex;

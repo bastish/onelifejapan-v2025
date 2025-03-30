@@ -7,7 +7,8 @@ import BottomBanner from '../components/BottomBanner.astro';
 import PurchaseBlock from '../components/PurchaseBlock.astro';
 import GenericSlider from '../components/GenericSlider.astro';
 import ItineraryBasicInfo from '../components/ItineraryBasicInfo.astro';
-import ItinerarySampleDays from '../components/ItinerarySampleDays.astro';
+//import ItinerarySampleDays from '../components/ItinerarySampleDays.astro';
+import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
 
 import background from '../assets/background.svg';
 import '../styles/global.scss';
@@ -53,12 +54,14 @@ const {
         <div class="custom-container itinerary-main">
             <PurchaseBlock page={'itinerary'} itinerary={itinerary} />
         </div>
+
         <div class="custom-container itinerary-main">
             <!-- Basic Info Section -->
             <div id="basic-info" class="page-section container">
                 <ItineraryBasicInfo itinerary={itinerary} />
             </div>
 
+            <!-- Days Section -->
             <a id="sample-itinerary" class="fixed-header-anchor"></a>
             <div class="secondary-header">
                 <h2>A Sample Itinerary</h2>
@@ -67,7 +70,22 @@ const {
                 <div class="section-inner">
                     <div set:html={itinerary.sampleItineraryIntro} />
 
-                    {itinerary ? <ItinerarySampleDays itinerary={itinerary} /> : <div>No DayItinerary</div>}
+                    {
+                        itinerary ? (
+                            itinerary.dayItineraries &&
+                            itinerary.dayItineraries.map((dayItinerary: any) => (
+                                <ItinerarySampleItineraryDay
+                                    key={dayItinerary.id}
+                                    itinerary={itinerary}
+                                    dayItinerary={dayItinerary}
+                                />
+                            ))
+                        ) : (
+                            <div>No DayItinerary</div>
+                        )
+                    }
+                    <!-- 
+                    <ItinerarySampleDays itinerary={itinerary} /> -->
 
                     <!-- For the custom Itinerary / only shows itinerary daily details without highlights. accomomdation etc. -->
 
@@ -193,18 +211,24 @@ const {
     }
 
     .secondary-header {
-        background: var(--bs-primary-ultralight);
-        background: var(--bs-primary-dark);
-        padding: 10px;
-        padding-left: 20px;
-        border: 1px solid var(--bs-primary);
+        // background: var(--bs-primary-ultralight);
+        // background: var(--bs-primary-dark);
+        padding: 0px;
+        padding-left: 0px;
+        //border: 1px solid var(--bs-primary);
         border-bottom: 2px solid var(--bs-primary);
         border-radius: 5px 5px 0px 0px;
     }
     .secondary-header h2 {
         /* text-transform: uppercase; */
-        font-weight: normal;
+        font-weight: 555;
         letter-spacing: 0.03em;
         color: #fff;
+        color: var(--bs-primary-dark);
+        margin-left: 0px;
+        padding-left: 0px;
+        font-size: 1.9em;
+        //border: 1px solid red;
+        margin-bottom: 10px;
     }
 </style>
