@@ -1,0 +1,179 @@
+---
+// Import your components and any necessary libraries
+import ItineraryLayout from '../../../../layouts/ItineraryLayout.astro';
+
+// import path from 'path';
+// import staticPaths from '../../../../staticPaths.json';
+// import ItinerarySellingPoints from '../../../../components/itinerary/ItinerarySellingPoints.astro';
+// import GenericSlider from '../../../../components/GenericSlider.astro';
+import { loadItineraries } from '../../../../utils/loadItineraries';
+import { loadItinerary } from '../../../../utils/loadItinerary';
+
+// export async function getStaticPaths() {
+//   try {
+//     return staticPaths.map(path => ({
+//       params: { id: path.params.id, slug: path.params.slug },
+//     }));
+//   } catch (error) {
+//     console.error('Error generating static paths:', error);
+//     return [];
+//   }
+// }
+
+export async function getStaticPaths() {
+    try {
+        // Fetch itineraries for the 'top' slug
+        //const itineraries = await loadItineraries('top');
+        const itineraries = await loadItineraries(['top', 'custom-wanderlust']);
+        //console.log('Fetched itineraries:', itineraries); // Log fetched data for debugging
+
+        // Generate paths based on the fetched itineraries
+        const paths = itineraries.map((itinerary: any) => ({
+            params: { id: itinerary.id.toString(), slug: itinerary.slug },
+        }));
+
+        //console.log('Generated paths:', paths); // Log generated paths for debugging
+
+        return paths;
+    } catch (error) {
+        console.error('Error generating static paths:', error);
+        return [];
+    }
+}
+
+const { id, slug } = Astro.params;
+
+type SliderData = {
+    id: string;
+    width?: string;
+    height?: string;
+    float?: 'left' | 'right';
+    scroll?: string;
+    uid: string;
+};
+
+function getIdsFromItineraryObject(itinerary: any): SliderData[] {
+    const sliderTagPattern = /\{GenericSlider[^}]+\}/g;
+    let slidersData: SliderData[] = [];
+
+    function parseSliderAttributes(sliderString: string): SliderData {
+        const idMatch = sliderString.match(/id="(\d+)"/);
+        const widthMatch = sliderString.match(/width="(\d+)"/);
+        const heightMatch = sliderString.match(/height="(\d+)"/);
+        const floatMatch = sliderString.match(/float="(left|right)"/);
+        const scrollMatch = sliderString.match(/scroll="(\d+)"/);
+        const uidMatch = sliderString.match(/uid="([a-zA-Z0-9-]+)"/);
+
+        return {
+            id: idMatch ? idMatch[1] : '',
+            width: widthMatch ? widthMatch[1] : undefined,
+            height: heightMatch ? heightMatch[1] : undefined,
+            float: floatMatch ? (floatMatch[1] as 'left' | 'right') : undefined,
+            scroll: scrollMatch ? scrollMatch[1] : undefined,
+            uid: uidMatch ? uidMatch[1] : '',
+        };
+    }
+
+    function searchObject(obj: any) {
+        if (typeof obj === 'object' && obj !== null) {
+            Object.values(obj).forEach((value) => {
+                if (typeof value === 'string') {
+                    const matches = value.matchAll(sliderTagPattern);
+                    for (const match of matches) {
+                        const sliderString = match[0];
+                        const sliderAttributes = parseSliderAttributes(sliderString);
+                        slidersData.push(sliderAttributes);
+                    }
+                } else if (typeof value === 'object') {
+                    searchObject(value);
+                }
+            });
+        }
+    }
+
+    searchObject(itinerary);
+    return slidersData;
+}
+
+let itinerary = null;
+try {
+    itinerary = await loadItinerary(id);
+    if (itinerary) {
+        itinerary.slidersData = getIdsFromItineraryObject(itinerary);
+    } else {
+        itinerary = {
+            id,
+            title: 'Error loading itinerary',
+            slug,
+            description: '',
+            imageUrl: '',
+            detailsUrl: '',
+            when: '',
+            days: '',
+            priceRange: '',
+            participants: '',
+            location: {
+                text: '',
+                link: '',
+            },
+            levelImages: [],
+            slidersData: [],
+            dayItinerary: [],
+            pricingTable: [],
+        };
+    }
+} catch (error) {
+    console.error('Error loading itinerary:', error);
+    itinerary = {
+        id,
+        title: 'Error loading itinerary',
+        slug,
+        description: '',
+        imageUrl: '',
+        detailsUrl: '',
+        when: '',
+        days: '',
+        priceRange: '',
+        participants: '',
+        location: {
+            text: '',
+            link: '',
+        },
+        levelImages: [],
+        slidersData: [],
+        dayItinerary: [],
+        pricingTable: [],
+    };
+}
+
+function convertLineBreaksToParagraphs(text: string | undefined) {
+    if (typeof text !== 'string') {
+        return '';
+    }
+    const normalizedText = text.replace(/\r\n/g, '\n');
+    return normalizedText
+        .split('\n\n')
+        .map((paragraph) => `<p>${paragraph}</p>`)
+        .join('');
+}
+
+const formattedLongDescription: string = convertLineBreaksToParagraphs(itinerary.longDescription);
+
+//console.log('itinerary.slidersData : ', itinerary.slidersData);
+
+// Frontmatter for SEO
+title: 'FAQ One Life Japan Hike & Bike Adventures';
+canonical: 'https://www.onelifejapan.com/';
+description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+---
+
+{
+    (
+        <ItineraryLayout id={itinerary.id} />
+        // itinerary.layout === 'custom-wanderlust' ? (
+        //     // <CustomWanderlustItineraryLayout itinerary={itinerary} />
+        // ) : (
+
+        // )
+    )
+}

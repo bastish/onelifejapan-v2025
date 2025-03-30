@@ -15,9 +15,9 @@ let backgroundImage;
 let backgroundSize;
 
 switch (page) {
-    case 'Xindex':
-        //slogan = '193px'; // Set the height for 'about' page
-        //pageBlurb = '/assets/bg_long.jpg'; // Set image for 'about' page
+    case 'itinerary':
+        slogan = itinerary.title; // Set the height for 'about' page
+        pageBlurb = itinerary.pageBlurb; // Set image for 'about' page
         break;
     case 'adventures':
         slogan = 'Find the Adventure for You'; // Set the height for 'about' page
@@ -135,7 +135,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     <div class="row">
         <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
             <h1>{slogan}</h1>
-            <p set:html={pageBlurb} />
+            <div class="blurb" set:html={pageBlurb} />
         </div>
         <div
             class=`col-md-3 d-flex 

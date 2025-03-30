@@ -1,17 +1,12 @@
 /* src/styles/global.scss */
 
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/mixins';
+// @import 'bootstrap/scss/bootstrap';
+// @import 'bootstrap/scss/functions';
+// @import 'bootstrap/scss/variables';
+// @import 'bootstrap/scss/mixins';
 
 @import './variables.scss';
 @import './lists.scss';
-
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
 
 html,
 body {
@@ -28,13 +23,10 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    filter: blur(100px);
-}
-#background {
     background-color: transparent;
     -webkit-filter: hue-rotate(200deg) brightness(1.1) blur(4px);
     opacity: 0.5;
-    filter: hue-rotate(190deg) brightness(1.1) blur(100px);
+    filter: hue-rotate(190deg) brightness(1.1) blur(30px);
 }
 
 #container {
@@ -125,6 +117,7 @@ p {
     line-height: 24px;
     letter-spacing: -0.006em;
     margin: 0;
+    margin-bottom: 1.2em;
 }
 
 a {
@@ -207,7 +200,7 @@ code {
 }
 
 .custom-container {
-    @extend .container; // Inherit Bootstrap's container styles
+    //@extend .container; // Inherit Bootstrap's container styles
 
     padding-left: 0px;
     padding-right: 0px;
@@ -217,19 +210,52 @@ code {
     height: auto; // This ensures the container grows to fit the content
     //min-height: 100%;
 
-    border: 0px solid red;
-    @include media-breakpoint-down(lg) {
-        width: 100%;
-        max-width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
-        //border: 1px solid blue;
-    }
+    // border: 0px solid red;
+    // @include media-breakpoint-down(lg) {
+    //     width: 100%;
+    //     max-width: 100%;
+    //     padding-left: 20px;
+    //     padding-right: 20px;
+    //     //border: 1px solid blue;
+    // }
 
-    @include media-breakpoint-down(sm) {
-        // Override for small screens
-        padding-left: 5px;
-        padding-right: 5px;
+    // @include media-breakpoint-down(sm) {
+    //     // Override for small screens
+    //     padding-left: 5px;
+    //     padding-right: 5px;
+    // }
+}
+
+.custom-container {
+    width: 100%;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (min-width: 576px) {
+    .custom-container {
+        max-width: 540px;
+    }
+}
+@media (min-width: 768px) {
+    .custom-container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 992px) {
+    .custom-container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1200px) {
+    .custom-container {
+        max-width: 1140px;
+    }
+}
+@media (min-width: 1400px) {
+    .custom-container {
+        max-width: 1320px;
     }
 }
 
@@ -247,4 +273,18 @@ code {
     text-shadow: none;
     font-weight: 700;
     line-height: 1.2;
+}
+
+.blurb p {
+    margin-bottom: 5px;
+}
+
+.blurb {
+    font-size: 1.1em;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    // @include media-breakpoint-down(lg) {
+    //     font-size: 1em;
+    // }
 }

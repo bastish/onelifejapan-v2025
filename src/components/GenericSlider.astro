@@ -1,0 +1,256 @@
+---
+// GenerciSlider.astro
+import { loadSliderImage } from '../utils/loadSliderImage.ts';
+import '../styles/global.scss';
+
+let {
+    sliderImageId = '1',
+    height = '200',
+    uid,
+    sliderText,
+    textAnimationDelay = '2s',
+    imageAnimationDelay = '0s',
+    preventShrink = false,
+} = Astro.props;
+
+let backgroundImage;
+let uniqueId;
+const sliderImage = await loadSliderImage(sliderImageId); // Fetch itineraries for the 'top' slug
+//console.log('loaded sliderImageId: ', sliderImageId )
+height = `${height}px`;
+
+// console.log('Astro.props:', Astro.props)
+// console.log('sliderImage: ', sliderImageId, sliderImage)
+// console.log('uid: ', uid)
+
+const baseUrl = 'http://localhost:3020/';
+
+if (sliderImage) {
+    backgroundImage = baseUrl + sliderImage.compiled_image; // Set image for the page
+    // Use uid directly if provided, otherwise fallback to the default uniqueId format
+    uniqueId = uid || `${sliderImage.id}-${Date.now()}`;
+}
+
+const inlineStyle = `height: ${height}; 
+    background-image: url('${backgroundImage}'); 
+    background-size: auto ${height}; 
+    background-repeat: repeat-x; 
+    overflow: hidden; 
+    position: relative; 
+    transition: background-position 1s ease; 
+    --height: ${height}; /* Set CSS variable */
+    ${imageAnimationDelay !== '0s' ? `opacity: 0; animation: fadeIn 1s ease-out forwards ${imageAnimationDelay};` : ''}`;
+
+//const textOverlayStyle = `animation-delay: ${textAnimationDelay};`;
+const textOverlayStyle = `animation-delay: calc(${textAnimationDelay} + ${imageAnimationDelay !== '0s' ? '1s' : '0s'});`;
+---
+
+<style lang="scss">
+    @import '../styles/global.scss';
+    .image-scroll-container {
+        width: 100%; /* Full width of the container */
+        overflow: hidden; /* Hide overflow */
+        position: relative; /* For positioning content inside, if needed */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        transition: background-position 0.5s ease;
+        /* 
+        opacity: 0;
+        animation: fadeIn 5s ease-out forwards;
+        animation-delay: 0s; */
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .scroll-btn {
+        position: absolute;
+        top: 50%; /* Center vertically */
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+
+    .scroll-btn.left {
+        left: 10px; /* Distance from the left edge */
+    }
+
+    .scroll-btn.right {
+        right: 10px; /* Distance from the right edge */
+    }
+
+    .scroll-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7); /* Slightly less transparent on hover */
+    }
+
+    .text-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(17, 92, 0, 0.75);
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        pointer-events: none;
+        padding: 20px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.8);
+        animation: fadeIn 2s ease-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes slideInFromLeft {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(50);
+            opacity: 1;
+        }
+    }
+
+    .text-overlay h3 {
+        color: white;
+    }
+
+    h3 {
+        color: white;
+    }
+
+    @include respond-to(xxlarge) {
+        .text-overlay {
+            font-size: 1.2em;
+        }
+    }
+
+    @include respond-to(xlarge) {
+        .text-overlay {
+            font-size: 1.1em;
+        }
+    }
+
+    @include respond-to(large) {
+        .text-overlay {
+            font-size: 1em;
+        }
+    }
+
+    @include respond-to(medium) {
+        .text-overlay {
+            font-size: 0.9em;
+        }
+    }
+
+    /* Media query for smaller screens */
+    @include respond-to(small) {
+        .image-scroll-container {
+            height: 125px !important; /* Adjust height for smaller screens */
+            background-size: auto 125px !important; /* Adjust background size */
+        }
+        .image-scroll-container {
+            height: 150px !important; /* Adjust height for smaller screens */
+            background-size: auto 150px !important; /* Adjust background size */
+        }
+
+        .image-scroll-container.prevent-shrink {
+            height: var(--height) !important;
+            background-size: auto var(--height) !important; /* Use CSS variable for dynamic height */
+        }
+
+        .scroll-btn {
+            font-size: 1.5rem; /* Adjust button size */
+            padding: 0.5rem; /* Adjust button padding */
+        }
+
+        .text-overlay {
+            font-size: 0.8rem; /* Adjust text size in the overlay */
+            padding: 0.5rem; /* Adjust padding for the overlay */
+        }
+    }
+</style>
+
+<header class="bg-light">
+    <header class="bg-light">
+        {
+            sliderImage ? (
+                <div
+                    id={`imageScrollContainer-${uniqueId}`}
+                    class={`image-scroll-container ${preventShrink ? 'prevent-shrink' : ''}`}
+                    style={inlineStyle}
+                    data-unique-id={uniqueId}
+                >
+                    <button class="scroll-btn left" data-direction="left" data-unique-id={uniqueId}>
+                        <i class="fas fa-chevron-left" />
+                    </button>
+                    <button class="scroll-btn right" data-direction="right" data-unique-id={uniqueId}>
+                        <i class="fas fa-chevron-right" />
+                    </button>
+                    {sliderText && <div class="text-overlay" style={textOverlayStyle} set:html={sliderText} />}
+                </div>
+            ) : (
+                <div>No Slider Image Available {uniqueId}</div>
+            )
+        }
+    </header>
+</header>
+
+<script>
+    document.querySelectorAll<HTMLButtonElement>('.scroll-btn').forEach((button) => {
+        button.addEventListener('click', function (this: HTMLButtonElement, event: Event) {
+            const uniqueId = this.getAttribute('data-unique-id');
+            if (!uniqueId) return; // Exit if uniqueId is null
+
+            const container = document.getElementById(`imageScrollContainer-${uniqueId}`);
+            if (!container) return; // Exit if container is not found
+
+            let currentPosition = parseFloat(container.getAttribute('data-current-position') || '0');
+            const direction = this.getAttribute('data-direction');
+
+            if (direction === 'left') {
+                currentPosition -= 200; // Adjust value for desired scroll amount left
+            } else if (direction === 'right') {
+                currentPosition += 200; // Adjust value for desired scroll amount right
+            }
+
+            container.style.backgroundPosition = `${currentPosition}px center`;
+            container.setAttribute('data-current-position', currentPosition.toString());
+        });
+    });
+
+    // Add event listener to the image scroll container to move forward when clicked
+    document.querySelectorAll('.image-scroll-container').forEach((container) => {
+        container.addEventListener('click', function (event) {
+            // Prevent default action if the click is on a button
+            if (event.target.closest('.scroll-btn')) return;
+
+            const uniqueId = this.getAttribute('data-unique-id');
+            if (!uniqueId) return; // Exit if uniqueId is null
+
+            let currentPosition = parseFloat(this.getAttribute('data-current-position') || '0');
+
+            // Move forward by the desired amount
+            currentPosition += 200; // Adjust value for desired scroll amount
+
+            this.style.backgroundPosition = `${currentPosition}px center`;
+            this.setAttribute('data-current-position', currentPosition.toString());
+        });
+    });
+</script>

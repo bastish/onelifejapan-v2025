@@ -1,0 +1,195 @@
+---
+const itinerary = Astro.props.itinerary;
+import { convertLineBreaksToParagraphs } from '../utils/utilities.ts';
+let formattedLongDescription: string = convertLineBreaksToParagraphs(itinerary.longDescription);
+
+// import MapModal from '../MapModal.astro';
+// import DifficultyModal from '../DifficultyModal.astro';
+import '../styles/global.scss';
+formattedLongDescription = itinerary.longDescription;
+---
+
+<div class="itinerary-basic-info">
+    <!-- Trip Info Column -->
+    <div class="info-and-map">
+        <div class="margin-bottom-40 trip-basics-box">
+            <div class="row title-row">
+                <h3 class="info-circle">
+                    <i class="fa fa-info-circle mr-2"></i> Trip Basics
+                </h3>
+            </div>
+            <div class="trip-info-flex">
+                {
+                    itinerary.when && (
+                        <div class="row">
+                            <div class="cell label">Season:</div>
+                            <div class="cell content">{itinerary.when}</div>
+                        </div>
+                    )
+                }
+
+                {
+                    itinerary.days && (
+                        <div class="row">
+                            <div class="cell label">Duration:</div>
+                            <div class="cell content">{itinerary.days} Days</div>
+                        </div>
+                    )
+                }
+
+                {
+                    itinerary.priceRange && (
+                        <div class="row">
+                            <div class="cell label">Estimate:</div>
+                            <div class="cell content">{itinerary.priceRange}</div>
+                        </div>
+                    )
+                }
+
+                {
+                    itinerary.participants && (
+                        <div class="row">
+                            <div class="cell label">People:</div>
+                            <div class="cell content">{itinerary.participants}</div>
+                        </div>
+                    )
+                }
+                <!-- <div class="row">
+                        <div class="cell label">Region:</div>
+                        {
+                            itinerary.regions.length > 0 ? (
+                                <div class="cell content">
+                                    <MapModal itinerary={itinerary} />
+                                </div>
+                            ) : (
+                                <div class="cell content">Multiple Regions</div>
+                            )
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="cell label">Difficulty:</div>
+                        <div class="cell content">
+                            <DifficultyModal itinerary={itinerary} />
+                        </div>
+                    </div> -->
+            </div>
+        </div>
+        {
+            itinerary.embededGoogleMap ? (
+                <div class="frame map-frame">
+                    <iframe src={itinerary.embededGoogleMap} width="100%" height="400" />
+                </div>
+            ) : (
+                <div class="frame map-frame">
+                    <iframe
+                        src="https://www.google.com/maps/d/embed?mid=1Mz8zqKcFz3BnigEpYY9YS7NDTMCTMIQ&ehbc=2E312F&noprof=1"
+                        width="100%"
+                        height="400"
+                    />
+                </div>
+            )
+        }
+    </div>
+
+    <div class="overview">
+        <h2 class="overview-header">Overview</h2>
+        <div set:html={formattedLongDescription} class="formatted-long-description margin-bottom-20" />
+    </div>
+</div>
+
+<style lang="scss">
+    @import '../styles/global.scss';
+
+    .itinerary-basic-info {
+        display: flex;
+        //flex-wrap: wrap;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    /* Left Column: Info & Map */
+    .info-and-map {
+        flex: 1 1 40%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    h2.overview-header {
+        margin-left: 0;
+        padding-left: 0;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        //text-transform: uppercase;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 1.5em;
+        font-size: 1.5em;
+    }
+
+    /* Right Column: Overview */
+    .overview {
+        flex: 1 1 60%;
+        background: var(--opaque-ultradark-10);
+        background: var(--opaque-white-80);
+        border-radius: 8px;
+        border: 1px solid var(--primary-color);
+        box-shadow: 0 4px 8px rgba(156, 156, 156, 0.15);
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    /* Trip Basics Box */
+    .trip-basics-box {
+        padding: 15px;
+        //background: #f5f5f5;
+        border-radius: 5px;
+        //border: 1px solid #ddd;
+    }
+
+    /* Row for each item (Season, Duration, etc.) */
+    .trip-info-flex .row {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .cell {
+        padding: 2px;
+    }
+
+    .label {
+        flex: 0 0 35%; /* Label takes 35% of the space */
+        font-weight: bold;
+    }
+
+    .content {
+        flex: 1; /* Content takes the remaining space */
+    }
+
+    /* Map styling */
+    .frame.map-frame {
+        display: block;
+    }
+    .frame {
+        padding: 5px;
+        border: 1px solid var(--primary-color);
+    }
+
+    /* Responsive layout changes for narrow screens */
+    @media (max-width: 768px) {
+        .itinerary-basic-info {
+            flex-direction: column;
+        }
+
+        .info-map,
+        .overview {
+            flex: 1 1 100%; /* Take full width */
+        }
+        .frame.map-frame iframe {
+            height: 200px; /* Specify height */
+        }
+
+        .frame.map {
+            display: none; /* Hide map on narrow screens */
+        }
+    }
+</style>

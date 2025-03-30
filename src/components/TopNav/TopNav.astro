@@ -7,7 +7,7 @@ import logo from '../../assets/olj_logo.png';
 <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
     <div class="container-fluid">
         <!-- Logo on the left -->
-        <a class="navbar-brand custom-navbar-brand" href="#">
+        <a class="navbar-brand custom-navbar-brand" href="/">
             <img src={logo.src} alt="Logo" />
         </a>
 
@@ -28,7 +28,7 @@ import logo from '../../assets/olj_logo.png';
         <div class="collapse navbar-collapse custom-navbar-collapse" id="navbarMain">
             <ul class="navbar-nav ms-auto custom-navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a
@@ -41,7 +41,11 @@ import logo from '../../assets/olj_logo.png';
                         Adventures &amp; Tours
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Japan Family Bike Adventure</a></li>
+                        <li>
+                            <a class="dropdown-item" href="/itinerary/1/family-japan-adventure/"
+                                >Japan Family Bike Adventure</a
+                            >
+                        </li>
                         <li><a class="dropdown-item" href="#">Autumn Bike &amp; Hike</a></li>
                         <li><a class="dropdown-item" href="#">Three Day Rural Immersion</a></li>
                         <li><hr class="dropdown-divider" /></li>
@@ -91,17 +95,17 @@ import logo from '../../assets/olj_logo.png';
         transition: width 0.3s ease;
     }
 
-    @include media-breakpoint-down(lg) {
-        .custom-navbar-brand img {
-            width: 175px;
-        }
-    }
+    // @include media-breakpoint-down(lg) {
+    //     .custom-navbar-brand img {
+    //         width: 175px;
+    //     }
+    // }
 
-    .custom-navbar-collapse {
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-    }
+    // .custom-navbar-collapse {
+    //     display: flex;
+    //     flex-direction: column;
+    //     padding: 0;
+    // }
 
     .custom-navbar-nav {
         padding: 0;

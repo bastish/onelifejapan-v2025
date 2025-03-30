@@ -1,15 +1,15 @@
 :root {
-    --primary-color: #9ab390;
-    --primary-hover-color: #628132; /* darken for hover */
+    --primary-color: rgb(154, 179, 144);
+    --primary-hover-color: rgb(98, 129, 50); /* darken for hover */
     --text-light: #fff;
     --text-dark: #333;
     /* Add other variables as needed */
 
     --bs-primary: #9ab390;
     --bs-primary-dark: #7b8f73;
-    --bs-primary-ultradark: #496125;
-    --bs-primary-light: #bdd09f;
-    --bs-primary-ultralight: #f5f1ea; /* Later definition takes precedence */
+    --bs-primary-ultradark: rgb(73, 97, 37);
+    --bs-primary-light: rgb(189, 208, 159);
+    --bs-primary-ultralight: rgb(245, 241, 234); /* Later definition takes precedence */
 
     --bs-primary-secondary: #cc4c14; /* Last definition takes precedence */
     --bs-border-color: var(--bs-primary);
@@ -18,4 +18,44 @@
 
     --bs-footer: #323232;
     --bs-footer-dark: #3e4753;
+
+    --opaque-white-80: rgba(255, 255, 255, 0.8); /* 80% opacity */
+    --opaque-white-60: rgba(255, 255, 255, 0.6); /* 60% opacity */
+    --opaque-white-50: rgba(255, 255, 255, 0.5); /* 80% opacity */
+    --opaque-white-10: rgba(255, 255, 255, 0.1); /* 80% opacity */
+    --opaque-primary-50: rgba(245, 241, 234, 0.7); /* 50% opacity */
+    --opaque-primary-mid: rgba(245, 241, 234, 0.5); /* 50% opacity */
+
+    --opaque-ultradark-10: rgba(var(--bs-primary-ultradark), 0.1); /* 10% opacity of the base ultradark color */
+}
+
+$small-screen: 576px;
+$medium-screen: 768px; /*hamburger*/
+$large-screen: 992px;
+$xlarge-screen: 1200px;
+$xxlarge-screen: 1400px;
+
+// Media queries mixin
+@mixin respond-to($media) {
+    @if $media == small {
+        @media (max-width: $small-screen) {
+            @content;
+        }
+    } @else if $media == medium {
+        @media (max-width: $medium-screen) {
+            @content;
+        }
+    } @else if $media == large {
+        @media (max-width: $large-screen) {
+            @content;
+        }
+    } @else if $media == xlarge {
+        @media (max-width: $xlarge-screen) {
+            @content;
+        }
+    } @else if $media == xxlarge {
+        @media (max-width: $xxlarge-screen) {
+            @content;
+        }
+    }
 }

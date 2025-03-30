@@ -1,0 +1,210 @@
+---
+import HeadComponent from '../components/Head/HeadComponent.astro';
+import TopNav from '../components/TopNav/TopNav.astro';
+import Footer from '../components/Footer/Footer.astro';
+import TopSlider from '../components/TopSlider.astro';
+import BottomBanner from '../components/BottomBanner.astro';
+import PurchaseBlock from '../components/PurchaseBlock.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+import ItineraryBasicInfo from '../components/ItineraryBasicInfo.astro';
+import ItinerarySampleDays from '../components/ItinerarySampleDays.astro';
+
+import background from '../assets/background.svg';
+import '../styles/global.scss';
+
+const id = Astro.props.id;
+import { loadItinerary } from '../utils/loadItinerary.ts';
+
+const itinerary = await loadItinerary(id);
+const {
+    title,
+    slug,
+    description,
+    mainImage,
+    imageUrl,
+    detailsUrl,
+    priceRange,
+    participants,
+    location_link,
+    locationText,
+    activityLevel,
+    when,
+    days,
+} = itinerary;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <HeadComponent title={title} description={description} />
+        <slot name="head" />
+    </head>
+    <body>
+        <img id="background" src={background.src} alt="" fetchpriority="high" />
+
+        <div class="custom-container">
+            <TopNav />
+        </div>
+        <div>
+            {itinerary.sliderImage ? <GenericSlider sliderImageId={itinerary.sliderImage.id} height={175} /> : <div />}
+        </div>
+        <!-- <TopSlider page={page} /> -->
+
+        <div class="custom-container itinerary-main">
+            <PurchaseBlock page={'itinerary'} itinerary={itinerary} />
+        </div>
+        <div class="custom-container itinerary-main">
+            <!-- Basic Info Section -->
+            <div id="basic-info" class="page-section container">
+                <ItineraryBasicInfo itinerary={itinerary} />
+            </div>
+
+            <a id="sample-itinerary" class="fixed-header-anchor"></a>
+            <div class="secondary-header">
+                <h2>A Sample Itinerary</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <div set:html={itinerary.sampleItineraryIntro} />
+
+                    {itinerary ? <ItinerarySampleDays itinerary={itinerary} /> : <div>No DayItinerary</div>}
+
+                    <!-- For the custom Itinerary / only shows itinerary daily details without highlights. accomomdation etc. -->
+
+                    <!-- {
+                        itinerary.id === 7 && itinerary.customItineraries && (
+                            <>
+                                <CustomItineraryCollapsibleChecklist items={customItineraries} />
+                                {itinerary.customItineraries.map((customItineraryId: any) => (
+                                    <div>
+                                        <CustomItinerary
+                                            itinerary={itinerary}
+                                            customItineraryId={customItineraryId.id}
+                                        />
+                                    </div>
+                                ))}
+                            </>
+                        )
+                    } -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <BottomBanner /> -->
+        <Footer />
+    </body>
+</html>
+
+<style lang="scss">
+    @import '../styles/global.scss';
+
+    .itinerary-main {
+        padding: 0px;
+        margin-top: 20px;
+        //border: 1px solid green;
+    }
+
+    .page-section {
+        padding-bottom: 175px;
+    }
+
+    .headline,
+    .short-slogan,
+    .inner-headline {
+        text-align: center;
+    }
+    .headline {
+        padding-top: 20px;
+    }
+    .inner-headline {
+        padding-top: 5px;
+        margin-bottom: 0px;
+    }
+
+    .short-slogan {
+        font-size: 1.3em;
+        padding: 20px;
+        font-weight: normal;
+        /* color: var(--bs-primary-dark);
+    color: var(--bs-primary); */
+    }
+    .itinerary-fixed-nav {
+        position: relative;
+        z-index: 1030;
+        background: #fff;
+        padding-top: 0px; /* Top padding when fixed */
+    }
+    .itinerary-fixed-nav::before,
+    .itinerary-fixed-nav::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #ddd;
+        width: 100vw; /* Full width of the viewport */
+        margin-left: -50vw; /* Offset half the viewport width to align */
+        left: 50%; /* Start at the middle of the viewport */
+    }
+    .itinerary-fixed-nav::before {
+        top: 0;
+    }
+    .itinerary-fixed-nav::after {
+        bottom: 0;
+    }
+    .is-fixed {
+        position: fixed;
+        top: 75px; /* Adjust this based on your main navbar's height */
+        top: 0;
+        width: 100%;
+        background: #fff; /* Ensures background is applied */
+        transition: top 0.3s ease; /* Smooth transition for the top property */
+    }
+    .inner-container {
+        max-width: 1200px; /* Adjust based on your container width */
+        margin: 0 auto;
+        padding: 0 15px; /* Optional padding */
+    }
+
+    .section-inner {
+        border: 1px solid #ddd;
+        background: var(--opaque-white-8);
+        background: var(--opaque-primary-mid);
+
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+    }
+
+    @include respond-to(medium) {
+        .section-inner {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+
+    @include respond-to(small) {
+        .is-fixed {
+            position: unset;
+        }
+        .page-section {
+            padding-bottom: 25px;
+        }
+    }
+
+    .secondary-header {
+        background: var(--bs-primary-ultralight);
+        background: var(--bs-primary-dark);
+        padding: 10px;
+        padding-left: 20px;
+        border: 1px solid var(--bs-primary);
+        border-bottom: 2px solid var(--bs-primary);
+        border-radius: 5px 5px 0px 0px;
+    }
+    .secondary-header h2 {
+        /* text-transform: uppercase; */
+        font-weight: normal;
+        letter-spacing: 0.03em;
+        color: #fff;
+    }
+</style>

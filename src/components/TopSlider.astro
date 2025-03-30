@@ -35,14 +35,14 @@ const inlineStyle = `background-image: url('${backgroundImage}'); background-rep
         background-size: 1902px 193px;
     }
 
-    // At the breakpoint below lg (less than 992px), change the height while preserving the aspect ratio.
-    @include media-breakpoint-down(lg) {
-        #imageScrollContainer {
-            height: 150px;
-            // Compute new width: newWidth = 150px * (1902 / 193)
-            background-size: calc(150px * 1902 / 193) 150px;
-        }
-    }
+    // // At the breakpoint below lg (less than 992px), change the height while preserving the aspect ratio.
+    // @include media-breakpoint-down(lg) {
+    //     #imageScrollContainer {
+    //         height: 150px;
+    //         // Compute new width: newWidth = 150px * (1902 / 193)
+    //         background-size: calc(150px * 1902 / 193) 150px;
+    //     }
+    // }
 
     /* (The rest of your styles for buttons, etc. remain the same) */
     .scroll-btn {

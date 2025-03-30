@@ -1,0 +1,206 @@
+---
+//SampleItineraryDay.astro
+// import DaySampleItineraryModal from '../../components/DaySampleItineraryModal.astro';
+// import BootstrapSliderModal from '../modals/BootstrapSliderModal.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+import '../styles/global.scss';
+const { itinerary, dayItinerary } = Astro.props;
+//console.log('dayItinerary.sliderImage', dayItinerary.sliderImage)
+---
+
+<style lang="scss">
+    @import '../styles/global.scss';
+    @include respond-to(medium) {
+        /* Adjusts the width for medium devices and up */
+        .custom-col-width {
+            flex: 0 0 45%;
+            max-width: 85%;
+        }
+        /* styles.css */
+        .modal-offscreen {
+            position: absolute;
+            top: -10000px; /* Position it far off-screen */
+            left: 0;
+        }
+    }
+
+    .fa-bicycle:before {
+        content: '\f206';
+    }
+    .more-details {
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    .slider-frame {
+        padding-left: 90px;
+    }
+    .box-shadow {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* More noticeable shadow */
+    }
+
+    .day-card {
+        margin-bottom: 50px;
+        border-radius: 10px;
+        background: var(--opaque-white-80);
+        border-radius: 8px;
+        border: 1px solid var(--primary-color);
+        box-shadow: 0 4px 8px rgba(156, 156, 156, 0.15);
+    }
+
+    a.read-more {
+        display: none;
+    }
+
+    .slider-image {
+        margin-bottom: 20px;
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+    .details-button a {
+        border: 1px solid var(--bs-primary-ultradark);
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        width: 30%;
+        color: var(--bs-primary-ultralight);
+        background: var(--bs-primary-dark);
+        color: #fff;
+        background: var(--bs-link-color);
+    }
+    .details-button a:hover {
+        background: var(--bs-primary);
+    }
+
+    .details-button {
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .day-itinerary-title {
+        padding-bottom: 1em;
+    }
+
+    .day-header {
+        background: var(--bs-primary);
+        background: var(--bs-primary-ultralight);
+        background: #fff;
+
+        width: 100%; /* Ensure the header spans the full width */
+        margin: 0; /* Remove any default margin */
+        padding: 0; /* Remove any default padding */
+        padding: 10px; /* Add padding if needed for content inside */
+        padding-left: 20px;
+        display: flex;
+        align-items: center; /* Center content vertically */
+        border-radius: 5px 5px 0px 0px;
+        border: 1px solid var(--bs-primary-ultralight);
+        border-bottom: 3px solid var(--bs-primary-light);
+    }
+
+    .day-header h2 {
+        margin: 0; /* Remove any default margin from the h2 element */
+        padding: 0; /* Remove any default padding from the h2 element */
+        color: var(--bs-primary-dark);
+        color: var(--bs-primary);
+        color: var(--bs-primary-dark);
+    }
+</style>
+<a id={`${dayItinerary.slug}`} class="fixed-header-anchor"></a><br />
+<div class="card box-shadow day-card">
+    <!-- shadow-sm for a small shadow -->
+    <div class="day-header">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <h2 class="mb-0 day-itinerary-title" set:html={dayItinerary.title} />
+                <!-- Remove default margin from h2 if needed -->
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Use a row and justify-content-between to align title and button -->
+
+        <div class="slider-image">
+            {
+                dayItinerary?.sliderImage ? (
+                    <GenericSlider sliderImageId={dayItinerary.sliderImage.id} />
+                ) : (
+                    <div>No Slider Image Available</div> // Or any other fallback content
+                )
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {
+                    dayItinerary.totalDistanceBike && (
+                        <h3>
+                            <i class="fa fa-bicycle" /> {dayItinerary.totalDistanceBike} ({dayItinerary.totalTimeBike})
+                        </h3>
+                    )
+                }
+                {
+                    dayItinerary.totalDistanceWalk && (
+                        <h3>
+                            <i class="fa fa-walking" /> {dayItinerary.totalDistanceWalk} ({dayItinerary.totalTimeWalk})
+                        </h3>
+                    )
+                }
+                <ul class="checklist">
+                    {
+                        dayItinerary.highlightPoints &&
+                            dayItinerary.highlightPoints.map((highlightPoint: any) => (
+                                <li set:html={highlightPoint.title} />
+                            ))
+                    }
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div set:html={dayItinerary.truncatedLongDescription} />
+                <div class="justify-content-right details-button">
+                    <!-- Flex container to align button to the right -->
+                    <a
+                        href="#"
+                        class="more-details rounded-2x"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#day-${dayItinerary.id}`}
+                        data-parent-modal-id={`day-${dayItinerary.id}`}
+                    >
+                        More Details ››&nbsp;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+<DaySampleItineraryModal dayItinerary={dayItinerary} />
+
+{
+    dayItinerary.routes?.map((route: any, index: number) =>
+        route.sliderImages && route.sliderImages.length > 0 ? (
+            <BootstrapSliderModal
+                id={`routeImagesBootStrapSliderModal-${route.id}`}
+                title={`${route.title} Images`}
+                sliderImages={route.sliderImages}
+            />
+        ) : (
+            <div>No images available for this route.</div>
+        )
+    )
+}
+
+{
+    dayItinerary.routes_optional?.map((route: any, index: number) =>
+        route.sliderImages && route.sliderImages.length > 0 ? (
+            <BootstrapSliderModal
+                id={`routeImagesBootStrapSliderModal-${route.id}`}
+                title={`${route.title} Images`}
+                sliderImages={route.sliderImages}
+            />
+        ) : (
+            <div>No images available for this route.</div>
+        )
+    )
+} -->
