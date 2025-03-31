@@ -1,11 +1,11 @@
 ---
 //SampleItineraryDay.astro
 // import SinglePhotoSlider from '../../components/SinglePhotoSlider.astro';
-// import DaySampleItinerarySchedule from '../../components/itinerary/DaySampleItinerarySchedule.astro';
+import DaySampleItinerarySchedule from '../components/DaySampleItinerarySchedule.astro';
 import DaySampleItineraryOverview from '../components/DaySampleItineraryOverview.astro';
-// import DaySampleItineraryHighlights from '../../components/itinerary/DaySampleItineraryHighlights.astro';
-// import DaySampleItineraryDifficulty from '../../components/itinerary/DaySampleItineraryDifficulty.astro';
-// import DaySampleItineraryAccommodation from '../../components/itinerary/DaySampleItineraryAccommodation.astro';
+import DaySampleItineraryHighlights from '../components/DaySampleItineraryHighlights.astro';
+import DaySampleItineraryDifficulty from '../components/DaySampleItineraryDifficulty.astro';
+import DaySampleItineraryAccommodation from '../components/DaySampleItineraryAccommodation.astro';
 
 import { hasProperty } from '../utils/utilities.ts';
 const { itinerary, dayItinerary } = Astro.props;
@@ -77,7 +77,7 @@ const modalId = `day-${dayItinerary.id}`;
                                             aria-controls={`difficulty-${dayItinerary.id}`}
                                             aria-selected="false"
                                         >
-                                            Routes <span class="hide-on-large"> & Difficulty</span>
+                                            Routes
                                         </button>
                                     </li>
                                 )
@@ -111,8 +111,8 @@ const modalId = `day-${dayItinerary.id}`;
                                             aria-controls={`accommodation-${dayItinerary.id}`}
                                             aria-selected="false"
                                         >
-                                            <span class="hide-on-large">Accommodation</span>
-                                            <span class="show-on-large">Stay</span>
+                                            <span class="show-on-large">Accommodation</span>
+                                            <span class="show-on-small">Stay</span>
                                         </button>
                                     </li>
                                 )
@@ -135,7 +135,7 @@ const modalId = `day-${dayItinerary.id}`;
                                 role="tabpanel"
                                 aria-labelledby={`highlights-tab-${dayItinerary.id}`}
                             >
-                                <!-- <DaySampleItineraryHighlights dayItinerary={dayItinerary} /> -->
+                                <DaySampleItineraryHighlights dayItinerary={dayItinerary} />
                             </div>
                             {
                                 hasProperty(dayItinerary, 'schedule.schedules') && (
@@ -145,7 +145,7 @@ const modalId = `day-${dayItinerary.id}`;
                                         role="tabpanel"
                                         aria-labelledby={`schedule-tab-${dayItinerary.id}`}
                                     >
-                                        {/* <DaySampleItinerarySchedule dayItinerary={dayItinerary} /> */}
+                                        <DaySampleItinerarySchedule dayItinerary={dayItinerary} />
                                     </div>
                                 )
                             }
@@ -157,10 +157,10 @@ const modalId = `day-${dayItinerary.id}`;
                                         role="tabpanel"
                                         aria-labelledby={`difficulty-tab-${dayItinerary.id}`}
                                     >
-                                        {/* <DaySampleItineraryDifficulty
+                                        <DaySampleItineraryDifficulty
                                             dayItinerary={dayItinerary}
                                             modalId={`day-${dayItinerary.id}`}
-                                        /> */}
+                                        />
                                     </div>
                                 )
                             }
@@ -172,7 +172,7 @@ const modalId = `day-${dayItinerary.id}`;
                                         role="tabpanel"
                                         aria-labelledby={`accommodation-tab-${dayItinerary.id}`}
                                     >
-                                        {/* <DaySampleItineraryAccommodation dayItinerary={dayItinerary} /> */}
+                                        <DaySampleItineraryAccommodation dayItinerary={dayItinerary} />
                                     </div>
                                 )
                             }
@@ -235,6 +235,8 @@ const modalId = `day-${dayItinerary.id}`;
         @include respond-to(small) {
             width: 100%;
             text-align: center;
+            border: 2px solid var(--bs-primary-ultradark);
+            color: var(--bs-primary-ultradark);
         }
     }
 
@@ -252,12 +254,16 @@ const modalId = `day-${dayItinerary.id}`;
         color: var(--bs-primary-ultradark);
         @include respond-to(small) {
             border-bottom: 1px solid #ddd;
+            border: 2px solid var(--bs-primary-ultradark);
+            background-color: var(--bs-primary-ultradark);
+            color: white;
         }
     }
 
     .tab-content {
         border: 0px solid #ddd;
         padding: 20px;
+        margin-top: 30px;
     }
 
     .tab-pane {
@@ -327,6 +333,35 @@ const modalId = `day-${dayItinerary.id}`;
         &:focus {
             outline: 2px solid var(--bs-primary-ultradark);
             outline-offset: 2px;
+        }
+    }
+
+    .show-on-small {
+        display: none;
+    }
+    .show-on-large {
+        display: block;
+    }
+    @media (max-width: 576px) {
+        .show-on-small {
+            display: block;
+        }
+        .show-on-large {
+            display: none;
+        }
+        .modal-content {
+            //border: 2px solid var(--bs-primary-ultradark);
+            border-radius: 10px;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .tab-content {
+            //border: 2px solid red;
+            padding: 10px;
+        }
+        .hide-on-large {
+            display: block;
         }
     }
 </style>

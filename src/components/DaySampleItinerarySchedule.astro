@@ -1,0 +1,138 @@
+---
+// DaySampleItinerarySchedule.astro
+const { dayItinerary } = Astro.props;
+---
+
+<h3 style="">A Sample Schedule</h3>
+<p>
+    This will give you an image of what a day might look. <span class="emph">Nothing is set in stone</span>. The exact
+    itinerary will be set <span class="emph"></span>taking everything into account, such as weather, fatigue, and any <span
+        class="emph">special activities</span
+    > that may be happening.
+</p>
+
+{
+    dayItinerary.schedule.schedules.map((schedule: any, scheduleIndex: number) => (
+        <div class="panel panel-green">
+            {schedule.header && <div class="itinerary-header">{schedule.header}</div>}
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    {schedule.timeSlots.map((timeSlot: any, slotIndex: number) => (
+                        <tr>
+                            <td class="time-slot">
+                                <div class="time">{timeSlot.time}</div>
+                                <div class="details">
+                                    {timeSlot.details.split('\n').map((line: string, lineIndex: number) => (
+                                        <div set:html={line} />
+                                    ))}
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {scheduleIndex < dayItinerary.schedule.schedules.length - 1 && <div class="arrow" />}
+            {schedule.footNotes && schedule.footNotes.length > 0 && (
+                <div>
+                    {schedule.footNotes.map((footnote: any, footnoteIndex: number) => (
+                        <p class="footnote">{footnote}</p>
+                    ))}
+                </div>
+            )}
+        </div>
+    ))
+}
+<!-- 
+<h3>Schedule Notes</h3>
+<div set:html={dayItinerary.scheduleNotes} /> -->
+
+<style>
+    @import '../styles/global.scss';
+    .testclass {
+        border: 1px solid red;
+    }
+    .itinerary-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        width: 100%;
+        padding: 1em;
+        border: 1px solid red;
+    }
+    .itinerary-header {
+        font-size: 1.8em;
+        margin-bottom: 1em;
+        color: var(--bs-primary-dark);
+        text-align: center;
+        font-weight: bold;
+    }
+    /* .panel {
+        width: 100%;
+        margin-bottom: 2em;
+        border: 2px solid var(--bs-primary);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 1em;
+        background-color: #f9f9f9;
+        border: 1px solid pink;
+    } */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0em 0;
+    }
+    .table th,
+    .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    .time-slot {
+        display: grid;
+        grid-template-columns: 80px auto;
+        align-items: start;
+        padding: 0.5em 0;
+    }
+    .time {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 1em;
+    }
+    .details {
+        border-left: 2px solid var(--bs-primary-light);
+        padding-left: 1em;
+    }
+    .arrow {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid var(--bs-primary-light);
+        margin: 1em 0;
+    }
+    .footnote {
+        font-style: italic;
+        margin-top: 1em;
+        color: #666;
+    }
+
+    @media (max-width: 576px) {
+        .time-slot {
+            grid-template-columns: 1fr;
+        }
+        .time {
+            text-align: left;
+            padding-right: 0;
+        }
+        .details {
+            border-left: none;
+            padding-left: 0;
+            margin-top: 0.5em;
+        }
+    }
+</style>

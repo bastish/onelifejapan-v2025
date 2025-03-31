@@ -7,6 +7,7 @@
 
 @import './variables.scss';
 @import './lists.scss';
+@import './blockquote.scss';
 // @use './variables.scss';
 // @use './lists.scss';
 
@@ -118,9 +119,10 @@ h2 {
 
 p {
     color: #4b5563;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -0.006em;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    // letter-spacing: -0.006em;
+    letter-spacing: 0.02rem;
     margin: 0;
     margin-bottom: 1.2em;
 }
@@ -327,13 +329,9 @@ $container-xxl: 1320px;
 }
 
 .blurb {
-    font-size: 1.1em;
     padding: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
-    // @include media-breakpoint-down(lg) {
-    //     font-size: 1em;
-    // }
 }
 
 .fineprint {
@@ -355,4 +353,23 @@ $container-xxl: 1320px;
     font-size: 1em; /* Bullet size */
     line-height: 1.5; /* Align bullet vertically */
     color: inherit; /* Use the same color as the text */
+}
+
+.rwgps-embed {
+    border: 1px solid var(--bs-primary-dark);
+    max-height: 700px !important;
+}
+.rwgps-iframe {
+    border: 2px solid red;
+}
+
+/* Responsive adjustments: On smaller screens, you might want the card layout to stack vertically */
+@media (max-width: 576px) {
+    .rwgps-embed iframe {
+        border: 1px solid var(--bs-primary-dark);
+        max-height: 500px !important;
+    }
+    .rwgps-iframe {
+        border: 2px solid blue;
+    }
 }

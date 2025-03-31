@@ -1,0 +1,210 @@
+---
+// DaySampleItineraryHighlights.astro
+import { baseHost } from '../utils/utilities.ts';
+import DaySampleItineraryDifficultyMaps from './DaySampleItineraryDifficultyMaps.astro';
+const { dayItinerary, modalId } = Astro.props;
+---
+
+<style>
+    /* General styling (icons, etc.) */
+    .fa-bicycle:before {
+        content: '\f206';
+    }
+    .chart-image {
+        margin-bottom: 10px;
+        display: block;
+    }
+    .fa-long-arrow-up {
+        transform: rotate(45deg);
+        display: inline-block;
+    }
+    .fa-long-arrow-down {
+        transform: rotate(-45deg);
+        display: inline-block;
+        font-weight: 100;
+    }
+    .fa-plus,
+    .fa-minus {
+        display: inline-block;
+        margin-right: 5px;
+    }
+    .circled-number {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.3em;
+        height: 1.3em;
+        padding: 5px;
+        border-radius: 25% !important;
+        border: 0px solid #555;
+        font-size: 1.5em;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    /* Container for all route cards */
+    .routes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    /* Each route card */
+    .route-card {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        /* Allow cards to shrink or grow; adjust basis as needed */
+        flex: 1 1 300px;
+    }
+
+    /* Map column (left side) */
+    .map-col {
+        flex: 0 0 auto;
+        max-width: 200px;
+    }
+    .map-col img {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-width: 200px;
+    }
+
+    /* Data column (right side) */
+    .data-col {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    /* Each data row */
+    .data-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .data-label {
+        font-weight: bold;
+        width: 100px;
+        flex-shrink: 0;
+    }
+    .data-value {
+        flex: 1;
+    }
+
+    /* Responsive adjustments: On smaller screens, you might want the card layout to stack vertically */
+    @media (max-width: 576px) {
+        .route-card {
+            flex-direction: column;
+            align-items: center;
+        }
+        .map-col {
+            margin-bottom: 10px;
+        }
+        .data-col {
+            width: 100%;
+        }
+    }
+</style>
+
+<div>
+    <br />
+    <div set:html={dayItinerary.routeDetails.description} />
+    {
+        dayItinerary.routes?.map((route: any) => (
+            <div>
+                <br />
+                <h3>
+                    <div class="route-title">{route.title}</div>
+                    <div class="route-distance">({route.distance.kilometers} km)</div>
+                </h3>
+                <DaySampleItineraryDifficultyMaps route={route} />
+                {/* <div class="frame rwgps-embed">
+                    <div set:html={route.RWGPSEmbed} />
+                </div> */}
+                <div class="route-card">
+                    <div class="map-col">
+                        <a href="#" data-modal-id={`routeImagesBootStrapSliderModal-${route.id}`}>
+                            <img class="map-thumb" src={baseHost + route.sliderImages[0]} alt="Route Map" />
+                        </a>
+                    </div>
+                    <div class="data-col">
+                        <div class="data-row">
+                            <div class="data-label">Distance:</div>
+                            <div class="data-value">
+                                {route.distance?.kilometers ?? '0'} km / {route.distance?.miles ?? '0'} mi
+                            </div>
+                        </div>
+                        <div class="data-row">
+                            <div class="data-label">Elevation:</div>
+                            <div class="data-value">
+                                <div>
+                                    <i class="fa fa-plus" /> {route.climb?.meters ?? '0'} m ({route.climb?.feet ?? '0'}{' '}
+                                    ft)
+                                </div>
+                                <div>
+                                    <i class="fa fa-minus" /> {route.drop?.meters ?? '0'} m ({route.drop?.feet ?? '0'}{' '}
+                                    ft)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="data-row">
+                            <div class="data-label">Riding Time:</div>
+                            <div class="data-value">
+                                <i class="fa fa-clock-o" /> {route.time}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* <div class="frame chart-image">
+                    <img src={baseHost + route.chart} width="100%" alt={`${route.title} Chart`} />
+                </div> */}
+                <div style="clear: both;" />
+                <div set:html={route.description} />
+            </div>
+        ))
+    }
+    <br />
+    {dayItinerary.routes_optional && dayItinerary.routes_optional.length > 0 && <h3>Optional Route</h3>}
+    {
+        dayItinerary.routes_optional?.map((route: any) => (
+            <div>
+                <h3>
+                    <div class="route-title">{route.title}</div>
+                    <div class="route-distance">({route.distance.kilometers} km)</div>
+                </h3>
+                <div class="frame">
+                    <img
+                        class="frame chart-image"
+                        src={baseHost + route.chart}
+                        width="100%"
+                        alt={`${route.title} Chart`}
+                    />
+                </div>
+                <div style="clear: both;" />
+                <div set:html={route.description} />
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .route-title {
+        display: inline;
+    }
+    .route-distance {
+        display: inline;
+    }
+    @media (max-width: 576px) {
+        .route-title {
+            display: block;
+        }
+        .route-distance {
+            display: block;
+        }
+    }
+</style>

@@ -29,3 +29,12 @@ export function hasProperty(obj: any, ...propertyPaths: string[]) {
     }
     return false;
 }
+
+/**
+ * Strips <p> and <em> HTML tags from the provided string.
+ * @param input - The string that may contain HTML tags.
+ * @returns The string with <p> and <em> tags removed.
+ */
+export function stripSimpleHtmlTags(input: string): string {
+    return input.replace(/<\/?(p|em)[^>]*>/gi, '');
+}

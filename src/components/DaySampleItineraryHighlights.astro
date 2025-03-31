@@ -1,0 +1,28 @@
+---
+//DaySampleItineraryHighlights.astro
+//import SinglePhotoSlider from '../components/SinglePhotoSlider.astro';
+import { stripSimpleHtmlTags } from '../utils/utilities.ts';
+const { itinerary, dayItinerary } = Astro.props;
+---
+
+{
+    dayItinerary.dayHighlights &&
+        dayItinerary.dayHighlights.map((dayHighlight: any) => (
+            <div style="">
+                <h3>{stripSimpleHtmlTags(dayHighlight.title)}</h3>
+                <div set:html={dayHighlight.description} />
+                <hr />
+            </div>
+        ))
+}
+<style>
+    @import '../styles/global.scss';
+    hr {
+        margin: 0px;
+        margin-top: 100px;
+        margin-bottom: 20px;
+        border: 0;
+        border-top: 2px solid var(--bs-primary);
+        border-bottom: 1px solid #fff;
+    }
+</style>

@@ -142,7 +142,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     <div class="row">
         <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
             <h1>{slogan}</h1>
-            <div class="blurb" set:html={pageBlurb} />
+            <p class="blurb" set:html={pageBlurb} />
         </div>
         <div
             class=`col-md-3 d-flex 
@@ -162,10 +162,16 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
 </div>
 
 <style>
+    @import '../styles/global.scss';
     a.book-link {
         font-size: 1.5em;
     }
     .book-link {
         font-size: 1.5em;
+    }
+    @media (max-width: 576px) {
+        .book-link {
+            margin-top: 20px;
+        }
     }
 </style>

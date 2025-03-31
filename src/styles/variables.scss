@@ -35,6 +35,14 @@ $large-screen: 992px;
 $xlarge-screen: 1200px;
 $xxlarge-screen: 1400px;
 
+:root {
+    --small-screen: #{$small-screen};
+    --medium-screen: #{$medium-screen};
+    --large-screen: #{$large-screen};
+    --xlarge-screen: #{$xlarge-screen};
+    --xxlarge-screen: #{$xxlarge-screen};
+}
+
 // Media queries mixin
 @mixin respond-to($media) {
     @if $media == small {

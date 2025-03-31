@@ -1,0 +1,86 @@
+---
+// DaySampleItineraryDifficultyMaps.astro.
+const { route } = Astro.props;
+
+// base URL using the route's RWGPS ID.
+const baseEmbedUrl = `https://ridewithgps.com/embeds?type=route&id=${route.RWGPSId}`;
+
+// map options:
+const distanceMarkers = true;
+const sampleGraph = true;
+const metricUnits = true;
+const showPhotos = true;
+const overlay = 'terrain';
+
+// Create a URL object from the base URL
+const urlObj = new URL(baseEmbedUrl);
+
+// Set query parameters based on your options
+urlObj.searchParams.set('distanceMarkers', distanceMarkers ? 'true' : '');
+urlObj.searchParams.set('sampleGraph', sampleGraph ? 'true' : '');
+urlObj.searchParams.set('metricUnits', metricUnits ? 'true' : '');
+urlObj.searchParams.set('showPhotos', showPhotos ? 'true' : '');
+urlObj.searchParams.set('overlay', overlay || '');
+
+// Convert back to a string.
+const embedUrl = urlObj.toString();
+---
+
+<style>
+    .rwgps-embed {
+        border: 1px solid var(--bs-primary-dark);
+        position: relative;
+        /* Hide both versions by default */
+        display: none;
+    }
+</style>
+
+<div class="panel panel-green">
+    <!-- Embed version for larger screens (700px height) -->
+    <div id={`rwgps-large-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
+        <iframe
+            class="rwgps-iframe"
+            src={embedUrl}
+            style="width: 1px; min-width: 100%; height: 700px; border: none;"
+            scrolling="no"
+        >
+        </iframe>
+    </div>
+
+    <!-- Embed version for smaller screens (500px height) -->
+    <div id={`rwgps-small-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
+        <iframe
+            class="rwgps-iframe"
+            src={embedUrl}
+            style="width: 1px; min-width: 100%; height: 500px; border: none;"
+            scrolling="no"
+        >
+        </iframe>
+    </div>
+</div>
+
+<script>
+    // Function to adjust which embed is visible based on the viewport width.
+    function adjustEmbeds(): void {
+        // Query for all .rwgps-embed elements as HTMLDivElement
+        const embeds = document.querySelectorAll<HTMLDivElement>('.rwgps-embed');
+        embeds.forEach((embed) => {
+            if (window.innerWidth <= 576) {
+                if (embed.id.indexOf('small') !== -1) {
+                    embed.style.display = 'block';
+                } else {
+                    embed.style.display = 'none';
+                }
+            } else {
+                if (embed.id.indexOf('large') !== -1) {
+                    embed.style.display = 'block';
+                } else {
+                    embed.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', adjustEmbeds);
+    window.addEventListener('resize', adjustEmbeds);
+</script>

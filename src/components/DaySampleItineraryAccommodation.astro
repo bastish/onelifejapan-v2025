@@ -1,0 +1,30 @@
+---
+//DaySampleItineraryHighlights.astro
+//import SinglePhotoSlider from '../components/SinglePhotoSlider.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+const { itinerary, dayItinerary } = Astro.props;
+---
+
+<!-- 
+<style>
+{
+     .frame {
+    max-width: 100%;
+    height: auto;
+    padding-bottom: 20px;
+    border: solid 1px var(--bs-border-light);
+  }
+}
+</style>  -->{
+    dayItinerary.accommodations &&
+        dayItinerary.accommodations.map((accommodation: any) => (
+            <>
+                <h1>{accommodation.name}</h1>
+
+                <div set:html={accommodation.description} />
+                {accommodation.sliderImage && accommodation.sliderImage.id ? (
+                    <GenericSlider sliderImageId={accommodation.sliderImage} />
+                ) : null}
+            </>
+        ))
+}
