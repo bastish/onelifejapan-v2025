@@ -63,12 +63,12 @@ const {
 
             <!-- Days Section -->
             <a id="sample-itinerary" class="fixed-header-anchor"></a>
-            <div class="secondary-header">
+            <div class="secondary-header add-padding-for-small">
                 <h2>A Sample Itinerary</h2>
             </div>
             <div class="page-section">
                 <div class="section-inner">
-                    <div set:html={itinerary.sampleItineraryIntro} />
+                    <div class="add-padding-for-small" set:html={itinerary.sampleItineraryIntro} />
 
                     {
                         itinerary ? (
@@ -230,5 +230,11 @@ const {
         font-size: 1.9em;
         //border: 1px solid red;
         margin-bottom: 10px;
+    }
+    @media (max-width: 576px) {
+        .add-padding-for-small {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
     }
 </style>

@@ -1,0 +1,51 @@
+---
+//DaySampleItineraryOverview.astro
+import GenericSlider from '../components/GenericSlider.astro';
+const { itinerary, dayItinerary } = Astro.props;
+---
+
+<style>
+    .frame {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border: solid 1px var(--bs-border-light);
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-5">
+        {
+            dayItinerary.totalDistanceBike && (
+                <h3>
+                    <i class="fa fa-bicycle" /> {dayItinerary.totalDistanceBike} ({dayItinerary.totalTimeBike})
+                </h3>
+            )
+        }
+        {
+            dayItinerary.totalDistanceWalk && (
+                <h3>
+                    <i class="fa fa-walking" /> {dayItinerary.totalDistanceWalk} ({dayItinerary.totalTimeWalk})
+                </h3>
+            )
+        }
+        <ul class="checklist">
+            {
+                dayItinerary.highlightPoints &&
+                    dayItinerary.highlightPoints.map((highlightPoint: any) => <li set:html={highlightPoint.title} />)
+            }
+        </ul>
+    </div>
+    <div class="col-md-7">
+        <div class="frame">
+            {
+                dayItinerary.sliderImage ? (
+                    <GenericSlider sliderImageId={dayItinerary.sliderImage.id} height={300} />
+                ) : (
+                    <div>No Slider Image Available</div> // Or any other fallback content
+                )
+            }
+        </div>
+    </div>
+</div>
+<h3>Detailed Overview</h3>
+<div set:html={dayItinerary.longDescription} />

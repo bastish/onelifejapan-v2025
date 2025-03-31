@@ -9,5 +9,23 @@ export function convertLineBreaksToParagraphs(text: string | undefined) {
         .join('');
 }
 
-console.log(import.meta.env);
 export const baseHost = `http://${import.meta.env.DEV_HOST}:3020`;
+
+export function hasProperty(obj: any, ...propertyPaths: string[]) {
+    if (!obj) return false;
+    for (let propertyPath of propertyPaths) {
+        const properties = propertyPath.split('.');
+        let current = obj;
+        for (let property of properties) {
+            if (!current[property]) {
+                current = null;
+                break;
+            }
+            current = current[property];
+        }
+        if (current && (Array.isArray(current) ? current.length > 0 : Object.keys(current).length > 0)) {
+            return true;
+        }
+    }
+    return false;
+}

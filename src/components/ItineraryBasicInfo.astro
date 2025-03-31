@@ -23,7 +23,7 @@ formattedLongDescription = itinerary.longDescription;
                     itinerary.when && (
                         <div class="row">
                             <div class="cell label">Season:</div>
-                            <div class="cell content">{itinerary.when}</div>
+                            <div class="cell cell-content">{itinerary.when}</div>
                         </div>
                     )
                 }
@@ -32,7 +32,7 @@ formattedLongDescription = itinerary.longDescription;
                     itinerary.days && (
                         <div class="row">
                             <div class="cell label">Duration:</div>
-                            <div class="cell content">{itinerary.days} Days</div>
+                            <div class="cell cell-content">{itinerary.days} Days</div>
                         </div>
                     )
                 }
@@ -40,8 +40,10 @@ formattedLongDescription = itinerary.longDescription;
                 {
                     itinerary.priceRange && (
                         <div class="row">
-                            <div class="cell label">Estimate:</div>
-                            <div class="cell content">{itinerary.priceRange}</div>
+                            <div class="cell label">
+                                Estimate<span class="">*</span> :
+                            </div>
+                            <div class="cell cell-content">{itinerary.priceRange}</div>
                         </div>
                     )
                 }
@@ -50,7 +52,7 @@ formattedLongDescription = itinerary.longDescription;
                     itinerary.participants && (
                         <div class="row">
                             <div class="cell label">People:</div>
-                            <div class="cell content">{itinerary.participants}</div>
+                            <div class="cell cell-content">{itinerary.participants}</div>
                         </div>
                     )
                 }
@@ -58,20 +60,24 @@ formattedLongDescription = itinerary.longDescription;
                         <div class="cell label">Region:</div>
                         {
                             itinerary.regions.length > 0 ? (
-                                <div class="cell content">
+                                <div class="cell cell-content">
                                     <MapModal itinerary={itinerary} />
                                 </div>
                             ) : (
-                                <div class="cell content">Multiple Regions</div>
+                                <div class="cell cell-content">Multiple Regions</div>
                             )
                         }
                     </div>
                     <div class="row">
                         <div class="cell label">Difficulty:</div>
-                        <div class="cell content">
+                        <div class="cell cell-content">
                             <DifficultyModal itinerary={itinerary} />
                         </div>
                     </div> -->
+            </div>
+            <div class="fineprint-pricing">
+                * This is not a pacakge tour. All trips are somewhat customaizable. This is an estimate of what you can
+                expect to budget. Contact us for a more accurate quote based on your specific case.
             </div>
         </div>
         {
@@ -100,6 +106,15 @@ formattedLongDescription = itinerary.longDescription;
 <style lang="scss">
     @import '../styles/global.scss';
 
+    .fineprint-pricing {
+        font-size: 0.8em;
+        color: var(--bs-primary-dark);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        //border: 1px solid red;
+        margin-left: 0px;
+    }
+
     .itinerary-basic-info {
         display: flex;
         //flex-wrap: wrap;
@@ -112,7 +127,7 @@ formattedLongDescription = itinerary.longDescription;
         flex: 1 1 40%;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 5px;
     }
 
     h2.overview-header {
@@ -143,7 +158,7 @@ formattedLongDescription = itinerary.longDescription;
         padding: 15px;
         //background: #f5f5f5;
         border-radius: 5px;
-        //border: 1px solid #ddd;
+        //border: 1px solid red;
     }
 
     /* Row for each item (Season, Duration, etc.) */
@@ -159,10 +174,12 @@ formattedLongDescription = itinerary.longDescription;
     .label {
         flex: 0 0 35%; /* Label takes 35% of the space */
         font-weight: bold;
+        border-bottom: 1px solid var(--bs-primary-dark);
     }
 
-    .content {
+    .cell-content {
         flex: 1; /* Content takes the remaining space */
+        border-bottom: 1px solid var(--bs-primary-dark);
     }
 
     /* Map styling */

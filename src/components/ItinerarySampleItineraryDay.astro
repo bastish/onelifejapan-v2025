@@ -1,6 +1,6 @@
 ---
 //SampleItineraryDay.astro
-// import DaySampleItineraryModal from '../../components/DaySampleItineraryModal.astro';
+import DaySampleItineraryModal from '../components/DaySampleItineraryModal.astro';
 // import BootstrapSliderModal from '../modals/BootstrapSliderModal.astro';
 import GenericSlider from '../components/GenericSlider.astro';
 import '../styles/global.scss';
@@ -174,9 +174,9 @@ const { itinerary, dayItinerary } = Astro.props;
         </div>
     </div>
 </div>
-<!-- 
-<DaySampleItineraryModal dayItinerary={dayItinerary} />
 
+<DaySampleItineraryModal dayItinerary={dayItinerary} />
+<!-- 
 {
     dayItinerary.routes?.map((route: any, index: number) =>
         route.sliderImages && route.sliderImages.length > 0 ? (

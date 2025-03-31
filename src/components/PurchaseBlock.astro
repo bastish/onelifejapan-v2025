@@ -51,6 +51,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
 ---
 
 <style>
+    @import '../styles/global.scss';
     @keyframes customFadeIn {
         from {
             opacity: 0;
@@ -126,6 +127,12 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
         }
         h1 {
             text-align: center;
+        }
+    }
+    @media (max-width: 576px) {
+        .container {
+            padding-left: 10px;
+            padding-right: 10px;
         }
     }
 </style>

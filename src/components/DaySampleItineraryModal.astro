@@ -1,0 +1,477 @@
+---
+//SampleItineraryDay.astro
+// import SinglePhotoSlider from '../../components/SinglePhotoSlider.astro';
+// import DaySampleItinerarySchedule from '../../components/itinerary/DaySampleItinerarySchedule.astro';
+import DaySampleItineraryOverview from '../components/DaySampleItineraryOverview.astro';
+// import DaySampleItineraryHighlights from '../../components/itinerary/DaySampleItineraryHighlights.astro';
+// import DaySampleItineraryDifficulty from '../../components/itinerary/DaySampleItineraryDifficulty.astro';
+// import DaySampleItineraryAccommodation from '../../components/itinerary/DaySampleItineraryAccommodation.astro';
+
+import { hasProperty } from '../utils/utilities.ts';
+const { itinerary, dayItinerary } = Astro.props;
+const modalId = `day-${dayItinerary.id}`;
+---
+
+<!-- Hidden element to expose the modal id to client-side JS -->
+<div id="modal-info" data-modalid={modalId} style="display: none;"></div>
+
+<!-- Day 1 Modal Popup -->
+<div
+    class="modal fade modal-xl modal-dialog-custom day-sample-itinerary-modal"
+    id={`day-${dayItinerary.id}`}
+    data-day-id={dayItinerary.id}
+    tabindex="-1"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog itinerary-modal-dialog">
+        <div class="modal-content itinerary-modal">
+            <div class="modal-header">
+                <h2 set:html={dayItinerary.title} />
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-v2">
+                        <!-- Tab Navigation -->
+                        <ul class="nav nav-tabs itinerary-nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button
+                                    class="modal-nav-link active"
+                                    id={`overview-tab-${dayItinerary.id}`}
+                                    data-tab-target={`#overview-${dayItinerary.id}`}
+                                    type="button"
+                                    role="tab"
+                                    aria-controls={`overview-${dayItinerary.id}`}
+                                    aria-selected="true">Overview</button
+                                >
+                            </li>
+                            {
+                                hasProperty(dayItinerary, 'dayHighlights') && (
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="modal-nav-link"
+                                            id={`highlights-tab-${dayItinerary.id}`}
+                                            data-tab-target={`#highlights-${dayItinerary.id}`}
+                                            type="button"
+                                            role="tab"
+                                            aria-controls={`highlights-${dayItinerary.id}`}
+                                            aria-selected="false"
+                                        >
+                                            Highlights
+                                        </button>
+                                    </li>
+                                )
+                            }
+                            {
+                                hasProperty(dayItinerary, 'routes', 'routes_optional') && (
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="modal-nav-link"
+                                            id={`difficulty-tab-${dayItinerary.id}`}
+                                            data-tab-target={`#difficulty-${dayItinerary.id}`}
+                                            type="button"
+                                            role="tab"
+                                            aria-controls={`difficulty-${dayItinerary.id}`}
+                                            aria-selected="false"
+                                        >
+                                            Routes <span class="hide-on-large"> & Difficulty</span>
+                                        </button>
+                                    </li>
+                                )
+                            }
+                            {
+                                hasProperty(dayItinerary, 'schedule.schedules') && (
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="modal-nav-link"
+                                            id={`schedule-tab-${dayItinerary.id}`}
+                                            data-tab-target={`#schedule-${dayItinerary.id}`}
+                                            type="button"
+                                            role="tab"
+                                            aria-controls={`schedule-${dayItinerary.id}`}
+                                            aria-selected="false"
+                                        >
+                                            Schedule
+                                        </button>
+                                    </li>
+                                )
+                            }
+                            {
+                                hasProperty(dayItinerary, 'accommodations') && (
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="modal-nav-link"
+                                            id={`accommodation-tab-${dayItinerary.id}`}
+                                            data-tab-target={`#accommodation-${dayItinerary.id}`}
+                                            type="button"
+                                            role="tab"
+                                            aria-controls={`accommodation-${dayItinerary.id}`}
+                                            aria-selected="false"
+                                        >
+                                            <span class="hide-on-large">Accommodation</span>
+                                            <span class="show-on-large">Stay</span>
+                                        </button>
+                                    </li>
+                                )
+                            }
+                        </ul>
+
+                        <div class="tab-content">
+                            <div
+                                class="tab-pane active"
+                                id={`overview-${dayItinerary.id}`}
+                                role="tabpanel"
+                                aria-labelledby={`overview-tab-${dayItinerary.id}`}
+                            >
+                                <DaySampleItineraryOverview dayItinerary={dayItinerary} />
+                            </div>
+
+                            <div
+                                class="tab-pane"
+                                id={`highlights-${dayItinerary.id}`}
+                                role="tabpanel"
+                                aria-labelledby={`highlights-tab-${dayItinerary.id}`}
+                            >
+                                <!-- <DaySampleItineraryHighlights dayItinerary={dayItinerary} /> -->
+                            </div>
+                            {
+                                hasProperty(dayItinerary, 'schedule.schedules') && (
+                                    <div
+                                        class="tab-pane"
+                                        id={`schedule-${dayItinerary.id}`}
+                                        role="tabpanel"
+                                        aria-labelledby={`schedule-tab-${dayItinerary.id}`}
+                                    >
+                                        {/* <DaySampleItinerarySchedule dayItinerary={dayItinerary} /> */}
+                                    </div>
+                                )
+                            }
+                            {
+                                hasProperty(dayItinerary, 'routes', 'routes_optional') && (
+                                    <div
+                                        class="tab-pane"
+                                        id={`difficulty-${dayItinerary.id}`}
+                                        role="tabpanel"
+                                        aria-labelledby={`difficulty-tab-${dayItinerary.id}`}
+                                    >
+                                        {/* <DaySampleItineraryDifficulty
+                                            dayItinerary={dayItinerary}
+                                            modalId={`day-${dayItinerary.id}`}
+                                        /> */}
+                                    </div>
+                                )
+                            }
+                            {
+                                hasProperty(dayItinerary, 'accommodations') && (
+                                    <div
+                                        class="tab-pane"
+                                        id={`accommodation-${dayItinerary.id}`}
+                                        role="tabpanel"
+                                        aria-labelledby={`accommodation-tab-${dayItinerary.id}`}
+                                    >
+                                        {/* <DaySampleItineraryAccommodation dayItinerary={dayItinerary} /> */}
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Shelf: Back and Close Buttons -->
+            <div class="modal-bottom-shelf">
+                <button class="modal-bottom-back">◀︎ Back</button>
+                <button class="modal-bottom-close" data-bs-dismiss="modal" aria-label="Close"> Close </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+    @import '../styles/global.scss';
+    /* General tab styles */
+    .nav-tabs {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-bottom: 2px solid #ddd;
+        @include respond-to(small) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); // Adjust the columns to fit neatly
+            gap: 5px;
+            border: none;
+        }
+    }
+
+    .nav-item {
+        margin-right: 5px;
+        @include respond-to(small) {
+            margin-right: 0;
+            border-bottom: 1px solid #ddd;
+        }
+    }
+
+    .modal-content {
+        border: 0px solid var(--bs-primary-ultradark);
+        border-radius: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .modal-nav-link {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        border-bottom: none;
+        background-color: #f8f9fa;
+        transition:
+            background-color 0.3s ease,
+            border-color 0.3s ease;
+
+        color: var(--bs-link-color);
+        @include respond-to(small) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    .modal-nav-link:hover {
+        background-color: #e9ecef;
+        border-color: #ccc;
+        color: var(--bs-link-hover-color);
+    }
+
+    .modal-nav-link.active {
+        background-color: #fff;
+        border-color: #ddd #ddd #fff;
+        font-weight: normal;
+        border-bottom: 5px solid var(--bs-primary-dark);
+        color: var(--bs-primary-ultradark);
+        @include respond-to(small) {
+            border-bottom: 1px solid #ddd;
+        }
+    }
+
+    .tab-content {
+        border: 0px solid #ddd;
+        padding: 20px;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.active {
+        display: block;
+    }
+
+    .modal-xl {
+        --bs-modal-width: 80%;
+        @include respond-to(xlarge) {
+            --bs-modal-width: 90%;
+            //background: green;
+        }
+        @include respond-to(large) {
+            --bs-modal-width: 90%;
+            //background: green;
+        }
+        @include respond-to(medium) {
+            //background: blue;
+        }
+        @include respond-to(small) {
+            //background: red;
+        }
+    }
+
+    .dropdown-itinerary-nav {
+        display: none;
+
+        @include respond-to(small) {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    }
+
+    .btn-close-custom {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        color: var(--bs-primary-ultradark);
+        font-size: 1.8rem;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition:
+            transform 0.2s ease,
+            color 0.2s ease;
+
+        &:hover {
+            transform: scale(1.1);
+            color: var(--bs-link-hover-color);
+        }
+
+        &:focus {
+            outline: 2px solid var(--bs-primary-ultradark);
+            outline-offset: 2px;
+        }
+    }
+</style>
+
+<script>
+    const modalInfoEl = document.getElementById('modal-info');
+    const modalId = modalInfoEl ? modalInfoEl.getAttribute('data-modalid') : null;
+    console.log('Modal ID from data attribute:', modalId);
+    let backButtonPushed = false;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // CUSTOM MODAL TAB HISTORY  array to store tab targets in order.
+        const customModalTabHistory: string[] = [];
+        const modalEl = document.getElementById(modalId!);
+        //console.log('modalEl:', modalEl);
+        //console.log('backButtonPushed:  ', backButtonPushed);
+        if (modalEl) {
+            const customTabs = modalEl.querySelectorAll<HTMLButtonElement>('.nav-item .modal-nav-link');
+            // [ADDED INITIAL TAB PUSH] – Push the initially active tab into our custom history.
+            const initialTabButton = modalEl.querySelector<HTMLButtonElement>('.modal-nav-link.active');
+            //console.log('initialTabButton:', initialTabButton);
+            if (initialTabButton) {
+                //alert('initialTabButton');
+                const initialTab = initialTabButton.getAttribute('data-tab-target') || '';
+                //alert(initialTab);
+                customModalTabHistory.push(initialTab);
+                //     console.log('Initial custom tab history:', customModalTabHistory);
+            }
+
+            function customTabClickHandler(event: Event): void {
+                event.preventDefault();
+
+                // remove active class from all tabs and panes.
+                customTabs.forEach((tab) => tab.classList.remove('active'));
+                const tabPanes = modalEl!.querySelectorAll<HTMLDivElement>('.tab-pane');
+                tabPanes.forEach((pane) => pane.classList.remove('show', 'active'));
+
+                const target = event.currentTarget as HTMLElement;
+                target.classList.add('active');
+                const targetTab = target.getAttribute('data-tab-target') || '';
+                const targetPane = modalEl!.querySelector(targetTab);
+                targetPane?.classList.add('show', 'active');
+                // push to history if not from backbutton.
+                if (backButtonPushed === false) {
+                    // console.log('TAB CLICK:  ');
+                    // console.log('backButtonPushed:  ', backButtonPushed);
+                    console.log('customModalTabHistory:  ', customModalTabHistory);
+                    customModalTabHistory.push(targetTab);
+                    // console.log('Custom modal tab history:', customModalTabHistory);
+                }
+            }
+
+            customTabs.forEach((tab) => {
+                tab.removeEventListener('click', customTabClickHandler as EventListener);
+                tab.addEventListener('click', customTabClickHandler);
+            });
+        }
+
+        // CUSTOM Bottom Shelf Back Button Handler
+        const backButton = document.querySelector<HTMLButtonElement>('.modal-bottom-back');
+        if (backButton && modalId) {
+            console.log('Custom back button found, modalId:', modalId);
+            backButton.addEventListener('click', () => {
+                console.log('Shelf Back button clicked. skipPush:');
+                console.log('backButtonPushed: ', backButtonPushed);
+                console.log('Custom modal tab history before pop:', customModalTabHistory);
+                if (customModalTabHistory.length > 1) {
+                    // Pop the current tab from our custom history.
+                    customModalTabHistory.pop();
+                    console.log('Custom modal tab history after pop:', customModalTabHistory);
+                    // Get the previous tab.
+                    const previousTab = customModalTabHistory[customModalTabHistory.length - 1];
+                    console.log('Navigating back to previous custom tab:', previousTab);
+                    const previousTabButton = document.querySelector(
+                        `.modal-nav-link[data-tab-target="${previousTab}"]`,
+                    ) as HTMLElement;
+                    if (previousTabButton) {
+                        backButtonPushed = true;
+                        previousTabButton.click();
+                    }
+
+                    backButtonPushed = false;
+                } else {
+                    console.log('No previous custom tab; closing modal.');
+                    if (modalEl) {
+                        const instance = (window as any).bootstrap?.Modal?.getInstance(modalEl);
+                        if (instance) {
+                            instance.hide();
+                        } else {
+                            modalEl.classList.remove('show');
+                            modalEl.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    /* Bottom Shelf Styling */
+    .modal-bottom-shelf {
+        position: fixed;
+        bottom: 0;
+        left: 15%;
+        width: 70%;
+        /* background: rgba(0, 0, 0, 0.7); */
+        text-align: center;
+        padding: 10px;
+        z-index: 7050;
+        display: none;
+        border-radius: 50px;
+    }
+    /* Show shelf only when modal is open */
+    .modal.show .modal-bottom-shelf {
+        display: block;
+    }
+    .modal-bottom-back,
+    .modal-bottom-close {
+        background: #fff;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin: 0 5px;
+        border-radius: 50px;
+    }
+
+    /* Apply hover effects only for devices that support hover */
+    @media (hover: hover) {
+        .modal-bottom-back:hover,
+        .modal-bottom-close:hover {
+            background: #e9ecef;
+        }
+    }
+
+    /* For devices without hover (touch devices), use :active to show a temporary effect */
+    @media (hover: none) {
+        .modal-bottom-back:active,
+        .modal-bottom-close:active {
+            background: #e9ecef;
+        }
+    }
+</style>

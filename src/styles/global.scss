@@ -7,6 +7,11 @@
 
 @import './variables.scss';
 @import './lists.scss';
+// @use './variables.scss';
+// @use './lists.scss';
+
+// To solve the import dependency issue,
+// https://www.youtube.com/watch?v=CR-a8upNjJ0
 
 html,
 body {
@@ -329,4 +334,25 @@ $container-xxl: 1320px;
     // @include media-breakpoint-down(lg) {
     //     font-size: 1em;
     // }
+}
+
+.fineprint {
+    margin-left: 20px;
+    font-size: 0.85em; /* Smaller text size */
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 1.5em; /* Space for custom bullet */
+    position: relative; /* Positioning context for custom bullets */
+}
+
+.fineprint li {
+    margin-bottom: 0.5em; /* Space between list items */
+}
+
+.fineprint li::before {
+    content: '*'; /* Custom bullet point */
+    position: absolute; /* Position relative to .fineprint */
+    left: 0; /* Align bullets to the left edge */
+    font-size: 1em; /* Bullet size */
+    line-height: 1.5; /* Align bullet vertically */
+    color: inherit; /* Use the same color as the text */
 }

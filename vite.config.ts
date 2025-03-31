@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-console.log('host: ', process.env.DEV_HOST);
+
 export default defineConfig({
     // server: {
     //     proxy: {
@@ -10,6 +10,15 @@ export default defineConfig({
     //         },
     //     },
     // },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                // api: 'modern-compiler',
+                // quietDeps: true,
+                silenceDeprecations: ['legacy-js-api'],
+            },
+        },
+    },
     define: {
         __DEV_HOST__: JSON.stringify(process.env.DEV_HOST || 'localhost'),
     },
