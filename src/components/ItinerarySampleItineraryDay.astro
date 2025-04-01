@@ -8,6 +8,103 @@ const { itinerary, dayItinerary } = Astro.props;
 //console.log('dayItinerary.sliderImage', dayItinerary.sliderImage)
 ---
 
+<a id={`${dayItinerary.slug}`} class="fixed-header-anchor"></a><br />
+<div class="card box-shadow day-card">
+    <!-- shadow-sm for a small shadow -->
+    <div class="day-header">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <h2 class="mb-0 day-itinerary-title" set:html={dayItinerary.title} />
+                <!-- Remove default margin from h2 if needed -->
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Use a row and justify-content-between to align title and button -->
+
+        <div class="slider-image">
+            {
+                dayItinerary?.sliderImage ? (
+                    <GenericSlider sliderImageId={dayItinerary.sliderImage.id} />
+                ) : (
+                    <div>No Slider Image Available</div> // Or any other fallback content
+                )
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {
+                    dayItinerary.totalDistanceBike && (
+                        <h3>
+                            <i class="fa fa-bicycle" /> {dayItinerary.totalDistanceBike} ({dayItinerary.totalTimeBike})
+                        </h3>
+                    )
+                }
+                {
+                    dayItinerary.totalDistanceWalk && (
+                        <h3>
+                            <i class="fa fa-walking" /> {dayItinerary.totalDistanceWalk} ({dayItinerary.totalTimeWalk})
+                        </h3>
+                    )
+                }
+                <ul class="checklist">
+                    {
+                        dayItinerary.highlightPoints &&
+                            dayItinerary.highlightPoints.map((highlightPoint: any) => (
+                                <li set:html={highlightPoint.title} />
+                            ))
+                    }
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div set:html={dayItinerary.truncatedLongDescription} />
+                <div class="justify-content-right details-button">
+                    <!-- Flex container to align button to the right -->
+                    <a
+                        href="#"
+                        class="more-details rounded-2x"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#day-${dayItinerary.id}`}
+                        data-parent-modal-id={`day-${dayItinerary.id}`}
+                    >
+                        More Details ››&nbsp;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<DaySampleItineraryModal dayItinerary={dayItinerary} />
+<!-- 
+{
+    dayItinerary.routes?.map((route: any, index: number) =>
+        route.sliderImages && route.sliderImages.length > 0 ? (
+            <BootstrapSliderModal
+                id={`routeImagesBootStrapSliderModal-${route.id}`}
+                title={`${route.title} Images`}
+                sliderImages={route.sliderImages}
+            />
+        ) : (
+            <div>No images available for this route.</div>
+        )
+    )
+}
+
+{
+    dayItinerary.routes_optional?.map((route: any, index: number) =>
+        route.sliderImages && route.sliderImages.length > 0 ? (
+            <BootstrapSliderModal
+                id={`routeImagesBootStrapSliderModal-${route.id}`}
+                title={`${route.title} Images`}
+                sliderImages={route.sliderImages}
+            />
+        ) : (
+            <div>No images available for this route.</div>
+        )
+    )
+} -->
+
 <style lang="scss">
     @import '../styles/global.scss';
     @include respond-to(medium) {
@@ -108,99 +205,3 @@ const { itinerary, dayItinerary } = Astro.props;
         color: var(--bs-primary-dark);
     }
 </style>
-<a id={`${dayItinerary.slug}`} class="fixed-header-anchor"></a><br />
-<div class="card box-shadow day-card">
-    <!-- shadow-sm for a small shadow -->
-    <div class="day-header">
-        <div class="row justify-content-between align-items-center">
-            <div class="col">
-                <h2 class="mb-0 day-itinerary-title" set:html={dayItinerary.title} />
-                <!-- Remove default margin from h2 if needed -->
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <!-- Use a row and justify-content-between to align title and button -->
-
-        <div class="slider-image">
-            {
-                dayItinerary?.sliderImage ? (
-                    <GenericSlider sliderImageId={dayItinerary.sliderImage.id} />
-                ) : (
-                    <div>No Slider Image Available</div> // Or any other fallback content
-                )
-            }
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                {
-                    dayItinerary.totalDistanceBike && (
-                        <h3>
-                            <i class="fa fa-bicycle" /> {dayItinerary.totalDistanceBike} ({dayItinerary.totalTimeBike})
-                        </h3>
-                    )
-                }
-                {
-                    dayItinerary.totalDistanceWalk && (
-                        <h3>
-                            <i class="fa fa-walking" /> {dayItinerary.totalDistanceWalk} ({dayItinerary.totalTimeWalk})
-                        </h3>
-                    )
-                }
-                <ul class="checklist">
-                    {
-                        dayItinerary.highlightPoints &&
-                            dayItinerary.highlightPoints.map((highlightPoint: any) => (
-                                <li set:html={highlightPoint.title} />
-                            ))
-                    }
-                </ul>
-            </div>
-            <div class="col-md-8">
-                <div set:html={dayItinerary.truncatedLongDescription} />
-                <div class="justify-content-right details-button">
-                    <!-- Flex container to align button to the right -->
-                    <a
-                        href="#"
-                        class="more-details rounded-2x"
-                        data-bs-toggle="modal"
-                        data-bs-target={`#day-${dayItinerary.id}`}
-                        data-parent-modal-id={`day-${dayItinerary.id}`}
-                    >
-                        More Details ››&nbsp;
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<DaySampleItineraryModal dayItinerary={dayItinerary} />
-<!-- 
-{
-    dayItinerary.routes?.map((route: any, index: number) =>
-        route.sliderImages && route.sliderImages.length > 0 ? (
-            <BootstrapSliderModal
-                id={`routeImagesBootStrapSliderModal-${route.id}`}
-                title={`${route.title} Images`}
-                sliderImages={route.sliderImages}
-            />
-        ) : (
-            <div>No images available for this route.</div>
-        )
-    )
-}
-
-{
-    dayItinerary.routes_optional?.map((route: any, index: number) =>
-        route.sliderImages && route.sliderImages.length > 0 ? (
-            <BootstrapSliderModal
-                id={`routeImagesBootStrapSliderModal-${route.id}`}
-                title={`${route.title} Images`}
-                sliderImages={route.sliderImages}
-            />
-        ) : (
-            <div>No images available for this route.</div>
-        )
-    )
-} -->

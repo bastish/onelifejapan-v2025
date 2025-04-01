@@ -1,0 +1,37 @@
+---
+// AstroEmbedComponents.astro
+import AstroEmbedComponentScriptLoader from './AstroEmbedComponentScriptLoader.astro';
+
+/**
+ * Interface for individual dynamic component entries.
+ *
+ * @interface ComponentProps
+ * @property {any} Component - The Astro component to be dynamically rendered.
+ * @property {Record<string, any>} componentProps - Properties passed to the component.
+ */
+interface ComponentProps {
+    Component: any;
+    componentProps: Record<string, any>;
+}
+
+/**
+ *
+ * @interface Props
+ * @property {ComponentProps[]} aecComponents - Array of dynamic components to render.
+ */
+interface Props {
+    aecComponents: ComponentProps[];
+}
+
+const { aecComponents } = Astro.props as Props;
+---
+
+{
+    aecComponents.map(({ Component, componentProps }) => (
+        <span id={componentProps.aecuid} style="display: none;">
+            <Component {...componentProps} />
+        </span>
+    ))
+}
+
+<AstroEmbedComponentScriptLoader />

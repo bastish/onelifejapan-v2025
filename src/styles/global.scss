@@ -206,6 +206,40 @@ code {
     }
 }
 
+.single-image-slider {
+    width: 100% !important;
+}
+.frame {
+    border: 1px solid #eeecec;
+    padding: 5px;
+    border: solid 1px var(--bs-border-light) !important;
+    border: 1px solid #ccc !important;
+}
+
+@media (max-width: 576px) {
+    .responsive-framed-floating-picture {
+        width: 100%;
+    }
+    .responsive-framed-floating-picture img {
+        width: 100%;
+        display: block;
+        margin: 0px !important;
+    }
+}
+
+// .responsive-framed-floating-picture {
+//     @include respond-to(small) {
+//         width: 100%;
+//     }
+// }
+// .responsive-framed-floating-picture img {
+//     @include respond-to(small) {
+//         width: 100%;
+//         display: block;
+//         margin: 0px !important;
+//     }
+// }
+
 // .custom-container {
 //     //@extend .container; // Inherit Bootstrap's container styles
 

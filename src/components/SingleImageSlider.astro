@@ -1,0 +1,138 @@
+---
+import { fetchSliderImage } from '../utils/fetchSliderImages';
+import { baseHost } from '../utils/utilities.ts';
+
+interface SingleImageSliderProps {
+    id?: string;
+    compiled_image?: string;
+    adeuid?: string;
+    height?: string;
+    width?: string;
+    float?: string;
+}
+
+let { id = '1', height = '200', width, float, compiled_image, adeuid } = Astro.props as SingleImageSliderProps;
+
+const sliderImage = await fetchSliderImage(id);
+// console.log('SLIDERIMAGE');
+// console.log(sliderImage);
+
+const backgroundImage = sliderImage!.compiled_image;
+const floatStyle = float ? `float: ${float};` : ''; // Conditionally set float style
+const floatStyleList = float ? `float-${float}` : '';
+height = `${height}px`;
+const widthStyle = width ? `${width}px` : '100%';
+const inlineStyle = `
+    height: ${height}; 
+    background-image: url('${baseHost + backgroundImage}'); 
+    background-size: auto ${height}; 
+    background-repeat: repeat-x; 
+    overflow: hidden; 
+    position: relative;
+`;
+const frameStyle = `
+    height: calc(${height} + 12px); /* Add padding to the height */
+    width: ${widthStyle};
+    margin-bottom: 1em;
+    ${floatStyle} /* Ensure float style is applied */
+`;
+---
+
+<div class=`single-image-slider frame  ${floatStyleList}` style={frameStyle}>
+    <div
+        class={`image-scroll-container`}
+        id={`imageScrollContainer-${adeuid}`}
+        style={inlineStyle}
+        data-current-position="0"
+    >
+        {
+            backgroundImage ? (
+                <>
+                    <button class="scroll-btn left" data-direction="left" data-unique-id={adeuid}>
+                        <i class="fas fa-chevron-left" />
+                    </button>
+                    <button class="scroll-btn right" data-direction="right" data-unique-id={adeuid}>
+                        <i class="fas fa-chevron-right" />
+                    </button>
+                </>
+            ) : (
+                <div>No Slider Image Available </div>
+            )
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.addEventListener('click', function (event) {
+            const target = event.target as HTMLElement;
+            const button = target!.closest('.scroll-btn') as HTMLElement;
+            if (!button) return;
+
+            const containerId = button.dataset.uniqueId;
+            const container = document.getElementById(`imageScrollContainer-${containerId}`);
+            if (!container) return;
+
+            let currentPosition = parseFloat(container.getAttribute('data-current-position')!) || 0;
+            const direction = button.dataset.direction;
+            const shiftAmount = 200;
+
+            if (direction === 'left') {
+                currentPosition -= shiftAmount;
+            } else if (direction === 'right') {
+                currentPosition += shiftAmount;
+            }
+
+            container.style.backgroundPosition = `${currentPosition}px center`;
+            container.setAttribute('data-current-position', currentPosition.toString());
+        });
+    });
+</script>
+
+<style>
+    .image-scroll-container {
+        overflow: hidden;
+        position: relative;
+        transition: background-position 0.5s ease;
+    }
+
+    .scroll-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+
+    .scroll-btn.left {
+        left: 10px;
+    }
+
+    .scroll-btn.right {
+        right: 10px;
+    }
+
+    .scroll-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .float-left {
+        margin-right: 20px;
+    }
+
+    .float-right {
+        margin-left: 20px;
+    }
+
+    .frame {
+        border: 1px solid #ddd;
+        border: solid 1px var(--bs-border-light);
+        padding: 5px;
+        box-sizing: border-box; /* Ensure padding and border are included in the dimensions */
+    }
+</style>

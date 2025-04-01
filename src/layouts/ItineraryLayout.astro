@@ -15,41 +15,14 @@ import '../styles/global.scss';
 
 const id = Astro.props.id;
 import { loadItinerary } from '../utils/loadItinerary.ts';
+let itinerary = await loadItinerary(id);
 
 // // astro-dynamic-embed
-// import { parseDynamicContent, addUidsToContents } from 'astro-dynamic-embed';
-// import { dynamicConfig, allowedConfig } from '../astroDynamicEmbed/dynamicComponentsConfig';
-// import ComponentHidden from '../astroDynamicEmbed/ComponentHidden.astro';
-// import AstroDynamicEmbedScriptLoader from '../astroDynamicEmbed/AstroDynamicEmbedScriptLoader.astro';
-// import { fetchSliderImages } from '../utils/fetchSliderImages';
-// import { fetchSingleImage } from '../utils/fetchSingleImage';
 
-// addUidsToContents(allowedConfig, itinerary);
+import { AstroEmbedComponents, embedComponents } from '../astroEmbedComponent/astroEmbedComponents';
+let aecComponents: any[] = [];
+[aecComponents, itinerary] = embedComponents(aecComponents, itinerary);
 
-// let singleImageSliderArray: any; // Adjust type as necessary
-// const embededSingleImageSliderArray = parseDynamicContent(itinerary, dynamicConfig('SingleImageSlider'));
-// if (embededSingleImageSliderArray.length > 0) {
-//     // console.log('Before embededSingleImageSliderArray: ', embededSingleImageSliderArray);
-//     singleImageSliderArray = await fetchSliderImages(embededSingleImageSliderArray);
-//     // console.log('After singleImageSliderArray: ', singleImageSliderArray);
-// }
-
-// let responsiveFramedFloatingImageArray: any; // Adjust type as necessary
-// const embededResponsiveFramedFloatingImageArray = parseDynamicContent(
-//     itinerary,
-//     dynamicConfig('ResponsiveFramedFloatingImage'),
-// );
-// if (embededResponsiveFramedFloatingImageArray.length > 0) {
-//     // console.log(
-//     //     'Before embededResponsiveFramedFloatingImageArray: ',
-//     //     embededResponsiveFramedFloatingImageArray
-//     // );
-//     responsiveFramedFloatingImageArray = await fetchSingleImage(embededResponsiveFramedFloatingImageArray);
-//     // console.log('After responsiveFramedFloatingImageArray: ', responsiveFramedFloatingImageArray);
-// }
-// // astro-dynamic-embed
-
-const itinerary = await loadItinerary(id);
 const {
     title,
     slug,
@@ -143,6 +116,8 @@ const {
 
         <!-- <BottomBanner /> -->
         <Footer />
+
+        <AstroEmbedComponents aecComponents={aecComponents} />
     </body>
 </html>
 

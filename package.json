@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "astro": "^5.5.5",
+        "astro-embed-components-in-content": "file:astro-embed-components-in-content-0.0.1.tgz",
         "bootstrap": "^5.3.3",
         "p-limit": "^6.2.0",
         "sass": "^1.86.0"

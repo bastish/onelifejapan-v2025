@@ -1,0 +1,51 @@
+---
+// ResponsiveFramedFloatingImage.astro
+
+import { fetchSingleImage } from '../utils/fetchSingleImage';
+import { baseHost } from '../utils/utilities.ts';
+interface Props {
+    id?: string;
+    float?: 'left' | 'right';
+    srcLarge?: string;
+    srcMedium?: string;
+    srcSmall?: string;
+    altText?: string;
+    adeuid?: string;
+    height?: string;
+    width?: string;
+}
+
+let {
+    id = '1',
+    float = 'left', // Provide a default float direction
+    height = '200',
+    width = '200',
+    srcLarge,
+    srcMedium,
+    srcSmall,
+    altText,
+    adeuid,
+} = Astro.props as Props;
+
+const imageData = await fetchSingleImage(id);
+// Convert height and width to include 'px' for CSS if they're numeric
+height = `${height}px`;
+width = `${width}px`;
+---
+
+<!-- <div style="width: 200px; height: 200px; border: 2px solid red;"> -->
+<span
+    class="responsive-framed-floating-picture frame"
+    style={`float: ${float}; display: inline-block; margin: 10px 20px; margin-${float}: 0px;`}
+>
+    <picture>
+        <source media="(min-width: 1200px)" srcset={baseHost + imageData!.srcLarge} type="image/jpeg" />
+        <source media="(min-width: 400px)" srcset={baseHost + imageData!.srcMedium} type="image/jpeg" />
+        <img
+            src={baseHost + imageData!.srcMedium}
+            style={`max-width: ${width}; height: auto; display: block; margin: 0 auto; border: 0px;`}
+            alt={altText}
+        />
+    </picture>
+</span>
+<!-- </div> -->

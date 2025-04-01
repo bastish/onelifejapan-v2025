@@ -238,7 +238,7 @@ const textOverlayStyle = `animation-delay: calc(${textAnimationDelay} + ${imageA
     document.querySelectorAll('.image-scroll-container').forEach((container) => {
         container.addEventListener('click', function (event) {
             // Prevent default action if the click is on a button
-            if (event.target.closest('.scroll-btn')) return;
+            if (event.target!.closest('.scroll-btn')) return;
 
             const uniqueId = this.getAttribute('data-unique-id');
             if (!uniqueId) return; // Exit if uniqueId is null

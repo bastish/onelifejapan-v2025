@@ -1,0 +1,146 @@
+<client:only>
+    <script>
+        /**
+         * Dynamically loads and displays Astro components based on placeholders in the content.
+         *
+         * Key functionality:
+         * - Scans the document for placeholders matching a specific pattern.
+         * - Finds corresponding hidden components by their unique identifier (aecuid).
+         * - Replaces the placeholders with the actual components.
+         *
+         * Assumptions:
+         * - All dynamically loadable components are initially hidden and have unique aecuid attributes.
+         */
+
+        export default function initializeDynamicComponentLoader(): void {
+            document.addEventListener('DOMContentLoaded', () => {
+                const debugMode = false; // Set to true to enable debugging styles
+
+                // Function to apply debugging styles to all <p> elements within a container
+                function applyDebugStyles(container: HTMLElement): void {
+                    if (debugMode) {
+                        const paragraphs = container.querySelectorAll('p');
+                        paragraphs.forEach((paragraph) => {
+                            paragraph.style.padding = '20px';
+                            paragraph.style.border = '1px solid red';
+                            paragraph.style.background = '';
+                        });
+                    }
+                }
+
+                const componentPattern = /\{([A-Za-z]+)\s+aecuid="([A-Za-z\d-]+)"(?:\s+[^}]+)?\}/g;
+
+                function findAndReplacePlaceholders(node: Node, depth = 0): void {
+                    const indent = ' '.repeat(depth * 2);
+
+                    if (node.nodeType === Node.TEXT_NODE && node.textContent) {
+                        let match: RegExpExecArray | null;
+                        let textContent = node.textContent;
+
+                        debugMode &&
+                            console.log(`${indent}Processing text node: "${textContent.trim()}"`);
+
+                        const fragment = document.createDocumentFragment();
+                        let lastIndex = 0;
+
+                        // Process the text content to replace placeholders with <span> elements
+                        while ((match = componentPattern.exec(textContent)) !== null) {
+                            const [fullMatch, componentName, aecuid] = match;
+
+                            debugMode && console.log(`${indent}Match found: ${fullMatch}`);
+                            debugMode && console.log(`${indent} - Component: ${componentName}`);
+                            debugMode && console.log(`${indent} - aecuid: ${aecuid}`);
+
+                            // Add text before the match
+                            if (match.index > lastIndex) {
+                                fragment.appendChild(
+                                    document.createTextNode(
+                                        textContent.slice(lastIndex, match.index)
+                                    )
+                                );
+                            }
+
+                            // Create a <span> element to replace the placeholder
+                            const span = document.createElement('span');
+                            span.setAttribute('aecuid', aecuid);
+                            fragment.appendChild(span);
+
+                            lastIndex = match.index + fullMatch.length;
+                        }
+
+                        // Add the remaining text after the last match
+                        if (lastIndex < textContent.length) {
+                            fragment.appendChild(
+                                document.createTextNode(textContent.slice(lastIndex))
+                            );
+                        }
+
+                        // Replace the original text node with the fragment
+                        node.parentNode?.replaceChild(fragment, node);
+                    } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'SCRIPT') {
+                        debugMode &&
+                            console.log(
+                                `${indent}Processing element: <${(node as Element).nodeName}>`
+                            );
+                        node.childNodes.forEach((childNode) =>
+                            findAndReplacePlaceholders(childNode, depth + 1)
+                        );
+                    }
+                }
+
+                function replaceSpansWithComponents(node: Node, depth = 0): void {
+                    const indent = ' '.repeat(depth * 2);
+
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        if (
+                            node.nodeName === 'SPAN' &&
+                            (node as HTMLElement).hasAttribute('aecuid')
+                        ) {
+                            const aecuid = (node as HTMLElement).getAttribute('aecuid');
+                            const componentDiv = document.getElementById(aecuid!);
+
+                            debugMode &&
+                                console.log(
+                                    `${indent}Replacing <span aecuid="${aecuid}"> with hidden component`
+                                );
+
+                            if (componentDiv) {
+                                const clonedComponentDiv = componentDiv.cloneNode(
+                                    true
+                                ) as HTMLElement;
+                                clonedComponentDiv.style.display = '';
+                                clonedComponentDiv.classList.remove('hidden');
+
+                                node.parentNode?.replaceChild(clonedComponentDiv, node);
+                            } else {
+                                console.warn(
+                                    `${indent}No hidden component found for aecuid: ${aecuid}`
+                                );
+                            }
+                        } else {
+                            debugMode &&
+                                console.log(`${indent}Processing element: <${node.nodeName}>`);
+                            node.childNodes.forEach((childNode) =>
+                                replaceSpansWithComponents(childNode, depth + 1)
+                            );
+                        }
+                    }
+                }
+
+                // First pass: Replace placeholders with <span> elements
+                findAndReplacePlaceholders(document.body);
+
+                // Second pass: Replace <span> elements with the actual components
+                replaceSpansWithComponents(document.body);
+
+                // Apply debugging styles to the new content
+                const contentContainer = document.querySelector('.container');
+                if (contentContainer) {
+                    applyDebugStyles(contentContainer as HTMLElement);
+                }
+            });
+        }
+
+        initializeDynamicComponentLoader();
+    </script>
+</client:only>
