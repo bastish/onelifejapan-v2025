@@ -5,14 +5,14 @@ import { baseHost } from '../utils/utilities.ts';
 interface SingleImageSliderProps {
     id?: string;
     compiled_image?: string;
-    adeuid?: string;
+    aecuid?: string;
     height?: string;
     width?: string;
     float?: string;
 }
 
-let { id = '1', height = '200', width, float, compiled_image, adeuid } = Astro.props as SingleImageSliderProps;
-
+let { id = '1', height = '200', width, float, compiled_image, aecuid } = Astro.props as SingleImageSliderProps;
+console.log('aecuid: ', aecuid);
 const sliderImage = await fetchSliderImage(id);
 // console.log('SLIDERIMAGE');
 // console.log(sliderImage);
@@ -41,17 +41,17 @@ const frameStyle = `
 <div class=`single-image-slider frame  ${floatStyleList}` style={frameStyle}>
     <div
         class={`image-scroll-container`}
-        id={`imageScrollContainer-${adeuid}`}
+        id={`imageScrollContainer-${aecuid}`}
         style={inlineStyle}
         data-current-position="0"
     >
         {
             backgroundImage ? (
                 <>
-                    <button class="scroll-btn left" data-direction="left" data-unique-id={adeuid}>
+                    <button class="scroll-btn left" data-direction="left" data-unique-id={aecuid}>
                         <i class="fas fa-chevron-left" />
                     </button>
-                    <button class="scroll-btn right" data-direction="right" data-unique-id={adeuid}>
+                    <button class="scroll-btn right" data-direction="right" data-unique-id={aecuid}>
                         <i class="fas fa-chevron-right" />
                     </button>
                 </>
