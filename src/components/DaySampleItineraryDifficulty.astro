@@ -177,14 +177,16 @@ const { dayItinerary, modalId } = Astro.props;
                     <div class="route-title">{route.title}</div>
                     <div class="route-distance">({route.distance.kilometers} km)</div>
                 </h3>
-                <div class="frame">
+
+                <DaySampleItineraryDifficultyMaps route={route} />
+                {/* <div class="frame">
                     <img
                         class="frame chart-image"
                         src={baseHost + route.chart}
                         width="100%"
                         alt={`${route.title} Chart`}
                     />
-                </div>
+                </div> */}
                 <div style="clear: both;" />
                 <div set:html={route.description} />
             </div>

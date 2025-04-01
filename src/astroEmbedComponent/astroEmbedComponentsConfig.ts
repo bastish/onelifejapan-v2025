@@ -21,6 +21,8 @@ import type { DelimitersMap, ComponentConfig, AllowedConfig } from 'astro-embed-
  * Maps component names to their corresponding Astro component implementations.
  * Ensures only allowed components can be dynamically rendered based on their names.
  */
+
+//import SingleImageSlider from '../components/SingleImageSlider.astro';
 import SingleImageSlider from '../components/SingleImageSlider.astro';
 import ResponsiveFramedFloatingImage from '..//components/ResponsiveFramedFloatingImage.astro';
 export const allowedDynamicComponents: Record<string, any> = {

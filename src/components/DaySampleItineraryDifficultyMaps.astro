@@ -2,8 +2,14 @@
 // DaySampleItineraryDifficultyMaps.astro.
 const { route } = Astro.props;
 
-// base URL using the route's RWGPS ID.
-const baseEmbedUrl = `https://ridewithgps.com/embeds?type=route&id=${route.RWGPSId}`;
+let rwgpsId = route.RWGPSId;
+if (!rwgpsId && route.mapLink) {
+    const parts = route.mapLink.split('/');
+    rwgpsId = parts[parts.length - 1]; // The last part should be the RWGPS ID.
+}
+
+// Base URL using the RWGPS ID.
+const baseEmbedUrl = `https://ridewithgps.com/embeds?type=route&id=${rwgpsId}`;
 
 // map options:
 const distanceMarkers = true;
@@ -37,29 +43,36 @@ const embedUrl = urlObj.toString();
 
 <div class="panel panel-green">
     <!-- Embed version for larger screens (700px height) -->
-    <!-- <div id={`rwgps-large-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
+
+    <div id={`rwgps-large-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
         <iframe
             class="rwgps-iframe"
-            src={embedUrl}
+            data-src={embedUrl}
             style="width: 1px; min-width: 100%; height: 700px; border: none;"
-            scrolling="no"
-        >
-        </iframe>
-    </div> -->
+            scrolling="no"></iframe>
+    </div>
 
     <!-- Embed version for smaller screens (500px height) -->
-    <!-- <div id={`rwgps-small-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
+
+    <div id={`rwgps-small-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
         <iframe
             class="rwgps-iframe"
-            src={embedUrl}
+            data-src={embedUrl}
             style="width: 1px; min-width: 100%; height: 500px; border: none;"
-            scrolling="no"
-        >
-        </iframe>
-    </div> -->
+            scrolling="no"></iframe>
+    </div>
 </div>
 
 <script>
+    function loadIframe(iframe: HTMLIFrameElement) {
+        if (!iframe.src) {
+            const dataSrc = iframe.getAttribute('data-src');
+            if (dataSrc) {
+                iframe.src = dataSrc;
+            }
+        }
+    }
+
     // Function to adjust which embed is visible based on the viewport width.
     function adjustEmbeds(): void {
         // Query for all .rwgps-embed elements as HTMLDivElement
@@ -78,9 +91,45 @@ const embedUrl = urlObj.toString();
                     embed.style.display = 'none';
                 }
             }
+            // If this embed is visible, load its iframe if not already loaded.
+            if (embed.style.display === 'block') {
+                const iframe = embed.querySelector('.rwgps-iframe') as HTMLIFrameElement;
+                if (iframe) {
+                    loadIframe(iframe);
+                }
+            }
         });
     }
-
+    // When the DOM content is loaded, adjust embeds.
     document.addEventListener('DOMContentLoaded', adjustEmbeds);
     window.addEventListener('resize', adjustEmbeds);
+
+    // If using Bootstrap modal, listen for when the modal is shown.
+    document.addEventListener('shown.bs.modal', (event) => {
+        const modal = event.target as HTMLElement;
+        // Find any embeds within this modal and load their iframes.
+        modal!.querySelectorAll('.rwgps-embed').forEach((embed) => {
+            const iframe = embed.querySelector('.rwgps-iframe') as HTMLIFrameElement | null;
+            if (iframe) {
+                loadIframe(iframe);
+            }
+        });
+    });
+
+    // If using Bootstrap tabs, listen for when a tab is shown.
+    document.addEventListener('shown.bs.tab', (event) => {
+        const closestTab = event.target as HTMLElement;
+        const tabPane = closestTab.closest('.tab-pane');
+        if (tabPane) {
+            tabPane.querySelectorAll('.rwgps-embed').forEach((embed) => {
+                const iframe = embed.querySelector('.rwgps-iframe') as HTMLIFrameElement | null;
+                if (iframe) {
+                    loadIframe(iframe);
+                }
+            });
+        }
+    });
+
+    // document.addEventListener('DOMContentLoaded', adjustEmbeds);
+    // window.addEventListener('resize', adjustEmbeds);
 </script>

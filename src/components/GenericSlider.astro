@@ -235,18 +235,18 @@ const textOverlayStyle = `animation-delay: calc(${textAnimationDelay} + ${imageA
     });
 
     // Add event listener to the image scroll container to move forward when clicked
-    document.querySelectorAll('.image-scroll-container').forEach((container) => {
-        container.addEventListener('click', function (event) {
-            // Prevent default action if the click is on a button
-            if (event.target!.closest('.scroll-btn')) return;
+    document.querySelectorAll<HTMLDivElement>('.image-scroll-container').forEach((container) => {
+        container.addEventListener('click', function (this: HTMLDivElement, event: MouseEvent) {
+            // Prevent default action if the click is on a button.
+            if ((event.target as HTMLElement).closest('.scroll-btn')) return;
 
             const uniqueId = this.getAttribute('data-unique-id');
             if (!uniqueId) return; // Exit if uniqueId is null
 
             let currentPosition = parseFloat(this.getAttribute('data-current-position') || '0');
 
-            // Move forward by the desired amount
-            currentPosition += 200; // Adjust value for desired scroll amount
+            // Move forward by the desired amount.
+            currentPosition += 200;
 
             this.style.backgroundPosition = `${currentPosition}px center`;
             this.setAttribute('data-current-position', currentPosition.toString());

@@ -375,11 +375,8 @@ const modalId = `day-${dayItinerary.id}`;
             const modalId = modalInfoEl.getAttribute('data-modalid');
             const modalEl = modalId ? document.getElementById(modalId) : null;
 
-            console.log('Setup modalId: ', modalId);
-            console.log('Setup modalEl: ', modalEl);
             if (modalEl && modalId) {
                 setupModal(modalEl, modalId);
-                console.log('Setup Modal: ', modalId);
             }
         });
     });
