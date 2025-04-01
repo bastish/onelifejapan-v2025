@@ -1,6 +1,5 @@
 ---
 //SampleItineraryDay.astro
-// import SinglePhotoSlider from '../../components/SinglePhotoSlider.astro';
 import DaySampleItinerarySchedule from '../components/DaySampleItinerarySchedule.astro';
 import DaySampleItineraryOverview from '../components/DaySampleItineraryOverview.astro';
 import DaySampleItineraryHighlights from '../components/DaySampleItineraryHighlights.astro';
@@ -14,6 +13,7 @@ const modalId = `day-${dayItinerary.id}`;
 
 <!-- Hidden element to expose the modal id to client-side JS -->
 <div id="modal-info" data-modalid={modalId} style="display: none;"></div>
+<div class="modal-info" data-modalid={modalId} style="display: none;"></div>
 
 <!-- Day 1 Modal Popup -->
 <div
@@ -367,98 +367,122 @@ const modalId = `day-${dayItinerary.id}`;
 </style>
 
 <script>
-    const modalInfoEl = document.getElementById('modal-info');
-    const modalId = modalInfoEl ? modalInfoEl.getAttribute('data-modalid') : null;
-    console.log('Modal ID from data attribute:', modalId);
-    let backButtonPushed = false;
-
+    // When the DOM is loaded, initialize each modal.
     document.addEventListener('DOMContentLoaded', function () {
-        // CUSTOM MODAL TAB HISTORY  array to store tab targets in order.
-        const customModalTabHistory: string[] = [];
-        const modalEl = document.getElementById(modalId!);
-        //console.log('modalEl:', modalEl);
-        //console.log('backButtonPushed:  ', backButtonPushed);
-        if (modalEl) {
-            const customTabs = modalEl.querySelectorAll<HTMLButtonElement>('.nav-item .modal-nav-link');
-            // [ADDED INITIAL TAB PUSH] – Push the initially active tab into our custom history.
-            const initialTabButton = modalEl.querySelector<HTMLButtonElement>('.modal-nav-link.active');
-            //console.log('initialTabButton:', initialTabButton);
-            if (initialTabButton) {
-                //alert('initialTabButton');
-                const initialTab = initialTabButton.getAttribute('data-tab-target') || '';
-                //alert(initialTab);
-                customModalTabHistory.push(initialTab);
-                //     console.log('Initial custom tab history:', customModalTabHistory);
+        const modalInfoEls = document.querySelectorAll('.modal-info');
+
+        modalInfoEls.forEach((modalInfoEl) => {
+            const modalId = modalInfoEl.getAttribute('data-modalid');
+            const modalEl = modalId ? document.getElementById(modalId) : null;
+
+            console.log('Setup modalId: ', modalId);
+            console.log('Setup modalEl: ', modalEl);
+            if (modalEl && modalId) {
+                setupModal(modalEl, modalId);
+                console.log('Setup Modal: ', modalId);
             }
-
-            function customTabClickHandler(event: Event): void {
-                event.preventDefault();
-
-                // remove active class from all tabs and panes.
-                customTabs.forEach((tab) => tab.classList.remove('active'));
-                const tabPanes = modalEl!.querySelectorAll<HTMLDivElement>('.tab-pane');
-                tabPanes.forEach((pane) => pane.classList.remove('show', 'active'));
-
-                const target = event.currentTarget as HTMLElement;
-                target.classList.add('active');
-                const targetTab = target.getAttribute('data-tab-target') || '';
-                const targetPane = modalEl!.querySelector(targetTab);
-                targetPane?.classList.add('show', 'active');
-                // push to history if not from backbutton.
-                if (backButtonPushed === false) {
-                    // console.log('TAB CLICK:  ');
-                    // console.log('backButtonPushed:  ', backButtonPushed);
-                    console.log('customModalTabHistory:  ', customModalTabHistory);
-                    customModalTabHistory.push(targetTab);
-                    // console.log('Custom modal tab history:', customModalTabHistory);
-                }
-            }
-
-            customTabs.forEach((tab) => {
-                tab.removeEventListener('click', customTabClickHandler as EventListener);
-                tab.addEventListener('click', customTabClickHandler);
-            });
-        }
-
-        // CUSTOM Bottom Shelf Back Button Handler
-        const backButton = document.querySelector<HTMLButtonElement>('.modal-bottom-back');
-        if (backButton && modalId) {
-            console.log('Custom back button found, modalId:', modalId);
-            backButton.addEventListener('click', () => {
-                console.log('Shelf Back button clicked. skipPush:');
-                console.log('backButtonPushed: ', backButtonPushed);
-                console.log('Custom modal tab history before pop:', customModalTabHistory);
-                if (customModalTabHistory.length > 1) {
-                    // Pop the current tab from our custom history.
-                    customModalTabHistory.pop();
-                    console.log('Custom modal tab history after pop:', customModalTabHistory);
-                    // Get the previous tab.
-                    const previousTab = customModalTabHistory[customModalTabHistory.length - 1];
-                    console.log('Navigating back to previous custom tab:', previousTab);
-                    const previousTabButton = document.querySelector(
-                        `.modal-nav-link[data-tab-target="${previousTab}"]`,
-                    ) as HTMLElement;
-                    if (previousTabButton) {
-                        backButtonPushed = true;
-                        previousTabButton.click();
-                    }
-
-                    backButtonPushed = false;
-                } else {
-                    console.log('No previous custom tab; closing modal.');
-                    if (modalEl) {
-                        const instance = (window as any).bootstrap?.Modal?.getInstance(modalEl);
-                        if (instance) {
-                            instance.hide();
-                        } else {
-                            modalEl.classList.remove('show');
-                            modalEl.style.display = 'none';
-                        }
-                    }
-                }
-            });
-        }
+        });
     });
+
+    // Sets up the modal-specific event listeners and tab history.
+    function setupModal(modalEl: HTMLElement, modalId: string) {
+        let backButtonPushed = false;
+        const customModalTabHistory: string[] = [];
+        const customTabs = modalEl.querySelectorAll<HTMLButtonElement>('.nav-item .modal-nav-link');
+
+        // Push the initially active tab into the custom history.
+        const initialTabButton = modalEl.querySelector('.modal-nav-link.active');
+        if (initialTabButton) {
+            const initialTab = initialTabButton.getAttribute('data-tab-target') || '';
+            customModalTabHistory.push(initialTab);
+        }
+
+        // Attach the tab click handler.
+        customTabs.forEach((tab) => {
+            // Remove any existing click listener, then add a new one.
+            tab.removeEventListener('click', tabClickHandler as EventListener);
+            tab.addEventListener('click', (event: any) => {
+                tabClickHandler(event, modalEl, customTabs, customModalTabHistory, () => backButtonPushed);
+            });
+        });
+
+        // Attach the back button handler.
+        const backButton = modalEl.querySelector('.modal-bottom-back');
+        if (backButton && modalId) {
+            backButton.addEventListener('click', () => {
+                const setBackButtonPushed = () => {
+                    backButtonPushed = true;
+                };
+                const unsetBackButtonPushed = () => {
+                    backButtonPushed = false;
+                };
+                backButtonClickHandler(modalEl, customModalTabHistory, setBackButtonPushed, unsetBackButtonPushed);
+            });
+        }
+    }
+
+    // Handles a tab click event.
+    function tabClickHandler(
+        event: Event,
+        modalEl: HTMLElement,
+        customTabs: NodeListOf<HTMLButtonElement>,
+        customModalTabHistory: string[],
+        isBackButtonPushed: () => boolean,
+    ): void {
+        event.preventDefault();
+
+        // Remove active classes from tabs and panes in this modal.
+        customTabs.forEach((tab) => tab.classList.remove('active'));
+        const tabPanes = modalEl.querySelectorAll('.tab-pane');
+        tabPanes.forEach((pane) => pane.classList.remove('show', 'active'));
+
+        // Activate the clicked tab and its pane.
+
+        const target = event.currentTarget as HTMLElement;
+        target!.classList.add('active');
+        const targetTab = target.getAttribute('data-tab-target') || '';
+        const targetPane = modalEl.querySelector(targetTab);
+        if (targetPane) {
+            targetPane.classList.add('show', 'active');
+        }
+
+        // If the click did not come from the back button, add this tab to history.
+        if (!isBackButtonPushed()) {
+            customModalTabHistory.push(targetTab);
+        }
+    }
+
+    // Handles the back button click.
+    function backButtonClickHandler(
+        modalEl: HTMLElement,
+        customModalTabHistory: string[],
+        setBackButtonPushed: () => void,
+        unsetBackButtonPushed: () => void,
+    ) {
+        if (customModalTabHistory.length > 1) {
+            // Remove the current tab from history.
+            customModalTabHistory.pop();
+            // Get the previous tab from history.
+            const previousTab = customModalTabHistory[customModalTabHistory.length - 1];
+            const previousTabButton = modalEl.querySelector(
+                `.modal-nav-link[data-tab-target="${previousTab}"]`,
+            ) as HTMLButtonElement;
+            if (previousTabButton) {
+                setBackButtonPushed();
+                previousTabButton.click();
+                unsetBackButtonPushed();
+            }
+        } else {
+            // No previous tab: close the modal.
+            const instance = (window as any).bootstrap?.Modal?.getInstance(modalEl);
+            if (instance) {
+                instance.hide();
+            } else {
+                modalEl.classList.remove('show');
+                modalEl.style.display = 'none';
+            }
+        }
+    }
 </script>
 
 <style>
