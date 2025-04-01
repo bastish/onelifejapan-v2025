@@ -1,0 +1,400 @@
+---
+const id = Astro.props.id;
+import '../styles/global.scss';
+import GenericSlider from '../components/GenericSlider.astro';
+const highlight = Astro.props.highlight;
+const { title, description } = highlight;
+//import IconWrapper from '../components/IconWrapper.jsx';
+---
+
+<a id={`collapseHighlight${id}-anchor`} class="fixed-header-anchor"></a>
+<div class="box-shadow highlight-card clearfix">
+    <div class="highlightHeader" id={`collapseHighlight${id}-trigger`}>
+        <span id={`icon-${id}`} class="chevron-icon"> ▶︎ </span>
+        <h3>
+            <button
+                id={`toggle-${id}`}
+                class="toggle-link"
+                data-collapse-id={`collapseHighlight${id}`}
+                role="button"
+                style=""
+            >
+                <span set:html={title} />
+            </button>
+        </h3>
+        <!-- <div class="underline"></div> -->
+    </div>
+    <div id={`collapseHighlight${id}`} class="collapse highlight-body">
+        <div class="standout-box-light">
+            <div class="frame highlight-slider">
+                {
+                    highlight.sliderImage ? (
+                        <GenericSlider sliderImageId={highlight.sliderImage.id} height={220} />
+                    ) : (
+                        <div>No highlight Slider Image Available <!-- {highligh} --></div>
+                        
+                    )
+                }
+            </div>
+            <span set:html={description} />
+        </div>
+    </div>
+</div>
+
+<div style="display: none;">
+    <span id="chevronRight">
+        ▶︎
+        <!-- <IconWrapper iconName="ChevronRightCircle" /> -->
+    </span>
+    <span id="chevronDown">
+        ⬇︎<!-- <IconWrapper iconName="ChevronDownCircle" /> -->
+    </span>
+</div>
+
+<script>
+    
+    function toggleCollapse(event: MouseEvent , collapseId: string) {
+        event.preventDefault(); // Prevent the default anchor behavior
+
+        const collapseElement = document.getElementById(collapseId);
+        const anchorElement = document.getElementById(`${collapseId}-anchor`);
+        const buttonElement = event.currentTarget as HTMLButtonElement;
+        const headerElement = document.getElementById(`${collapseId}-trigger`);
+        const iconContainer = document.getElementById(
+            `icon-${collapseId.split('collapseHighlight')[1]}`
+        );
+        const chevronRight = document.getElementById('chevronRight')!.innerHTML;
+        const chevronDown = document.getElementById('chevronDown')!.innerHTML;
+
+        if (!collapseElement || !anchorElement || !iconContainer) {
+            console.error('Collapse, anchor, or icon element not found');
+            return;
+        }
+
+        // Check if the element is currently hidden
+        const isHidden =
+            collapseElement.style.maxHeight === '0px' || !collapseElement.style.maxHeight;
+
+        // Toggle the collapse manually
+        if (isHidden) {
+            collapseElement.style.display = 'block';
+            collapseElement.style.maxHeight = collapseElement.scrollHeight + 'px';
+            headerElement!.classList.add('open'); // Add class to make border appear
+            iconContainer.innerHTML = chevronDown;
+
+            // Scroll to the anchor element only when opening
+            const headerHeight = 100; // Adjust this value based on your fixed header height
+            const elementTop = anchorElement.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementTop - headerHeight;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth',
+            });
+
+            // Visualize the position
+            //console.log('Scrolling to:', offsetPosition, 'Anchor position:', collapseId);
+        } else {
+            collapseElement.style.maxHeight = '0px';
+            iconContainer.innerHTML = chevronRight;
+            setTimeout(() => {
+                collapseElement.style.display = 'none';
+                headerElement!.classList.remove('open'); // Remove class to hide border
+                buttonElement!.blur(); // Remove focus from the button
+            }, 500); // Adjust this value to match the CSS transition duration
+        }
+    }
+
+    // Attach event listener once the DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.toggle-link').forEach((el) => {
+            el.addEventListener('click', (event) => {
+                const collapseId = el.getAttribute('data-collapse-id');
+                collapseId && toggleCollapse(event as MouseEvent, collapseId);
+            });
+        });
+    });
+</script>
+
+
+
+
+<style lang="scss">
+
+@import '../styles/global.scss';
+
+:root {
+  --highlight-color: var(--bs-primary);
+}
+
+.highlightHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  position: relative;
+  border-bottom: 2px solid transparent;
+}
+
+.chevron-icon {
+  margin-top: -10px;
+  padding-right: 5px;
+  color: var(--highlight-color);
+}
+
+.highlightHeader.open {
+  padding-bottom: 10px;
+}
+
+.highlightHeader.open h3 {
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--highlight-color);
+}
+
+.highlightHeader h3 {
+  margin: 0;
+  padding: 0 0 15px 0;
+  font-size: 1.2em;
+}
+
+.box-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.highlight-card {
+  margin-bottom: 10px;
+  padding: 10px;
+  padding-bottom: 0;
+  border: 1px solid var(--bs-primary-dark);
+  background: white;
+}
+
+.frame {
+  max-width: 100%;
+  height: auto;
+  padding: 5px;
+  border: 1px solid var(--bs-border-light);
+}
+
+.collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  display: none;
+}
+
+.collapse.show {
+  max-height: 500px;
+}
+
+.toggle-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: inline;
+  color: var(--bs-primary-dark);
+  text-decoration: inherit;
+  padding-left: 5px;
+}
+
+.toggle-link:hover {
+  color: var(--bs-link-hover-color);
+  text-decoration: none;
+}
+
+.toggle-link:focus {
+  outline: none;
+  color: var(--bs-primary);
+  text-decoration: none;
+}
+
+.highlight-body {
+  margin-top: 10px;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
+  min-height: 100%;
+}
+
+.highlight-slider {
+  float: right;
+  width: 70%;
+  margin-left: 20px;
+}
+
+@include respond-to(small) {
+  .highlight-slider {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+  .highlight-body {
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    min-height: 100%;
+  }
+}
+
+
+    // @import '../styles/global.scss';
+    // :root {
+    //     --highlight-color: var(--bs-primary);
+    // }
+    // .highlightHeader {
+    //     display: flex;
+    //     align-items: center;
+    //     padding: 0px 0px;
+    //     margin-bottom: 0px;
+    //     position: relative; /* Add relative positioning to the container */
+    //     border-bottom: 2px solid transparent; /* Initial state */
+    // }
+
+    // @include respond-to(large) {
+    //     .highlightHeader {
+    //         padding: 5px 10px; /* Adjust padding to make items more compact */
+    //         font-size: 1.2em; /* Reduce font size */
+    //         text-align: left;
+    //     }
+    //     .highlightHeader button {
+    //         padding: 5px 10px; /* Adjust padding to make items more compact */
+    //         font-size: 0.9em; /* Reduce font size */
+    //         text-align: left;
+    //     }
+        
+    // }
+
+    // .chevron-icon {
+    //         // font-size: .5em;
+    //         // border: 1px solid red;
+    //         margin-top: -10px;
+    //         padding-right: 5px;
+    //         color: var(--highlight-color);
+    //     }
+    // .highlightHeader.open {
+    //     padding-bottom: 10px;
+    //     /* border-bottom: 2px solid var(--highlight-color);  */
+    // }
+
+    // .highlightHeader.open h3 {
+    //     font-weight: bold;
+    //     padding-bottom: 10px;
+    //     border-bottom: 3px solid var(--highlight-color);
+    // }
+
+    // .highlightHeader h3 {
+    //     margin: 0;
+    //     padding: 0;
+    //     font-size: 1.2em;
+    //     padding-bottom: 15px;
+    // }
+
+    // .highlightContainer-icon {
+    //     color: var(--highlight-color);
+    //     padding: 10px;
+    //     font-size: 20px;
+    //     text-align: center;
+    //     transition: all 0.4s ease-in-out;
+    // }
+
+    // .highlight-body {
+    //     padding-left: 10px;
+    //     margin-top: 10px;
+    //     background: white;
+    //     border-radius: 5px;
+    //     padding-left: 10px;
+    //     padding-right: 10px;
+    //     padding-top: 10px;
+    //     min-height: 100%;
+    // }
+
+    // .frame {
+    //     max-width: 100%;
+    //     height: auto;
+    // }
+
+    // .desc {
+    //     flex-grow: 1;
+    // }
+
+    // .box-shadow {
+    //     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* More noticeable shadow */
+    // }
+
+    // .highlight-card {
+    //     margin-bottom: 10px;
+    //     padding: 10px;
+    //     padding-bottom: 0px;
+    //     border: 1px solid var(--bs-primary-dark);
+    //     background: white;;
+    // }
+
+    // .frame {
+    //     padding: 5px;
+    //     border: 1px solid var(--bs-border-light);
+    // }
+
+    // .collapse {
+    //     max-height: 0;
+    //     overflow: hidden;
+    //     transition: max-height 0.5s ease; /* Adjust the duration as needed */
+    //     display: none; /* Ensure it is hidden initially */
+    // }
+
+    // .collapse.show {
+    //     max-height: 500px; /* Adjust this value to accommodate the maximum height of your content */
+    // }
+
+    // /* Specific button styling to mimic link appearance */
+    // .toggle-link {
+    //     background: none;
+    //     border: none;
+    //     padding: 0;
+    //     font: inherit;
+    //     cursor: pointer;
+    //     display: inline;
+    //     color: var(--bs-link-color); /* Inherit link color */
+    //     color: var(--bs-primary-dark); /* Inherit link color */
+    //     text-decoration: inherit; /* Inherit link text decoration */
+    //     padding-left: 5px;
+    // }
+
+    // .toggle-link:hover {
+    //     color: var(--bs-link-hover-color); /* Change color on hover */
+    //     text-decoration: none; /* Remove underline on hover */
+    // }
+
+    // .toggle-link:focus {
+    //     outline: none; /* Remove outline on focus */
+    //     color: var(--bs-primary); /* Change color on focus */
+    //     text-decoration: none; /* Remove underline on focus */
+    // }
+
+
+    // .highlight-slider {
+    //     float: right; 
+    //     width: 70%; 
+    //     margin-left: 20px;
+    // }
+    // @include respond-to(small) {
+        
+    //     .highlight-slider {
+    //         // float: right; 
+    //         display: block;
+    //         width: 100%; 
+    //         margin-left: 0px;
+    //         margin-bottom: 20px;
+    //     }
+    //     .highlight-body {
+    //         margin-left: 0px;
+    //         padding-left: 0px;
+    //         padding-right: 0px;
+    //         min-height: 100%;
+    //     }
+        
+    // }
+
+</style>

@@ -1,0 +1,50 @@
+---
+import HighlightCollapsable from '../components/HighlightCollapsable.astro';
+const itinerary = Astro.props.itinerary;
+---
+
+<style>
+    .section-intro {
+    }
+</style>
+
+<div>
+    <!-- {console.log('Itinerery.dayItinerary', itinerary.dayItinerary)} -->
+    {
+        (itinerary.dayItinerary || []).map((dayItinerary: any) =>
+            (dayItinerary.dayHighlights || []).map((dayHighlight: any) => (
+                <div>
+                    {/* No need for key here in Astro, but make sure every child in a list has a unique "key" prop if you were using React */}
+                    <h1>{dayHighlight.title}</h1>
+                    <div>{dayHighlight.description}</div>
+                    <hr />
+                </div>
+            )),
+        )
+    }
+</div>
+
+<div class="margin-top-20 section-intro">
+    <p>
+        One Life Japan offers a <span class="emph">variety of non-riding activities</span> to insight into the history, culture,
+        nature and modern day life in rural Japan. <em>
+            * Please note that some activities are only available seasonally and may depend on the kindness and
+            availability of local volunteers.
+        </em>
+    </p>
+</div>
+<div class="">
+    {
+        (itinerary.highlights || []).map((highlight: any) => (
+            <>
+                <HighlightCollapsable
+                    key={highlight.id}
+                    id={highlight.id}
+                    slug={highlight.slug}
+                    highlight={highlight}
+                    itinerary={itinerary}
+                />
+            </>
+        ))
+    }
+</div>

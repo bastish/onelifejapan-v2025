@@ -9,6 +9,7 @@ import GenericSlider from '../components/GenericSlider.astro';
 import ItineraryBasicInfo from '../components/ItineraryBasicInfo.astro';
 //import ItinerarySampleDays from '../components/ItinerarySampleDays.astro';
 import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
+import ItineraryPossibleHighlights from '../components/ItineraryPossibleHighlights.astro';
 
 import background from '../assets/background.svg';
 import '../styles/global.scss';
@@ -110,6 +111,15 @@ const {
                             </>
                         )
                     } -->
+                </div>
+            </div>
+            <a id="sample-itinerary" class="fixed-header-anchor"></a>
+            <div class="secondary-header add-padding-for-small">
+                <h2>Possible Highlights</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <ItineraryPossibleHighlights itinerary={itinerary} />
                 </div>
             </div>
         </div>

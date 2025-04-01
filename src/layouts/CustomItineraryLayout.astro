@@ -1,0 +1,538 @@
+---
+import HeadComponent from '../components/Head/HeadComponent.astro';
+import TopNav from '../components/TopNav/TopNav.astro';
+import Footer from '../components/Footer/Footer.astro';
+import PurchaseBlock from '../components/PurchaseBlock.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+import ItineraryBasicInfo from '../components/ItineraryBasicInfo.astro';
+import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
+
+import background from '../assets/background.svg';
+import '../styles/global.scss';
+
+
+//import CustomWanderlustItineraryLayoutNav from '../components/itinerary/CustomWanderlustItineraryLayoutNav.astro';
+import ItineraryDifficulty from '../components/itinerary/ItineraryDifficulty.astro';
+import CustomItineraryDifficulty from '../components/itinerary/CustomItineraryDifficulty.astro';
+import SingleImageSlider from '../components/SingleImageSlider.astro';
+
+import ItineraryCard from "../components/ItineraryCard.astro";
+import ItinerarySampleDays from '../components/itinerary/ItinerarySampleDays.astro';
+import ItineraryPossibleHighlights from '../components/itinerary/ItineraryPossibleHighlights.astro';
+import CustomItineraryHighlightPointsCollections from '../components/itinerary/CustomItineraryHighlightPointsCollections.astro';
+//import ItineraryCustomItineraries from '../components/itinerary/ItineraryCustomItineraries.astro';
+import ItineraryGettingThere from '../components/itinerary/ItineraryGettingThere.astro';
+import ItineraryDatesAndAvailability from '../components/itinerary/ItineraryDatesAndAvailability.astro';
+import ItineraryPricingDetails from '../components/itinerary/ItineraryPricingDetails.astro';
+import CustomItineraryRouteOverviewSlider from '../components/itinerary/CustomItineraryRouteOverviewSlider.astro';
+
+import CustomItineraryAccordian from '../components/itinerary/CustomItineraryAccordian.astro';
+
+import CustomItineraryCollapsibleChecklist from '../components/CustomItineraryCollapsibleChecklist.astro';
+import CustomItinerary from '../components/itinerary/CustomItinerary.astro';
+const itinerary = Astro.props.itinerary;
+
+// astro-dynamic-embed
+import { parseDynamicContent, addUidsToContents } from 'astro-dynamic-embed';
+import { dynamicConfig, allowedConfig } from '../astroDynamicEmbed/dynamicComponentsConfig';
+import ComponentHidden from '../astroDynamicEmbed/ComponentHidden.astro';
+import AstroDynamicEmbedScriptLoader from '../astroDynamicEmbed/AstroDynamicEmbedScriptLoader.astro';
+import { fetchSliderImages } from '../utils/fetchSliderImages';
+import { fetchSingleImage } from '../utils/fetchSingleImage';
+
+import SeoMetaTags from '../components/SeoMetaTags.astro';
+import '../styles/global.scss';
+import { loadCustomItinerary, customItineraryList, customItineraryWIthParentList } from '../utils/loadCustomItinerary';
+
+let  formattedLongDescription = itinerary.longDescription;
+
+
+// Function to chunk the itineraries into groups of three
+function chunk(arr, size) {
+  if (!arr || !arr.length) {
+    return [];
+  }
+
+  // Filter the array for items that have a custom_itinerary
+  const validItems = arr.filter(item => item.custom_itinerary?.id);
+
+  const result = [];
+  for (let i = 0; i < validItems.length; i += size) {
+    result.push(validItems.slice(i, i + size));
+  }
+  return result;
+}
+
+
+const customItineraries = await customItineraryList();
+const customItinerariesWithParnet = await customItineraryWIthParentList();
+const rows = chunk(customItinerariesWithParnet, 3);
+// console.log('');
+// console.log('allowedConfig: ', allowedConfig);
+// console.log('');
+addUidsToContents(allowedConfig, itinerary);
+
+let singleImageSliderArray: any; // Adjust type as necessary
+const embededSingleImageSliderArray = parseDynamicContent(itinerary, dynamicConfig('SingleImageSlider'));
+if (embededSingleImageSliderArray.length > 0) {
+    // console.log('Before embededSingleImageSliderArray: ', embededSingleImageSliderArray);
+    singleImageSliderArray = await fetchSliderImages(embededSingleImageSliderArray);
+    // console.log('After singleImageSliderArray: ', singleImageSliderArray);
+}
+
+let responsiveFramedFloatingImageArray: any; // Adjust type as necessary
+const embededResponsiveFramedFloatingImageArray = parseDynamicContent(
+    itinerary,
+    dynamicConfig('ResponsiveFramedFloatingImage'),
+);
+if (embededResponsiveFramedFloatingImageArray.length > 0) {
+    // console.log(
+    //     'Before embededResponsiveFramedFloatingImageArray: ',
+    //     embededResponsiveFramedFloatingImageArray
+    // );
+    responsiveFramedFloatingImageArray = await fetchSingleImage(embededResponsiveFramedFloatingImageArray);
+    // console.log('After responsiveFramedFloatingImageArray: ', responsiveFramedFloatingImageArray);
+}
+// astro-dynamic-embed
+const defaultDesc =
+    "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+
+const { title, description = defaultDesc, itineraries, page, sliderid, sliderText } = Astro.props;
+const canonicalUrl = `https://www.onelifejapan.com/itinerary/${itinerary.id}/${itinerary.slug}/`;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <SeoMetaTags title={title} description={description} />
+        <Head title={title} description={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script src="/js/modal-back-button.js" defer></script>
+
+        <style lang="scss">
+            @import '../styles/global.scss';
+
+            .page-section {
+                padding-bottom: 175px;
+            }
+
+            .headline,
+            .short-slogan,
+            .inner-headline {
+                text-align: center;
+            }
+            .headline {
+                padding-top: 20px;
+            }
+            .inner-headline {
+                padding-top: 5px;
+                margin-bottom: 0px;
+            }
+
+            .short-slogan {
+                font-size: 1.3em;
+                padding: 20px;
+                font-weight: normal;
+                /* color: var(--bs-primary-dark);
+            color: var(--bs-primary); */
+            }
+            .itinerary-fixed-nav {
+                position: relative;
+                z-index: 1030;
+                background: #fff;
+                padding-top: 0px; /* Top padding when fixed */
+            }
+            .itinerary-fixed-nav::before,
+            .itinerary-fixed-nav::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: #ddd;
+                width: 100vw; /* Full width of the viewport */
+                margin-left: -50vw; /* Offset half the viewport width to align */
+                left: 50%; /* Start at the middle of the viewport */
+            }
+            .itinerary-fixed-nav::before {
+                top: 0;
+            }
+            .itinerary-fixed-nav::after {
+                bottom: 0;
+            }
+            .is-fixed {
+                position: fixed;
+                top: 75px; /* Adjust this based on your main navbar's height */
+                top: 0;
+                width: 100%;
+                background: #fff; /* Ensures background is applied */
+                transition: top 0.3s ease; /* Smooth transition for the top property */
+            }
+            .inner-container {
+                max-width: 1200px; /* Adjust based on your container width */
+                margin: 0 auto;
+                padding: 0 15px; /* Optional padding */
+            }
+
+            .section-inner {
+                border: 1px solid #ddd;
+                background: var(--bs-primary-ultralight);
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 20px;
+            }
+
+            @include respond-to(medium) {
+                .section-inner {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+            }
+
+            @include respond-to(small) {
+                .is-fixed {
+                    position: unset;
+                }
+                .page-section {
+                    padding-bottom: 25px;
+                }
+            }
+
+            .secondary-header {
+                background: var(--bs-primary-ultralight);
+                background: var(--bs-primary-dark);
+                padding: 10px;
+                padding-left: 20px;
+                border: 1px solid var(--bs-primary);
+                border-bottom: 2px solid var(--bs-primary);
+                border-radius: 5px 5px 0px 0px;
+            }
+            .secondary-header h2 {
+                /* text-transform: uppercase; */
+                font-weight: normal;
+                letter-spacing: 0.03em;
+                color: #fff;
+            }
+
+
+
+        </style>
+        <style>
+/* Make sure the section-inner establishes the positioning context */
+.section-inner {
+  position: relative;
+}
+
+/* The description remains full-width */
+.highlight-description {
+  margin-bottom: 1rem;
+}
+
+/* Two-column layout for the second row */
+.highlights-layout {
+  display: flex;
+  gap: 1rem; /* space between columns */
+}
+
+/* Left column styling */
+.highlight-collections-container {
+  flex: 1;
+}
+
+/* Right column wrapper (optional, for extra styling if needed) */
+.highlight-external-links-wrapper {
+  flex: 1;
+  /* The wrapper can also be positioned relative if needed */
+  position: relative;
+}
+
+/* Sticky the external links element within its container */
+.highlight-external-links {
+  position: sticky;
+  top: 0; /* sticks to the top of the .section-inner container */
+  max-height: 100vh; /* or a specific value if desired */
+  overflow-y: auto; /* allow scrolling if the list is long */
+  padding: 1rem;
+  border: 1px solid #ddd;
+  background: #fff;
+  margin-top:500px;
+}
+
+.custom-top {
+    margin-top:20px;
+    margin-bottom:-150px;
+}
+
+
+
+            </style>
+    </head>
+    <body>
+        <TopNavBar />
+        <div>
+            {itinerary.sliderImage ? <GenericSlider sliderImageId={itinerary.sliderImage.id} height={175} /> : <div />}
+        </div>
+        { itinerary.id === 7 ? (<></>) : (
+        <div class="container content">
+            <div class="headline">
+                <h1 id="outer">{itinerary.title}</h1>
+            </div>
+            <div class="short-slogan h3">{itinerary.shortSlogan}</div>
+            <div id="nav-placeholder" style="display: none; height: 0;"></div>
+        </div>)}
+
+        <div class="itinerary-fixed-nav" id="nav">
+            <div class="inner-container">
+                <div class="inner-headline">
+                    <h1 id="inner" style="display: none;">{itinerary.title}</h1>
+                </div>
+                <CustomWanderlustItineraryLayoutNav itinerary={itinerary} />
+            </div>
+        </div>
+
+        <!-- END OF FULL LENGTH BORDER -->
+        <div class="container content">
+            
+            <div id="basic-info" class="page-section"> 
+            { itinerary.id === 7 ? (
+                <PurchaseBlock page={'custom'} />
+                <div set:html={formattedLongDescription} class="formatted-long-description custom-top" style="margin-top: 100px margin-bottom: 10px;" />
+                ) 
+                :
+                 (<ItineraryBasicInfo itinerary={itinerary} />)}
+            </div>
+            <a id="sample-itinerary" class="fixed-header-anchor"></a>
+            <div class="secondary-header">
+                <!-- For the custom Itinerary / only shows itinerary daily details without highlights. accomomdation etc. -->
+                {
+                    // itinerary.id === 7 && itinerary.customItineraries && (
+
+                    itinerary.id === 7 ? 
+                    (
+                    <h2>Past Custom Itinerary Trip Reports</h2>
+                    ) :
+                    (<h2>Notes from the Road</h2>)
+                }
+                
+            
+            </div>
+            <div class="page-section">
+                <div class="section-inner">   
+                    <!-- daily map slider -->
+                    { itinerary.custom_itinerary?.routes && 
+                        <CustomItineraryRouteOverviewSlider routes={itinerary.custom_itinerary.routes} itinerary={itinerary} />
+                    }
+                    <!-- <div set:html={itinerary.sampleItineraryIntro} /> -->
+                    
+
+                    { itinerary.custom_itinerary?.routes ? (
+                        <CustomItineraryAccordian routes={itinerary.custom_itinerary.routes} />
+                        <br/><br />
+                    ) : (
+                        ''
+                    )}
+                    
+                
+
+                
+                    <!-- For the custom Itinerary / only shows itinerary daily details without highlights. accomomdation etc. -->
+                    {
+                        // itinerary.id === 7 && itinerary.customItineraries && (
+
+                        itinerary.id === 7 && 
+                        (
+                            <>
+
+
+<div class="container content">
+        <div class="itinerary-cards">
+            {rows.map((row) => (
+                <div class="row margin-bottom-30">
+                    
+                    {row.map((item: any) => (
+                        // <h1>{item.custom_itinerary?.id}: {item?.title}</h1>
+                        item.custom_itinerary?.id ? (
+                            <ItineraryCard key={item.id} id={item.id} />
+                        ) : null
+
+                    ))}
+                </div>
+            ))}
+        </div>
+</div>
+
+
+
+                                {/* <CustomItineraryCollapsibleChecklist items={customItineraries} /> */}
+                                
+                            </>
+                        )
+                    }
+                </div>
+            </div>
+            {
+                itinerary.custom_itinerary?.highlight_desc && (
+
+
+                <a id="highlights" class="fixed-header-anchor"></a>
+                <div class="secondary-header">
+                    <h2>Select Highlights</h2>
+                </div>
+                <div class="page-section">
+                    <div class="section-inner">
+                        <div class="highlight-description">
+                        <div set:html={itinerary.custom_itinerary.highlight_desc} />
+                        </div>
+                        
+                        <div class="highlights-layout">
+                        <div class="highlight-collections-container">
+                            <CustomItineraryHighlightPointsCollections itinerary={itinerary} />
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+
+
+                    
+                        
+                )
+            }
+            {
+                itinerary.possibleHighlights && itinerary.possibleHighlights.length > 0 ? (
+                <a id="highlights" class="fixed-header-anchor"></a>
+                <div class="secondary-header">
+                    <h2>Possible Highlights</h2>
+                </div>
+                <div class="page-section">
+                    <div class="section-inner">
+                        <ItineraryPossibleHighlights itinerary={itinerary} />
+                    </div>
+                </div>
+            ) : <div />
+            }
+            <a id="difficulty" class="fixed-header-anchor"></a>
+            <div class="secondary-header">
+                <h2>Difficulty</h2>
+            </div>
+            <div class="page-section">
+                <!-- <GenericSlider sliderImageId={itinerary.sliderImage.id} height={175} /> -->
+                <div class="section-inner">
+                    <ItineraryDifficulty itinerary={itinerary} />
+                </div>
+            </div>
+            <a id="pricing-details" class="fixed-header-anchor"></a>
+            <div class="secondary-header">
+                <h2>Price Estimates</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <ItineraryPricingDetails itinerary={itinerary} />
+                </div>
+            </div>
+            <a id="dates-and-availability" class="fixed-header-anchor"></a>
+            <div class="secondary-header">
+                <h2>Dates & Availability</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <ItineraryDatesAndAvailability itinerary={itinerary} />
+                </div>
+            </div>
+            <!-- 
+        <div id="getting-there" class="page-section">
+            <hr />
+            <ItineraryGettingThere itinerary={itinerary} />
+        </div>
+        -->
+        </div>
+        <AstroDynamicEmbedScriptLoader />
+        <Footer />
+        <Scripts />
+        <div>
+            <!-- Use the slidersData property to render your GenericSlider components -->
+            <!-- <GenericSliderDivs sliderData={itinerary.slidersData} /> -->
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const nav = document.getElementById('nav'); // The navigation element
+
+                const container = document.querySelector('.container.content'); // The container element
+                const outerH1 = document.getElementById('outer');
+                const innerH1 = document.getElementById('inner');
+                const mainNavbar = document.querySelector('.navbar');
+
+                let lastScrollY = window.scrollY;
+
+                function adjustNavWidth() {
+                    if (!nav || !container) {
+                        return;
+                    }
+                    // Ensure 'nav' and 'container' are not null
+                    if (nav.classList.contains('is-fixed')) {
+                        const containerRect = container.getBoundingClientRect();
+                        nav.style.width = `${containerRect.width}px`;
+                        nav.style.left = `${containerRect.left}px`; // Ensure it aligns with the container
+                    } else {
+                        nav.style.width = '100%';
+                        nav.style.left = '0'; // Reset left when navigation is not fixed
+                    }
+                }
+
+                const navOffsetTop = nav!.offsetTop;
+
+                function handleScroll() {
+                    if (!nav || !mainNavbar || !innerH1 || !outerH1) {
+                        return;
+                    }
+                    const mainNavbarHeight = mainNavbar.offsetHeight;
+                    // console.log('mainNavbarHeight: ', mainNavbarHeight);
+                    const rect = outerH1.getBoundingClientRect();
+                    const currentScrollY = window.scrollY;
+
+                    if (currentScrollY > navOffsetTop - mainNavbarHeight) {
+                        nav.classList.add('is-fixed');
+                        if (currentScrollY > lastScrollY) {
+                            // Scrolling down
+                            nav.style.top = `0px`; // Adjust top to 0 to stick to the top of the screen
+                        } else {
+                            // Scrolling up
+                            nav.style.top = `${mainNavbarHeight}px`; // Adjust top based on navbar height
+                        }
+                        adjustNavWidth();
+                    } else {
+                        nav.classList.remove('is-fixed');
+                        nav.style.width = '100%';
+                        nav.style.top = '0px'; // Reset top when navigation is not fixed
+                        nav.style.left = '0'; // Reset left when navigation is not fixed
+                    }
+
+                    if (rect.top < 0) {
+                        // Check if the outer <h1> is off the screen
+                        innerH1.style.display = 'block';
+                    } else {
+                        innerH1.style.display = 'none';
+                    }
+
+                    lastScrollY = currentScrollY;
+                }
+
+                window.addEventListener('scroll', handleScroll);
+                window.addEventListener('resize', adjustNavWidth); // Adjust width on window resize to ensure responsiveness
+                handleScroll(); // Initial check in case the page is loaded with scroll position not at the top
+            });
+        </script>
+
+        {
+            singleImageSliderArray?.map((props: any) => (
+                <ComponentHidden componentName="SingleImageSlider" componentProps={props} />
+            ))
+        }
+        {
+            responsiveFramedFloatingImageArray?.map((props: any) => (
+                <ComponentHidden componentName="ResponsiveFramedFloatingImage" componentProps={props} />
+            ))
+        }
+    </body>
+</html>
