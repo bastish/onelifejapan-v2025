@@ -10,6 +10,8 @@ import ItineraryBasicInfo from '../components/ItineraryBasicInfo.astro';
 //import ItinerarySampleDays from '../components/ItinerarySampleDays.astro';
 import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
 import ItineraryPossibleHighlights from '../components/ItineraryPossibleHighlights.astro';
+import ItineraryDifficulty from '../components/ItineraryDifficulty.astro';
+import ItineraryPricingDetails from '../components/ItineraryPricingDetails.astro';
 
 import background from '../assets/background.svg';
 import '../styles/global.scss';
@@ -120,6 +122,36 @@ const {
             <div class="page-section">
                 <div class="section-inner">
                     <ItineraryPossibleHighlights itinerary={itinerary} />
+                </div>
+            </div>
+
+            <a id="difficulty" class="fixed-header-anchor"></a>
+            <div class="secondary-header add-padding-for-small">
+                <h2>Difficulty</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <ItineraryDifficulty itinerary={itinerary} />
+                </div>
+            </div>
+
+            <a id="pricing-details" class="fixed-header-anchor"></a>
+            <div class="secondary-header add-padding-for-small">
+                <h2>Price Estimates</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <ItineraryPricingDetails itinerary={itinerary} />
+                </div>
+            </div>
+
+            <a id="dates-and-availability" class="fixed-header-anchor"></a>
+            <div class="secondary-header add-padding-for-small">
+                <h2>Dates & Availability</h2>
+            </div>
+            <div class="page-section">
+                <div class="section-inner">
+                    <!-- <ItineraryDatesAndAvailability itinerary={itinerary} /> -->
                 </div>
             </div>
         </div>
@@ -250,6 +282,10 @@ const {
         margin-bottom: 10px;
     }
     @media (max-width: 576px) {
+        .secondary-header {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
         .add-padding-for-small {
             padding-left: 10px;
             padding-right: 10px;

@@ -1,0 +1,352 @@
+---
+import { loadItinerary } from '../utils/loadItinerary';
+
+const { id, slug } = Astro.params;
+const itinerary = await loadItinerary(id!);
+
+function hasPricingTable(itinerary: any) {
+    return itinerary && Array.isArray(itinerary.pricingTable) && itinerary.pricingTable.length > 0;
+}
+---
+
+<div class="panel panel-green margin-bottom-40">
+    <div class="panel-body-container">
+        <div class="panel-body">
+            <!-- <div class="price-display-old" set:html={itinerary.pricingTable}></div> -->
+
+            {
+                itinerary.pricingIntro ? (
+                    <div class="price-display">
+                        <div class="price-intro">
+                            <div set:html={itinerary.pricingIntro} />
+                        </div>
+                        <div class="pricing-button-container">
+                            <a href="/contact" class="detail-btn btn btn-brd rounded btn-u-sm rounded-2x">
+                                Inquire About A Trip Like This ››&nbsp;
+                            </a>
+                        </div>
+                    </div>
+                ) : (
+                    ''
+                )
+            }
+            <!-- {
+                itinerary.custom_itinerary?.custom_pricing_intro ? (
+                    <div class="price-display">
+                        <div class="price-intro" set:html={itinerary.custom_itinerary.custom_pricing_intro} />
+                    </div>
+                ) : (
+                    ''
+                )
+            } -->
+            <div class="price-display">
+                {
+                    itinerary.pricing.prices && itinerary.pricing.prices.length > 0 ? (
+                        <>
+                            <div class="pricing-table-container">
+                                <h3 class="pricing-table-title">Register with:</h3>
+                                <div class="pricing-table">
+                                    {itinerary.pricing.prices.map((row: any, i: number) => (
+                                        <div class="pricing-row">
+                                            <div class="pricing-column pricing-people">{row.people}</div>
+                                            <div class="pricing-column pricing-price">{row.price}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div class="pricing-includes-container">
+                                {itinerary.pricingIncluded &&
+                                (itinerary.pricingIncluded.included.length > 0 ||
+                                    itinerary.pricingIncluded.not_included.length > 0) ? (
+
+                                <h3 class="pricing-table-title">Estimate Includes:</h3>
+                                    <div class="price-inclusions">
+                                        <div class="incuded-list">
+                                            <b>Estimate Includes</b>
+                                            <ul class="checklist">
+                                                {itinerary.pricingIncluded.included.map((item: string, i: number) => (
+                                                    <li>{item}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div class="incuded-list">
+                                            <b>Not Included</b>
+                                            <ul class="checklist x">
+                                                {itinerary.pricingIncluded.not_included.map(
+                                                    (item: string, i: number) => (
+                                                        <li>{item}</li>
+                                                    ),
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ) : null}
+                            </div>
+                        </>
+                    ) : (
+                        <div class="pricing-table-container">
+                            <div class="pricing-button-container">
+                                <a href="/contact" class="detail-btn btn btn-brd rounded btn-u-sm rounded-2x">
+                                    Inquire About A Trip Like This ››&nbsp;
+                                </a>
+                            </div>
+                        </div>
+                    )
+                }
+                <div class="price-fineprint">
+                    <hr />
+                    <h4>Pricing Notes:</h4>
+                    <ul class="checklist fineprint-check">
+                        {itinerary.pricing.footnotes.map((item: any) => <li set:html={item.note} />)}
+                    </ul>
+                    {
+                        itinerary.pricingFinePrint ? (
+                            <div class="price-fineprint">
+                                <ul class="fineprint">
+                                    {itinerary.pricingFinePrint.map((item: string) => (
+                                        <li>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            ''
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @import '../styles/global.scss';
+    .panel-body-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px; /* Space between items */
+    }
+
+    .panel-body,
+    .price-display-old,
+    .price-display,
+    .price-notes {
+        width: 100%; /* Ensure full width */
+        margin-bottom: 20px; /* Consistent bottom margin */
+    }
+
+    .contact-button {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .contact-button a,
+    .detail-btn {
+        display: inline-block;
+        text-align: center;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition:
+            background-color 0.3s,
+            border-color 0.3s;
+        background-color: var(--bs-link-hover-color);
+        border: 1px solid var(--bs-primary-ultradark);
+    }
+
+    .detail-btn:hover {
+        background-color: var(--bs-link-color);
+        border-color: var(--bs-primary-dark);
+    }
+
+    .price-fineprint {
+        font-size: 0.85em;
+        max-width: 100%;
+    }
+
+    .reference-symbol {
+        flex-shrink: 0;
+        padding-right: 0.5em;
+        text-align: right;
+        white-space: nowrap;
+        width: auto;
+        min-width: 50px;
+    }
+
+    .note {
+        flex-grow: 1;
+        word-wrap: break-word;
+    }
+</style>
+
+<style>
+    .price-display {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px 20px 20px 40px; /* Include padding-left adjustment */
+    }
+
+    .pricing-table {
+        flex: 1 1 50%; /* Table takes up to 60% of the width */
+        flex-direction: column;
+        border: 0px solid red;
+    }
+
+    .pricing-table-container {
+        flex: 1 1 50%; /* Table takes up to 60% of the width */
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        border: 0px solid red;
+        max-width: 60%;
+    }
+    .pricing-button-container {
+        margin: auto;
+        margin-left: 0px;
+
+        border: 0px solid green;
+    }
+    .price-contact {
+        flex: 1 1 40%; /* Button takes up to 40% of the width */
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 768px) {
+        .price-display {
+            flex-direction: column;
+        }
+
+        .pricing-table,
+        .price-contact {
+            width: 100%;
+        }
+
+        .price-contact {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pricing-button-container {
+            margin-left: 0px;
+            border: 0px solid green;
+            margin-bottom: 20px;
+        }
+        .pricing-table-container {
+            max-width: 100%;
+        }
+    }
+
+    .pricing-row,
+    .fineprint-row {
+        display: flex;
+        margin-bottom: 0.5em;
+    }
+
+    .pricing-column {
+        text-align: left;
+    }
+
+    .pricing-people {
+        flex: 0 0 auto;
+        padding-right: 1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 20%;
+        font-weight: bold;
+    }
+
+    .pricing-price {
+        flex: 1;
+        word-wrap: break-word;
+    }
+
+    @import '../styles/global.scss';
+
+    .price-display {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px 20px 20px 40px;
+    }
+
+    .pricing-table-container,
+    .pricing-includes-container {
+        flex: 1 1 50%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .price-display {
+            flex-direction: column;
+        }
+        .pricing-table-container,
+        .pricing-includes-container {
+            flex: 1 1 100%;
+        }
+    }
+
+    /* Optional: Pricing table row and column styles */
+    .pricing-row {
+        display: flex;
+        margin-bottom: 0.5em;
+    }
+
+    .pricing-column {
+        text-align: left;
+    }
+
+    .pricing-people {
+        flex: 0 0 auto;
+        padding-right: 1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 20%;
+        font-weight: bold;
+    }
+    h3.pricing-table-title {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--bs-primary-dark);
+    }
+    .pricing-price {
+        flex: 1;
+        word-wrap: break-word;
+    }
+    @media (max-width: 576px) {
+        .panel-body {
+        }
+        .price-intro {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .price-display {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+</style>

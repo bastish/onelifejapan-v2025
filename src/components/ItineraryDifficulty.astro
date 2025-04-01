@@ -1,0 +1,150 @@
+---
+const itinerary = Astro.props.itinerary;
+// import DifficultySvgFilter from './DifficultySvgFilter.astro';
+import GenericSlider from './GenericSlider.astro';
+import { baseHost } from '../utils/utilities.ts';
+---
+
+<style>
+    @import '../styles/global.scss';
+
+    .images-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .image-wrapper {
+        /* Adjust width to be less than 50% to account for the gap */
+        width: calc(50% - 10px); /* Subtract desired gap */
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid var(--bs-primary);
+        border-radius: 5px;
+        margin-bottom: 10px; /* Space between rows */
+        margin-right: 10px; /* Space between images on the same row */
+        background: #fff;
+    }
+
+    .frame,
+    .map-thumb {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Clear the right margin for every 2nd item to maintain the grid */
+    .image-wrapper:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .difficulty-display {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px 20px 20px 20px; /* Include padding-left adjustment */
+        margin-bottom: 20px;
+    }
+
+    .distance-details {
+        font-size: 0.9em;
+        text-align: center;
+    }
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        .image-wrapper {
+            width: 100%; /* Full width for smaller screens */
+            margin-right: 0; /* Remove the right margin on smaller screens */
+        }
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 576px) {
+        .difficulty-display {
+            width: 100%; /* Full width for smaller screens */
+            margin: 0;
+            margin-bottom: 20px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+</style>
+
+<div class="difficulty-display">
+    <div class="frame" style="margin-bottom:20px;">
+        <GenericSlider sliderImageId="64" height={200} />
+    </div>
+    <hr />
+    <span set:html={itinerary.difficultyDescription} />
+</div>
+
+{
+    !itinerary.custom_itinerary && (
+        <>
+            <div class="images-container">
+                {(itinerary.dayItineraries || []).map((dayItinerary: any) =>
+                    (dayItinerary.routes || []).map((route: any) => (
+                        <div class="image-wrapper">
+                            <div class="distance-details">
+                                {route.distance.kilometers} km | <i class="fas fa-long-arrow-alt-up" />{' '}
+                                {route.climb.meters} m
+                                <i class="fas fa-long-arrow-alt-down" /> {route.drop?.meters} m
+                            </div>
+                            <img class="frame map-thumb" src={baseHost + route.chart} alt="Map Thumbnail" />
+                            <hr />
+                        </div>
+                    )),
+                )}
+            </div>
+
+            {(itinerary.dayItineraries || []).some((day) => (day.routes_optional || []).length > 0) && (
+                <>
+                    <h3>Optional Additional Challenges</h3>
+                    <div class="images-container">
+                        {(itinerary.dayItineraries || []).map((dayItinerary: any) =>
+                            (dayItinerary.routes_optional || []).map((route: any) => (
+                                <div class="image-wrapper color-change">
+                                    <div class="distance-details">
+                                        {route.distance.kilometers} km | <i class="fas fa-long-arrow-alt-up" />{' '}
+                                        {route.climb.meters} m
+                                        <i class="fas fa-long-arrow-alt-down" /> {route.drop?.meters} m
+                                    </div>
+                                    <img class="frame map-thumb" src={baseHost + route.chart} alt="Map Thumbnail" />
+                                    <hr />
+                                </div>
+                            )),
+                        )}
+                    </div>
+                </>
+            )}
+        </>
+    )
+}
+
+{
+    itinerary.custom_itinerary && (
+        <div class="images-container">
+            {(itinerary.custom_itinerary.routes || []).map(
+                (route: any) =>
+                    route?.chart && (
+                        <div class="image-wrapper">
+                            <div class="distance-details">
+                                {route.distance?.kilometers} km | <i class="fas fa-long-arrow-alt-up" />{' '}
+                                {route.climb?.meters} m
+                                <i class="fas fa-long-arrow-alt-down" /> {route.drop?.meters} m
+                            </div>
+                            <img class="frame map-thumb" src={route.chart} alt="Map Thumbnail" loading="lazy" />
+                            <hr />
+                        </div>
+                    ),
+            )}
+        </div>
+    )
+}
+
+<!-- <DifficultySvgFilter /> -->
