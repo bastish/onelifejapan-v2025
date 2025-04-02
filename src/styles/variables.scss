@@ -41,6 +41,12 @@ $xxlarge-screen: 1400px;
     --large-screen: #{$large-screen};
     --xlarge-screen: #{$xlarge-screen};
     --xxlarge-screen: #{$xxlarge-screen};
+
+    //____?????? Not sure why I have multiples of these. I found them in other sheet
+    --breakpoint-xs: 480px;
+    --breakpoint-sm: 768px;
+    --breakpoint-md: 1024px;
+    --breakpoint-lg: 1200px;
 }
 
 // Media queries mixin

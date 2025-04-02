@@ -1,6 +1,7 @@
 ---
 // Astro will bundle and optimize this automatically
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js?url';
+import MovableElementsScript from '../../components/MovableElementsScript.astro';
 ---
 
 <style lang="scss">
@@ -138,3 +139,38 @@ import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js?url';
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+
+<script>
+    (function () {
+        // Define your breakpoint (e.g., 768px)
+        const breakpoint = 768;
+
+        // Cache movable elements and placeholders
+        const movableElements = document.querySelectorAll('.movable');
+
+        function repositionElements() {
+            const windowWidth = window.innerWidth;
+
+            movableElements.forEach((element) => {
+                const id = element.getAttribute('data-id');
+                const placeholder = document.querySelector(`.moveable-placeholder[data-id="${id}"]`);
+
+                if (placeholder) {
+                    if (windowWidth <= breakpoint) {
+                        // Move the element to the placeholder
+                        placeholder.parentNode?.insertBefore(element, placeholder.nextSibling);
+                    } else {
+                        // Optionally, move the element back to its original location if needed.
+                        // This requires you to define a fallback container or store the original location.
+                    }
+                }
+            });
+        }
+
+        // Run on load and when resizing
+        window.addEventListener('DOMContentLoaded', repositionElements);
+        window.addEventListener('resize', repositionElements);
+    })();
+</script>
+
+<MovableElementsScript />

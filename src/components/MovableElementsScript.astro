@@ -1,0 +1,137 @@
+---
+// MovableElementsScript.astro
+
+// <!-- Example Markup -->
+// <div id="parent-container">
+//     <!-- Original location of the movable element -->
+//     <div class="movable" data-id="example1">
+//         <!-- Content for example1 -->
+//         Movable Element Content
+//     </div>
+
+//     <!-- Optionally define placeholders for each breakpoint -->
+//     <!-- If you leave out the desktop one, the script will auto-generate it -->
+//     <span class="moveable-placeholder" data-id="example1" data-breakpoint="medium"></span>
+//     <span class="moveable-placeholder" data-id="example1" data-breakpoint="small"></span>
+// </div>
+---
+
+<script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Unwrap placeholders if needed ---
+        document.querySelectorAll('.moveable-placeholder').forEach((placeholder) => {
+            const parent = placeholder.parentNode;
+            if (parent.tagName === 'P') {
+                let onlyPlaceholder = true;
+                parent.childNodes.forEach((child) => {
+                    if (child !== placeholder) {
+                        if (child.nodeType === Node.TEXT_NODE && child.textContent.trim() === '') {
+                            return;
+                        }
+                        onlyPlaceholder = false;
+                    }
+                });
+                if (onlyPlaceholder) {
+                    parent.parentNode.insertBefore(placeholder, parent);
+                    parent.remove();
+                }
+            }
+        });
+
+        // --- Helper: Get CSS custom property as number ---
+        function getBreakpointValue(property) {
+            const value = getComputedStyle(document.documentElement).getPropertyValue(property).trim();
+            return parseInt(value.replace('px', ''), 10);
+        }
+
+        // Retrieve breakpoint values from CSS custom properties.
+        const smallScreen = getBreakpointValue('--small-screen'); // e.g., 576
+        const mediumScreen = getBreakpointValue('--medium-screen'); // e.g., 768
+        const largeScreen = getBreakpointValue('--large-screen'); // e.g., 992
+        const xlargeScreen = getBreakpointValue('--xlarge-screen'); // e.g., 1200
+        const xxlargeScreen = getBreakpointValue('--xxlarge-screen'); // e.g., 1400
+
+        // Define breakpoint configuration.
+        const breakpointConfig = [
+            { name: 'desktop', min: xlargeScreen },
+            { name: 'medium', min: mediumScreen, max: xlargeScreen - 1 },
+            { name: 'small', max: mediumScreen - 1 },
+        ];
+
+        function getCurrentBreakpoint(width) {
+            return (
+                breakpointConfig.find((bp) => {
+                    if (bp.min && bp.max) {
+                        return width >= bp.min && width <= bp.max;
+                    } else if (bp.min) {
+                        return width >= bp.min;
+                    } else if (bp.max) {
+                        return width <= bp.max;
+                    }
+                })?.name || 'desktop'
+            );
+        }
+
+        // Process all movable elements.
+        const movables = document.querySelectorAll('.movable[data-id]');
+        movables.forEach((movable) => {
+            const id = movable.getAttribute('data-id');
+
+            // Hide the element until repositioning.
+            movable.classList.add('hide-until-reposition');
+
+            // Check for an existing desktop placeholder; if missing, create one.
+            let desktopPlaceholder = document.querySelector(
+                `.moveable-placeholder[data-id="${id}"][data-breakpoint="desktop"]`,
+            );
+            if (!desktopPlaceholder) {
+                desktopPlaceholder = document.createElement('span');
+                desktopPlaceholder.classList.add('moveable-placeholder');
+                desktopPlaceholder.setAttribute('data-id', id);
+                desktopPlaceholder.setAttribute('data-breakpoint', 'desktop');
+                desktopPlaceholder.style.display = 'none';
+                movable.parentNode.insertBefore(desktopPlaceholder, movable);
+            }
+
+            // Get medium and small placeholders.
+            const mediumPlaceholder = document.querySelector(
+                `.moveable-placeholder[data-id="${id}"][data-breakpoint="medium"]`,
+            );
+            const smallPlaceholder = document.querySelector(
+                `.moveable-placeholder[data-id="${id}"][data-breakpoint="small"]`,
+            );
+
+            movable.__placeholders = {
+                desktop: desktopPlaceholder,
+                medium: mediumPlaceholder || desktopPlaceholder,
+                small: smallPlaceholder || desktopPlaceholder,
+            };
+        });
+
+        // Reposition function.
+        function repositionElements(isInitial) {
+            const currentWidth = window.innerWidth;
+            const currentBreakpoint = getCurrentBreakpoint(currentWidth);
+            movables.forEach((movable) => {
+                const targetPlaceholder = movable.__placeholders[currentBreakpoint] || movable.__placeholders.desktop;
+                if (targetPlaceholder) {
+                    // Insert movable element immediately after the target placeholder.
+                    targetPlaceholder.parentNode.insertBefore(movable, targetPlaceholder.nextElementSibling);
+                    // Unhide the element after repositioning.
+                    movable.classList.remove('mv');
+                }
+            });
+        }
+
+        // Initial call on DOMContentLoaded.
+        repositionElements(true);
+
+        // Use window load to ensure complete rendering on mobile.
+        window.addEventListener('load', () => {
+            requestAnimationFrame(() => repositionElements(true));
+        });
+
+        // Reposition on every resize.
+        window.addEventListener('resize', () => repositionElements(false));
+    });
+</script>

@@ -29,3 +29,61 @@ ul.checklist.x li:before {
     font-weight: 400; /* Regular style for outline icons */
     color: rgba(189, 1, 1, 0.933); /* Set the color to red */
 }
+
+.long-desc-list {
+    margin-left: 20px;
+    border: 1px solid var(--bs-primary-light);
+    padding-top: 20px;
+    padding-right: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Only affect the specific container using both classes */
+.row.list-container.long-desc-list {
+    font-weight: 600;
+    color: var(--bs-primary-dark);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* align right on larger screens */
+}
+
+/* Target the columns inside using Bootstrap's col classes */
+.row.list-container.long-desc-list > .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    box-sizing: border-box;
+    padding: 0 10px; /* if desired */
+}
+
+/* Override float-end on small screens and stack columns */
+@media (max-width: 1200px) {
+    .row.list-container.long-desc-list {
+        display: block; /* revert to block so it doesn’t float */
+        float: none !important; /* override Bootstrap’s float-end */
+        // display: none;
+        margin-left: 0px;
+    }
+    .row.list-container.long-desc-list > .col-md-6 {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 0px; /* if desired */
+    }
+
+    .long-desc-list {
+        margin-left: 0px;
+        border: 1px solid var(--bs-primary-light);
+        padding-top: 20px;
+        padding-right: 10px;
+        border-radius: 5px;
+        padding-left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .long-desc-list {
+        margin-bottom: 10px;
+        margin-right: 5px;
+    }
+}

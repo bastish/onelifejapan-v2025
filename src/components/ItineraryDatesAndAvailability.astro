@@ -95,7 +95,7 @@ import { baseHost } from '../utils/utilities.ts';
         // Check for hash in URL and open corresponding tab within the custom tab section
         const hash = window.location.hash;
         if (hash) {
-            const targetTab = customTabsContainer.querySelector(`.nav-item[data-tab-target="${hash}"]`);
+            const targetTab = customTabsContainer.querySelector(`.nav-item[data-tab-target="${hash}"]`) as HTMLElement;
             if (targetTab) {
                 targetTab.click();
             }
@@ -228,8 +228,8 @@ import { baseHost } from '../utils/utilities.ts';
         padding-bottom: 5px;
         font-size: .9em;
     }
-.tab-content {
-    padding: 5px;
-}
+    .tab-content {
+        padding: 10px;
+    }
     }
 </style>
