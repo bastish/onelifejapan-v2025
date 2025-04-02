@@ -1,12 +1,13 @@
 ---
 const page = Astro.props.page;
+import { baseHost } from '../utils/utilities.ts';
 
 // Pick the background image based on the page – the height is now handled in CSS.
 let backgroundImage;
 switch (page) {
     case 'adventures':
     case 'about':
-        backgroundImage = '/assets/top_sliders/bg_long.jpg';
+        backgroundImage = `${baseHost}/assets/top_sliders/bg_long.jpg`;
         break;
     // Add other cases as needed...
     default:

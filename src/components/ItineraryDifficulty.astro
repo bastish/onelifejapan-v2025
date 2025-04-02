@@ -102,7 +102,7 @@ import { baseHost } from '../utils/utilities.ts';
                 )}
             </div>
 
-            {(itinerary.dayItineraries || []).some((day) => (day.routes_optional || []).length > 0) && (
+            {(itinerary.dayItineraries || []).some((day: any) => (day.routes_optional || []).length > 0) && (
                 <>
                     <h3>Optional Additional Challenges</h3>
                     <div class="images-container">

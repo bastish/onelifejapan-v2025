@@ -1,0 +1,235 @@
+---
+import TopSlider from "../components/TopSlider.astro";
+const itinerary = Astro.props.itinerary;
+import { baseHost } from '../utils/utilities.ts';
+
+
+---
+
+<div class="description-container">
+<div set:html={itinerary.datesAvailabilityDescription}/>
+</div>
+
+{(itinerary.datesAvailabilitySpring || itinerary.datesAvailabilitySummer || itinerary.datesAvailabilityFall || itinerary.datesAvailabilityWinter) ? (
+    <>
+        <div class="year">
+            <div class="month" style="background: #8bbbe4;">Jan</div>
+            <div class="month" style="background: #8bbbe4;">Feb</div>
+            <div class="month" style="background: linear-gradient(to right, #8bbbe4, #d0e3f4);">Mar</div> <!-- Blue to Teal -->
+            <div class="month" style="background: linear-gradient(to right, #d0e3f4, #fcecee);">Apr</div> <!-- Blue to Teal -->
+            <div class="month" style="background: linear-gradient(to right, #fcecee, #94df88);">May</div> <!-- Teal to Green -->
+            <div class="month" style="background: linear-gradient(to right, #94df88, #20980e);">Jun</div> <!-- Teal to Green -->
+            <div class="month" style="background: linear-gradient(to right, #20980e, #20980e);">Jul</div> <!-- Teal to Green -->
+            <div class="month" style="background: #20980e;">Aug</div>
+            <div class="month" style="background: linear-gradient(to right, #20980e, #58980e);">Sep</div>
+            <div class="month" style="background: linear-gradient(to right, #58980e, #d69c32);">Oct</div>
+            <div class="month" style="background: linear-gradient(to right, #d69c32, #d0e3f4);">Nov</div>
+            <div class="month" style="background: linear-gradient(to right, #d0e3f4, #8bbbe4);">Dec</div>
+        </div>
+
+
+    
+        <br />
+        <br />
+        <div class="date-availability-description custom-tabs">
+            {/* Tab navigation */}
+            <ul class="nav-tabs" id="seasonTabs">
+                <li class="nav-item active" data-tab-target="#spring">Spring</li>
+                <li class="nav-item" data-tab-target="#summer">Summer</li>
+                <li class="nav-item" data-tab-target="#autumn">Autumn</li>
+                <li class="nav-item" data-tab-target="#winter">Winter</li>
+            </ul>
+            {/* Tab content */}
+            <div class="tab-content">
+                <div class="tab-pane active season" id="spring">
+                <div set:html={itinerary.datesAvailabilitySpring}></div>
+                </div>
+                <div class="tab-pane season" id="summer">
+                    <div set:html={itinerary.datesAvailabilitySummer}></div>
+                </div>
+                <div class="tab-pane season" id="autumn">
+                    <div set:html={itinerary.datesAvailabilityFall}></div>
+                </div>
+                <div class="tab-pane season" id="winter">
+                    <div set:html={itinerary.datesAvailabilityWinter}></div>
+                </div>
+            </div>
+        </div>
+    </>
+    ) : null}
+
+<!-- <div set:html={itinerary.datesAvailabilityDescription}></div> -->
+</div>
+
+<div class="margin-top-20">
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const customTabsContainer = document.querySelector('.custom-tabs');
+        if (!customTabsContainer) return;
+
+        const tabs = customTabsContainer.querySelectorAll('.nav-item');
+        const tabPanes = customTabsContainer.querySelectorAll('.tab-pane');
+
+        function handleTabClick(event: any) {
+            event.preventDefault();
+
+            // Remove active class from all tabs and tab panes within the custom tab section
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            // Add active class to the clicked tab and corresponding pane
+            event.currentTarget.classList.add('active');
+            const targetPane = customTabsContainer!.querySelector(event.currentTarget.getAttribute('data-tab-target'));
+            targetPane.classList.add('active');
+
+            // Manually update the URL hash without scrolling
+            history.replaceState(null, '', event.currentTarget.getAttribute('data-tab-target'));
+        }
+
+        // Attach click event listeners to the tabs within the custom tab section
+        tabs.forEach(tab => tab.addEventListener('click', handleTabClick));
+
+        // Check for hash in URL and open corresponding tab within the custom tab section
+        const hash = window.location.hash;
+        if (hash) {
+            const targetTab = customTabsContainer.querySelector(`.nav-item[data-tab-target="${hash}"]`);
+            if (targetTab) {
+                targetTab.click();
+            }
+        }
+    });
+</script>
+
+<style>
+
+    .date-avialability-description h3 {
+    }
+    .year {
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        border-radius: 10px;;
+    }
+    
+    .month {
+        flex: 1;
+        text-align: center;
+        color: white;
+        border: 1px solid #ddd; /* Add slight separation between months */
+        padding: 20px 0; /* Some padding for better readability */
+    }
+    
+    /* Media queries can be used for more responsive adjustments, e.g., font-size changes */
+    @media (max-width: 600px) {
+        .month {
+            font-size: 10px;
+            padding: 10px 0;
+        }
+    }
+    .season-tab {
+        font-size: 1.5em;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+    /* Custom styles for active tab */
+    .nav-link.active {
+        /* background-color: #a8d5a2 !important;  */
+        border: 1px solid #28a745 !important; /* Stronger border in green */
+        border-bottom: none !important; /* To avoid the bottom border */
+        color: #28a745 !important;
+    }
+
+
+    /* Basic styling for tabs */
+.nav-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 0px solid #ddd;
+        font-size: 1.5em;
+        padding-left: 1em;
+        padding-right: 1em;
+        color: var(--bs-link-color);
+}
+
+.nav-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid var(--bs-primary);
+    border-bottom: none;
+    margin-right: 5px;
+    background-color: var(--bs-base-background);
+    border-radius: 5px 5px 0 0;
+}
+
+.nav-item.active {
+    background-color: #fff;
+    border-bottom: 2px solid #fff;
+    font-weight: normal;
+        /* background-color: #a8d5a2 !important;  */
+        border: 1px solid var(--bs-link-hover-color) !important; /* Stronger border in green */
+        border-bottom: none !important; /* To avoid the bottom border */
+        color: var(--bs-link-hover-color) !important;
+}
+
+.tab-content {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--bs-primary);
+    border-radius: 5px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+:root {
+    --mid-winter: #8bbbe4;
+    --late-winter: #d0e3f4;
+    --cherry: #fcecee;
+    --spring: #94df88;
+    --summer: #20980e;
+    --fall: #d69c32;
+}
+
+.custom-tabs{
+    margin-bottom:20px;
+}
+.date-availability-description{
+    margin: 0px;
+    padding: 0px;
+}
+
+@media (max-width: 576px) {
+
+    .season-tab {
+        font-size: 1.5em;
+        padding-left: 1em;
+        padding-right: 1em;
+        border: 1px solid green;;
+    }
+    .nav-tabs{
+    }
+    .nav-item {
+        margin: 0px;
+        padding-left: 7px;
+        padding-right: 7px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: .9em;
+    }
+.tab-content {
+    padding: 5px;
+}
+    }
+</style>
