@@ -1,0 +1,27 @@
+---
+// src/pages/highlight-points/[id].astro
+
+import HighlightPointAccordianItem from '../../components/HighlightPointAccordianItem.astro';
+
+// 1. getStaticPaths: fetch all routes so Astro knows which pages to generate.
+export async function getStaticPaths() {
+    const res = await fetch('http://127.0.0.1:8011/api/highlightPoints/');
+    const data = await res.json();
+    return data.map((point: any) => ({
+        params: { id: String(point.id) },
+    }));
+}
+
+const { id } = Astro.params;
+
+// 2. Fetch only the specific route data needed for this page.
+// Assuming your API supports fetching a single route by ID:
+const res = await fetch(`http://127.0.0.1:8011/api/highlightPoints/${id}`);
+const data = await res.json();
+
+const modalId = 'highlightModalId';
+---
+
+<!-- Output only the content for this specific accordion tab -->
+<HighlightPointAccordianItem highlight={data} modalId={modalId} />
+<span style="display:block; color: white">{id}</span>

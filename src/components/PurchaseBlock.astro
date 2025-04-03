@@ -54,7 +54,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     ${hiddenClass}`>
     <div class="row">
         <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
-            <h1>{slogan}</h1>
+            <h1 class="slogan-header">{slogan}</h1>
             <p class="blurb" set:html={pageBlurb} />
         </div>
         <div
@@ -132,6 +132,9 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
         display: none;
     }
 
+    .slogan-header {
+        font-size: 2em !important;
+    }
     @media only screen and (max-width: 765px) {
         .btn-container {
             justify-content: center !important;

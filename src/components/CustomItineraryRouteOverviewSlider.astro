@@ -1,0 +1,178 @@
+---
+// Component Frontmatter
+import { baseHost } from '../utils/utilities.ts';
+
+const { routes, itinerary } = Astro.props;
+
+// Build an array of slides. Each slide will have a title and an image URL.
+const slides = routes
+    .map((route: any) => {
+        // Find an image with name "overview" in this route's images.
+        const overviewImage = (route?.routeImages || []).find((image: any) => image.name === 'overview');
+        if (overviewImage) {
+            return {
+                title: route.title,
+                url: overviewImage.url,
+            };
+        }
+    })
+    .filter(Boolean);
+---
+
+<div class="wrap-container">
+    <div class="sample-intro" set:html={itinerary.sampleItineraryIntro} />
+</div>
+
+<!-- 
+
+<div class="wrap-container">
+    <div class="sample-intro" set:html={itinerary.sampleItineraryIntro} />
+</div> -->
+
+<!-- Slider with an ID -->
+<div id="route-slider" class="route-overview-slider">
+    <div class="route-overview-slides">
+        {
+            slides.map((slide: any, index: any) => (
+                <div class="route-overview-slide" data-index={index}>
+                    <h3>{slide.title}</h3>
+                    <img data-src={baseHost + slide.url} alt={slide.title} />
+                </div>
+            ))
+        }
+    </div>
+    <button class="prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="next"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<style>
+    /* Container to hold both the slider and the intro text */
+    .wrap-container {
+        overflow: auto; /* Clears floated children */
+        margin: 20px;
+    }
+
+    /* Slider: Floats right so the text wraps around it */
+    .route-overview-slider {
+        float: right;
+        margin-left: 20px; /* space between slider and text */
+        margin-bottom: 20px;
+        width: 60%; /* adjust as needed */
+        max-width: 500px; /* or fixed maximum width */
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--bs-primary-dark);
+        border-radius: 8px;
+        background: #fff;
+    }
+
+    .route-overview-slides {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .route-overview-slide {
+        display: none;
+        text-align: center;
+        padding: 20px;
+    }
+    .route-overview-slide h3 {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        text-align: left;
+    }
+    .route-overview-slide img {
+        max-width: 100%;
+        border-radius: 4px;
+    }
+    .prev,
+    .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+    .prev {
+        left: 10px;
+    }
+    .next {
+        right: 10px;
+    }
+
+    /* Intro text: Will wrap around the floated slider */
+    .sample-intro {
+        overflow: hidden;
+    }
+
+    /* Media Query: On narrow screens, remove the float so the slider becomes full width */
+    @media (max-width: 768px) {
+        .route-overview-slider {
+            float: none;
+            width: 100%;
+            margin-left: 0;
+            margin-bottom: 20px;
+        }
+        .statlist {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const slider = document.querySelector('.route-overview-slider') as HTMLElement | null;
+        const slides = Array.from(slider!.querySelectorAll('.route-overview-slide')) as HTMLElement[];
+        let currentIndex = 0;
+
+        // Helper: Load an image from data-src if not already loaded.
+        function loadImage(slide: any) {
+            if (!slide) return;
+            const img = slide.querySelector('img[data-src]');
+            if (img) {
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+            }
+        }
+
+        // Function to show the current slide and preload the next one.
+        function showSlide(index: any) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+            });
+            loadImage(slides[index]);
+            const nextIndex = (index + 1) % slides.length;
+            loadImage(slides[nextIndex]);
+        }
+
+        // Initial slide setup.
+        loadImage(slides[0]);
+        loadImage(slides[1]);
+        showSlide(currentIndex);
+
+        slider!.querySelector('.prev')?.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        });
+
+        slider!.querySelector('.next')?.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        });
+    });
+
+    // On window load, replace the placeholder with the slider if it exists.
+    window.addEventListener('load', () => {
+        const sliderEl = document.getElementById('route-slider');
+        const placeholder = document.getElementById('slider-placeholder');
+        if (sliderEl && placeholder) {
+            placeholder.parentNode?.replaceChild(sliderEl, placeholder);
+        }
+    });
+</script>

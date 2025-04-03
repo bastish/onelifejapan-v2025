@@ -1,0 +1,371 @@
+---
+const { route, modalId } = Astro.props;
+const sliderImages = route.sliderImages || [];
+const sliderImagesJSON = JSON.stringify(sliderImages);
+
+// <iframe src="https://ridewithgps.com/embeds?
+//          type=route&id=48050424
+//          &title=TITEL&metricUnits=true
+//          &sampleGraph=true
+//          &distanceMarkers=true
+//          &showPhotos=true
+//          &privacyCode=RNVphyCXKVleSFjIHftTEa87BdemWSDF"
+//          style="width: 1px;
+//                  min-width: 100%;
+//                  height: 700px;
+//                  border: none;"
+//                  scrolling="no"></iframe>
+
+function parseEmbeded(embed: string) {
+    // Extract the src URL from the embed code.
+    const srcMatch = embed.match(/src="([^"]+)"/);
+    if (!srcMatch) {
+        console.warn('No src attribute found in embed');
+        return embed;
+    }
+    let srcUrl = srcMatch[1];
+
+    // Map　　&overlay=roadmap
+    // Terrain　　&overlay=terrain
+    // Satellite　　&overlay=satellite
+    // Hybrid　　&overlay=hybrid
+    // RWGPS　　&overlay=rwgps
+    // OSM　　&overlay=osm
+    // OSM Outdoor　　&overlay=osmOutdoor
+    // Esri Topo　　&overlay=esriTopo
+    // Create a URL object so we can easily update query parameters.
+
+    const urlObj = new URL(srcUrl);
+    const distanceMarkers = true;
+    const sampleGraph = true;
+    const metricUnits = true;
+    const showPhotos = true;
+    const overlay = 'terrain';
+
+    // First, check if the embed HTML contains a title attribute.
+    const titleMatch = embed.match(/title="([^"]*)"/);
+    if (titleMatch && titleMatch[1]) {
+        // If found, use that title.
+        urlObj.searchParams.set('title', titleMatch[1]);
+    } else {
+        // If no title attribute exists in the embed AND there's no title already in the URL,
+        // then set it from route.title (if available).
+        if (!urlObj.searchParams.get('title') && route.title) {
+            urlObj.searchParams.set('title', route.title);
+        }
+    }
+
+    // if (route.title) {
+    //     urlObj.searchParams.set('title', route.title);
+    // }
+
+    urlObj.searchParams.set('distanceMarkers', distanceMarkers ? 'true' : '');
+    urlObj.searchParams.set('metricUnits', metricUnits ? 'true' : '');
+    //urlObj.searchParams.set('sampleGraph', sampleGraph ? 'true' : '');
+    urlObj.searchParams.set('showPhotos', showPhotos ? 'true' : '');
+    urlObj.searchParams.set('overlay', overlay ? overlay : '');
+
+    // Optionally update other URL parameters (e.g., metricUnits) as needed.
+    // urlObj.searchParams.set('metricUnits', 'true');
+
+    // Replace the src attribute in the original embed string with our updated URL.
+    let modifiedEmbed = embed.replace(/src="([^"]+)"/, `src="${urlObj.toString()}"`);
+
+    // Modify inline style: for example, change width to 50%.
+    // (This regex assumes width is defined inline in the style attribute.)
+    modifiedEmbed = modifiedEmbed.replace(/min-width:\s*[^;]+;/, 'min-width: 70%;');
+    modifiedEmbed = modifiedEmbed.replace(/height:\s*[^;]+;/, 'height: 600px;');
+    modifiedEmbed = modifiedEmbed.replace(/width:\s1px+;/, 'width: 100%;');
+
+    // You can add additional modifications, e.g., update height:
+    // modifiedEmbed = modifiedEmbed.replace(/height:\s*[^;]+;/, 'height: 600px;');
+
+    return modifiedEmbed;
+}
+
+// Split the RWGPSEmbed field into an array of embed strings.
+// This regex assumes each embed is an <iframe>...</iframe> block.
+const mapsEmbed = (() => {
+    if (!route.RWGPSEmbed) return [];
+    const regex = /<iframe[\s\S]+?<\/iframe>/g;
+    const matches = route.RWGPSEmbed.match(regex);
+    if (!matches) return [];
+    // Force even a single embed into an array of one.
+    return matches.map((embed: string) => parseEmbeded(embed));
+})();
+
+// Check if the route description (which is rendered via set:html) has placeholders.
+const hasEmbedPlaceholder = route.description && route.description.includes('class="route-embededmap"');
+---
+
+<div id=`route-accordian-${route.id}` class="route-description">
+    <!-- Hidden container with each processed embed stored in a regular HTML element -->
+
+    <div class="embeded-maps-data" style="">
+        {
+            mapsEmbed.map((embed: string, index: number) => (
+                <div class="embeded-map-data" data-index={index} set:html={embed} />
+            ))
+        }
+    </div>
+
+    <div class="route-images">
+        {
+            route.distance && (
+                <div class="images-and-stats">
+                    <div class="stats">
+                        {route.distance?.kilometers && (
+                            <div class="col">
+                                <span class="col-title">Distance: </span>
+                                <p>{route.distance.kilometers} km</p>
+                            </div>
+                        )}
+                        {route.time && (
+                            <div class="col">
+                                <span class="col-title">Duration: </span>
+                                <p>{route.time}</p>
+                            </div>
+                        )}
+                        {route.climb?.meters && (
+                            <div class="col">
+                                <span class="col-title">Climb: </span>
+                                <p>{route.climb.meters} m</p>
+                            </div>
+                        )}
+                        {route.drop?.meters && (
+                            <div class="col">
+                                <span class="col-title">Drop: </span>
+                                <p>{route.drop.meters} m</p>
+                            </div>
+                        )}
+                        {route.difficulty && (
+                            <div class="col">
+                                <span class="col-title">Difficulty: </span>
+                                <p>{route.difficulty}</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div class="image-slider">
+                        <button class="scroll-button left">&#9664;</button>
+                        <div class="image-container">
+                            {sliderImages.map((image: string, index: number) => (
+                                <a
+                                    href="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target={`#${modalId}`}
+                                    data-modal-index={index}
+                                    data-slider-images={sliderImagesJSON}
+                                >
+                                    <img class="frame map-thumb" src={image} alt={`Image ${index + 1}`} />
+                                </a>
+                            ))}
+                        </div>
+                        <button class="scroll-button right">&#9654;</button>
+                    </div>
+                </div>
+            )
+        }
+
+        <div class="route-description">
+            <div class="route-highlights-box">
+                <h4>Day's Highlights:</h4>
+                <ul class="checklist">
+                    {route.highlights.map((highlight: any) => <li>{highlight}</li>)}
+                </ul>
+            </div>
+            <div set:html={route.description} />
+        </div>
+    </div>
+
+    <style>
+        /* Image slider and thumbnails */
+        .image-slider {
+            position: relative;
+            width: 50%;
+            overflow: hidden; /* hide native scrollbar */
+        }
+        .image-container {
+            display: flex;
+            transition: transform 0.3s ease;
+            overflow-x: hidden;
+            gap: 10px;
+            white-space: nowrap;
+            margin-top: 10px;
+        }
+        .map-thumb {
+            flex: 0 0 auto;
+            min-width: 150px;
+            /* width: 150px; */
+            max-width: 150px;
+            height: auto;
+            margin-right: 5px;
+        }
+        .frame {
+            max-width: 100%;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        /* Scroll buttons styling */
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .scroll-button.left {
+            left: 5px;
+        }
+        .scroll-button.right {
+            right: 5px;
+        }
+
+        /* Overall layout: stats on the left, images on the right */
+        .images-and-stats {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        /* Stats styling */
+        .stats {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-family: Arial, sans-serif;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+        .stats .col {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 2px 0;
+        }
+        .stats .col-title {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+            color: #333;
+            margin-right: 10px;
+        }
+        .stats p {
+            margin: 0;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        /* Responsive: stack stats and images vertically on smaller screens */
+        @media (max-width: 768px) {
+            .images-and-stats {
+                flex-direction: column;
+            }
+            .map-thumb {
+                flex: 0 0 auto;
+                min-width: 100px;
+                max-width: 100px;
+                height: auto;
+                margin-right: 3px;
+            }
+        }
+
+        .route-description {
+            margin-top: 20px;
+        }
+
+        .route-highlights-box {
+            border: 1px solid #528c1f;
+            border-left: 2px solid #528c1f;
+            border-radius: 8px;
+            margin-left: 20px;
+            margin-right: 15px;
+            margin-bottom: 25px;
+            width: 45%;
+            display: none;
+            float: right;
+            background: var(--bs-primary-ultralight);
+            box-shadow: 2px 2px 15px #ccc;
+        }
+
+        .route-highlights-box ul {
+            margin-left: 20px;
+            margin-right: 15px;
+        }
+
+        .route-highlights-box h4 {
+            background: var(--bs-primary-dark);
+            margin-top: 0;
+            /* Adjust padding on the header as desired */
+            padding: 10px 15px;
+            /* Use negative margins to pull h4 out of the container's padding */
+            /* margin: -15px -15px 15px -20px; */
+            width: 100%;
+            color: #fff;
+        }
+
+        .route-embededmap-box {
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        // Attach scroll event listeners to each slider instance
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.image-slider').forEach((slider) => {
+                const container = slider.querySelector('.image-container');
+                const leftButton = slider.querySelector('.scroll-button.left');
+                const rightButton = slider.querySelector('.scroll-button.right');
+
+                leftButton!.addEventListener('click', () => {
+                    container!.scrollBy({ left: -100, behavior: 'smooth' });
+                });
+
+                rightButton!.addEventListener('click', () => {
+                    container!.scrollBy({ left: 100, behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.route-description').forEach((container) => {
+                const highlightsBox = container.querySelector('.route-highlights-box') as HTMLElement;
+                const placeholder = container.querySelector('.route-highlights');
+
+                if (highlightsBox && placeholder) {
+                    placeholder.replaceWith(highlightsBox);
+                    highlightsBox.style.display = 'inline-block';
+                    //highlightsBox.style.float = 'right';
+                }
+            });
+        });
+    </script>
+
+    <!-- Pass the embed array to the client via a script and perform placeholder replacement -->
+    <!-- Client-side script that replaces placeholders with the corresponding embed HTML -->
+    <!-- Client-side script scoped to each route container -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[id^="route-accordian-"]').forEach((container) => {
+                container.querySelectorAll('span.route-embededmap').forEach((placeholder) => {
+                    const index = placeholder.getAttribute('data-index') || '0';
+                    const embedData = container.querySelector(
+                        `.embeded-maps-data .embeded-map-data[data-index="${index}"]`,
+                    );
+                    if (embedData) {
+                        // Move the embedData node from the hidden container to replace the placeholder.
+                        placeholder.replaceWith(embedData);
+                    }
+                });
+            });
+        });
+    </script>
+</div>

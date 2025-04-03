@@ -1,0 +1,172 @@
+---
+import CustomItineraryRouteAccordianItem from './CustomItineraryRouteAccordianItem.astro';
+//import RouteImageModal from '../../components/RouteImageModal.astro';
+// Use a fixed, global modal ID.
+const modalId = 'RouteImageModal';
+//import IconWrapper from '../../components/IconWrapper.jsx';
+const { routes } = Astro.props;
+---
+
+<div class="accordion custom-itinerary-accordian" id="itineraryAccordion">
+    {
+        routes?.map((route: any, index: number) => (
+            <div class="accordion-item">
+                <h2 class="accordion-header" id={`heading-${index}`}>
+                    {/* {' '}
+                    <span id={`icon-${route.id}`} class="chevron-icon">
+                        <IconWrapper iconName="ChevronRightCircle" />
+                    </span> */}
+                    <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target={`#collapse-${index}`}
+                        aria-expanded="false"
+                        aria-controls={`collapse-${index}`}
+                        data-route-slug={route.slug}
+                    >
+                        {route.title}
+                    </button>
+                </h2>
+                <div
+                    id={`collapse-${index}`}
+                    class="accordion-collapse collapse"
+                    aria-labelledby={`heading-${index}`}
+                    data-bs-parent="#itineraryAccordion"
+                >
+                    <div class="accordion-body">
+                        <div id={`accordion-content-${route.id}`} class="accordion-content-placeholder">
+                            <p>Loading content…</p>
+                        </div>
+                        {/* <CustomItineraryRouteAccordianItem route={route} modalId={modalId} /> */}
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+<!-- Global modal: Only one instance on the page -->
+<!-- <RouteImageModal modalId={modalId} /> -->
+
+<style>
+    .accordion {
+        margin-bottom: 2rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Listen for clicks on accordion buttons
+        document.querySelectorAll<HTMLButtonElement>('.accordion-button').forEach((button) => {
+            button.addEventListener('click', (event: Event) => {
+                const targetSelector = button.getAttribute('data-bs-target');
+                if (!targetSelector) return;
+
+                const contentContainer = document.querySelector(
+                    `${targetSelector} .accordion-body .accordion-content-placeholder`,
+                ) as HTMLElement | null;
+                if (!contentContainer) return;
+
+                // Extract route id from the content container id (assuming it's set like "accordion-content-{id}")
+                const idMatch = contentContainer.id.match(/accordion-content-(.+)/);
+                if (!idMatch) return;
+                const routeId = idMatch[1];
+
+                // Only fetch if not already loaded (dataset properties are strings)
+                if (!contentContainer.dataset.loaded) {
+                    fetch(`/route-accordian/${routeId}/`)
+                        .then((response) => response.text())
+                        .then((html) => {
+                            contentContainer.innerHTML = html;
+                            contentContainer.dataset.loaded = 'true';
+                        })
+                        .catch((err) => {
+                            contentContainer.innerHTML = `<p>Error loading content.</p>`;
+                            console.error(err);
+                        });
+                }
+            });
+        });
+    });
+</script>
+<script>
+    // Function to open the accordion item based on the current hash.
+    function openAccordionForHash(): void {
+        const hash = window.location.hash;
+        if (hash) {
+            const slug = hash.substring(1); // Remove the '#' character.
+            // Find the accordion button with a matching data-route-slug attribute.
+            const targetButton = document.querySelector(
+                `button[data-route-slug="${slug}"]`,
+            ) as HTMLButtonElement | null;
+            if (targetButton) {
+                // If the accordion item is collapsed, trigger a click.
+                if (targetButton.classList.contains('collapsed')) {
+                    targetButton.click();
+                }
+                // Scroll with an offset to account for fixed headers.
+                setTimeout(() => {
+                    const offset = 280; // Adjust this offset as needed.
+                    const rect = targetButton.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const targetY = rect.top + scrollTop - offset;
+                    window.scrollTo({
+                        top: targetY,
+                        behavior: 'smooth',
+                    });
+                }, 300); // Delay to allow the accordion to open.
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Existing code: load content on click.
+        document.querySelectorAll<HTMLButtonElement>('.accordion-button').forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const targetSelector = button.getAttribute('data-bs-target');
+                if (!targetSelector) return;
+
+                const contentContainer = document.querySelector(
+                    `${targetSelector} .accordion-body .accordion-content-placeholder`,
+                ) as HTMLElement | null;
+                if (!contentContainer) return;
+
+                // Extract route id from the content container id (assuming it's set like "accordion-content-{id}")
+                const idMatch = contentContainer.id.match(/accordion-content-(.+)/);
+                if (!idMatch) return;
+                const routeId = idMatch[1];
+
+                // Only fetch if not already loaded.
+                if (!contentContainer.dataset.loaded) {
+                    fetch(`/route-accordian/${routeId}/`)
+                        .then((response) => response.text())
+                        .then((html) => {
+                            contentContainer.innerHTML = html;
+                            contentContainer.dataset.loaded = 'true';
+                        })
+                        .catch((err) => {
+                            contentContainer.innerHTML = `<p>Error loading content.</p>`;
+                            console.error(err);
+                        });
+                }
+            });
+        });
+
+        // Check hash on page load.
+        openAccordionForHash();
+    });
+
+    // Listen for hash changes (e.g., when clicking a menu link).
+    window.addEventListener('hashchange', openAccordionForHash);
+</script>
+
+<style lang="scss">
+    .chevron-icon {
+        // font-size: .5em;
+        // border: 1px solid red;
+        margin-top: -10px;
+        padding-right: 5px;
+        color: var(--highlight-color);
+    }
+</style>

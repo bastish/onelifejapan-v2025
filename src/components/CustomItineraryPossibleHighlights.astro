@@ -1,0 +1,8 @@
+---
+import CustomItineraryHighlightPointsCollections from '../components/CustomItineraryHighlightPointsCollections.astro';
+const { itinerary } = Astro.props;
+---
+
+<div set:html={itinerary.custom_itinerary.highlight_desc} />
+
+<CustomItineraryHighlightPointsCollections itinerary={itinerary} />

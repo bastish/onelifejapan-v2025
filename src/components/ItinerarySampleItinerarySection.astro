@@ -1,33 +1,41 @@
 ---
-//ItinerarySampleItinerarySection.astro
+// ItinerarySampleItinerarySection.astro
 const itinerary = Astro.props.itinerary;
 import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
 import CustomItinerary from '../components/CustomItinerary.astro';
+import CustomItineraryRouteOverviewSlider from '../components/CustomItineraryRouteOverviewSlider.astro';
+
+// Define flags for different cases
+const hasDayItineraries = itinerary && itinerary.dayItineraries && itinerary.dayItineraries.length > 0;
+const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_itinerary.routes.length > 0;
+
+// If you have other conditions in the future, you can define them here too.
 ---
 
-<div class="add-padding-for-small" set:html={itinerary.sampleItineraryIntro} />
-
+{/* Render day itineraries if they exist and we're not dealing with custom routes */}
 {
-    itinerary ? (
-        itinerary.dayItineraries &&
-        itinerary.dayItineraries.map((dayItinerary: any) => (
-            <ItinerarySampleItineraryDay key={dayItinerary.id} itinerary={itinerary} dayItinerary={dayItinerary} />
-        ))
-    ) : (
-        <div>No DayItinerary</div>
+    hasDayItineraries && !hasCustomRoutes && (
+        <>
+            <div class="add-padding-for-small" set:html={itinerary.sampleItineraryIntro} />
+            {itinerary.dayItineraries.map((dayItinerary: any) => (
+                <ItinerarySampleItineraryDay key={dayItinerary.id} itinerary={itinerary} dayItinerary={dayItinerary} />
+            ))}
+        </>
     )
 }
 
+{/* Render the custom route slider if custom routes exist */}
 {
-    itinerary.id === 7 && itinerary.customItineraries && (
+    hasCustomRoutes && (
+        <CustomItineraryRouteOverviewSlider routes={itinerary.custom_itinerary.routes} itinerary={itinerary} />
         <>
             <h1>{itinerary.id}</h1>
             {/* <CustomItineraryCollapsibleChecklist items={customItineraries} /> */}
-            {itinerary.customItineraries.map((customItineraryId: any) => (
+            {/* {itinerary.customItineraries.map((customItineraryId: any) => (
                 <div>
                     <CustomItinerary itinerary={itinerary} customItineraryId={customItineraryId.id} />
                 </div>
-            ))}
+            ))} */}
         </>
     )
 }

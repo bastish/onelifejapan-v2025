@@ -13,6 +13,8 @@ import ItineraryPossibleHighlights from '../components/ItineraryPossibleHighligh
 import ItineraryDifficulty from '../components/ItineraryDifficulty.astro';
 import ItineraryPricingDetails from '../components/ItineraryPricingDetails.astro';
 import ItineraryDatesAndAvailability from '../components/ItineraryDatesAndAvailability.astro';
+import CustomItinerarySampleItinerarySection from '..//components/CustomItinerarySampleItinerarySection.astro';
+import CustomItineraryPossibleHighlights from '../components/CustomItineraryPossibleHighlights.astro';
 //import CustomItineraryCollapsibleChecklist from '../components/CustomItineraryCollapsibleChecklist.astro';
 //import CustomItinerary from '../components/CustomItinerary.astro';
 import ItinerarySectionContainer from '../components/ItinerarySectionContainer.astro';
@@ -44,6 +46,10 @@ if (itinerary.id === 7) {
     customItineraries = await customItineraryList();
     customClass = 'is-custom';
 }
+
+const hasDayItineraries = itinerary && itinerary.dayItineraries && itinerary.dayItineraries.length > 0;
+const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_itinerary.routes.length > 0;
+
 ---
 
 <!doctype html>
@@ -91,14 +97,17 @@ if (itinerary.id === 7) {
             <!-- Days Section -->
             {page === 'customIndex' ? <></> : 
                 <ItinerarySectionContainer sectionTitle="A Sample Itinerary" sectionAnchorId="sample-itinerary">
-                    <ItinerarySampleItinerarySection itinerary={itinerary} />
+                    {!hasCustomRoutes && <ItinerarySampleItinerarySection itinerary={itinerary} /> }
+                    {hasCustomRoutes && <CustomItinerarySampleItinerarySection itinerary={itinerary} /> }
                 </ItinerarySectionContainer>
             }
 
             <!-- Hihglights Section -->
             {page === 'customIndex' ? <></> :
                 <ItinerarySectionContainer sectionTitle="Possible Highlights" sectionAnchorId="possible-highlights">
-                    <ItineraryPossibleHighlights itinerary={itinerary} />
+                    {!hasCustomRoutes && <ItineraryPossibleHighlights itinerary={itinerary} /> }
+                    {hasCustomRoutes && <CustomItineraryPossibleHighlights itinerary={itinerary} /> }
+                    
                 </ItinerarySectionContainer>
             }
 
