@@ -1,0 +1,33 @@
+---
+//ItinerarySampleItinerarySection.astro
+const itinerary = Astro.props.itinerary;
+import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
+import CustomItinerary from '../components/CustomItinerary.astro';
+---
+
+<div class="add-padding-for-small" set:html={itinerary.sampleItineraryIntro} />
+
+{
+    itinerary ? (
+        itinerary.dayItineraries &&
+        itinerary.dayItineraries.map((dayItinerary: any) => (
+            <ItinerarySampleItineraryDay key={dayItinerary.id} itinerary={itinerary} dayItinerary={dayItinerary} />
+        ))
+    ) : (
+        <div>No DayItinerary</div>
+    )
+}
+
+{
+    itinerary.id === 7 && itinerary.customItineraries && (
+        <>
+            <h1>{itinerary.id}</h1>
+            {/* <CustomItineraryCollapsibleChecklist items={customItineraries} /> */}
+            {itinerary.customItineraries.map((customItineraryId: any) => (
+                <div>
+                    <CustomItinerary itinerary={itinerary} customItineraryId={customItineraryId.id} />
+                </div>
+            ))}
+        </>
+    )
+}

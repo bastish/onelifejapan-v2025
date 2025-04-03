@@ -5,7 +5,9 @@ import path from 'path';
 import { limitedFetch } from './limitedFetch';
 export async function loadItinerary(id: string) {
     try {
-        const response = await limitedFetch(`http://localhost:8011/api/itinerary/${id}/`); // Update the URL as necessary
+        const url = `http://localhost:8011/api/itinerary/${id}/`;
+        console.log(url);
+        const response = await limitedFetch(url); // Update the URL as necessary
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

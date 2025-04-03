@@ -9,6 +9,7 @@ import ItineraryLayout from '../../../../layouts/ItineraryLayout.astro';
 // import GenericSlider from '../../../../components/GenericSlider.astro';
 import { loadItineraries } from '../../../../utils/loadItineraries';
 import { loadItinerary } from '../../../../utils/loadItinerary';
+import { convertLineBreaksToParagraphs } from '../../../../utils/utilities';
 
 // export async function getStaticPaths() {
 //   try {
@@ -145,17 +146,6 @@ try {
         dayItinerary: [],
         pricingTable: [],
     };
-}
-
-function convertLineBreaksToParagraphs(text: string | undefined) {
-    if (typeof text !== 'string') {
-        return '';
-    }
-    const normalizedText = text.replace(/\r\n/g, '\n');
-    return normalizedText
-        .split('\n\n')
-        .map((paragraph) => `<p>${paragraph}</p>`)
-        .join('');
 }
 
 const formattedLongDescription: string = convertLineBreaksToParagraphs(itinerary.longDescription);

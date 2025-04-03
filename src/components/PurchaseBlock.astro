@@ -36,7 +36,7 @@ switch (page) {
         slogan = 'Contact One Life Japan '; // Set the height for 'about' page
         pageBlurb = ''; // Set image for 'about' page
         break;
-    case 'custom':
+    case 'customIndex':
         slogan = 'Custom Hike, Bike, & Walking Adventures in Japan'; // Set the height for 'about' page
         pageBlurb = ''; // Set image for 'about' page
         break;
@@ -49,6 +49,30 @@ switch (page) {
 const fadeInClass = page !== 'about' ? 'animate__customFadeIn' : '';
 const hiddenClass = page == 'contact' ? 'hidden' : '';
 ---
+
+<div class=`container purchase-block
+    ${hiddenClass}`>
+    <div class="row">
+        <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
+            <h1>{slogan}</h1>
+            <p class="blurb" set:html={pageBlurb} />
+        </div>
+        <div
+            class=`col-md-3 d-flex 
+                        align-items-center 
+                        justify-content-end
+                        btn-buy 
+                        btn-container
+                        ${fadeInClass}  
+                        animate__customFadeIn--right
+                        book-link`
+        >
+            <a href="/contact" class="btn-u btn-u-lg rounded5 book-link">
+                Find an Adventure <i class="fa fa-arrow-right"></i></a
+            >
+        </div>
+    </div>
+</div>
 
 <style>
     @import '../styles/global.scss';
@@ -135,33 +159,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
             padding-right: 10px;
         }
     }
-</style>
 
-<div class=`container 
-    ${hiddenClass}`>
-    <div class="row">
-        <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
-            <h1>{slogan}</h1>
-            <p class="blurb" set:html={pageBlurb} />
-        </div>
-        <div
-            class=`col-md-3 d-flex 
-                        align-items-center 
-                        justify-content-end
-                        btn-buy 
-                        btn-container
-                        ${fadeInClass}  
-                        animate__customFadeIn--right
-                         book-link`
-        >
-            <a href="/contact" class="btn-u btn-u-lg rounded5 book-link">
-                Find an Adventure <i class="fa fa-arrow-right"></i></a
-            >
-        </div>
-    </div>
-</div>
-
-<style>
     @import '../styles/global.scss';
     a.book-link {
         font-size: 1.5em;
@@ -173,5 +171,9 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
         .book-link {
             margin-top: 20px;
         }
+    }
+
+    .purchase-block {
+        margin-bottom: 30px !important;
     }
 </style>

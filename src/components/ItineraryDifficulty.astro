@@ -138,7 +138,12 @@ import { baseHost } from '../utils/utilities.ts';
                                 {route.climb?.meters} m
                                 <i class="fas fa-long-arrow-alt-down" /> {route.drop?.meters} m
                             </div>
-                            <img class="frame map-thumb" src={route.chart} alt="Map Thumbnail" loading="lazy" />
+                            <img
+                                class="frame map-thumb"
+                                src={baseHost + route.chart}
+                                alt="Map Thumbnail"
+                                loading="lazy"
+                            />
                             <hr />
                         </div>
                     ),

@@ -1,0 +1,202 @@
+---
+//SampleItineraryDay.astro
+//import CustomeItineraryModal from '../../components/itinerary/CustomeItineraryModal.astro';
+//import BootstrapSliderModal from '../modals/BootstrapSliderModal.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+
+import '../styles/global.scss';
+
+const { itinerary, customItineraryId } = Astro.props;
+import { loadCustomItinerary, customItineraryList } from '../utils/loadCustomItinerary';
+
+//const customItinerary = await loadCustomItinerary(customItineraryId);
+const customItinerary = itinerary.custom_itinerary;
+console.log('++++++++customItineraryId');
+console.log(customItineraryId);
+console.log(itinerary.title);
+console.log('++++++++customItineraryId');
+const customItineraries = await customItineraryList();
+
+// // START astro-dynamic-embed
+// import { parseDynamicContent, addUidsToContents } from 'astro-dynamic-embed';
+// import { dynamicConfig, allowedConfig } from '../../astroDynamicEmbed/dynamicComponentsConfig';
+// import ComponentHidden from '../../astroDynamicEmbed/ComponentHidden.astro';
+// import AstroDynamicEmbedScriptLoader from '../../astroDynamicEmbed/AstroDynamicEmbedScriptLoader.astro';
+// import { fetchSliderImages } from '../../utils/fetchSliderImages';
+// import { fetchSingleImage } from '../../utils/fetchSingleImage';
+
+// addUidsToContents(allowedConfig, customItinerary);
+
+// const dynamicComponents = [
+//     {
+//         type: 'SingleImageSlider',
+//         fetchFn: fetchSliderImages,
+//     },
+//     {
+//         type: 'ResponsiveFramedFloatingImage',
+//         fetchFn: fetchSingleImage,
+//     },
+// ];
+
+// // This object will hold the fetched results keyed by component type.
+// const componentResults: Record<string, any> = {};
+
+// // Iterate over each dynamic component, parse its placeholders, and fetch data if any are found.
+// for (const comp of dynamicComponents) {
+//     const parsedArray = parseDynamicContent(customItinerary, dynamicConfig(comp.type));
+//     if (parsedArray.length > 0) {
+//         componentResults[comp.type] = await comp.fetchFn(parsedArray);
+//     }
+// }
+// END astro-dynamic-embed
+const defaultDesc =
+    "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+---
+
+<a id={`${customItineraryId}`} class="fixed-header-anchor"></a><br />
+<div class="card box-shadow day-card">
+    <div class="day-header">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <h2 class="mb-0 day-itinerary-title" set:html={itinerary.title} />
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div set:html={itinerary.description} />
+
+        <a href=`/itinerary/${customItineraryId}}/${itinerary.slug}/`>{customItinerary?.title}</a><br />
+        <a href="http://localhost:3020/itinerary/8/one-month-across-japan/">one-month-across-japan</a><br />
+
+        <a href="http://localhost:3020/itinerary/9/one-week-in-noto/">one-week-in-noto</a><br />
+        <a href="http://localhost:3020/itinerary/10/7-days-biwaka-northern-kyoto-and-wakasa-seashore/"
+            >7-days-biwaka-northern-kyoto-and-wakasa-seashore</a
+        ><br />
+        <a href="http://localhost:3020/itinerary/11/10-days-osaka-to-the-japan-sea-nagasendo-nagano-and-back-to-kyoto/"
+            >10-days-osaka-to-the-japan-sea-nagasendo-nagano-and-back-to-kyoto</a
+        ><br />
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="justify-content-right details-button">
+                    <a
+                        href="#"
+                        class="more-details rounded-2x"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#customItinerary-${customItineraryId}`}
+                        data-parent-modal-id={`customItinerary-${customItineraryId}`}
+                    >
+                        More Details ››&nbsp;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+<AstroDynamicEmbedScriptLoader />
+
+{
+    dynamicComponents.map((comp) =>
+        componentResults[comp.type]?.map((props: any) => (
+            <ComponentHidden componentName={comp.type} componentProps={props} />
+        )),
+    )
+} -->
+
+<style lang="scss">
+    @import '../styles/global.scss';
+    @include respond-to(medium) {
+        /* Adjusts the width for medium devices and up */
+        .custom-col-width {
+            flex: 0 0 45%;
+            max-width: 85%;
+        }
+        /* styles.css */
+        .modal-offscreen {
+            position: absolute;
+            top: -10000px; /* Position it far off-screen */
+            left: 0;
+        }
+    }
+
+    .fa-bicycle:before {
+        content: '\f206';
+    }
+    .more-details {
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    .slider-frame {
+        padding-left: 90px;
+    }
+    .box-shadow {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* More noticeable shadow */
+    }
+
+    .day-card {
+        margin-bottom: 50px;
+        border-radius: 10px;
+    }
+
+    a.read-more {
+        display: none;
+    }
+
+    .slider-image {
+        margin-bottom: 20px;
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+    .details-button a {
+        border: 1px solid var(--bs-primary-ultradark);
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        width: 30%;
+        color: var(--bs-primary-ultralight);
+        background: var(--bs-primary-dark);
+        color: #fff;
+        background: var(--bs-link-color);
+    }
+    .details-button a:hover {
+        background: var(--bs-primary);
+    }
+
+    .details-button {
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .day-itinerary-title {
+        padding-bottom: 1em;
+    }
+
+    .day-header {
+        background: var(--bs-primary);
+        background: var(--bs-primary-ultralight);
+        background: #fff;
+
+        width: 100%; /* Ensure the header spans the full width */
+        margin: 0; /* Remove any default margin */
+        padding: 0; /* Remove any default padding */
+        padding: 10px; /* Add padding if needed for content inside */
+        padding-left: 20px;
+        display: flex;
+        align-items: center; /* Center content vertically */
+        border-radius: 5px 5px 0px 0px;
+        border: 1px solid var(--bs-primary-ultralight);
+        border-bottom: 3px solid var(--bs-primary-light);
+    }
+
+    .day-header h2 {
+        margin: 0; /* Remove any default margin from the h2 element */
+        padding: 0; /* Remove any default padding from the h2 element */
+        color: var(--bs-primary-dark);
+        color: var(--bs-primary);
+        color: var(--bs-primary-dark);
+    }
+</style>

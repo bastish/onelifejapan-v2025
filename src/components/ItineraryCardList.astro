@@ -1,8 +1,6 @@
 ---
 import ItineraryCard from './ItineraryCard.astro';
-const { itineraries } = Astro.props;
-
-const page = 'index';
+const { itineraries, page } = Astro.props;
 
 // Chunk the itineraries into groups of three
 function chunk(arr: any, size: any) {
@@ -20,15 +18,20 @@ const row3 = chunk(itineraries, 3);
 const row4 = chunk(itineraries, 4);
 ---
 
+<a id="itinerary-cards" class="fixed-header-anchor"></a>
 <div id="row3" class="container content">
     {
-        page == 'index' ? (
+        page ? (
             <div class="itinerary-cards">
                 {row3.map((row) => (
                     <div class="row margin-bottom-30">
-                        {row.map((itinerary: any) => (
-                            <ItineraryCard key={itinerary.id} id={itinerary.id} />
-                        ))}
+                        {row.map((itinerary: any) =>
+                            page === 'customIndex' ? (
+                                <ItineraryCard id={itinerary.itinerary_id} />
+                            ) : (
+                                <ItineraryCard id={itinerary.id} />
+                            ),
+                        )}
                     </div>
                 ))}
             </div>
@@ -40,13 +43,17 @@ const row4 = chunk(itineraries, 4);
 
 <div id="row4" class="container content">
     {
-        page == 'index' ? (
+        page ? (
             <div class="itinerary-cards">
                 {row4.map((row) => (
                     <div class="row margin-bottom-30">
-                        {row.map((itinerary: any) => (
-                            <ItineraryCard key={itinerary.id} id={itinerary.id} />
-                        ))}
+                        {row.map((itinerary: any) =>
+                            page === 'customIndex' ? (
+                                <ItineraryCard id={itinerary.itinerary_id} />
+                            ) : (
+                                <ItineraryCard id={itinerary.id} />
+                            ),
+                        )}
                     </div>
                 ))}
             </div>

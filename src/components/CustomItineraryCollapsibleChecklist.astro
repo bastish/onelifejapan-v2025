@@ -1,0 +1,245 @@
+---
+const { items } = Astro.props;
+import ResponsiveFramedFloatingImage from '../components/ResponsiveFramedFloatingImage.astro';
+---
+
+<style>
+    .checklist-container {
+        margin: 0rem;
+    }
+
+    /* Accordion Styling */
+    .accordion {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .accordion-item {
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
+
+    .accordion-item:last-child {
+        border-bottom: none;
+    }
+
+    .accordion-title {
+        width: 100%;
+        text-align: left;
+        background: white;
+        background: var(--bs-primary-dark);
+        color: var(--bs-primary-dark);
+        color: white;
+        font-size: 1.5em;
+        font-weight: 300;
+        padding: 10px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        transition: background 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid var(--bs-primary-dark);
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    .accordion-title:hover {
+        background: var(--bs-primary-dark);
+        color: white;
+    }
+
+    .accordion-title::after {
+        content: '▼';
+        font-size: 0.8rem;
+        margin-left: 10px;
+    }
+
+    /* .accordion-title::before {
+        content: '▶︎　';
+    } */
+
+    .accordion-title.active::after {
+        content: '▲';
+    }
+
+    .accordion-title.active {
+        background: var(--bs-primary-dark);
+        background: white;
+        color: white;
+        color: var(--bs-primary-dark);
+        border: 0px;
+        font-size: 25px;
+        border-bottom: 1px dotted var(--bs-primary-dark);
+        font-size: 1.5em;
+        color: var(--bs-link-color);
+    }
+
+    .accordion-content {
+        display: none;
+        padding: 15px;
+        background: #fff;
+        overflow: hidden;
+    }
+
+    .accordion-content.active {
+        display: block;
+    }
+    /* 
+    .accordion-title.active span::first-letter {
+        font-size: 1.5em; 
+    } */
+    /* Floating Image Inside Accordion */
+    .image-column {
+        float: right;
+        width: 400px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-column img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Content should wrap around the floating image */
+    .content-row {
+        overflow: hidden;
+    }
+
+    /* Clearfix to ensure content wraps properly */
+    .clearfix::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .details-button {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .details-button a {
+        display: inline-block;
+        padding: 8px 12px;
+        background: var(--bs-primary-dark);
+        background: var(--bs-link-color);
+
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    /* Responsive: Move Image Above Content on Small Screens */
+    @media (max-width: 768px) {
+        .image-column {
+            float: none;
+            width: 100%;
+            margin-left: 0;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+
+<p>Below are some of the memorable custom trips we have provided in the past that are not based in our main area.</p>
+<!-- <img
+    src="/assets/img/2024/media/photos/2514/Screenshot_2025-02-18_at_23.53.21_medium.png"
+    alt="30 day map"
+    class="frame"
+    data-astro-cid-rdth4ocd=""
+/> -->
+<p>
+    Generally while the trips may pass through some popular tourist spots, such as the *Nakasendo*, *Kanazawa*, or the
+    *Shimanami Kaido Bike Route*, those are often not the primary goal of the trip. we much prefer to explore the
+    in-between places that are a little less known.
+</p>
+
+<div class="checklist-container">
+    <div class="accordion">
+        {
+            items.map((item: any, index: any) => {
+                const firstImage = item.overview_map_image?.[0] || {};
+                const srcLarge = firstImage.src_large || firstImage.src || '/assets/img/default-map.png';
+                const srcMedium = firstImage.src_medium || firstImage.src || '/assets/img/default-map.png';
+                const altText = firstImage.title || 'Map Image';
+                const itineraryLink =
+                    item.itinerary_id && item.slug ? `/itinerary/${item.itinerary_id}/${item.slug}/` : '#';
+
+                return (
+                    <div class="accordion-item">
+                        <button class={`accordion-title ${index === 0 ? 'active' : ''}`} data-index={index}>
+                            <span set:html={item.title} />
+                        </button>
+                        <div class={`accordion-content ${index === 0 ? 'active' : ''}`} data-index={index}>
+                            <div class="image-column" id={`image-${index}`}>
+                                <picture>
+                                    <source media="(min-width: 1200px)" srcset={srcLarge} type="image/jpeg" />
+                                    <source media="(min-width: 400px)" srcset={srcMedium} type="image/jpeg" />
+                                    <img src={srcMedium} alt={altText} class="frame" />
+                                </picture>
+                            </div>
+                            <div
+                                class="content-row"
+                                id={`content-${index}`}
+                                set:html={item.short_desc || '<p>Default description</p>'}
+                            />
+                            <div class="details-button more-details">
+                                <a class="more-details" href={itineraryLink}>
+                                    More Details ››
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Move each image inside its respective content-row after hydration
+        document.querySelectorAll('.accordion-content').forEach((content, index) => {
+            const contentRow = content.querySelector('.content-row');
+            const imageColumn = document.getElementById(`image-${index}`);
+
+            if (contentRow && imageColumn) {
+                contentRow.insertBefore(imageColumn, contentRow.firstChild);
+            }
+        });
+
+        // Accordion functionality
+        const titles = document.querySelectorAll('.accordion-title');
+        titles.forEach((title) => {
+            title.addEventListener('click', () => {
+                const content = title.nextElementSibling;
+                const isActive = content!.classList.contains('active');
+
+                // Close all accordions except the one being clicked
+                document.querySelectorAll('.accordion-content').forEach((section) => {
+                    section.classList.remove('active');
+                });
+
+                document.querySelectorAll('.accordion-title').forEach((t) => {
+                    t.classList.remove('active');
+                });
+
+                // Toggle current accordion
+                if (!isActive) {
+                    content!.classList.add('active');
+                    title.classList.add('active');
+                }
+            });
+        });
+    });
+</script>

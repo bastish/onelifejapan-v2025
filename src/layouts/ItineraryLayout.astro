@@ -2,23 +2,26 @@
 import HeadComponent from '../components/Head/HeadComponent.astro';
 import TopNav from '../components/TopNav/TopNav.astro';
 import Footer from '../components/Footer/Footer.astro';
-import TopSlider from '../components/TopSlider.astro';
 import BottomBanner from '../components/BottomBanner.astro';
+import ItineraryCardList from '../components/ItineraryCardList.astro';
 import PurchaseBlock from '../components/PurchaseBlock.astro';
 import GenericSlider from '../components/GenericSlider.astro';
 import ItineraryBasicInfo from '../components/ItineraryBasicInfo.astro';
-//import ItinerarySampleDays from '../components/ItinerarySampleDays.astro';
-import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
+//import ItinerarySampleItineraryDay from '../components/ItinerarySampleItineraryDay.astro';
+import ItinerarySampleItinerarySection from '../components/ItinerarySampleItinerarySection.astro';
 import ItineraryPossibleHighlights from '../components/ItineraryPossibleHighlights.astro';
 import ItineraryDifficulty from '../components/ItineraryDifficulty.astro';
 import ItineraryPricingDetails from '../components/ItineraryPricingDetails.astro';
 import ItineraryDatesAndAvailability from '../components/ItineraryDatesAndAvailability.astro';
-
+//import CustomItineraryCollapsibleChecklist from '../components/CustomItineraryCollapsibleChecklist.astro';
+//import CustomItinerary from '../components/CustomItinerary.astro';
+import ItinerarySectionContainer from '../components/ItinerarySectionContainer.astro';
 import background from '../assets/background.svg';
 import '../styles/global.scss';
 
 const id = Astro.props.id;
 import { loadItinerary } from '../utils/loadItinerary.ts';
+import { loadCustomItinerary, customItineraryList } from '../utils/loadCustomItinerary';
 let itinerary = await loadItinerary(id);
 
 // // astro-dynamic-embed
@@ -29,19 +32,18 @@ let aecComponents: any[] = [];
 
 const {
     title,
-    slug,
-    description,
-    mainImage,
-    imageUrl,
-    detailsUrl,
-    priceRange,
-    participants,
-    location_link,
-    locationText,
-    activityLevel,
-    when,
-    days,
+    description
 } = itinerary;
+
+let page = 'itinerary';
+let customItineraries = null;
+let customClass = '';
+
+if (itinerary.id === 7) {
+    page = 'customIndex';
+    customItineraries = await customItineraryList();
+    customClass = 'is-custom';
+}
 ---
 
 <!doctype html>
@@ -56,105 +58,66 @@ const {
         <div class="custom-container">
             <TopNav />
         </div>
+
         <div>
             {itinerary.sliderImage ? <GenericSlider sliderImageId={itinerary.sliderImage.id} height={175} /> : <div />}
         </div>
-        <!-- <TopSlider page={page} /> -->
 
-        <div class="custom-container itinerary-main">
-            <PurchaseBlock page={'itinerary'} itinerary={itinerary} />
-        </div>
+        <div class="custom-container itinerary-main">   
 
-        <div class="custom-container itinerary-main">
-            <!-- Basic Info Section -->
-            <div id="basic-info" class="page-section container">
-                <ItineraryBasicInfo itinerary={itinerary} />
-            </div>
+            <ItinerarySectionContainer>
+                <PurchaseBlock page={page} itinerary={itinerary} />
+            </ItinerarySectionContainer>        
+            
+
+            <ItinerarySectionContainer sectionTitle="" sectionAnchorId="basic-info">
+                {
+                    page === 'customIndex' ? (
+                        <div
+                            set:html={itinerary.longDescription}
+                            class="formatted-long-description custom-top"
+                            style="margin-top: 100px margin-bottom: 10px;"
+                        />
+                    ) : (
+                        <ItineraryBasicInfo itinerary={itinerary} />
+                    )
+                }
+            </ItinerarySectionContainer>
+            
+            
+            <ItineraryCardList itineraries={customItineraries} page={page} />
+
 
             <!-- Days Section -->
-            <a id="sample-itinerary" class="fixed-header-anchor"></a>
-            <div class="secondary-header add-padding-for-small">
-                <h2>A Sample Itinerary</h2>
-            </div>
-            <div class="page-section">
-                <div class="section-inner">
-                    <div class="add-padding-for-small" set:html={itinerary.sampleItineraryIntro} />
+            {page === 'customIndex' ? <></> : 
+                <ItinerarySectionContainer sectionTitle="A Sample Itinerary" sectionAnchorId="sample-itinerary">
+                    <ItinerarySampleItinerarySection itinerary={itinerary} />
+                </ItinerarySectionContainer>
+            }
 
-                    {
-                        itinerary ? (
-                            itinerary.dayItineraries &&
-                            itinerary.dayItineraries.map((dayItinerary: any) => (
-                                <ItinerarySampleItineraryDay
-                                    key={dayItinerary.id}
-                                    itinerary={itinerary}
-                                    dayItinerary={dayItinerary}
-                                />
-                            ))
-                        ) : (
-                            <div>No DayItinerary</div>
-                        )
-                    }
-                    <!-- 
-                    <ItinerarySampleDays itinerary={itinerary} /> -->
-
-                    <!-- For the custom Itinerary / only shows itinerary daily details without highlights. accomomdation etc. -->
-
-                    <!-- {
-                        itinerary.id === 7 && itinerary.customItineraries && (
-                            <>
-                                <CustomItineraryCollapsibleChecklist items={customItineraries} />
-                                {itinerary.customItineraries.map((customItineraryId: any) => (
-                                    <div>
-                                        <CustomItinerary
-                                            itinerary={itinerary}
-                                            customItineraryId={customItineraryId.id}
-                                        />
-                                    </div>
-                                ))}
-                            </>
-                        )
-                    } -->
-                </div>
-            </div>
-            <a id="sample-itinerary" class="fixed-header-anchor"></a>
-            <div class="secondary-header add-padding-for-small">
-                <h2>Possible Highlights</h2>
-            </div>
-            <div class="page-section">
-                <div class="section-inner">
+            <!-- Hihglights Section -->
+            {page === 'customIndex' ? <></> :
+                <ItinerarySectionContainer sectionTitle="Possible Highlights" sectionAnchorId="possible-highlights">
                     <ItineraryPossibleHighlights itinerary={itinerary} />
-                </div>
-            </div>
+                </ItinerarySectionContainer>
+            }
 
-            <a id="difficulty" class="fixed-header-anchor"></a>
-            <div class="secondary-header add-padding-for-small">
-                <h2>Difficulty</h2>
-            </div>
-            <div class="page-section">
-                <div class="section-inner">
+                        
+            <!-- Difficulty Section -->
+            <ItinerarySectionContainer sectionTitle="Difficulty" sectionAnchorId="difficulty">
                     <ItineraryDifficulty itinerary={itinerary} />
-                </div>
-            </div>
+            </ItinerarySectionContainer>
+            
+            <!-- Price Section -->
+            <ItinerarySectionContainer sectionTitle="Price Estimates" sectionAnchorId="pricing-details">
+                <ItineraryPricingDetails itinerary={itinerary} />
+            </ItinerarySectionContainer>
 
-            <a id="pricing-details" class="fixed-header-anchor"></a>
-            <div class="secondary-header add-padding-for-small">
-                <h2>Price Estimates</h2>
-            </div>
-            <div class="page-section">
-                <div class="section-inner">
-                    <ItineraryPricingDetails itinerary={itinerary} />
-                </div>
-            </div>
+            <!-- Dates Section -->
+            <ItinerarySectionContainer sectionTitle="Dates & Availability" sectionAnchorId="dates-and-availability">
+                <ItineraryDatesAndAvailability itinerary={itinerary} />
+            </ItinerarySectionContainer>
 
-            <a id="dates-and-availability" class="fixed-header-anchor"></a>
-            <div class="secondary-header add-padding-for-small">
-                <h2>Dates & Availability</h2>
-            </div>
-            <div class="page-section">
-                <div class="section-inner">
-                    <ItineraryDatesAndAvailability itinerary={itinerary} />
-                </div>
-            </div>
         </div>
 
         <!-- <BottomBanner /> -->
@@ -175,6 +138,9 @@ const {
 
     .page-section {
         padding-bottom: 175px;
+    }
+    .page-section.is-custom {
+        padding-bottom: 0px !important;
     }
 
     .headline,

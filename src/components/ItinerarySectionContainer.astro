@@ -1,0 +1,20 @@
+---
+//ItinerarySectionContainer.astro
+const sectionTitle = Astro.props.sectionTitle;
+const sectionAnchorId = Astro.props.sectionAnchorId;
+---
+
+{sectionAnchorId && <a id={`${sectionAnchorId}`} class="fixed-header-anchor" />}
+
+{
+    sectionTitle && (
+        <div class="secondary-header add-padding-for-small">
+            <h2>{sectionTitle}</h2>
+        </div>
+    )
+}
+<div class="page-section">
+    <div class="section-inner">
+        <slot />
+    </div>
+</div>
