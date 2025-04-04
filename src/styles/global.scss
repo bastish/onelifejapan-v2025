@@ -175,7 +175,7 @@ code {
     padding: 6px 8px;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: $medium-screen) {
     #container {
         display: flex;
         flex-direction: column;
@@ -216,7 +216,7 @@ code {
     border: 1px solid #ccc !important;
 }
 
-@media (max-width: 576px) {
+@media (max-width: $small-screen) {
     .responsive-framed-floating-picture {
         width: 100%;
     }
@@ -227,79 +227,6 @@ code {
     }
 }
 
-// .responsive-framed-floating-picture {
-//     @include respond-to(small) {
-//         width: 100%;
-//     }
-// }
-// .responsive-framed-floating-picture img {
-//     @include respond-to(small) {
-//         width: 100%;
-//         display: block;
-//         margin: 0px !important;
-//     }
-// }
-
-// .custom-container {
-//     //@extend .container; // Inherit Bootstrap's container styles
-
-//     padding-left: 0px;
-//     padding-right: 0px;
-//     margin-left: auto;
-//     margin-right: auto;
-//     //border: 1px solid red;
-//     height: auto; // This ensures the container grows to fit the content
-//     //min-height: 100%;
-
-//     // border: 0px solid red;
-//     // @include media-breakpoint-down(lg) {
-//     //     width: 100%;
-//     //     max-width: 100%;
-//     //     padding-left: 20px;
-//     //     padding-right: 20px;
-//     //     //border: 1px solid blue;
-//     // }
-
-//     // @include media-breakpoint-down(sm) {
-//     //     // Override for small screens
-//     //     padding-left: 5px;
-//     //     padding-right: 5px;
-//     // }
-// }
-
-// .custom-container {
-//     width: 100%;
-//     padding-right: 1.5rem;
-//     padding-left: 1.5rem;
-//     margin-right: auto;
-//     margin-left: auto;
-// }
-// @media (min-width: 576px) {
-//     .custom-container {
-//         max-width: 540px;
-//     }
-// }
-// @media (min-width: 768px) {
-//     .custom-container {
-//         max-width: 720px;
-//     }
-// }
-// @media (min-width: 992px) {
-//     .custom-container {
-//         max-width: 960px;
-//     }
-// }
-// @media (min-width: 1200px) {
-//     .custom-container {
-//         max-width: 1140px;
-//     }
-// }
-// @media (min-width: 1400px) {
-//     .custom-container {
-//         max-width: 1320px;
-//     }
-// }
-
 $container-sm: 540px;
 $container-md: 720px;
 $container-lg: 960px;
@@ -308,11 +235,8 @@ $container-xxl: 1320px;
 
 .custom-container {
     width: 100%;
-    // padding-left: 1.5rem;
-    // padding-right: 1.5rem;
     margin-left: auto;
     margin-right: auto;
-    //border: 1px solid red;
     height: auto;
 }
 
@@ -398,7 +322,7 @@ $container-xxl: 1320px;
 }
 
 /* Responsive adjustments: On smaller screens, you might want the card layout to stack vertically */
-@media (max-width: 576px) {
+@media (max-width: $small-screen) {
     .rwgps-embed iframe {
         border: 1px solid var(--bs-primary-dark);
         max-height: 500px !important;

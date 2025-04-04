@@ -3,7 +3,7 @@ const { items } = Astro.props;
 import ResponsiveFramedFloatingImage from '../components/ResponsiveFramedFloatingImage.astro';
 ---
 
-<style>
+<style lang="scss">
     .checklist-container {
         margin: 0rem;
     }
@@ -139,7 +139,7 @@ import ResponsiveFramedFloatingImage from '../components/ResponsiveFramedFloatin
     }
 
     /* Responsive: Move Image Above Content on Small Screens */
-    @media (max-width: 768px) {
+    @media (max-width: $medium-screen) {
         .image-column {
             float: none;
             width: 100%;

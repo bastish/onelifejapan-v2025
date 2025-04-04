@@ -124,7 +124,7 @@ if (itinerary.comming_soon_status) {
     )
 }
 
-<style>
+<style lang="scss">
     @import '../styles/global.scss';
 
     .thumbnail-img img {
@@ -135,7 +135,7 @@ if (itinerary.comming_soon_status) {
         padding-top: 5px;
     }
 
-    @media only screen and (max-width: 480px) {
+    @media (max-width: 480px) {
         h3 {
             font-size: 1.2em;
         }
@@ -143,6 +143,11 @@ if (itinerary.comming_soon_status) {
 
     .cardmain {
         margin-bottom: 20px;
+        @include respond-to(small) {
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+            max-width: 95%;
+        }
     }
 
     p {
@@ -165,6 +170,10 @@ if (itinerary.comming_soon_status) {
 
     h3 {
         font-size: clamp(16px, calc(16px + (4 * ((100vw - 320px) / 680))), 1.2em);
+        @include respond-to(small) {
+            font-size: 1.3em !important;
+            margin-bottom: 15px;
+        }
     }
 
     h3 a {
@@ -194,6 +203,10 @@ if (itinerary.comming_soon_status) {
         color: var(--bs-primary-ultralight);
         background: var(--bs-primary-dark);
         color: #fff;
+        @include respond-to(small) {
+            font-size: 1.1em;
+            right: -25px; /* Half outside the image container */
+        }
     }
 
     .btn-more:hover {

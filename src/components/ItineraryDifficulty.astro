@@ -5,7 +5,7 @@ import GenericSlider from './GenericSlider.astro';
 import { baseHost } from '../utils/utilities.ts';
 ---
 
-<style>
+<style lang="scss">
     @import '../styles/global.scss';
 
     .images-container {
@@ -56,7 +56,7 @@ import { baseHost } from '../utils/utilities.ts';
         text-align: center;
     }
     /* Media query for smaller screens */
-    @media (max-width: 768px) {
+    @media (max-width: $medium-screen) {
         .image-wrapper {
             width: 100%; /* Full width for smaller screens */
             margin-right: 0; /* Remove the right margin on smaller screens */
@@ -64,7 +64,7 @@ import { baseHost } from '../utils/utilities.ts';
     }
 
     /* Media query for smaller screens */
-    @media (max-width: 576px) {
+    @media (max-width: $small-screen) {
         .difficulty-display {
             width: 100%; /* Full width for smaller screens */
             margin: 0;

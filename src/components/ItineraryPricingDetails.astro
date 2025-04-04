@@ -118,7 +118,7 @@ function hasPricingTable(itinerary: any) {
     </div>
 </div>
 
-<style>
+<style lang="scss">
 
 
 @import '../styles/global.scss';
@@ -257,7 +257,7 @@ h3.pricing-table-title {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: $medium-screen) {
   .price-display {
     flex-direction: column;
   }
@@ -273,7 +273,7 @@ h3.pricing-table-title {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: $small-screen) {
   .price-intro,
   .price-fineprint {
     margin-left: 10px;
@@ -288,7 +288,7 @@ h3.pricing-table-title {
 
 </style>
 
-<style>
+<style lang="scss">
 
 
 

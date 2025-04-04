@@ -20,3 +20,29 @@ const sectionAnchorId = Astro.props.sectionAnchorId;
         </div>
     </div>
 </div>
+
+<style lang="scss">
+    @import '../styles/global.scss';
+
+    .page-section {
+        padding-bottom: 175px;
+        @include respond-to(small) {
+            padding-bottom: 125px;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+    }
+    .page-section.is-custom {
+        padding-bottom: 0px !important;
+    }
+    @media (max-width: $small-screen) {
+        .secondary-header {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .add-padding-for-small {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+</style>

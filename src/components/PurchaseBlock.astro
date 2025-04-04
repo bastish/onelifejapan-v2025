@@ -74,7 +74,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     </div>
 </div>
 
-<style>
+<style lang="scss">
     @import '../styles/global.scss';
     @keyframes customFadeIn {
         from {
@@ -135,7 +135,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     .slogan-header {
         font-size: 2em !important;
     }
-    @media only screen and (max-width: 765px) {
+    @media (max-width: 765px) {
         .btn-container {
             justify-content: center !important;
             margin-top: 5px;
@@ -156,7 +156,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
             text-align: center;
         }
     }
-    @media (max-width: 576px) {
+    @media (max-width: $small-screen) {
         .container {
             padding-left: 10px;
             padding-right: 10px;
@@ -170,7 +170,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     .book-link {
         font-size: 1.5em;
     }
-    @media (max-width: 576px) {
+    @media (max-width: $small-screen) {
         .book-link {
             margin-top: 20px;
         }

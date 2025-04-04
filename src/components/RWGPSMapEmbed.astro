@@ -5,7 +5,7 @@
 const { route } = Astro.props;
 
 // Build embed URL from RWGPS id (computed mode)
-function buildEmbedUrlFromId(id) {
+function buildEmbedUrlFromId(id: string) {
     const baseEmbedUrl = `https://ridewithgps.com/embeds?type=route&id=${id}`;
     const distanceMarkers = true;
     const sampleGraph = true;
@@ -22,7 +22,7 @@ function buildEmbedUrlFromId(id) {
 }
 
 // Parse a legacy embed string and update its URL
-function parseEmbeded(embed) {
+function parseEmbeded(embed: string) {
     const srcMatch = embed.match(/src="([^"]+)"/);
     if (!srcMatch) {
         console.warn('No src attribute found in embed');
@@ -56,7 +56,7 @@ let embedUrls = [];
 if (route.RWGPSEmbed) {
     const regex = /<iframe[\s\S]+?<\/iframe>/g;
     const matches = route.RWGPSEmbed.match(regex) || [];
-    embedUrls = matches.map((embed) => parseEmbeded(embed));
+    embedUrls = matches.map((embed: string) => parseEmbeded(embed));
 } else {
     let rwgpsId = route.RWGPSId;
     if (!rwgpsId && route.mapLink) {
@@ -72,10 +72,11 @@ if (route.RWGPSEmbed) {
 const uniqueId = route.id;
 ---
 
-<style>
+<style lang="scss">
     .rwgps-embed {
         border: 1px solid var(--bs-primary-dark);
         position: relative;
+        border-radius: 10px;
         /* Initially hidden; JS will toggle display */
         display: none;
     }
@@ -84,11 +85,13 @@ const uniqueId = route.id;
 <!-- Render each embed URL as two versions (large and small) -->
 <div class="rwgps-map-container" id={`rwgps-map-${uniqueId}`}>
     {
-        embedUrls.map((url, idx) => (
-            <>
+        embedUrls.map((url: string, idx: number) => (
+            <div style={idx > 0 ? 'margin-top: 20px;' : undefined}>
+                {/* Uncomment to show the URL as a link */}
                 {/* <a href={url} target="_blank">
                     {url}
                 </a> */}
+
                 <div id={`rwgps-large-${uniqueId}-${idx}`} class="rwgps-embed" data-map-index={idx}>
                     <iframe
                         class="rwgps-iframe"
@@ -105,7 +108,7 @@ const uniqueId = route.id;
                         scrolling="no"
                     />
                 </div>
-            </>
+            </div>
         ))
     }
 </div>

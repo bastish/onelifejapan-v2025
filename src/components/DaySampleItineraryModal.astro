@@ -217,8 +217,8 @@ const modalId = `day-${dayItinerary.id}`;
     .modal-content {
         border: 0px solid var(--bs-primary-ultradark);
         border-radius: 10px;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .modal-nav-link {
@@ -262,7 +262,8 @@ const modalId = `day-${dayItinerary.id}`;
 
     .tab-content {
         border: 0px solid #ddd;
-        padding: 20px;
+        padding-left: 5px;
+        padding-right: 5px;
         margin-top: 30px;
     }
 
@@ -335,33 +336,22 @@ const modalId = `day-${dayItinerary.id}`;
             outline-offset: 2px;
         }
     }
-
-    .show-on-small {
-        display: none;
-    }
-    .show-on-large {
-        display: block;
-    }
-    @media (max-width: 576px) {
+    @include respond-to(medium) {
         .show-on-small {
-            display: block;
+            display: inline;
         }
         .show-on-large {
             display: none;
         }
-        .modal-content {
-            //border: 2px solid var(--bs-primary-ultradark);
-            border-radius: 10px;
-            padding-left: 0px;
-            padding-right: 0px;
-        }
+    }
 
-        .tab-content {
-            //border: 2px solid red;
-            padding: 10px;
+    // Use a min-width query for larger screens
+    @media (min-width: ($medium-screen + 1)) {
+        .show-on-small {
+            display: none;
         }
-        .hide-on-large {
-            display: block;
+        .show-on-large {
+            display: inline;
         }
     }
 </style>
@@ -482,7 +472,7 @@ const modalId = `day-${dayItinerary.id}`;
     }
 </script>
 
-<style>
+<style lang="scss">
     /* Bottom Shelf Styling */
     .modal-bottom-shelf {
         position: fixed;

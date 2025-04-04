@@ -83,7 +83,8 @@ const hasEmbedPlaceholder = route.description && route.description.includes('cla
         </div>
     </div>
 
-    <style>
+    <style lang="scss">
+        @import '../styles/global.scss';
         /* Image slider and thumbnails */
         .image-slider {
             position: relative;
@@ -169,7 +170,7 @@ const hasEmbedPlaceholder = route.description && route.description.includes('cla
         }
 
         /* Responsive: stack stats and images vertically on smaller screens */
-        @media (max-width: 768px) {
+        @media (max-width: $medium-screen) {
             .images-and-stats {
                 flex-direction: column;
             }

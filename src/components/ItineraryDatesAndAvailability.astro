@@ -103,8 +103,8 @@ import { baseHost } from '../utils/utilities.ts';
     });
 </script>
 
-<style>
-
+<style lang="scss">
+    @import '../styles/global.scss';
     .date-avialability-description h3 {
     }
     .year {
@@ -210,7 +210,7 @@ import { baseHost } from '../utils/utilities.ts';
     padding: 0px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: $small-screen) {
 
     .season-tab {
         font-size: 1.5em;

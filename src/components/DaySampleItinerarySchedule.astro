@@ -46,7 +46,7 @@ const { dayItinerary } = Astro.props;
 <h3>Schedule Notes</h3>
 <div set:html={dayItinerary.scheduleNotes} /> -->
 
-<style>
+<style lang="scss">
     @import '../styles/global.scss';
     .testclass {
         border: 1px solid red;
@@ -121,7 +121,7 @@ const { dayItinerary } = Astro.props;
         color: #666;
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: $small-screen) {
         .time-slot {
             grid-template-columns: 1fr;
         }
