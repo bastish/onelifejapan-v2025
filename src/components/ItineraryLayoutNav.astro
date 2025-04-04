@@ -1,0 +1,310 @@
+---
+const { itinerary, activePage } = Astro.props;
+// Extract day titles from itinerary.dayItineraries
+const days = itinerary.dayItineraries
+    ? itinerary.dayItineraries.map((dayItinerary: any) => ({ title: dayItinerary.title, slug: dayItinerary.slug }))
+    : [];
+const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
+---
+
+<!-- Itinerary nav that appears below TopSlider and then sticks at the top -->
+<div class="itinerary-fixed-nav" id="nav">
+    <div class="inner-container">
+        <div class="inner-headline">
+            <h1 id="inner" style="display: none;">{itinerary.title}</h1>
+        </div>
+        <div class="itinerary-nav-container">
+            <!-- Removed the Menu button -->
+            <ul class="inline-links itinerary-nav">
+                <li class={activePage === 'overview' ? 'active' : ''}>
+                    <a class="button-link" href="#basic-info">Overview</a>
+                </li>
+                <li class={`dropdown ${activePage === 'sample-itinerary' ? 'active' : ''}`}>
+                    <a class="button-link dropdown-toggle" href="#sample-itinerary">
+                        Itinerary <span class="small-screen-hide">Details</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {
+                            days.map((day: any) => (
+                                <li>
+                                    <a class="dropdown-item" href={`#${day.slug}`}>
+                                        {day.title}
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </li>
+                <li class={activePage === 'highlights' ? 'active' : ''}>
+                    <a class="button-link" href="#highlights">Highlights</a>
+                </li>
+                <li class={activePage === 'difficulty' ? 'active' : ''}>
+                    <a class="button-link" href="#difficulty">Difficulty</a>
+                </li>
+                <li class={activePage === 'pricing-details' ? 'active' : ''}>
+                    <a class="button-link" href="#pricing-details">
+                        Pricing <span class="small-screen-hide">Details</span>
+                    </a>
+                </li>
+                <li class={activePage === 'dates-and-availability' ? 'active' : ''}>
+                    <a class="button-link" href="#dates-and-availability">
+                        Dates <span class="small-screen-hide">& Availability</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stickyNav = document.getElementById('nav');
+        const mainNav = document.querySelector('.navbar'); // Main TopNav
+        let ticking = false;
+
+        function updateSticky() {
+            // Get current position of the itinerary nav relative to viewport
+            const rect = stickyNav.getBoundingClientRect();
+
+            // Use a threshold (5px) to avoid rapid toggling
+            if (rect.top <= 0 && !stickyNav.classList.contains('is-fixed')) {
+                stickyNav.classList.add('is-fixed');
+            } else if (rect.top > 5 && stickyNav.classList.contains('is-fixed')) {
+                stickyNav.classList.remove('is-fixed');
+            }
+
+            // Adjust top offset based on main nav's visibility.
+            // Assumes main nav is 75px tall when visible.
+            if (mainNav && !mainNav.classList.contains('hidden-nav')) {
+                stickyNav.style.top = '70px';
+            } else {
+                stickyNav.style.top = '0';
+            }
+
+            ticking = false;
+        }
+
+        function checkSticky() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateSticky);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', checkSticky);
+        window.addEventListener('resize', checkSticky);
+    });
+</script>
+
+<!-- Dropdown and mobile behavior script (unchanged) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle hover for dropdown items
+        document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
+            dropdown.addEventListener('mouseover', function () {
+                dropdown.classList.add('show');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                if (menu) menu.classList.add('show');
+            });
+            dropdown.addEventListener('mouseout', function () {
+                dropdown.classList.remove('show');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                if (menu) menu.classList.remove('show');
+            });
+        });
+
+        // Enable nested dropdown toggles if needed
+        document.querySelectorAll('.dropdown-item.dropdown-toggle').forEach(function (element) {
+            element.addEventListener('click', function (e) {
+                const nextSibling = element.nextElementSibling;
+                if (nextSibling && nextSibling.classList.contains('dropdown-menu')) {
+                    e.preventDefault();
+                    nextSibling.classList.toggle('show');
+                    element
+                        .closest('.dropdown-menu')
+                        .querySelectorAll('.dropdown-menu')
+                        .forEach((menu) => {
+                            if (menu !== nextSibling) menu.classList.remove('show');
+                        });
+                }
+            });
+        });
+
+        // Optional: Close dropdowns when clicking outside the navbar
+        document.body.addEventListener(
+            'click',
+            function (e) {
+                if (!e.target.closest('.navbar')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
+                        menu.classList.remove('show');
+                    });
+                }
+            },
+            true,
+        );
+    });
+</script>
+
+<style lang="scss">
+    @import '../styles/global.scss';
+
+    /* Itinerary nav container */
+    .itinerary-fixed-nav {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 75px; /* Starts sticky at 75px below the viewport top */
+        z-index: 1500;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+
+    /* When scrolled to the top, switch to fixed position */
+    .itinerary-fixed-nav.is-fixed {
+        position: fixed;
+        top: 0;
+    }
+
+    .itinerary-nav-container {
+        position: relative;
+    }
+
+    .itinerary-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 5px;
+    }
+
+    .itinerary-nav.show {
+        flex-direction: column;
+    }
+
+    .small-screen-hide {
+        display: inline-block;
+    }
+
+    @include respond-to(large) {
+        .button-link {
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+        .small-screen-hide {
+            display: none;
+        }
+    }
+
+    .inline-links li {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    .button-link {
+        display: inline-block;
+        width: 100%;
+        padding: 10px 15px;
+        border: 2px solid;
+        border: 0px solid;
+        border-color: var(--bs-primary-secondary);
+        border-radius: 4px;
+        text-align: center;
+        white-space: nowrap;
+        box-sizing: border-box;
+        text-decoration: none;
+        background-color: transparent;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+
+    .button-link:hover {
+        background-color: var(--bs-link-color);
+        background-color: var(--bs-primary-ultralight);
+        background-color: #fff;
+        border-color: var(--bs-link-color);
+        color: var(--bs-link-hover-color);
+    }
+
+    .button-link:active {
+        background-color: #cce0ff;
+    }
+
+    .active .button-link {
+        background-color: var(--bs-link-color);
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        min-width: 10rem;
+        padding: 0.5rem 0;
+        margin: 0;
+        font-size: 1rem;
+        color: #212529;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 1rem 2rem;
+        font-weight: 400;
+        color: var(--bs-link-color);
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 1px solid #999;
+        border-color: var(--bs-link-color);
+        border-bottom: #fff;
+        text-decoration: none;
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        color: var(--bs-link-hover-color);
+        text-decoration: none;
+        background-color: #f8f9fa;
+    }
+
+    /* Mobile adjustments */
+    @include respond-to(small) {
+        .button-link {
+            font-size: 0.8em;
+            width: 100%;
+            padding: 10px 5px;
+        }
+        .dropdown-menu {
+            display: none;
+        }
+        .itinerary-nav {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding-bottom: 1px;
+        }
+        .inline-links li {
+            flex: 1 1 auto;
+            min-width: 90px;
+            margin: 0;
+            margin-top: 1px;
+        }
+        .button-link {
+            text-align: center;
+            padding: 8px 4px;
+            border: 1px solid var(--bs-primary-dark);
+        }
+    }
+</style>

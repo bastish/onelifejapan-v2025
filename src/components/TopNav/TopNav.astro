@@ -95,6 +95,149 @@ import logo from '../../assets/olj_logo.png';
     </div>
 </nav>
 
+<!-- JavaScript: Hide navbar on scroll down, show on scroll up -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const mainNav = document.querySelector('.navbar');
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        let isMenuOpen = false;
+        const delta = 5; // Threshold for downward scroll
+
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Only run scroll logic if the mobile menu is not open
+            if (!isMenuOpen) {
+                if (scrollTop - lastScrollTop > delta) {
+                    // Scrolling down: add class to hide the navbar
+                    mainNav!.classList.add('hidden-nav');
+                } else if (lastScrollTop - scrollTop > 0) {
+                    // Scrolling up: remove class so the navbar reappears
+                    mainNav!.classList.remove('hidden-nav');
+                }
+            }
+            lastScrollTop = scrollTop;
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        // When the hamburger menu is toggled, ensure the navbar stays visible
+        if (navbarToggler) {
+            navbarToggler.addEventListener('click', function () {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mainNav!.classList.remove('hidden-nav');
+                }
+            });
+        }
+    });
+</script>
+<style lang="scss">
+    @use '../../styles/global' as *;
+
+    /* Base navbar styles */
+    .custom-navbar {
+        padding: 0 !important;
+    }
+
+    .custom-container {
+        padding: 0 !important;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .custom-navbar-brand {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .custom-navbar-brand img {
+        height: 100%;
+        object-fit: contain;
+        width: 226px;
+        transition: width 0.3s ease;
+    }
+
+    @include respond-to(large) {
+        .custom-navbar-brand img {
+            width: 175px;
+        }
+    }
+
+    .custom-navbar-nav {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .nav-link {
+        color: var(--primary-color);
+        font-weight: 500;
+        &:hover,
+        &:focus {
+            color: #e0e0e0 !important;
+        }
+    }
+
+    .dropdown-menu {
+        background-color: var(--bs-light);
+        .dropdown-item {
+            color: #333 !important;
+            border-bottom: 1px solid #e0e0e0;
+        }
+    }
+
+    .navbar a {
+        color: var(--bs-link-color);
+        font-size: 1.2em;
+    }
+    .navbar a:hover {
+        color: var(--bs-link-hover-color);
+    }
+    .nav-item {
+        border-right: 1px solid var(--bs-link-hover-color);
+    }
+    .nav-item:last-child {
+        border-right: 0;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: $large-screen) {
+        .custom-navbar,
+        .custom-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0;
+            padding: 0;
+        }
+        .custom-navbar-nav {
+            margin-left: 0 !important;
+            width: 100%;
+        }
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 0;
+        }
+    }
+
+    /* Fixed navbar styling with transition */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 2000; /* High z-index to cover content */
+        background: #fff;
+        border-bottom: 1px solid var(--bs-link-hover-color);
+        transition: transform 0.3s ease;
+    }
+
+    /* When hidden, slide it up out of view */
+    .navbar.hidden-nav {
+        transform: translateY(-100%);
+    }
+</style>
+<!--   
 <style lang="scss">
     //    @import '../../styles/global.scss';
 
@@ -193,4 +336,31 @@ import logo from '../../assets/olj_logo.png';
             border-right: 0px solid var(--bs-link-hover-color);
         }
     }
-</style>
+
+    /* Smooth transition for the navbar */
+    .navbar {
+        transition: transform 0.3s ease;
+    }
+
+    /* When hidden, slide it up out of view */
+    .navbar.hidden-nav {
+        transform: translateY(-100%);
+    }
+
+    /* Always fixed at the top, with smooth transition */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 2000; /* High z-index to cover content */
+        transition: transform 0.3s ease;
+        background: #fff;
+        border-bottom: 1px solid var(--bs-link-hover-color);
+    }
+
+    /* When the class "hidden-nav" is applied, slide it up out of view */
+    .navbar.hidden-nav {
+        transform: translateY(-100%);
+    }
+</style> -->

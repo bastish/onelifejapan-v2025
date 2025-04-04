@@ -6,7 +6,7 @@ import { baseHost } from '../utils/utilities.ts';
 const { highlight, modalId } = Astro.props;
 ---
 
-<div id={`accordion-content-${highlight.id}`} class="accordion-content-placeholder">
+<div id={`accordion-content-${highlight.id}`} class="accordian-content accordion-content-placeholder">
     {
         highlight.sliderImage || highlight.related_highlight?.sliderImage ? (
             <div class="frame highlight-slider">
@@ -49,11 +49,19 @@ const { highlight, modalId } = Astro.props;
 </div>
 
 <style lang="scss">
+    @import '../styles/global.scss';
     .accordion-content-placeholder {
         padding: 10px;
         /* border: 1px solid var(--bs-primary-light); */
         border-radius: 4px;
         background: #f8f9fa;
+        font-size: 1rem;
+        padding-left: 0px;
+        padding-right: 0px;
+        @include respond-to(small) {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
     }
     .find-out-more {
         margin-top: 20px;

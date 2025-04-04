@@ -9,7 +9,7 @@ const sectionAnchorId = Astro.props.sectionAnchorId;
 
     {
         sectionTitle && (
-            <div class="secondary-header add-padding-for-small">
+            <div class="section-header add-padding-for-small">
                 <h2>{sectionTitle}</h2>
             </div>
         )
@@ -25,9 +25,9 @@ const sectionAnchorId = Astro.props.sectionAnchorId;
     @import '../styles/global.scss';
 
     .page-section {
-        padding-bottom: 175px;
+        padding-bottom: 50px;
         @include respond-to(small) {
-            padding-bottom: 125px;
+            padding-bottom: 25px;
             padding-right: 10px;
             padding-left: 10px;
         }
@@ -35,10 +35,28 @@ const sectionAnchorId = Astro.props.sectionAnchorId;
     .page-section.is-custom {
         padding-bottom: 0px !important;
     }
+    .section-header {
+        padding: 0px;
+        padding-left: 0px;
+        border-bottom: 2px solid var(--bs-primary);
+        border-radius: 5px 5px 0px 0px;
+        margin-bottom: 20px;
+    }
+    .section-header h2 {
+        font-weight: 555;
+        letter-spacing: 0.03em;
+        color: #fff;
+        color: var(--bs-primary-dark);
+        margin-left: 0px;
+        padding-left: 0px;
+        font-size: 1.9em;
+        margin-bottom: 10px;
+    }
     @media (max-width: $small-screen) {
-        .secondary-header {
+        .section-header {
             padding-left: 10px;
             padding-right: 10px;
+            margin-top: 20px;
         }
         .add-padding-for-small {
             padding-left: 10px;

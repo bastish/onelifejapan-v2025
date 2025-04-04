@@ -18,6 +18,7 @@ import CustomItineraryPossibleHighlights from '../components/CustomItineraryPoss
 //import CustomItineraryCollapsibleChecklist from '../components/CustomItineraryCollapsibleChecklist.astro';
 //import CustomItinerary from '../components/CustomItinerary.astro';
 import ItinerarySectionContainer from '../components/ItinerarySectionContainer.astro';
+import ItineraryLayoutNav from '../components/ItineraryLayoutNav.astro';
 import background from '../assets/background.svg';
 import '../styles/global.scss';
 
@@ -65,10 +66,12 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
             <TopNav />
         </div>
 
-        <div>
+        <div id="topSlider">
             {itinerary.sliderImage ? <GenericSlider sliderImageId={itinerary.sliderImage.id} height={175} /> : <div />}
         </div>
-
+        
+        <ItineraryLayoutNav itinerary={itinerary} />
+                
         <div class="custom-container itinerary-main">   
 
             <ItinerarySectionContainer>
@@ -234,38 +237,21 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
             position: unset;
         }
     }
+.itinerary-fixed-nav {
+    position: relative;
+    z-index: 1500;
+    background: #fff;
+    transition: position 0.3s ease;
 
-    .secondary-header {
-        // background: var(--bs-primary-ultralight);
-        // background: var(--bs-primary-dark);
-        padding: 0px;
-        padding-left: 0px;
-        //border: 1px solid var(--bs-primary);
-        border-bottom: 2px solid var(--bs-primary);
-        border-radius: 5px 5px 0px 0px;
+    &.is-sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    .secondary-header h2 {
-        /* text-transform: uppercase; */
-        font-weight: 555;
-        letter-spacing: 0.03em;
-        color: #fff;
-        color: var(--bs-primary-dark);
-        margin-left: 0px;
-        padding-left: 0px;
-        font-size: 1.9em;
-        //border: 1px solid red;
-        margin-bottom: 10px;
-    }
-    @media (max-width: $small-screen) {
-        .secondary-header {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        .add-padding-for-small {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-    }
+}
+
 </style>
 
 

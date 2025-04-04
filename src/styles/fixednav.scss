@@ -1,0 +1,25 @@
+.itinerary-fixed-nav {
+    position: fixed; /* Always fixed at the top */
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    background: #fff;
+    transition: top 0.3s ease;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        width: 100vw;
+        margin-left: -50vw;
+        height: 1px;
+        background: #ddd;
+    }
+    &::before {
+        top: 0;
+    }
+    &::after {
+        bottom: 0;
+    }
+}
