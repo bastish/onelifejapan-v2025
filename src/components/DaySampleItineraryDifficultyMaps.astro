@@ -1,5 +1,7 @@
 ---
 // DaySampleItineraryDifficultyMaps.astro.
+
+import RWGPSMapEmbed from '../components/RWGPSMapEmbed.astro';
 const { route } = Astro.props;
 
 let rwgpsId = route.RWGPSId;
@@ -51,8 +53,6 @@ const embedUrl = urlObj.toString();
             style="width: 1px; min-width: 100%; height: 700px; border: none;"
             scrolling="no"></iframe>
     </div>
-
-    <!-- Embed version for smaller screens (500px height) -->
 
     <div id={`rwgps-small-${route.id}`} class="rwgps-embed" data-rwgps-id={route.RWGPSId}>
         <iframe

@@ -1,0 +1,111 @@
+---
+// RWGPSMaps.astro
+// This component accepts a single { route } prop.
+// It supports both legacy mode (using route.RWGPSEmbed) and computed mode (using RWGPSId or mapLink).
+const { route } = Astro.props;
+
+// Build embed URL from RWGPS id (computed mode)
+function buildEmbedUrlFromId(id) {
+    const baseEmbedUrl = `https://ridewithgps.com/embeds?type=route&id=${id}`;
+    const distanceMarkers = true;
+    const sampleGraph = true;
+    const metricUnits = true;
+    const showPhotos = true;
+    const overlay = 'terrain';
+    const urlObj = new URL(baseEmbedUrl);
+    urlObj.searchParams.set('distanceMarkers', distanceMarkers ? 'true' : '');
+    urlObj.searchParams.set('sampleGraph', sampleGraph ? 'true' : '');
+    urlObj.searchParams.set('metricUnits', metricUnits ? 'true' : '');
+    urlObj.searchParams.set('showPhotos', showPhotos ? 'true' : '');
+    urlObj.searchParams.set('overlay', overlay || '');
+    return urlObj.toString();
+}
+
+// Parse a legacy embed string and update its URL
+function parseEmbeded(embed) {
+    const srcMatch = embed.match(/src="([^"]+)"/);
+    if (!srcMatch) {
+        console.warn('No src attribute found in embed');
+        return '';
+    }
+    let srcUrl = srcMatch[1];
+    const urlObj = new URL(srcUrl);
+    const distanceMarkers = true;
+    const sampleGraph = true;
+    const metricUnits = true;
+    const showPhotos = true;
+    const overlay = 'terrain';
+    // Use title from embed if available; otherwise use route.title
+    const titleMatch = embed.match(/title="([^"]*)"/);
+    if (titleMatch && titleMatch[1]) {
+        urlObj.searchParams.set('title', titleMatch[1]);
+    } else if (!urlObj.searchParams.get('title') && route.title) {
+        urlObj.searchParams.set('title', route.title);
+    }
+    urlObj.searchParams.set('distanceMarkers', distanceMarkers ? 'true' : '');
+    urlObj.searchParams.set('metricUnits', metricUnits ? 'true' : '');
+    urlObj.searchParams.set('showPhotos', showPhotos ? 'true' : '');
+    urlObj.searchParams.set('overlay', overlay || '');
+    return urlObj.toString();
+}
+
+// Determine the embed URLs to render.
+// If route.RWGPSEmbed exists, we use legacy mode and parse all <iframe> blocks.
+// Otherwise, we use computed mode and build one embed URL.
+let embedUrls = [];
+if (route.RWGPSEmbed) {
+    const regex = /<iframe[\s\S]+?<\/iframe>/g;
+    const matches = route.RWGPSEmbed.match(regex) || [];
+    embedUrls = matches.map((embed) => parseEmbeded(embed));
+} else {
+    let rwgpsId = route.RWGPSId;
+    if (!rwgpsId && route.mapLink) {
+        const parts = route.mapLink.split('/');
+        rwgpsId = parts[parts.length - 1];
+    }
+    if (rwgpsId) {
+        embedUrls = [buildEmbedUrlFromId(rwgpsId)];
+    }
+}
+
+// Use route.id as a unique identifier; if there are multiple maps, add an index.
+const uniqueId = route.id;
+---
+
+<style>
+    .rwgps-embed {
+        border: 1px solid var(--bs-primary-dark);
+        position: relative;
+        /* Initially hidden; JS will toggle display */
+        display: none;
+    }
+</style>
+
+<!-- Render each embed URL as two versions (large and small) -->
+<div class="rwgps-map-container" id={`rwgps-map-${uniqueId}`}>
+    {
+        embedUrls.map((url, idx) => (
+            <>
+                {/* <a href={url} target="_blank">
+                    {url}
+                </a> */}
+                <div id={`rwgps-large-${uniqueId}-${idx}`} class="rwgps-embed" data-map-index={idx}>
+                    <iframe
+                        class="rwgps-iframe"
+                        data-src={url}
+                        style="width: 1px; min-width: 100%; height: 700px; border: none;"
+                        scrolling="no"
+                    />
+                </div>
+                <div id={`rwgps-small-${uniqueId}-${idx}`} class="rwgps-embed" data-map-index={idx}>
+                    <iframe
+                        class="rwgps-iframe"
+                        data-src={url}
+                        style="width: 1px; min-width: 100%; height: 500px; border: none;"
+                        scrolling="no"
+                    />
+                </div>
+            </>
+        ))
+    }
+</div>

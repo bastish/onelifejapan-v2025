@@ -2,6 +2,7 @@
 //HighlightPointAccordianItem.astro
 
 import GenericSlider from '../components/GenericSlider.astro';
+import { baseHost } from '../utils/utilities.ts';
 const { highlight, modalId } = Astro.props;
 ---
 
@@ -29,7 +30,11 @@ const { highlight, modalId } = Astro.props;
                         <div class="external-link-item">
                             <a href={link.url} target="_blank" rel="noopener noreferrer" class="external">
                                 <div class="thumbnail">
-                                    <img src={link.screenshot_small} alt={link.name || link.url} loading="lazy" />
+                                    <img
+                                        src={baseHost + link.screenshot_small}
+                                        alt={link.name || link.url}
+                                        loading="lazy"
+                                    />
                                 </div>
                                 <div class="link-text">{link.name || link.url}</div>
                             </a>

@@ -268,3 +268,59 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
         }
     }
 </style>
+
+
+
+<!-- Self-contained inline script to adjust visibility and lazy-load iframes -->
+<script is:inline>
+    function loadIframe(iframe) {
+        if (!iframe.src) {
+            const dataSrc = iframe.getAttribute('data-src');
+            if (dataSrc) {
+                iframe.src = dataSrc;
+            }
+        }
+    }
+    function adjustEmbeds() {
+        
+        // Find all embed containers rendered by this component.
+        const embeds = document.querySelectorAll('.rwgps-embed');
+        embeds.forEach((embed) => {
+            const id = embed.getAttribute('id') || '';
+            if (window.innerWidth <= 576) {
+                // On small screens, display elements with "small" in the id.
+                if (id.indexOf('small') !== -1) {
+                    embed.style.display = 'block';
+                } else {
+                    embed.style.display = 'none';
+                }
+            } else {
+                // On larger screens, display elements with "large" in the id.
+                if (id.indexOf('large') !== -1) {
+                    embed.style.display = 'block';
+                } else {
+                    embed.style.display = 'none';
+                }
+            }
+            // If visible, lazy-load the iframe.
+            if (embed.style.display === 'block') {
+                const iframe = embed.querySelector('.rwgps-iframe');
+                if (iframe) loadIframe(iframe);
+            }
+        });
+    }
+    // Run when the component's container is inserted or changed.
+    // const container = document.getElementById(`rwgps-map-${uniqueId}`);
+    // if (container) {
+    //     // Create an observer to watch for child changes.
+    //     const observer = new MutationObserver((mutationsList, obs) => {
+    //         adjustEmbeds();
+    //     });
+    //     observer.observe(container, { childList: true, subtree: true });
+    // }
+    document.addEventListener('DOMContentLoaded', adjustEmbeds);
+    window.addEventListener('resize', adjustEmbeds);
+    document.addEventListener('ajaxContentLoaded', function() {
+        window.adjustEmbeds();
+    });
+</script>

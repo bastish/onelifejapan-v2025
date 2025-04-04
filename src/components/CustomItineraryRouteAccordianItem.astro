@@ -1,112 +1,17 @@
 ---
+import RWGPSMapEmbed from '../components/RWGPSMapEmbed.astro';
+
 const { route, modalId } = Astro.props;
 const sliderImages = route.sliderImages || [];
 const sliderImagesJSON = JSON.stringify(sliderImages);
-
-// <iframe src="https://ridewithgps.com/embeds?
-//          type=route&id=48050424
-//          &title=TITEL&metricUnits=true
-//          &sampleGraph=true
-//          &distanceMarkers=true
-//          &showPhotos=true
-//          &privacyCode=RNVphyCXKVleSFjIHftTEa87BdemWSDF"
-//          style="width: 1px;
-//                  min-width: 100%;
-//                  height: 700px;
-//                  border: none;"
-//                  scrolling="no"></iframe>
-
-function parseEmbeded(embed: string) {
-    // Extract the src URL from the embed code.
-    const srcMatch = embed.match(/src="([^"]+)"/);
-    if (!srcMatch) {
-        console.warn('No src attribute found in embed');
-        return embed;
-    }
-    let srcUrl = srcMatch[1];
-
-    // Map　　&overlay=roadmap
-    // Terrain　　&overlay=terrain
-    // Satellite　　&overlay=satellite
-    // Hybrid　　&overlay=hybrid
-    // RWGPS　　&overlay=rwgps
-    // OSM　　&overlay=osm
-    // OSM Outdoor　　&overlay=osmOutdoor
-    // Esri Topo　　&overlay=esriTopo
-    // Create a URL object so we can easily update query parameters.
-
-    const urlObj = new URL(srcUrl);
-    const distanceMarkers = true;
-    const sampleGraph = true;
-    const metricUnits = true;
-    const showPhotos = true;
-    const overlay = 'terrain';
-
-    // First, check if the embed HTML contains a title attribute.
-    const titleMatch = embed.match(/title="([^"]*)"/);
-    if (titleMatch && titleMatch[1]) {
-        // If found, use that title.
-        urlObj.searchParams.set('title', titleMatch[1]);
-    } else {
-        // If no title attribute exists in the embed AND there's no title already in the URL,
-        // then set it from route.title (if available).
-        if (!urlObj.searchParams.get('title') && route.title) {
-            urlObj.searchParams.set('title', route.title);
-        }
-    }
-
-    // if (route.title) {
-    //     urlObj.searchParams.set('title', route.title);
-    // }
-
-    urlObj.searchParams.set('distanceMarkers', distanceMarkers ? 'true' : '');
-    urlObj.searchParams.set('metricUnits', metricUnits ? 'true' : '');
-    //urlObj.searchParams.set('sampleGraph', sampleGraph ? 'true' : '');
-    urlObj.searchParams.set('showPhotos', showPhotos ? 'true' : '');
-    urlObj.searchParams.set('overlay', overlay ? overlay : '');
-
-    // Optionally update other URL parameters (e.g., metricUnits) as needed.
-    // urlObj.searchParams.set('metricUnits', 'true');
-
-    // Replace the src attribute in the original embed string with our updated URL.
-    let modifiedEmbed = embed.replace(/src="([^"]+)"/, `src="${urlObj.toString()}"`);
-
-    // Modify inline style: for example, change width to 50%.
-    // (This regex assumes width is defined inline in the style attribute.)
-    modifiedEmbed = modifiedEmbed.replace(/min-width:\s*[^;]+;/, 'min-width: 70%;');
-    modifiedEmbed = modifiedEmbed.replace(/height:\s*[^;]+;/, 'height: 600px;');
-    modifiedEmbed = modifiedEmbed.replace(/width:\s1px+;/, 'width: 100%;');
-
-    // You can add additional modifications, e.g., update height:
-    // modifiedEmbed = modifiedEmbed.replace(/height:\s*[^;]+;/, 'height: 600px;');
-
-    return modifiedEmbed;
-}
-
-// Split the RWGPSEmbed field into an array of embed strings.
-// This regex assumes each embed is an <iframe>...</iframe> block.
-const mapsEmbed = (() => {
-    if (!route.RWGPSEmbed) return [];
-    const regex = /<iframe[\s\S]+?<\/iframe>/g;
-    const matches = route.RWGPSEmbed.match(regex);
-    if (!matches) return [];
-    // Force even a single embed into an array of one.
-    return matches.map((embed: string) => parseEmbeded(embed));
-})();
 
 // Check if the route description (which is rendered via set:html) has placeholders.
 const hasEmbedPlaceholder = route.description && route.description.includes('class="route-embededmap"');
 ---
 
 <div id=`route-accordian-${route.id}` class="route-description">
-    <!-- Hidden container with each processed embed stored in a regular HTML element -->
-
-    <div class="embeded-maps-data" style="">
-        {
-            mapsEmbed.map((embed: string, index: number) => (
-                <div class="embeded-map-data" data-index={index} set:html={embed} />
-            ))
-        }
+    <div class="panel panel-green">
+        <RWGPSMapEmbed route={route} />
     </div>
 
     <div class="route-images">
@@ -345,26 +250,6 @@ const hasEmbedPlaceholder = route.description && route.description.includes('cla
                     highlightsBox.style.display = 'inline-block';
                     //highlightsBox.style.float = 'right';
                 }
-            });
-        });
-    </script>
-
-    <!-- Pass the embed array to the client via a script and perform placeholder replacement -->
-    <!-- Client-side script that replaces placeholders with the corresponding embed HTML -->
-    <!-- Client-side script scoped to each route container -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('[id^="route-accordian-"]').forEach((container) => {
-                container.querySelectorAll('span.route-embededmap').forEach((placeholder) => {
-                    const index = placeholder.getAttribute('data-index') || '0';
-                    const embedData = container.querySelector(
-                        `.embeded-maps-data .embeded-map-data[data-index="${index}"]`,
-                    );
-                    if (embedData) {
-                        // Move the embedData node from the hidden container to replace the placeholder.
-                        placeholder.replaceWith(embedData);
-                    }
-                });
             });
         });
     </script>

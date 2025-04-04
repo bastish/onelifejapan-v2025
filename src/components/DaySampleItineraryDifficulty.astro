@@ -2,6 +2,7 @@
 // DaySampleItineraryHighlights.astro
 import { baseHost } from '../utils/utilities.ts';
 import DaySampleItineraryDifficultyMaps from './DaySampleItineraryDifficultyMaps.astro';
+import RWGPSMapEmbed from './RWGPSMapEmbed.astro';
 const { dayItinerary, modalId } = Astro.props;
 ---
 
@@ -121,7 +122,9 @@ const { dayItinerary, modalId } = Astro.props;
                     <div class="route-title">{route.title}</div>
                     <div class="route-distance">({route.distance.kilometers} km)</div>
                 </h3>
-                <DaySampleItineraryDifficultyMaps route={route} />
+
+                <RWGPSMapEmbed route={route} />
+                {/* <DaySampleItineraryDifficultyMaps route={route} /> */}
                 {/* <div class="frame rwgps-embed">
                     <div set:html={route.RWGPSEmbed} />
                 </div> */}
@@ -178,7 +181,8 @@ const { dayItinerary, modalId } = Astro.props;
                     <div class="route-distance">({route.distance.kilometers} km)</div>
                 </h3>
 
-                <DaySampleItineraryDifficultyMaps route={route} />
+                <RWGPSMapEmbed route={route} />
+                {/* <DaySampleItineraryDifficultyMaps route={route} /> */}
                 {/* <div class="frame">
                     <img
                         class="frame chart-image"
