@@ -9,6 +9,8 @@
     --bs-primary-dark: #7b8f73;
     --bs-primary-ultradark: rgb(73, 97, 37);
     --bs-primary-light: rgb(189, 208, 159);
+    --bs-primary-light-opaque: rgba(189, 208, 159, 0.1); // 0.8 is 80% opacity
+
     --bs-primary-ultralight: rgb(245, 241, 234); /* Later definition takes precedence */
 
     --bs-primary-secondary: #cc4c14; /* Last definition takes precedence */

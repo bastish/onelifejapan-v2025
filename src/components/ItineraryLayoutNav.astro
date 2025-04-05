@@ -9,49 +9,54 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
 
 <!-- Itinerary nav that appears below TopSlider and then sticks at the top -->
 <div class="itinerary-fixed-nav" id="sticky-nav">
-    <div class="inner-container">
-        <div class="inner-headline">
-            <h1 id="inner" style="display: none;">{itinerary.title}</h1>
-        </div>
-        <div class="itinerary-nav-container">
-            <!-- Removed the Menu button -->
-            <ul class="inline-links itinerary-nav">
-                <li class={activePage === 'overview' ? 'active' : ''}>
-                    <a class="button-link" href="#basic-info">Overview</a>
-                </li>
-                <li class={`dropdown ${activePage === 'sample-itinerary' ? 'active' : ''}`}>
-                    <a class="button-link dropdown-toggle" href="#sample-itinerary">
-                        Itinerary <span class="small-screen-hide">Details</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {
-                            days.map((day: any) => (
-                                <li>
-                                    <a class="dropdown-item" href={`#${day.slug}`}>
-                                        {day.title}
-                                    </a>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </li>
-                <li class={activePage === 'highlights' ? 'active' : ''}>
-                    <a class="button-link" href="#highlights">Highlights</a>
-                </li>
-                <li class={activePage === 'difficulty' ? 'active' : ''}>
-                    <a class="button-link" href="#difficulty">Difficulty</a>
-                </li>
-                <li class={activePage === 'pricing-details' ? 'active' : ''}>
-                    <a class="button-link" href="#pricing-details">
-                        Pricing <span class="small-screen-hide">Details</span>
-                    </a>
-                </li>
-                <li class={activePage === 'dates-and-availability' ? 'active' : ''}>
-                    <a class="button-link" href="#dates-and-availability">
-                        Dates <span class="small-screen-hide">& Availability</span>
-                    </a>
-                </li>
-            </ul>
+    <div class="nav-container">
+        <div class="inner-container">
+            <div class="inner-headline">
+                <h1 id="inner" style="display: none;">{itinerary.title}</h1>
+            </div>
+            <div class="itinerary-nav-container">
+                <!-- Removed the Menu button -->
+                <ul class="inline-links itinerary-nav">
+                    <li class={activePage === 'overview' ? 'active' : ''}>
+                        <a class="button-link" href="#basic-info">Overview</a>
+                    </li>
+                    <li class={`dropdown ${activePage === 'sample-itinerary' ? 'active' : ''}`}>
+                        <a class="button-link dropdown-toggle" href="#sample-itinerary">
+                            Itinerary <span class="small-screen-hide">Details</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href={`#sample-itinerary`}> - Itinerary Details </a>
+                            </li>
+                            {
+                                days.map((day: any) => (
+                                    <li>
+                                        <a class="dropdown-item" href={`#${day.slug}`}>
+                                            {day.title}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </li>
+                    <li class={activePage === 'highlights' ? 'active' : ''}>
+                        <a class="button-link" href="#highlights">Highlights</a>
+                    </li>
+                    <li class={activePage === 'difficulty' ? 'active' : ''}>
+                        <a class="button-link" href="#difficulty">Difficulty</a>
+                    </li>
+                    <li class={activePage === 'pricing-details' ? 'active' : ''}>
+                        <a class="button-link" href="#pricing-details">
+                            Pricing <span class="small-screen-hide">Details</span>
+                        </a>
+                    </li>
+                    <li class={activePage === 'dates-and-availability' ? 'active' : ''}>
+                        <a class="button-link" href="#dates-and-availability">
+                            Dates <span class="small-screen-hide">& Availability</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -84,8 +89,9 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
             // Assumes main nav is 75px tall when visible.
 
             if (mainNav && !mainNav.classList.contains('hidden-nav')) {
-                if (window.matchMedia('(max-width: 768px)').matches) {
-                    stickyNav.style.top = '51px'; // Mobile offset
+                if (window.matchMedia('(max-width: 992px)').matches) {
+                    // hamburger menu width when logo gets smaller
+                    stickyNav.style.top = '55px'; // Mobile offset
                 } else {
                     stickyNav.style.top = '65px'; // Desktop offset
                 }
@@ -102,7 +108,11 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
             // if (mainNavPosition.top <= 0) {
             //     stickyNav.classList.add('is-swapped');
             // }
-
+            if (mainNav && !mainNav.classList.contains('hidden-nav')) {
+                document.documentElement.style.scrollPaddingTop = '180px';
+            } else {
+                document.documentElement.style.scrollPaddingTop = '80px';
+            }
             ticking = false;
         }
 
@@ -117,55 +127,6 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
         window.addEventListener('resize', checkSticky);
     });
 </script>
-
-<!-- Dropdown and mobile behavior script (unchanged) -->
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Handle hover for dropdown items
-        document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
-            dropdown.addEventListener('mouseover', function () {
-                dropdown.classList.add('show');
-                const menu = dropdown.querySelector('.dropdown-menu');
-                if (menu) menu.classList.add('show');
-            });
-            dropdown.addEventListener('mouseout', function () {
-                dropdown.classList.remove('show');
-                const menu = dropdown.querySelector('.dropdown-menu');
-                if (menu) menu.classList.remove('show');
-            });
-        });
-
-        // Enable nested dropdown toggles if needed
-        document.querySelectorAll('.dropdown-item.dropdown-toggle').forEach(function (element) {
-            element.addEventListener('click', function (e) {
-                const nextSibling = element.nextElementSibling;
-                if (nextSibling && nextSibling.classList.contains('dropdown-menu')) {
-                    e.preventDefault();
-                    nextSibling.classList.toggle('show');
-                    element
-                        .closest('.dropdown-menu')
-                        .querySelectorAll('.dropdown-menu')
-                        .forEach((menu) => {
-                            if (menu !== nextSibling) menu.classList.remove('show');
-                        });
-                }
-            });
-        });
-
-        // Optional: Close dropdowns when clicking outside the navbar
-        document.body.addEventListener(
-            'click',
-            function (e) {
-                if (!e.target.closest('.navbar')) {
-                    document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
-                        menu.classList.remove('show');
-                    });
-                }
-            },
-            true,
-        );
-    });
-</script> -->
 
 <style lang="scss">
     @import '../styles/global.scss';
@@ -238,7 +199,7 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
         box-sizing: border-box;
         text-decoration: none;
         background-color: transparent;
-        font-size: inherit;
+        font-size: 1.2em;
         font-weight: inherit;
     }
 
@@ -248,67 +209,40 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
         background-color: #fff;
         border-color: var(--bs-link-color);
         color: var(--bs-link-hover-color);
+        border: 1px solid var(--bs-primary-dark);
+        background-color: var(--bs-primary-dark);
+        color: #fff;
+        background-color: #fff;
+        color: var(--bs-primary-dark);
+        padding-bottom: 0px;
+        @include respond-to(small) {
+            background-color: var(--bs-primary-dark);
+            color: #fff;
+        }
     }
 
     .button-link:active {
         background-color: #cce0ff;
+        background-color: var(--bs-primary-ultralight);
+        border: 1px solid var(--bs-primary-dark);
+        color: #cce0ff;
     }
 
     .active .button-link {
         background-color: var(--bs-link-color);
     }
 
-    .dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1000;
-        min-width: 10rem;
-        padding: 0.5rem 0;
-        margin: 0;
-        font-size: 1rem;
-        color: #212529;
-        text-align: left;
-        list-style: none;
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        border-radius: 0.25rem;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
-    }
-
-    .dropdown:hover .dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-item {
-        display: block;
-        width: 100%;
-        padding: 1rem 2rem;
-        font-weight: 400;
-        color: var(--bs-link-color);
-        text-align: inherit;
-        white-space: nowrap;
-        background-color: transparent;
-        border: 1px solid #999;
-        border-color: var(--bs-link-color);
-        border-bottom: #fff;
-        text-decoration: none;
-    }
-
-    .dropdown-item:hover,
-    .dropdown-item:focus {
-        color: var(--bs-link-hover-color);
-        text-decoration: none;
-        background-color: #f8f9fa;
-    }
-
     /* Mobile adjustments */
     @include respond-to(small) {
+        .itinerary-fixed-nav {
+            background-color: var(--bs-primary-light-opaque);
+        }
         .button-link {
-            font-size: 0.8em;
+            font-size: 0.9em;
             width: 100%;
             padding: 10px 5px;
+            background-color: #f8f9fa;
+            font-weight: 800;
         }
         .dropdown-menu {
             display: none;
@@ -317,17 +251,19 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
             flex-wrap: wrap;
             justify-content: space-between;
             padding-bottom: 1px;
+            gap: 0px;
         }
         .inline-links li {
             flex: 1 1 auto;
             min-width: 90px;
             margin: 0;
-            margin-top: 1px;
+            margin-top: 0px;
         }
         .button-link {
             text-align: center;
             padding: 8px 4px;
-            border: 1px solid var(--bs-primary-dark);
+            border: 2px solid var(--bs-primary-dark);
+            border-radius: 0px;
         }
     }
 
@@ -337,4 +273,95 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
         width: 100%;
         z-index: 1000;
     }
+
+    /* Desktop: Show dropdown on hover or when an element within is focused */
+    /* Default (Desktop) styling for the dropdown menu */
+    @media (min-width: 993px) {
+        .itinerary-fixed-nav .dropdown-menu {
+            /* Use your standard desktop positioning (typically relative to the link) */
+            position: absolute;
+            left: 0; // Align left relative to the dropdown's parent (the <li>)
+            width: auto; // Let it size naturally (or specify a width if desired)
+            box-sizing: border-box;
+            top: 100%; // Position immediately below the trigger
+            padding: 0.5rem 0;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.25rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+            display: none; // Hidden by default; shown via :hover or :focus-within
+        }
+
+        /* Show the dropdown on hover or focus */
+        .itinerary-fixed-nav .dropdown:hover .dropdown-menu,
+        .itinerary-fixed-nav .dropdown:focus-within .dropdown-menu {
+            display: block;
+        }
+    }
+
+    /* Mobile: Use click toggling */
+    @media (max-width: 992px) {
+        /* Remove any positioning from the dropdown container so the menu is positioned
+     relative to the full-width itinerary nav */
+        .itinerary-fixed-nav .dropdown {
+            position: static;
+        }
+
+        /* Mobile dropdown menu positioning: keep your horizontal positioning intact */
+        .itinerary-fixed-nav .dropdown-menu {
+            display: none; /* Hidden by default */
+            position: absolute;
+            left: calc(50% - 50vw); /* Align with the viewport's left edge */
+            width: 100vw; /* Span the full viewport width */
+            box-sizing: border-box;
+            top: 100%; /* Place directly below the trigger (adjust vertical spacing if needed) */
+            padding: 0.5rem 0;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.25rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+        }
+
+        /* When toggled open, show the menu */
+        .itinerary-fixed-nav .dropdown.open .dropdown-menu {
+            display: block;
+        }
+    }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check for mobile using a media query
+        const isMobile = window.matchMedia('(max-width: 992px)').matches;
+        const dropdownTriggers = document.querySelectorAll('.itinerary-fixed-nav .dropdown > .dropdown-toggle');
+
+        if (isMobile) {
+            // Toggle dropdown on click for mobile
+            dropdownTriggers.forEach((trigger) => {
+                trigger.addEventListener('click', function (e) {
+                    e.preventDefault(); // Prevent default link action if any
+                    const parentDropdown = trigger.parentElement;
+                    parentDropdown!.classList.toggle('open');
+                });
+
+                // Optionally, close the dropdown when a dropdown item is clicked
+                const dropdownItems = trigger.parentElement!.querySelectorAll('.dropdown-menu .dropdown-item');
+                dropdownItems.forEach((item) => {
+                    item.addEventListener('click', function () {
+                        const parentDropdown = item.closest('.dropdown');
+                        if (parentDropdown) {
+                            parentDropdown.classList.remove('open');
+                        }
+                    });
+                });
+            });
+
+            // Optional: close any open dropdown if clicking outside
+            document.addEventListener('click', function (e: MouseEvent) {
+                dropdownTriggers.forEach((trigger) => {
+                    const parentDropdown = trigger.parentElement;
+                    if (parentDropdown && e.target instanceof Element && !parentDropdown.contains(e.target)) {
+                        parentDropdown.classList.remove('open');
+                    }
+                });
+            });
+        }
+    });
+</script>

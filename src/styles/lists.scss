@@ -37,6 +37,8 @@ ul.checklist.x li:before {
     padding-right: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    background: var(--bs-primary-light-opaque);
+    background: white;
 }
 
 /* Only affect the specific container using both classes */

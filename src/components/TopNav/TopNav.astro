@@ -5,7 +5,7 @@ import logo from '../../assets/olj_logo.png';
 ---
 
 <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
-    <div class="container-fluid">
+    <div class="nav-container container">
         <!-- Logo on the left -->
         <a class="navbar-brand custom-navbar-brand" href="/">
             <img src={logo.src} alt="Logo" />
@@ -62,7 +62,9 @@ import logo from '../../assets/olj_logo.png';
                             >
                         </li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="/itinerary/7/custom-wanderlust/">Custom Adventures</a></li>
+                        <li>
+                            <a class="dropdown-item" href="/itinerary/7/custom-wanderlust/">Custom Adventures</a>
+                        </li>
                         <li>
                             <a class="dropdown-item" href="/itinerary/8/one-month-across-japan/"
                                 >One Month Across Japan</a
@@ -95,8 +97,113 @@ import logo from '../../assets/olj_logo.png';
     </div>
 </nav>
 
+<style lang="scss">
+    @use '../../styles/global' as *;
+
+    /* Base navbar styles */
+    .custom-navbar {
+        padding: 0 !important;
+    }
+
+    .custom-navbar-brand {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .custom-navbar-brand img {
+        height: 100%;
+        object-fit: contain;
+        width: 226px;
+        transition: width 0.3s ease;
+    }
+
+    @include respond-to(large) {
+        .custom-navbar-brand img {
+            width: 175px;
+        }
+    }
+
+    .custom-navbar-nav {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .nav-link {
+        color: var(--primary-color);
+        font-weight: 500;
+        &:hover,
+        &:focus {
+            color: var(--bs-primary-dark) !important;
+        }
+    }
+
+    .dropdown-menu {
+        background-color: var(--bs-light);
+        .dropdown-item {
+            color: var(--bs-link-color) !important;
+            border-bottom: 1px solid #e0e0e0;
+        }
+    }
+
+    .navbar a {
+        color: var(--bs-link-color);
+        font-size: 1.2em;
+    }
+    .navbar a:hover {
+        color: var(--bs-link-hover-color);
+    }
+    .nav-item {
+        border-right: 1px solid var(--bs-link-hover-color);
+    }
+    .nav-item:last-child {
+        border-right: 0;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: $large-screen) {
+        .custom-navbar {
+            max-width: 100% !important;
+            margin: 0;
+            padding: 0;
+        }
+        .custom-navbar-nav {
+            margin-left: 0 !important;
+            width: 100%;
+        }
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 0;
+        }
+    }
+    @media (max-width: $small-screen) {
+        .nav-container.scrolled {
+            //padding-top: 30px;
+            //border: 1px solid red;
+        }
+    }
+    /* Fixed navbar styling with transition */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 2000; /* High z-index to cover content */
+        background: #fff;
+        border-bottom: 1px solid var(--bs-link-hover-color);
+        transition: transform 0.3s ease;
+    }
+
+    /* When hidden, slide it up out of view */
+    .navbar.hidden-nav {
+        transform: translateY(-100%);
+    }
+</style>
+
 <!-- JavaScript: Hide navbar on scroll down, show on scroll up -->
 <script>
+    let doHideNav = true;
+    doHideNav = false;
+
     document.addEventListener('DOMContentLoaded', function () {
         let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const mainNav = document.querySelector('.navbar');
@@ -111,7 +218,7 @@ import logo from '../../assets/olj_logo.png';
             if (!isMenuOpen) {
                 if (scrollTop - lastScrollTop > delta) {
                     // Scrolling down: add class to hide the navbar
-                    mainNav!.classList.add('hidden-nav');
+                    doHideNav && mainNav!.classList.add('hidden-nav');
                 } else if (lastScrollTop - scrollTop > 0) {
                     // Scrolling up: remove class so the navbar reappears
                     mainNav!.classList.remove('hidden-nav');
@@ -133,234 +240,18 @@ import logo from '../../assets/olj_logo.png';
         }
     });
 </script>
-<style lang="scss">
-    @use '../../styles/global' as *;
 
-    /* Base navbar styles */
-    .custom-navbar {
-        padding: 0 !important;
-    }
-
-    .custom-container {
-        padding: 0 !important;
-        display: flex;
-        align-items: stretch;
-    }
-
-    .custom-navbar-brand {
-        display: flex;
-        align-items: stretch;
-    }
-
-    .custom-navbar-brand img {
-        height: 100%;
-        object-fit: contain;
-        width: 226px;
-        transition: width 0.3s ease;
-    }
-
-    @include respond-to(large) {
-        .custom-navbar-brand img {
-            width: 175px;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navContainer = document.querySelector('.nav-container');
+        function handleScroll() {
+            if (window.scrollY > 0) {
+                navContainer!.classList.add('scrolled');
+            } else {
+                navContainer!.classList.remove('scrolled');
+            }
         }
-    }
 
-    .custom-navbar-nav {
-        padding: 0;
-        margin-bottom: 0;
-    }
-
-    .nav-link {
-        color: var(--primary-color);
-        font-weight: 500;
-        &:hover,
-        &:focus {
-            color: #e0e0e0 !important;
-        }
-    }
-
-    .dropdown-menu {
-        background-color: var(--bs-light);
-        .dropdown-item {
-            color: #333 !important;
-            border-bottom: 1px solid #e0e0e0;
-        }
-    }
-
-    .navbar a {
-        color: var(--bs-link-color);
-        font-size: 1.2em;
-    }
-    .navbar a:hover {
-        color: var(--bs-link-hover-color);
-    }
-    .nav-item {
-        border-right: 1px solid var(--bs-link-hover-color);
-    }
-    .nav-item:last-child {
-        border-right: 0;
-    }
-
-    /* Mobile adjustments */
-    @media (max-width: $large-screen) {
-        .custom-navbar,
-        .custom-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0;
-            padding: 0;
-        }
-        .custom-navbar-nav {
-            margin-left: 0 !important;
-            width: 100%;
-        }
-        .nav-item {
-            border-bottom: 1px solid #e0e0e0;
-            border-right: 0;
-        }
-    }
-
-    /* Fixed navbar styling with transition */
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 2000; /* High z-index to cover content */
-        background: #fff;
-        border-bottom: 1px solid var(--bs-link-hover-color);
-        transition: transform 0.3s ease;
-    }
-
-    /* When hidden, slide it up out of view */
-    .navbar.hidden-nav {
-        transform: translateY(-100%);
-    }
-</style>
-<!--   
-<style lang="scss">
-    //    @import '../../styles/global.scss';
-
-    @use '../../styles/global' as *;
-
-    /* Base navbar styles */
-    .custom-navbar {
-        padding: 0 !important;
-    }
-
-    .custom-container {
-        padding: 0 !important;
-        display: flex;
-        align-items: stretch;
-    }
-
-    .custom-navbar-brand {
-        display: flex;
-        align-items: stretch;
-    }
-
-    .custom-navbar-brand img {
-        height: 100%;
-        object-fit: contain;
-        width: 226px;
-        transition: width 0.3s ease;
-    }
-
-    @include respond-to(large) {
-        .custom-navbar-brand img {
-            width: 175px;
-        }
-    }
-
-    // .custom-navbar-collapse {
-    //     display: flex;
-    //     flex-direction: column;
-    //     padding: 0;
-    // }
-
-    .custom-navbar-nav {
-        padding: 0;
-        margin-bottom: 0;
-    }
-
-    .nav-link {
-        color: var(--primary-color);
-        font-weight: 500;
-        &:hover,
-        &:focus {
-            color: #e0e0e0 !important;
-        }
-    }
-
-    .dropdown-menu {
-        background-color: var(--bs-light);
-        .dropdown-item {
-            color: #333 !important;
-            border-bottom: 1px solid #e0e0e0;
-        }
-    }
-
-    .navbar a {
-        color: var(--bs-link-color);
-        font-size: 1.2em;
-    }
-    .navbar a:hover {
-        color: var(--bs-link-hover-color);
-    }
-    .nav-item {
-        border-right: 1px solid var(--bs-link-hover-color);
-    }
-    .nav-item:last-child {
-        border-right: 0px solid var(--bs-link-hover-color);
-    }
-
-    /* Mobile adjustments: override container constraints to span full width */
-
-    @media (max-width: $large-screen) {
-        .custom-navbar,
-        .custom-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0;
-            padding: 0;
-        }
-        /* Remove ms-auto so nav items align left */
-        .custom-navbar-nav {
-            margin-left: 0 !important;
-            width: 100%;
-        }
-        .nav-link {
-        }
-        .nav-item {
-            border-bottom: 1px solid #e0e0e0;
-            border-right: 0px solid var(--bs-link-hover-color);
-        }
-    }
-
-    /* Smooth transition for the navbar */
-    .navbar {
-        transition: transform 0.3s ease;
-    }
-
-    /* When hidden, slide it up out of view */
-    .navbar.hidden-nav {
-        transform: translateY(-100%);
-    }
-
-    /* Always fixed at the top, with smooth transition */
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 2000; /* High z-index to cover content */
-        transition: transform 0.3s ease;
-        background: #fff;
-        border-bottom: 1px solid var(--bs-link-hover-color);
-    }
-
-    /* When the class "hidden-nav" is applied, slide it up out of view */
-    .navbar.hidden-nav {
-        transform: translateY(-100%);
-    }
-</style> -->
+        window.addEventListener('scroll', handleScroll);
+    });
+</script>
