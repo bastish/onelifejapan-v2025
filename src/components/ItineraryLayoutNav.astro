@@ -8,7 +8,7 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
 ---
 
 <!-- Itinerary nav that appears below TopSlider and then sticks at the top -->
-<div class="itinerary-fixed-nav" id="nav">
+<div class="itinerary-fixed-nav" id="sticky-nav">
     <div class="inner-container">
         <div class="inner-headline">
             <h1 id="inner" style="display: none;">{itinerary.title}</h1>
@@ -57,28 +57,51 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const stickyNav = document.getElementById('nav');
+        const stickyNav = document.getElementById('sticky-nav');
+        const stickyNavPlaceholder = document.getElementById('stickynav-placeholder');
         const mainNav = document.querySelector('.navbar'); // Main TopNav
+
         let ticking = false;
 
         function updateSticky() {
-            // Get current position of the itinerary nav relative to viewport
-            const rect = stickyNav.getBoundingClientRect();
+            if (!stickyNav || !mainNav || !stickyNavPlaceholder) return;
+            // Get current position of the sticky nav relative to viewport
+            const stickyNavPosition = stickyNav.getBoundingClientRect();
+            const mainNavPosition = mainNav.getBoundingClientRect();
+            const stickyNavPlaceholderPosition = stickyNavPlaceholder.getBoundingClientRect();
+            // console.log('stickyNavPosition', stickyNavPosition.x, stickyNavPosition.y);
+            // console.log('stickyNavPosition.top', stickyNavPosition.top);
 
-            // Use a threshold (5px) to avoid rapid toggling
-            if (rect.top <= 0 && !stickyNav.classList.contains('is-fixed')) {
+            // Hysteresis: add fixed state when nav goes above -70px,
+            // and remove it when nav is lower than 10px from top.
+            if (stickyNavPosition.top <= -70 && !stickyNav.classList.contains('is-fixed')) {
                 stickyNav.classList.add('is-fixed');
-            } else if (rect.top > 5 && stickyNav.classList.contains('is-fixed')) {
+            } else if (stickyNavPosition.top > 70 && stickyNav.classList.contains('is-fixed')) {
                 stickyNav.classList.remove('is-fixed');
             }
 
             // Adjust top offset based on main nav's visibility.
             // Assumes main nav is 75px tall when visible.
+
             if (mainNav && !mainNav.classList.contains('hidden-nav')) {
-                stickyNav.style.top = '70px';
+                if (window.matchMedia('(max-width: 768px)').matches) {
+                    stickyNav.style.top = '51px'; // Mobile offset
+                } else {
+                    stickyNav.style.top = '65px'; // Desktop offset
+                }
             } else {
                 stickyNav.style.top = '0';
             }
+            if (stickyNavPlaceholderPosition.top >= 70) {
+                stickyNav.classList.remove('is-fixed');
+            }
+
+            // console.log('stickyNavPlaceholderPosition.top', stickyNavPlaceholderPosition.top);
+            // console.log('stickyNavPosition.top', stickyNavPosition.top);
+
+            // if (mainNavPosition.top <= 0) {
+            //     stickyNav.classList.add('is-swapped');
+            // }
 
             ticking = false;
         }
@@ -96,7 +119,7 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
 </script>
 
 <!-- Dropdown and mobile behavior script (unchanged) -->
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Handle hover for dropdown items
         document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
@@ -142,7 +165,7 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
             true,
         );
     });
-</script>
+</script> -->
 
 <style lang="scss">
     @import '../styles/global.scss';
@@ -152,7 +175,7 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
         position: -webkit-sticky;
         position: sticky;
         top: 75px; /* Starts sticky at 75px below the viewport top */
-        z-index: 1500;
+        z-index: 1000;
         background: #fff;
         transition: all 0.3s ease;
     }
@@ -306,5 +329,12 @@ const urlBase = `/itinerary/${itinerary.id}/${itinerary.slug}`;
             padding: 8px 4px;
             border: 1px solid var(--bs-primary-dark);
         }
+    }
+
+    .is-swapped {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
     }
 </style>

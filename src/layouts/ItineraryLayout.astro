@@ -65,10 +65,10 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
         <div class="custom-container">
             <TopNav />
         </div>
-
         <div id="topSlider">
             {itinerary.sliderImage ? <GenericSlider sliderImageId={itinerary.sliderImage.id} height={175} /> : <div />}
         </div>
+        <div id="stickynav-placeholder" style="display: block; height: 0;"></div>
         
         <ItineraryLayoutNav itinerary={itinerary} />
                 
