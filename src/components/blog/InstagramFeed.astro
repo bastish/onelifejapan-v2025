@@ -1,0 +1,156 @@
+<style>
+    .instagram-feed-container {
+        margin-bottom: 50px;
+        border: 0px solid red;
+    }
+
+    .instagram-feed-inner {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        height: 810px; /* Set a fixed height for the scrollable area */
+        overflow: hidden; /* Hide the scrollbar */
+        position: relative;
+    }
+
+    .instagram-image-wrapper {
+        border: 2px solid #ccc;
+        padding: 3px;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 150px; /* Fixed height for grid items */
+        display: flex; /* Center the image */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .instagram-image-wrapper img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* Maintain aspect ratio */
+        border-radius: 3px;
+    }
+
+    .instagram-feed::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for WebKit browsers */
+    }
+
+    .scroll-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .scroll-buttons button {
+        padding: 5px 15px;
+        background-color: var(--bs-primary-dark);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 5px;
+        width: 30%;
+    }
+
+    .scroll-buttons button:hover {
+        background-color: var(--bs-primary);
+    }
+</style>
+
+<div class="instagram-feed-container">
+    <h3>Instagram</h3>
+    <div id="instagram-feed" class="instagram-feed-inner">
+        <p>Loading Instagram feed...</p>
+    </div>
+    <div class="scroll-buttons">
+        <button class="up-button"><i class="fas fa-chevron-up"></i></button>
+        <button class="down-button"><i class="fas fa-chevron-down"></i></button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Replace the Instagram API calls with your PHP endpoint
+    const phpEndpoint = 'https://my.onelifejapan.com/instagram-feed.php';
+
+    fetch(phpEndpoint)
+        .then(response => response.json())
+        .then(data => {
+            const instagramContainer = document.getElementById('instagram-feed');
+            instagramContainer.innerHTML = '';
+            const images = data.data;
+
+            images.forEach(image => {
+                if (image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM') {
+                    const imgElement = document.createElement('div');
+                    imgElement.classList.add('instagram-image-wrapper');
+
+                    // Handle single image
+                    if (image.media_type === 'IMAGE') {
+                        imgElement.innerHTML = `
+                            <a href="${image.permalink}" target="_blank">
+                                <img src="${image.media_url}" alt="Instagram Image" />
+                            </a>
+                        `;
+                        instagramContainer.appendChild(imgElement);
+                    }
+                    // Handle carousel album
+                    else if (image.media_type === 'CAROUSEL_ALBUM') {
+                        fetch(`${phpEndpoint}?children_id=${image.id}`)
+                            .then(response => response.json())
+                            .then(albumData => {
+                                if (albumData.data && albumData.data.length > 0) {
+                                    const firstImage = albumData.data[0];
+                                    imgElement.innerHTML = `
+                                        <a href="${image.permalink}" target="_blank">
+                                            <img src="${firstImage.media_url}" alt="Instagram Image" />
+                                        </a>
+                                    `;
+                                    instagramContainer.appendChild(imgElement);
+                                }
+                            })
+                            .catch(error => console.error('Error fetching carousel album:', error));
+                    }
+                }
+            });
+
+            // Scroll functionality
+            const scrollAmount = 100;
+            const upButtons = document.querySelectorAll('.up-button');
+            const downButtons = document.querySelectorAll('.down-button');
+
+            upButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    instagramContainer.scrollBy({
+                        top: -scrollAmount,
+                        behavior: 'smooth',
+                    });
+                });
+            });
+
+            downButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    instagramContainer.scrollBy({
+                        top: scrollAmount,
+                        behavior: 'smooth',
+                    });
+                });
+            });
+
+            // Add wheel scrolling
+            instagramContainer.addEventListener('wheel', function (event) {
+                event.preventDefault();
+                instagramContainer.scrollBy({
+                    top: event.deltaY < 0 ? -scrollAmount : scrollAmount,
+                    behavior: 'smooth',
+                });
+            });
+        })
+        .catch(error => {
+            const instagramContainer = document.getElementById('instagram-feed');
+            instagramContainer.innerHTML = '<p>Error loading Instagram feed. Please try again later.</p>';
+            console.error('Error fetching Instagram feed:', error);
+        });
+});
+
+</script>

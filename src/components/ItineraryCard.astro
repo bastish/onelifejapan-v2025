@@ -125,7 +125,8 @@ if (itinerary.comming_soon_status) {
 }
 
 <style lang="scss">
-    @import '../styles/global.scss';
+    @use '../styles/global' as *;
+    //@import '../styles/global.scss';
 
     .thumbnail-img img {
         border: 1px solid var(--bs-primary-light);
@@ -201,7 +202,7 @@ if (itinerary.comming_soon_status) {
 
         border: 1px solid var(--bs-primary-ultradark);
         color: var(--bs-primary-ultralight);
-        background: var(--bs-primary-dark);
+        background: var(--bs-link-color);
         color: #fff;
         @include respond-to(small) {
             font-size: 1.1em;
@@ -211,7 +212,7 @@ if (itinerary.comming_soon_status) {
 
     .btn-more:hover {
         right: -15px; /* Moves slightly to the left on hover */
-        background: var(--bs-link-color);
+        background: var(--bs-primary-dark);
     }
 
     /* Adjust for larger screens where there might be 3 cards per row */
@@ -248,6 +249,8 @@ if (itinerary.comming_soon_status) {
 
     .thumbnail-link:hover .btn-more {
         right: -15px;
-        background: var(--bs-link-color);
+        background: var(--bs-primary-light);
+        color: var(--bs-primary-dark);
+        color: var(--bs-link-color);
     }
 </style>

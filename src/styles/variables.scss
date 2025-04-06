@@ -13,9 +13,10 @@
 
     --bs-primary-ultralight: rgb(245, 241, 234); /* Later definition takes precedence */
 
-    --bs-primary-secondary: #cc4c14; /* Last definition takes precedence */
+    --bs-primary-secondary: rgb(204, 76, 20); /* Last definition takes precedence */
     --bs-border-color: var(--bs-primary);
     --bs-link-color: var(--bs-primary-secondary);
+    --bs-link-color-opaque: rgba(1204, 76, 20, 0.1); // 0.8 is 80% opacity
     --bs-link-hover-color: #628132;
 
     --bs-footer: #323232;

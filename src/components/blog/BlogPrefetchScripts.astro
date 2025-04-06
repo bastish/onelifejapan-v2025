@@ -1,0 +1,66 @@
+---
+---
+
+<script>
+    const parPage = '5';
+    const blogUrl = `https://onelifejapan.com/blog/wp-json/wp/v2/posts?per_page=${parPage}`;
+
+    function getBlogDataCache() {
+        let blogDataCacheString = localStorage.getItem('blogDataCache');
+        let blogDataCache = blogDataCacheString ? JSON.parse(blogDataCacheString) : [];
+        return blogDataCache;
+    }
+
+    async function fetchLatestTimestamp() {
+        const response = await fetch('https://onelifejapan.com/blog/wp-json/custom/v1/latest-modified/');
+        const data = await response.json();
+        return data.timestamp;
+    }
+
+    async function checkAndUpdateCache() {
+        const latestTimestamp = await fetchLatestTimestamp();
+        const storedTimestamp = localStorage.getItem('latestTimestamp');
+
+        // console.log('storedTimestamp:', storedTimestamp)
+        // console.log('latestTimestamp:', latestTimestamp)
+
+        if (!storedTimestamp || latestTimestamp > storedTimestamp) {
+            // console.log('Fetching new data...');
+            localStorage.setItem('latestTimestamp', latestTimestamp);
+            localStorage.removeItem('blogDataCache');
+            await preloadBlogData(1);
+        } else {
+            //console.log('Using cached data...');
+        }
+    }
+
+    async function preloadBlogData(page) {
+        try {
+            const response = await fetch(`${blogUrl}&page=${page}`);
+            const data = await response.json();
+            let blogDataCache = getBlogDataCache();
+            //console.log(blogDataCache)
+            blogDataCache = blogDataCache.filter(item => item.page !== page);
+            blogDataCache.push({ page: page, data: data });
+            localStorage.setItem('blogDataCache', JSON.stringify(blogDataCache));
+            //console.log(`Preloaded page ${page}:`, data);
+        } catch (error) {
+            console.error(`Error preloading blog page ${page}:`, error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function () {
+        const currentPage = window.location.pathname.includes('/journeys') ? parseInt(new URLSearchParams(window.location.search).get('page') || '1') : null;
+
+        await checkAndUpdateCache();
+
+        if (currentPage === null || currentPage === 1) {
+            await preloadBlogData(1);
+        }
+
+        if (currentPage && currentPage > 1) {
+            await preloadBlogData(currentPage);
+        }
+    });
+</script>
+

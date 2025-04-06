@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PurchaseBlock from '../components/PurchaseBlock.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+import '../styles/global.scss';
+
+const slogan = 'About One Life Japan'; // Set the height for 'about' page
+//const slogan = 'More than 90% of visitors to Japan do not leave Japans Golden Route (Tokyo, Kyoto, Osaka)';
+const pageBlurb2 =
+    '<div class="centered"><h2 class="emph">More than 90% of visitors to Japan do not leave Japans Golden Route (Tokyo, Kyoto, Osaka)</h2></div><p class="centered">Yet, most of what The Golden Route has to offer, can be found throughout Japan - without the shoulder to shoulder tourist crowds.</p><div class="centered"><h2 class="emph larger">Where do you want your Japan adventure to take <em>you</em>?</h2></div>'; // Set image for 'about' page
+
+const pageBlurb =
+    '<span class="emph">One Life Japan provides bike, hike, and walking Adventure Facilitation</span> to help you see, taste, feel, and experience the rest of Japan.'; //
+
+const sliderTextx =
+    '<p>Most of what The Golden Route offers, can be found throughout Japan</p><p> without the shoulder to shoulder tourist crowds.</p> Where do you want your Japan adventure to take <em>you</em>?'; // Set image for 'about' page
+
+const sliderText = '<div class="where-do-you">Where do you want your Japan adventure to take <em>you</em>?</div>'; // Set image for 'about' page
+
+// Frontmatter for SEO
+title: 'About One Life Japan Hike & Bike Adventures';
+canonical: 'https://www.onelifejapan.com/about/';
+description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+image: '/images/about-banner.jpg';
+---
+
+<BaseLayout title="About One Life Japan Hike & Bike Adventures" page="about" sliderid="4">
+    <div class="custom-container simple-page-body">
+        <div class="centered attention-catcher">
+            <h2>More than 90% of visitors to Japan do not leave Japan's Golden Route</h2>
+            <h4>(Tokyo, Kyoto, Osaka)</h4>
+        </div>
+        <div class="frame">
+            <GenericSlider
+                sliderImageId="23"
+                height={180}
+                sliderText={sliderText}
+                imageAnimationDelay="0s"
+                textAnimationDelay="2.5s"
+                preventShrink="true"
+            />
+        </div>
+
+        <PurchaseBlock page={'about'} slogan={slogan} pageBlurb={pageBlurb} />
+
+        <br />
+        <p>
+            We have been helping visitors venture into lesser visited rural areas <span class="emph">since 2005</span> -
+            between the bullet train stops and beyond the postcards and tourist hotspots, <span class="emph"
+                >introducing the people, places, and lifestyle and culture</span
+            >. For us it's about the <span class="emph">moments shared with locals</span>, and in the breathtaking
+            vistas that await off the main roads and the stories that unfold long the way - slowing down and eperince it
+            in a <span class="emph">relaxed, active, and adventureful way</span> on foot or by bicycle.
+        </p>
+
+        <div class="centered" style="margin-bottom:50px;">
+            <h2 class="emph">Our adventures are custom made to fit your travel style.</h2>
+        </div>
+
+        <p>
+            We want to <span class="emph">help you to explore</span>, not to dictate exactly what you should look at and
+            adhere to strict time schedules. We <span class="emph">go with the flow and adjust</span> according to your interest.
+            We <span class="emph">facilitate interaction with locals</span>, and ensure that <span class="emph"
+                >even if you do get "lost", you will never be truly lost</span
+            >, allowing you to explore without worry.
+        </p>
+
+        <p>
+            For many people, especially first time travelers, the where to go is pretty much set. The way to make your
+            trip unique is to start thinking about the how to get there. The itineraries I see are all about points, but
+            no one discusses what will happing in the time - a huge chuknk of time in Japan - as you travel between
+            those points. 2/3 of your trip. [represenation of how much of each day is spend at "attractions" vs "travel"
+            vs in-between interactions]
+        </p>
+
+        <p>
+            We travel by <span class="emph">bicycle and on foot</span>, but the main focus is not to log as many
+            kilometers as possible, rather bicycle and walking are simply the preferred mode of travel <span
+                class="emph">to allow you to keep it slow</span
+            >, so you can enjoy the area. While not opposed to some challenge, to <span class="emph"
+                >keep a focus on adventure</span
+            >, We provide e-assist bicycles in addtion to regular cross bikes. When the distances between locations are
+            too far to allow a relaxing ride or walk, alternative transportation is available to <span class="emph"
+                >provide shortcuts</span
+            > to ensure your cycling or walking time is spent in the best locations.
+        </p>
+
+        <p>
+            We can plan and faclitate adventures in the <span class="emph">countless rural areas across Japan</span>,
+            but our <span class="emph">base, main playground, and the community we know best</span>, and can make you
+            feel at home is a <span class="emph">rural area of Northern Nagano</span>. - Iiyama, Nozawa Onsen Village,
+            Sakae Mura, Kijima Daira, and Tsunan Town.
+        </p>
+
+        <hr />
+        <h3>About Your Facilitator</h3>
+
+        <br />
+        <p>
+            Kevin, the founder and head facilitator, has been <span class="emph"
+                >living, studying, working, and adventuring in Japan for nearly three decades</span
+            >, having studied and worked in in Kyushu, Shokoku and Tokyo. In 2006 he and his wife <span class="emph"
+                >moved to a small rural village</span
+            > in Northern Nagano's Snow Country to begin <span class="emph"
+                >farming rice, shoveling snow, and lay the foundation for One Life Japan.</span
+            >
+        </p>
+        <div class="frame about-right">
+            <GenericSlider sliderImageId={22} height={200} />
+        </div>
+        <p>
+            Using has an uncanny ability to intuit which path will lead to <span class="emph"
+                >the next great adventure</span
+            >. It's not all intuition though, he also relies on his <span class="emph"
+                >community ties, personal experience and careful research</span
+            >, trip planning, and preparation. Kevin speaks <span class="emph">Japanese and English</span>, with the
+            ability to charm even the most serious of local farmers into a conversation about politics, food, or life in
+            the mountains
+        </p>
+
+        <p>
+            <span class="emph">Kevin has journied extensivly</span> by foot, bicycle, van, train, ferry, and even hitchiking
+            throughout Japan, and led adventures from the <span class="emph">islands ofKyushu</span>, to the <span
+                class="emph">summit of Japan's highest mountains</span
+            >, through blzzards and typhoons. Still his passion is for the less extreme, slow paced realxing <span
+                class="emph">adventures that connect people with place</span
+            >, and when his mojo is working, he has been known to even work in an unplanned home-cooked dinner and peek
+            into the real life of the locals.
+        </p>
+
+        <p>
+            Kevin is trained as an <span class="emph">American Wilderness First Responder</span>, and an <span
+                class="emph">Outward Bound Japan instructor</span
+            >. In a previous life, before making the leap to rural life, Kevin worked in Tokyo for a major Japanese
+            finance firm, and in web development. After receiving a Masters Degree in Sustainability Studies in Sweden,
+            he worked for one of Japan's leading Sustainability Consultancy in Tokyo. He draws on these past
+            regular-life experiences in Japan to inform his current lust for travel.
+        </p>
+
+        <blockquote>
+            Kevin was instrumental in all our very special memories of the most fantastic Japan experiences. Hoping we
+            can come visit you guys soon.
+        </blockquote>
+
+        <blockquote>
+            Kristina and me went on a bike tour with Kevin 10 years ago (wow time flies!) and it remains my favorite
+            ever trip
+        </blockquote>
+
+        <blockquote>
+            The journey is as much about discovering new landscapes as it is about rediscovering ourselves. Whether
+            you’re cruising on a bike, exploring on foot, or simply soaking in a hot bath, you’re not just a guest on
+            our tours; you’re like family, and part of a community of explorers, dreamers, and storytellers. - Kevin
+        </blockquote>
+    </div>
+</BaseLayout>
+
+<style lang="scss">
+    @import '../styles/global.scss';
+    .attention-catcher {
+        padding-top: 20px;
+        padding-bottom: 30px;
+        overflow: hidden;
+        position: relative;
+    }
+    .attention-catcher h2,
+    h4 {
+        opacity: 0;
+        animation: fadeIn 4s forwards;
+        animation-timing-function: ease-out;
+        position: relative;
+    }
+
+    .attention-catcher h2 {
+        font-size: 1.7em;
+    }
+    .attention-catcher h2 span {
+        font-size: 1em;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @include respond-to(xxlarge) {
+    }
+
+    @include respond-to(xlarge) {
+    }
+
+    @include respond-to(large) {
+        .attention-catcher {
+            padding-top: 0px;
+            padding-bottom: 20px;
+        }
+    }
+
+    @include respond-to(medium) {
+        .btn-container {
+            justify-content: center !important; /* Center the button */
+            margin-top: 5px; /* Add some space above the button */
+        }
+
+        .container .row {
+            flex-direction: column; /* Stack the elements vertically */
+            align-items: center; /* Center align the children */
+        }
+
+        .container .col-md-3 {
+            width: 100%; /* Full width on smaller screens */
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1em;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    }
+    .centered {
+        text-align: center;
+    }
+    h2 {
+        font-size: 1.5em;
+        margin-top: 30px;
+        /* color: var(--bs-primary); */
+    }
+    h2.larger {
+        font-size: 2em;
+    }
+    h3 {
+        margin-top: 30px;
+        font-weight: bolder;
+    }
+
+    .about-right {
+        float: right;
+        width: 60%;
+        margin-left: 10px;
+        @include respond-to(small) {
+            margin: 0px;
+            width: 100%;
+        }
+        @include respond-to(medium) {
+            width: 100%;
+        }
+    }
+</style>

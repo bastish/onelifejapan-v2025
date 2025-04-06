@@ -33,7 +33,8 @@ const {
             <TopSlider page={page} />
         </div>
 
-        <PurchaseBlock page={'index'} />
+        {page === 'index' && <PurchaseBlock page={page} />}
+
         <main class="custom-container">
             <slot />
         </main>

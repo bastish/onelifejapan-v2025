@@ -1,0 +1,28 @@
+---
+const response = await fetch('https://blog.onelifejapan.com/wp-json/custom/v1/month-counts');
+if (!response.ok) {
+    throw new Error(`Failed to fetch month counts: ${response.statusText}`);
+}
+
+const monthCounts = await response.json();
+---
+
+<div class="archive-links">
+    <h3>What's it Like in...</h3>
+    <div class="archive-links-description">
+        <p>Take a peek into what's happening at different times of the year</p>
+    </div>
+    <ul id="month-archive-list" style="list-style: none; padding: 0;">
+        {monthCounts.length > 0 ? (
+            monthCounts.map(({ month, count }) => (
+                <li>
+                    <a href={`/journeys/month/${month.toLowerCase()}/`}>
+                        {month} ({count})
+                    </a>
+                </li>
+            ))
+        ) : (
+            <li>No posts available yet.</li>
+        )}
+    </ul>
+</div>

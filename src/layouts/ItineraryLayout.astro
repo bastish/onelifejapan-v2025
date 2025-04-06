@@ -115,7 +115,7 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
 
             <!-- Hihglights Section -->
             {page === 'customIndex' ? <></> :
-                <ItinerarySectionContainer sectionTitle="Possible Highlights" sectionAnchorId="possible-highlights">
+                <ItinerarySectionContainer sectionTitle="Possible Highlights" sectionAnchorId="highlights">
                     {!hasCustomRoutes && <ItineraryPossibleHighlights itinerary={itinerary} /> }
                     {hasCustomRoutes && <CustomItineraryPossibleHighlights itinerary={itinerary} /> }
                     

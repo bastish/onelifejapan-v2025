@@ -68,7 +68,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
                         book-link`
         >
             <a href="/contact" class="btn-u btn-u-lg rounded5 book-link">
-                Find an Adventure <i class="fa fa-arrow-right"></i></a
+                Book an Adventure <i class="fa fa-arrow-right"></i></a
             >
         </div>
     </div>
@@ -166,6 +166,15 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
     @import '../styles/global.scss';
     a.book-link {
         font-size: 1.5em;
+        background: var(--bs-link-color) !important;
+        color: var(--bs-primary-dark);
+        color: var(--bs-link-color);
+        color: #fff;
+    }
+    a.book-link:hover {
+        background: var(--bs-primary-light) !important;
+        color: var(--bs-primary-dark);
+        color: var(--bs-link-color);
     }
     .book-link {
         font-size: 1.5em;

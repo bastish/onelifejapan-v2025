@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import PurchaseBlock from '../components/PurchaseBlock.astro';
+import ContactSuccessMessage from '../components/ContactSuccessMessage.astro';
+
+// Frontmatter for SEO
+title: 'Contact One Life Japan Hike & Bike Adventures';
+canonical: 'https://www.onelifejapan.com/contact/';
+description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+---
+
+<BaseLayout title="Contact One Life Japan Bike, Hike & Walking Adventures" page="contact">
+    <div class="custom-container simple-page-body">
+        <PurchaseBlock page={'contact'} />
+        <div class="tab-v1">
+            <div id="form">
+                <ContactForm />
+            </div>
+            <div id="success">
+                <ContactSuccessMessage />
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'success') {
+            document.getElementById('form')!.style.display = 'none';
+            document.getElementById('success')!.style.display = 'block';
+        } else {
+            document.getElementById('form')!.style.display = 'block';
+            document.getElementById('success')!.style.display = 'none';
+        }
+    });
+
+    function handleFormSubmit(event: any) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch('/send_email.php', {
+            method: 'POST',
+            body: formData,
+        }).then((response) => {
+            if (response.ok) {
+                window.location.href = '/contact?status=success';
+            } else {
+                window.location.href = '/contact?status=fail';
+            }
+        });
+    }
+</script>
+
+<style>
+    #success {
+        display: none;
+    }
+</style>
+
+<!-- <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="detailed-tab" data-bs-toggle="tab" href="#detailed" role="tab" aria-controls="detailed" aria-selected="true">Detailed Contact Form</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="free-tab" data-bs-toggle="tab" href="#free" role="tab" aria-controls="free" aria-selected="false">Free Contact Form</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="detailed" role="tabpanel" aria-labelledby="detailed-tab">
+                <div class="row">
+                    <DetailedContactForm />
+                </div>
+            </div>
+            <div class="tab-pane fade" id="free" role="tabpanel" aria-labelledby="free-tab">
+                <FreeContactForm />
+            </div>
+        </div> -->

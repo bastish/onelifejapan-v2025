@@ -1,0 +1,14 @@
+---
+// journeys.astro
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPage from '../components/blog/BlogPage.astro';
+import { loadBlog } from '../utils/loadBlog';
+
+const posts = await loadBlog().then((res) => res.slice(0, 5)); // Fetch first 5 posts
+const pageTitle = '';
+---
+
+<BaseLayout title={pageTitle} page="journeys">
+    <BlogPage posts={posts} pageTitle={pageTitle} />
+</BaseLayout>

@@ -1,0 +1,394 @@
+//@import 'variables';
+
+.instagram-feed-container {
+    margin-bottom: 50px;
+    border: 0px solid red;
+}
+
+.instagram-feed-inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Two columns for two images per row
+    gap: 5px;
+    height: 810px; /* Set a fixed height for the scrollable area */
+    overflow: hidden; /* Hide the scrollbar */
+    position: relative;
+}
+
+.instagram-image-wrapper {
+    margin: 2px;
+    border: 1px solid #ccc;
+    padding: 1px;
+    border-radius: 5px;
+    width: 95%; // Full width to ensure one image per line
+    aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
+}
+
+.instagram-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire wrapper */
+    border-radius: 3px;
+    display: block;
+}
+
+.instagram-feed {
+    margin-bottom: 20px;
+}
+
+.instagram-feed::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+.scroll-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.scroll-buttons button {
+    /* t r b l*/
+    padding: 5px 15px 5px 15px;
+    background-color: var(--bs-primary-dark);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    width: 30%;
+}
+
+.scroll-buttons button:hover {
+    background-color: var(--bs-primary);
+}
+
+.blog-header {
+    border: 0px solid #ccc;
+    text-align: center;
+    padding: 20px;
+}
+
+.wp-block-image img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.blog-img img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.blog-content-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping */
+}
+
+#blog-posts {
+    flex: 1;
+    margin-right: 20px;
+    width: 70%; /* Ensure it takes full width for block layout */
+}
+
+.sidebar {
+    width: 25%;
+    padding-left: 10px;
+}
+
+#pagination-controls {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    order: 1; /* Ensure it's after blog-posts */
+}
+
+.blog-post {
+    padding: 0px;
+    margin-bottom: 120px;
+}
+
+#blog-posts h2 {
+    // background: var(--bs-primary-ultradark);
+    color: var(--bs-primary-ultradark);
+    padding: 10px 0px;
+    border-radius: 5px;
+    border-bottom: var(--bs-primary-light);
+    border-top: 1px solid var(--bs-primary-ultradark);
+}
+
+.archive-container {
+    margin-bottom: 20px;
+}
+.archive-container h2 {
+    margin-top: 20px;
+}
+.archive-container article {
+    margin-bottom: 10px;
+}
+.images-together {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 20px; /* Ensure separation from following content */
+}
+
+.images-together figure {
+    margin: 0 5px;
+}
+
+.images-together img {
+    object-fit: cover;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.archive-links {
+    border: 1px solid var(--bs-primary-light);
+    padding-left: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.archive-links-description {
+    margin-bottom: 10px;
+    padding-right: 8px;
+    //background: var(--bs-primary-light);
+}
+.archive-links ul {
+    list-style-type: none;
+    padding: 0;
+    padding-left: 10px;
+}
+.archive-links li {
+    margin-bottom: 10px;
+}
+.year-toggle {
+    cursor: pointer;
+    border: 0px solid red;
+    margin-left: -10px;
+    padding: 5px;
+}
+.archive-month {
+    border: 0px solid red;
+    margin-top: 10px;
+}
+.month-list {
+    padding-top: 10px;
+}
+
+.latest-posts ul {
+    list-style-type: none;
+    padding: 0;
+}
+.latest-posts li {
+    margin-bottom: 10px;
+}
+
+#pagination-controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pagination-controls a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+#pagination-controls a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Styles for the sidebar modal */
+.sidebar-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.sidebar-content {
+    background-color: #fff;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+//
+
+.instagram-feed-container {
+    margin-bottom: 50px;
+    border: 0px solid red;
+}
+
+.instagram-feed-inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Two columns for two images per row
+    gap: 5px;
+    height: 810px; /* Set a fixed height for the scrollable area */
+    overflow: hidden; /* Hide the scrollbar */
+    position: relative;
+}
+
+.instagram-image-wrapper {
+    margin: 2px;
+    border: 1px solid #ccc;
+    padding: 1px;
+    border-radius: 5px;
+    width: 95%; // Full width to ensure one image per line
+    aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
+}
+
+.instagram-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire wrapper */
+    border-radius: 3px;
+    display: block;
+}
+
+.blog-header {
+    border: 0px solid #ccc;
+    text-align: center;
+    padding: 20px;
+}
+
+.blog-content-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping */
+}
+
+#blog-posts {
+    flex: 1;
+    margin-right: 20px;
+    width: 70%; /* Ensure it takes full width for block layout */
+}
+
+.sidebar {
+    width: 25%;
+    padding-left: 10px;
+}
+
+#pagination-controls {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    order: 1; /* Ensure it's after blog-posts */
+}
+
+.sidebar.active {
+    display: block;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 300px;
+    background-color: white;
+    z-index: 1001;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-toggle {
+    display: none; /* Hidden by default */
+    text-align: center;
+    padding: 5px 10px;
+    background-color: var(--bs-primary-dark);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    //margin-left: 10px; /* Add some space between the button and the heading */
+}
+
+#blog-title-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center;
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+.sidebar-close {
+    display: none;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Add some space below the close button */
+    padding: 5px 10px;
+    background-color: var(--bs-primary-dark);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Full width button */
+}
+
+@include respond-to(medium) {
+    .sidebar {
+        display: none;
+        position: fixed; /* Make the sidebar fixed */
+        top: 0;
+        right: 0;
+        width: 90%; /* Set the width of the sidebar */
+        height: 100%; /* Full height */
+        background-color: white; /* Background color */
+        z-index: 1001; /* Ensure it is on top of other content */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Optional shadow for visual effect */
+    }
+    .sidebar {
+        display: none;
+        position: fixed; /* Make the sidebar fixed */
+        top: 0;
+        right: 0;
+        width: 300px; /* Set the width of the sidebar */
+        height: 100%; /* Full height */
+        background-color: white; /* Background color */
+        z-index: 1001; /* Ensure it is on top of other content */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Optional shadow for visual effect */
+        padding: 20px; /* Add some padding */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+    .sidebar-toggle {
+        display: inline-block;
+    }
+
+    .sidebar-close {
+        display: block;
+    }
+
+    // .instagram-feed-container {
+    //     display: none;
+    // }
+
+    .instagram-feed-inner {
+        height: 410px; /* Set a fixed height for the scrollable area */
+    }
+}

@@ -1,0 +1,125 @@
+
+<form action="" class="needs-validation" novalidate>
+    <div class="container py-4">
+        <header class="mb-4">
+            <h2>Inquire About an Adventure</h2>
+        </header>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="name" class="form-label">Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" name="name" id="name" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">E-mail</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" name="email" id="email" required>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="subject" class="form-label">Subject</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                    <input type="text" class="form-control" name="subject" id="subject" required>
+                </div>
+            </div>
+
+            <!-- Accordion for participant details -->
+            <div class="accordion" id="accordionParticipants">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Participant 1
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionParticipants">
+                        <div class="accordion-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="participant1Name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="participant1Name" name="participant1Name">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="participant1Age" class="form-label">Age</label>
+                                    <select class="form-select" id="participant1Age" name="participant1Age">
+                                        <!-- Insert age options here -->
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="participant1ActivityLevel" class="form-label">Activity Level</label>
+                                    <select class="form-select" id="participant1ActivityLevel" name="participant1ActivityLevel">
+                                        <!-- Insert activity level options here -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat for other participants -->
+            </div>
+
+            <!-- Additional questions -->
+            <div class="col-12">
+                <label for="itineraryGoals" class="form-label">Which itinerary on the site is closest to your goals?</label>
+                <textarea class="form-control" id="itineraryGoals" name="itineraryGoals" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="japanDuration" class="form-label">How long will you be in Japan before and after your trip with One Life Japan?</label>
+                <textarea class="form-control" id="japanDuration" name="japanDuration" rows="5"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="visitPlaces" class="form-label">What places will you visit before and after?</label>
+                <textarea class="form-control" id="visitPlaces" name="visitPlaces" rows="5"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="activityFrequency" class="form-label">How often and how far do you ride a bike or hike?</label>
+                <textarea class="form-control" id="activityFrequency" name="activityFrequency" rows="5"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="physicalConditions" class="form-label">Do you have any physical conditions/concerns you would like us to take into consideration when planning?</label>
+                <textarea class="form-control" id="physicalConditions" name="physicalConditions" rows="5"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="accommodationRequirements" class="form-label">Do you have any special requirements for accommodations?</label>
+                <textarea class="form-control" id="accommodationRequirements" name="accommodationRequirements" rows="5"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="dietaryRestrictions" class="form-label">Do you have any specific dietary restrictions or allergies?</label>
+                <textarea class="form-control" id="dietaryRestrictions" name="dietaryRestrictions" rows="5"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="transportationExpectations" class="form-label">What are your expectations for the transportation?</label>
+                <textarea class="form-control" id="transportationExpectations" name="transportationExpectations" rows="5"></textarea>
+            </div>
+            
+
+            
+            <!-- Repeat for other textarea inputs as needed -->
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="copy" name="copy">
+                    <label class="form-check-label" for="copy">Send a copy to my e-mail address</label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="window.history.back();">Back</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+

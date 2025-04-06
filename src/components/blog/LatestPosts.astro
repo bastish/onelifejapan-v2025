@@ -1,0 +1,22 @@
+---
+// Import the `loadRecentPosts` function
+import { loadRecentPosts } from '../../utils/loadBlog';
+
+// Fetch recent posts during build
+const recentPosts = await loadRecentPosts();
+---
+
+<div class="archive-links">
+    <h3>Latest Posts</h3>
+    <ul id="latest-posts-list" style="list-style: none; padding: 0;">
+        {recentPosts && recentPosts.length > 0 ? (
+            recentPosts.map((post) => (
+                <li key={post.id}>
+                    <a href={`/journeys/page/${post.id.toString()}/${post.slug ? post.slug.toString() : 'a' }/`}>{post.title}</a>
+                </li>
+            ))
+        ) : (
+            <li>No recent posts available</li>
+        )}
+    </ul>
+</div>

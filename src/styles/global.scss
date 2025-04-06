@@ -1,16 +1,24 @@
 /* src/styles/global.scss */
 
-// @import 'bootstrap/scss/bootstrap';
-// @import 'bootstrap/scss/functions';
-// @import 'bootstrap/scss/variables';
-// @import 'bootstrap/scss/mixins';
+// @import './variables.scss';
+// @import './lists.scss';
+// @import './blockquote.scss';
+// @import './fixednav.scss';
+// @import './blog.scss';
 
-@import './variables.scss';
-@import './lists.scss';
-@import './blockquote.scss';
-@import './fixednav.scss';
-// @use './variables.scss';
-// @use './lists.scss';
+// // After: using @use
+
+@use './variables' as *;
+@use './lists' as *;
+@use './blockquote' as *;
+@use './fixednav' as *;
+@use './blog' as *;
+
+// @forward 'variables';
+// @forward 'lists';
+// @forward 'blockquote';
+// @forward 'fixednav';
+// @forward 'blog';
 
 // To solve the import dependency issue,
 // https://www.youtube.com/watch?v=CR-a8upNjJ0
@@ -309,6 +317,11 @@ $container-xxl: 1320px;
     padding: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
+    font-size: 1.3rem;
+}
+.blurb span.emph {
+    //color: red !important;
+    font-size: 1.4rem;
 }
 
 .fineprint {
@@ -398,4 +411,29 @@ $container-xxl: 1320px;
     font-family: 'Georgia', serif;
     color: #333;
     font-style: italic;
+}
+
+.btn-main-style {
+    background: var(--bs-link-color) !important;
+    color: #fff !important;
+    @include respond-to(small) {
+        font-size: 1.1em;
+        right: -25px; /* Half outside the image container */
+    }
+}
+
+.btn-main-style:hover {
+    //right: -15px; /* Moves slightly to the left on hover */
+    background: var(--bs-primary-dark) !important;
+}
+
+.simple-page-body {
+    @include respond-to(small) {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+.where-do-you {
+    font-size: 2.5em;
 }

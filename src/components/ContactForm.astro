@@ -1,0 +1,155 @@
+---
+//export const prerender = true;
+---
+
+<!-- <form action="/send_email.php" method="post" onsubmit="return validateForm()" class="container mt-5"> -->
+
+<style>
+    .center {
+        text-align: center;
+        font-weight: 900;
+        color: var(--bs-link-color);
+        margin: 30px;
+    }
+
+    ul.questions li {
+        margin-bottom: 10px;
+    }
+</style>
+
+<h2 class="mb-4">Inquire About an Adventure</h2>
+
+
+<p>To enquire about trip, please contact us via email with the dates and type of itinerary you are interested in, as well as any other information that will be helpful for us to develop the perfetct adventure for you</p>
+<p class="center"><a href="mailto:info@onelifejapan.com" data-astro-cid-sz7xmlte="">info@onelifejapan.com</a></p>
+<ul class="questions">
+<li>Participant Names, Ages & General desired activity level</li>
+
+<li>Which itinerary on the site is closest to your goals? </li>
+
+<li>How long will you be in Japan before and after your trip with One Life Japan? </li>
+
+<li>What places will you visit before and after? </li>
+
+<li>How often/far do you walk, ride a bike or hike? </li>
+
+<li>Do you have any physical conditions/concerns you would like us take into consideration when planning? </li>
+
+<li>Do you have any special requirements for accommodations? </li>
+
+<li>Do you have any specific dietary restrictions or allergies?</li>
+</ul>
+<!--
+<form
+    id="contactForm"
+    target="_blank"
+    action="/send_email.php"
+    method="post"
+    onsubmit="return validateForm()"
+    class="container mt-5"
+>
+     
+    <p>Please fill out your name and email, number of people and dates you will be in Japan.</p>
+    <p>
+        The additional information is not required at this time, but can be helpful for us to plan a
+        proposal.
+    </p>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="name" class="form-label">Name</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="name"
+                    placeholder="Your Name"
+                />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">E-mail</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    id="email"
+                    placeholder="Your Email"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+            <input
+                type="text"
+                class="form-control"
+                name="subject"
+                id="subject"
+                placeholder="Subject"
+            />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="message" rows="20" placeholder="">
+Participant Names, Ages & General desired activity level: 
+
+Which itinerary on the site is closest to your goals? 
+
+How long will you be in Japan before and after your trip with One Life Japan? 
+
+What places will you visit before and after? 
+
+How often/far do you walk, ride a bike or hike? 
+
+Do you have any physical conditions/concerns you would like us take into consideration when planning? 
+
+Do you have any special requirements for accommodations? 
+
+Do you have any specific dietary restrictions or allergies?
+        </textarea>
+    </div>
+    <div class="honeypot" style="display:none;">
+        <label for="honeypot">Leave this field blank:</label>
+        <input type="text" id="honeypot" name="honeypot" />
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary me-md-2">Submit</button>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">
+            Back
+        </button>
+    </div>
+</form> -->
+
+<script>
+    function validateForm() {
+        //console.log("validateForm called");
+        var email = document.forms[0]['email'].value;
+        var message = document.forms[0]['message'].value;
+        //alert(email)
+
+        if (email == '' || message == '') {
+            alert('Email and message fields must be filled out');
+            return false;
+        }
+
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address');
+            return false;
+        }
+        return true;
+    }
+
+    document.getElementById('contactForm')!.onsubmit = validateForm;
+</script>
