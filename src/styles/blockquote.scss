@@ -1,6 +1,6 @@
 /* blockquote.css */
 
-@import 'variables';
+@use './variables' as *;
 
 blockquote {
     display: block;

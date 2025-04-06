@@ -1,24 +1,16 @@
 /* src/styles/global.scss */
 
-// @import './variables.scss';
-// @import './lists.scss';
-// @import './blockquote.scss';
-// @import './fixednav.scss';
-// @import './blog.scss';
-
-// // After: using @use
-
 @use './variables' as *;
 @use './lists' as *;
 @use './blockquote' as *;
 @use './fixednav' as *;
 @use './blog' as *;
 
-// @forward 'variables';
-// @forward 'lists';
-// @forward 'blockquote';
-// @forward 'fixednav';
-// @forward 'blog';
+@forward 'variables';
+@forward 'lists';
+@forward 'blockquote';
+@forward 'fixednav';
+@forward 'blog';
 
 // To solve the import dependency issue,
 // https://www.youtube.com/watch?v=CR-a8upNjJ0

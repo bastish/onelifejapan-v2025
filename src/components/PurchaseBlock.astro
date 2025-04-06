@@ -75,7 +75,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
 </div>
 
 <style lang="scss">
-    @import '../styles/global.scss';
+    @use '../styles/global' as *;
     @keyframes customFadeIn {
         from {
             opacity: 0;
@@ -163,7 +163,6 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
         }
     }
 
-    @import '../styles/global.scss';
     a.book-link {
         font-size: 1.5em;
         background: var(--bs-link-color) !important;

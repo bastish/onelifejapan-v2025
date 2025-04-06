@@ -106,7 +106,7 @@ const { itinerary, dayItinerary } = Astro.props;
 } -->
 
 <style lang="scss">
-    @import '../styles/global.scss';
+    @use '../styles/global' as *;
     @include respond-to(medium) {
         /* Adjusts the width for medium devices and up */
         .custom-col-width {

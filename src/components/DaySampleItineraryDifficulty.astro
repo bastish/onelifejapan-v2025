@@ -94,7 +94,7 @@ const { dayItinerary, modalId } = Astro.props;
 </div>
 
 <style lang="scss">
-    @import '../styles/global.scss';
+    @use '../styles/global' as *;
     /* General styling (icons, etc.) */
     .fa-bicycle:before {
         content: '\f206';
@@ -199,7 +199,7 @@ const { dayItinerary, modalId } = Astro.props;
     }
 </style>
 <style lang="scss">
-    @import '../styles/global.scss';
+    @use '../styles/global' as *;
     .route-title {
         display: inline;
     }

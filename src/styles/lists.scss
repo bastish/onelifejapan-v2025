@@ -1,4 +1,5 @@
 //@import './variables.scss';
+@use './variables' as *;
 
 ul.checklist {
     list-style-type: none;
