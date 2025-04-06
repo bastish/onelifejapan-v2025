@@ -1,12 +1,6 @@
 ---
-import { loadItinerary } from '../utils/loadItinerary';
+const{ itinerary }  = Astro.props;
 
-const { id, slug } = Astro.params;
-const itinerary = await loadItinerary(id!);
-
-function hasPricingTable(itinerary: any) {
-    return itinerary && Array.isArray(itinerary.pricingTable) && itinerary.pricingTable.length > 0;
-}
 ---
 
 <div class="panel panel-green margin-bottom-40">
@@ -14,11 +8,11 @@ function hasPricingTable(itinerary: any) {
         <div class="panel-body">
             <!-- <div class="price-display-old" set:html={itinerary.pricingTable}></div> -->
 
-            {
-                itinerary.pricingIntro ? (
+            { 
+                itinerary?.pricingIntro ? (
                     <div class="price-display">
                         <div class="price-intro">
-                            <div set:html={itinerary.pricingIntro} />
+                            <div set:html={itinerary?.pricingIntro} />
                         </div>
                         <div class="pricing-button-container">
                             <a href="/contact" class="btn-main-style detail-btn btn btn-brd rounded btn-u-sm rounded-2x">

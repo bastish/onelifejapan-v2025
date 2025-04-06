@@ -46,7 +46,8 @@ const slides = routes
 </div>
 
 <style lang="scss">
-    @import '../styles/variables.scss';
+    @use '../styles/global' as *;
+    @use '../styles/variables' as *;
     /* Container to hold both the slider and the intro text */
     .wrap-container {
         overflow: auto; /* Clears floated children */

@@ -1,7 +1,7 @@
 ---
 // ItineraryCard.astro
 const id = Astro.props.id;
-console.log(`~~~~ItineraryCard ~~ ${id} ~~~~~~~~~`);
+//console.log(`~~~~ItineraryCard ~~ ${id} ~~~~~~~~~`);
 import { loadItinerary } from '../utils/loadItinerary.ts';
 import { baseHost } from '../utils/utilities.ts';
 //const itinerary = await import(`../../data/itinerary_${id}.json`);
@@ -26,8 +26,8 @@ const {
 } = itinerary;
 
 let itineraryLink = `/itinerary/${id}/${slug}/`;
-console.log('--- itineraryLink ---');
-console.log(itineraryLink);
+// console.log('--- itineraryLink ---');
+// console.log(itineraryLink);
 if (itinerary.comming_soon_status) {
     itineraryLink = 'javascript:void(0)';
 }

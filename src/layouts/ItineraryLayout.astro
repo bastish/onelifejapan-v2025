@@ -22,13 +22,13 @@ import ItineraryLayoutNav from '../components/ItineraryLayoutNav.astro';
 import background from '../assets/background.svg';
 import '../styles/global.scss';
 
-const id = Astro.props.id;
+let itinerary: any = Astro.props.itinerary;
 import { loadItinerary } from '../utils/loadItinerary.ts';
 import { loadCustomItinerary, customItineraryList } from '../utils/loadCustomItinerary';
-let itinerary = await loadItinerary(id);
+//let itinerary = await loadItinerary(id);
 
 // // astro-dynamic-embed
-
+//console.log(itinerary.pricingIntro);
 import { AstroEmbedComponents, embedComponents } from '../astroEmbedComponent/astroEmbedComponents';
 let aecComponents: any[] = [];
 [aecComponents, itinerary] = embedComponents(aecComponents, itinerary);
@@ -129,10 +129,9 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
             </ItinerarySectionContainer>
             
             <!-- Price Section -->
-            <ItinerarySectionContainer sectionTitle="Price Estimates" sectionAnchorId="pricing-details">
-                <ItineraryPricingDetails itinerary={itinerary} />
-            </ItinerarySectionContainer>
-
+                <ItinerarySectionContainer sectionTitle="Price Estimates" sectionAnchorId="pricing-details">
+                    <ItineraryPricingDetails itinerary={itinerary} />
+                </ItinerarySectionContainer>
             <!-- Dates Section -->
             <ItinerarySectionContainer sectionTitle="Dates & Availability" sectionAnchorId="dates-and-availability">
                 <ItineraryDatesAndAvailability itinerary={itinerary} />
