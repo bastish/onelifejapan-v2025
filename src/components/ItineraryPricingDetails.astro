@@ -33,10 +33,10 @@ const{ itinerary }  = Astro.props;
                     ''
                 )
             } -->
-            <div class="price-display">
                 {
                     itinerary.pricing.prices && itinerary.pricing.prices.length > 0 ? (
-                        <>
+                        
+            <div class="price-display">
                             <div class="pricing-table-container">
                                 <h3 class="pricing-table-title">Register with:</h3>
                                 <div class="pricing-table">
@@ -76,37 +76,44 @@ const{ itinerary }  = Astro.props;
                                     </div>
                                 ) : null}
                             </div>
-                        </>
-                    ) : (
-                        <div class="pricing-table-container">
-                            <div class="pricing-button-container">
-                                <a href="/contact" class="detail-btn btn btn-brd rounded btn-u-sm rounded-2x">
-                                    Inquire About A Trip Like This ››&nbsp;
-                                </a>
-                            </div>
-                        </div>
+                            {
+                    itinerary.pricing.footnotes && itinerary.pricing.footnotes.length > 0 ? (
+                    <div class="price-fineprint">
+                        <hr />
+                        <h4>Pricing Notes:</h4>
+                        <ul class="checklist fineprint-check">
+                            {itinerary.pricing.footnotes.map((item: any) => <li set:html={item.note} />)}
+                        </ul>
+                        {
+                            itinerary.pricingFinePrint ? (
+                                <div class="price-fineprint">
+                                    <ul class="fineprint">
+                                        {itinerary.pricingFinePrint.map((item: string) => (
+                                            <li>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ) : (
+                                ''
+                            )
+                        }
+                    </div>) : (
+                        ''
                     )
                 }
-                <div class="price-fineprint">
-                    <hr />
-                    <h4>Pricing Notes:</h4>
-                    <ul class="checklist fineprint-check">
-                        {itinerary.pricing.footnotes.map((item: any) => <li set:html={item.note} />)}
-                    </ul>
-                    {
-                        itinerary.pricingFinePrint ? (
-                            <div class="price-fineprint">
-                                <ul class="fineprint">
-                                    {itinerary.pricingFinePrint.map((item: string) => (
-                                        <li>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ) : (
-                            ''
-                        )
-                    }
-                </div>
+                        </div>
+                    ) : (
+                        ''
+                        // <div class="pricing-table-container">
+                        //     <div class="pricing-button-container">
+                        //         <a href="/contact" class="detail-btn btn btn-brd rounded btn-u-sm rounded-2x">
+                        //             X Inquire About A Trip Like This ››&nbsp;
+                        //         </a>
+                        //     </div>
+                        // </div>
+                    )
+                }
+                
             </div>
         </div>
     </div>

@@ -1,0 +1,58 @@
+---
+const { itinerary } = Astro.props;
+const region = itinerary.regions && itinerary.regions.length > 0 ? itinerary.regions[0] : null;
+
+import { baseHost } from '../utils/utilities.ts';
+---
+
+{
+    region && (
+        <>
+            <a href="#" data-bs-toggle="modal" data-bs-target={`#map-modal-${region.id}`}>
+                {region.title}
+            </a>
+
+            <div
+                class="modal fade"
+                id={`map-modal-${region.id}`}
+                tabindex="-1"
+                aria-labelledby={`map-modal-label-${region.id}`}
+                aria-hidden="true"
+            >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id={`map-modal-label-${region.id}`}>
+                                {region.title}
+                            </h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                        </div>
+                        <div class="modal-body">
+                            <img
+                                src={baseHost + region.photos[0].medium}
+                                class="img-fluid"
+                                alt={`Image for ${region.title}`}
+                            />
+                            {/* <div set:html={region.description}></div> */}
+                        </div>
+                        {/* <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div> */}
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+<style lang="scss">
+    @use '../styles/global' as *;
+
+    .modal-content {
+        border: 0px solid var(--bs-primary-ultradark);
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-top: 80px;
+    }
+</style>

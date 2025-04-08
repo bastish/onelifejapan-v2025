@@ -111,58 +111,68 @@ try {
         font-size: 1.3em;
         display: block;
     }
+    .accordion-collapse {
+    transition: none !important;
+}
 </style>
 
 <script>
-    // When the document is ready, attach click handlers to accordion buttons.
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.highlight-accordion-button').forEach((button) => {
-            button.addEventListener('click', () => {
-                const collapseSelector = button.getAttribute('data-bs-target');
-                //console.log('collapseSelector: ', collapseSelector);
-                const placeholder = document.querySelector(`${collapseSelector} .highlight-content-placeholder`) as HTMLElement;
-                if (placeholder && !placeholder.dataset.loaded) {
-                    // Extract the highlight point id from the data attribute.
-                    const highlightId = placeholder.getAttribute('data-highlight-id');
-                    //console.log(`/highlight-points/${highlightId}/`);
-                    if (highlightId !== null) {
-                        //console.log('highlightId:', highlightId);
-                        // Fetch the static HTML for this highlight point.
-                        fetch(`/highlight-points/${highlightId}/`)
-                            .then((response) => response.text())
-                            .then((html) => {
-                                placeholder.innerHTML = html;
-                                placeholder.dataset.loaded = "true";
-                            })
-                            .catch((err) => {
-                                placeholder.innerHTML = `<p>Error loading content.</p>`;
-                                console.error(err);
-                            });
-                    } else {
-                        placeholder.innerHTML = `<p style="text-align: center; font-style: italic;"><span class="no-info">┐( ͡◉ ͜ʖ ͡◉)┌ </span><br>Still searching for the best links to share.</p>`;
-                    }
+document.addEventListener('DOMContentLoaded', () => {
+    const accordionButtons = document.querySelectorAll('.highlight-accordion-button');
+
+    accordionButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const collapseSelector = button.getAttribute('data-bs-target');
+            const placeholder = document.querySelector(`${collapseSelector} .highlight-content-placeholder`) as HTMLElement;
+            if (placeholder && !placeholder.dataset.loaded) {
+                const highlightId = placeholder.getAttribute('data-highlight-id');
+                if (highlightId !== null) {
+                    fetch(`/highlight-points/${highlightId}/`)
+                        .then((response) => response.text())
+                        .then((html) => {
+                            placeholder.innerHTML = html;
+                            placeholder.dataset.loaded = "true";
+                        })
+                        .catch((err) => {
+                            placeholder.innerHTML = `<p>Error loading content.</p>`;
+                            console.error(err);
+                        });
+                } else {
+                    placeholder.innerHTML = `<p style="text-align: center; font-style: italic;"><span class="no-info">No content available.</span></p>`;
                 }
-            });
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // For each placeholder, find the corresponding accordion container
-        document.querySelectorAll('.highlight-collection').forEach((placeholder) => {
-            const index = placeholder.getAttribute('data-index');
-            const accordion = document.getElementById(`accordionCollection-${index}`);
-            if (accordion) {
-                // Move the accordion into the placeholder.
-                // Option 1: Append the accordion inside the placeholder.
-                placeholder.appendChild(accordion);
-
-                // Option 2 (if you want to replace the placeholder entirely):
-                // placeholder.parentNode.replaceChild(accordion, placeholder);
-            } else {
-                console.warn(`No accordion found for data-index="${index}"`);
             }
         });
     });
+
+    // Use Bootstrap’s collapse events to adjust scroll.
+    document.querySelectorAll('.accordion-collapse').forEach((collapseEl) => {
+        collapseEl.addEventListener('shown.bs.collapse', (event) => {
+            // The new active element (the one that just expanded)
+            const target = event.target as HTMLElement;
+            // Use scrollIntoView for a smooth scroll after the panel is shown
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100); // Delay, adjust timing according to your animation speed
+        });
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    let savedScrollPos = 0;
+
+    // Capture the scroll position when an accordion header is clicked.
+    document.querySelectorAll('.highlight-accordion-button').forEach(button => {
+        button.addEventListener('click', () => {
+            savedScrollPos = window.scrollY || window.pageYOffset;
+        });
+    });
+
+    // After the panel is fully expanded, reset scroll position.
+    document.querySelectorAll('.accordion-collapse').forEach(collapseEl => {
+        collapseEl.addEventListener('shown.bs.collapse', () => {
+            window.scrollTo({ top: savedScrollPos, behavior: 'instant' });
+        });
+    });
+});
+
+
 </script>

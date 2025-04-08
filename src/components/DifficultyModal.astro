@@ -1,0 +1,69 @@
+---
+const { itinerary } = Astro.props;
+---
+
+<!-- <a href="#" data-bs-toggle="modal" data-bs-target={`#difficulty-modal-${itinerary.activityLevel.id}`}>
+    {itinerary.activityLevel.title}
+</a> -->{
+    itinerary.activityLevel.title
+}
+<span class=`level-indicator level-${itinerary.activityLevel.level}`>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</span>
+
+<div
+    class="modal fade"
+    id={`difficulty-modal-${itinerary.activityLevel.id}`}
+    tabindex="-1"
+    aria-labelledby={`difficulty-modal-label-${itinerary.activityLevel.id}`}
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id={`difficulty-modal-label-${itinerary.activityLevel.id}`}>
+                    difficulty Modal {itinerary.activityLevel.id}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Modal content for difficulty ID {itinerary.activityLevel.id} goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    a {
+        display: inline-block;
+        /* Adjust spacing between link and indicator as needed */
+    }
+
+    .level-indicator {
+        display: inline-flex;
+        gap: 5px; /* Space between circles */
+        vertical-align: middle; /* Align with the middle of the link */
+        margin-left: 10px;
+    }
+
+    .circle {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #eee; /* Default color for empty circles */
+        border: 1px solid #ccc;
+    }
+
+    .level-1 .circle:nth-child(1),
+    .level-2 .circle:nth-child(-n + 2),
+    .level-3 .circle:nth-child(-n + 3),
+    .level-4 .circle:nth-child(-n + 4) {
+        background-color: var(--bs-primary-light); /* Filled circle color */
+    }
+</style>

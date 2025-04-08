@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PurchaseBlock from '../components/PurchaseBlock.astro';
 import GenericSlider from '../components/GenericSlider.astro';
+import IsItForYou from '../components/IsItForYou.astro';
 import '../styles/global.scss';
 
 const slogan = 'About One Life Japan'; // Set the height for 'about' page
@@ -45,17 +46,98 @@ image: '/images/about-banner.jpg';
 
         <br />
         <p>
-            We have been helping visitors venture into lesser visited rural areas <span class="emph">since 2005</span> -
-            between the bullet train stops and beyond the postcards and tourist hotspots, <span class="emph"
-                >introducing the people, places, and lifestyle and culture</span
-            >. For us it's about the <span class="emph">moments shared with locals</span>, and in the breathtaking
-            vistas that await off the main roads and the stories that unfold long the way - slowing down and eperince it
-            in a <span class="emph">relaxed, active, and adventureful way</span> on foot or by bicycle.
+            <span class="emph">Since 2005</span>, we've helped travelers venture beyond the bullet train stops and
+            glossy postcards, into <span class="emph">lesser-visited rural areas</span> where life unfolds at a slower pace.
+            <span class="emph">One Life Japan is based in the countryside</span> we explore, and our roots in the region
+            run deep. We're not just passing through - we live here, work here, and <span class="emph">
+                know the backroads, the seasons, and the people
+            </span> who shape the rhythm of everyday life.
+        </p>
+        <p>
+            Our trips introduce not just places, but the<span class="emph"> people and everyday culture</span> that make
+            them meaningful. For us, the magic lies in <span class="emph">shared moments with locals</span>,
+            breathtaking vistas far from the main roads, and the <span class="emph"
+                >unexpected stories that unfold along the way</span
+            >.
+        </p>
+
+        <div class="centered" style="margin-bottom:20px;">
+            <IsItForYou show="modal" />
+        </div>
+        <p>
+            <span class="emph">Each trip is custom-designed</span> to match your pace and travel style. Whether it's a two-day
+            countryside break, a one-week Bike & Hike challenge, a relaxed family adventure, or a one-month culture and language
+            immersion for students - we build each trip to fit the people taking it.<span class="emph">
+                We love a good challenge</span
+            >, whether it's physical or about opening perspectives,<span class="emph">
+                but we always keep it within reach</span
+            >.
+        </p>
+
+        <p>
+            We believe that travel is not just about what you see, but how you experience it. Our programs are built to
+            reveal the <span class="emph">meaning and relationships</span> behind Japan’s cultural and natural heritage—through
+            first-hand encounters with landscapes, traditions, and communities. The goal isn’t just to see rural Japan, but
+            to feel a connection to it as place.
+        </p>
+
+        <p>
+            Our home base - and <span class="emph">the region we know best</span> - is in Northern Nagano: Iiyama, Nozawa
+            Onsen Village, Sakae Mura, Kijima Daira, and Tsunan Town.<span class="emph">
+                We travel by bike and on foot</span
+            >, not to rack up kilometers, but because they’re the <span class="emph"
+                >best way to stay grounded and explore deeply</span
+            >. For longer distances, we mix in trains or transfers to keep the rhythm balanced. E-bikes are available
+            for those who want to <span class="emph">keep things active but accessible</span>.
+        </p>
+
+        <p>
+            We don't dictate where to look or rush you through a checklist. Instead,<span class="emph">
+                we create space for exploration</span
+            >, adjusting to your interests and giving you the <span class="emph"
+                >confidence to wander without worry</span
+            >. Even if you do get a little "lost," you're never truly lost—we’re there to back you up, not hold your
+            hand.
+        </p>
+
+        <p>
+            For many visitors, the "where" is already decided. <span class="emph"
+                >What makes a trip meaningful is the "how"</span
+            > - the time in between the sights. The landscapes you move through. The strangers who become characters in <span
+                class="emph"
+            >
+                your story
+            </span>. That’s where we focus.
+        </p>
+
+        <!-- 
+
+        <p>
+            We have <span class="emph">twenty years of experience</span> helping people venture into lesser visited rural
+            areas - <span class="emph">since 2005</span> - between the bullet train stops and beyond the postcards and tourist
+            hotspots, <span class="emph">introducing the people, places, and lifestyle and culture</span>. For us it's
+            about the <span class="emph">moments shared with locals</span>, and in the breathtaking vistas that await
+            off the main roads and the stories that unfold long the way - slowing down and eperince it in a <span
+                class="emph">relaxed, active, and adventureful way</span
+            > on foot or by bicycle.
         </p>
 
         <div class="centered" style="margin-bottom:50px;">
             <h2 class="emph">Our adventures are custom made to fit your travel style.</h2>
         </div>
+        <p>
+            We have trips to fit most needs and schedules, such as 2-days in the countryside, a challenging 1-week Bike
+            & Hike, 4 and 5 day family trips, and even a 1-month Japan language & culture immersion course for students.
+            We thrive on challenge - physical challenge as well as challenging pre-held beliefs, but strive to make sure
+            the challenge is not too much for the individual.
+        </p>
+        <p>
+            Our programs are designed to communicate and reveal meanings and relationships of cultural and natural
+            heritage to the public, through first hand involvement with an object, artifact, landscape, monument or
+            site. Through this we aim to forge an emotional and intellectual connection between the interests of
+            participants and the meanings inherent in the cultural resource being studied.
+        </p>
+        <IsItForYou show="collapse" />
 
         <p>
             We want to <span class="emph">help you to explore</span>, not to dictate exactly what you should look at and
@@ -90,44 +172,99 @@ image: '/images/about-banner.jpg';
             but our <span class="emph">base, main playground, and the community we know best</span>, and can make you
             feel at home is a <span class="emph">rural area of Northern Nagano</span>. - Iiyama, Nozawa Onsen Village,
             Sakae Mura, Kijima Daira, and Tsunan Town.
-        </p>
+        </p> -->
 
         <hr />
         <h3>About Your Facilitator</h3>
 
         <br />
+
         <p>
-            Kevin, the founder and head facilitator, has been <span class="emph"
-                >living, studying, working, and adventuring in Japan for nearly three decades</span
-            >, having studied and worked in in Kyushu, Shokoku and Tokyo. In 2006 he and his wife <span class="emph"
-                >moved to a small rural village</span
-            > in Northern Nagano's Snow Country to begin <span class="emph"
-                >farming rice, shoveling snow, and lay the foundation for One Life Japan.</span
+            Kevin has spent <span class="emph">30 years living, working, and exploring Japan</span> - from the islands of
+            Kyushu and Shikoku to the streets of Tokyo. In 2006, he and his wife moved to a <span class="emph">
+                rural village in Northern Nagano’s Snow Country
+            </span>, where he began farming rice, shoveling snow, and guiding tours as One Life Japan. Becoming <span
+                class="emph"
             >
+                part of a rural community and living daily life there
+            </span> has given him rare insight into a side of Japan that few visitors ever see - something that can’t be
+            fully understood without being rooted in it. Through One Life Japan, he <span class="emph"
+                >shares that local knowledge and everyday connection</span
+            > with travelers looking for something deeper than a checklist of sights.
         </p>
+
         <div class="frame about-right">
             <GenericSlider sliderImageId={22} height={200} />
         </div>
         <p>
-            Using has an uncanny ability to intuit which path will lead to <span class="emph"
-                >the next great adventure</span
-            >. It's not all intuition though, he also relies on his <span class="emph"
-                >community ties, personal experience and careful research</span
-            >, trip planning, and preparation. Kevin speaks <span class="emph">Japanese and English</span>, with the
-            ability to charm even the most serious of local farmers into a conversation about politics, food, or life in
-            the mountains
+            He has traveled extensively by <span class="emph">foot, bike, train, ferry, and even hitchhiking</span> - leading
+            adventures from subtropical coastlines to Japan’s highest peaks, through blizzards, typhoons, and golden rice
+            fields. Along the way, he’s developed <span class="emph">a knack for finding the path</span> that leads to something
+            special.
+        </p>
+        <p>
+            Kevin speaks both <span class="emph">English and Japanese</span> and has a natural way of connecting with locals
+            - whether chatting with farmers in mountain dialects or finding the perfect roadside udon spot.
+        </p>
+        <p>His background includes:</p>
+        <ul>
+            <li>Sea kayak instructor in Maine</li>
+            <li>Outward Bound outdoor education instructor training in the US and Japan</li>
+            <li>Outward Bound Japan field instructor</li>
+            <li>Canyoning guide in Nagano</li>
+            <li>Trained as a Wilderness First Responder</li>
+            <li>Ogranic Rice Farmer</li>
+            <li>Volunteer Fire Brigade</li>
+        </ul>
+        <p>
+            Before settling in the countryside, Kevin worked in Tokyo in finance and web development. After earning a
+            Master’s in Sustainability Studies in Sweden, he joined one of Japan’s leading sustainability consultancies.
+            During the pandemic, when Japan was closed to tourism, he took a break from guiding to teach preschool and
+            kindergarten - something that <span class="emph">keeps him young</span> and adds a <span class="emph"
+                >little extra magic to family trips</span
+            >. He draws on all of these experiences to create grounded, meaningful adventures that <span class="emph">
+                connect people with place
+            </span> - often with a few unexpected moments of real-life hospitality along the way.
+        </p>
+
+        <!-- Kevin has been <span
+                class="emph">living, studying, working, and adventuring in Japan for nearly thirty years</span
+            >, having lived in Kyushu, Shikoku and Tokyo before he and his wife <span class="emph"
+                >moved to a small rural village</span
+            > in Northern Nagano's Snow Country in 2006 to begin <span class="emph"
+                >farming rice, shoveling snow, and guiding rural tours as One Life Japan.</span
+            > -->
+        <!-- 
+        <p>
+            With an uncanny ability to intuit which path will lead to <span class="emph">the next great adventure</span
+            >, <span class="emph">community ties, personal experience, and careful research</span>, trip planning, and
+            preparation. Kevin speaks <span class="emph">Japanese and English</span>, with the ability to charm even the
+            most serious of local farmers into a conversation about politics, food, or most often, life in the
+            mountains.
         </p>
 
         <p>
-            <span class="emph">Kevin has journied extensivly</span> by foot, bicycle, van, train, ferry, and even hitchiking
-            throughout Japan, and led adventures from the <span class="emph">islands ofKyushu</span>, to the <span
+            <span class="emph">Kevin has jounreyed extensivly</span> around Japan by foot, bicycle, van, train, ferry, and
+            even hitchiking. He has led adventures from the <span class="emph">islands ofKyushu</span>, to the <span
                 class="emph">summit of Japan's highest mountains</span
-            >, through blzzards and typhoons. Still his passion is for the less extreme, slow paced realxing <span
-                class="emph">adventures that connect people with place</span
+            >, through blzzards and typhoons.
+        </p>
+
+        <p>In addition to leading 0ne Life Japan Hike, Bike and Walking Tours, Kevin's resume includes:</p>
+        <ul>
+            <li>Sea kayak instructor in Maine</li>
+            <li>Outward Bound outdoor education instructor training in the US and Japan</li>
+            <li>Outward Bound Japan field instructor</li>
+            <li>Canyoning guide in Nagano</li>
+            <li>Trained as a Wilderness First Responder</li>
+            <li>Ogranic Rice Farmer</li>
+        </ul>
+        <p>
+            Still, his passion is for the less extreme, slow paced realxing <span class="emph"
+                >adventures that connect people with place</span
             >, and when his mojo is working, he has been known to even work in an unplanned home-cooked dinner and peek
             into the real life of the locals.
         </p>
-
         <p>
             Kevin is trained as an <span class="emph">American Wilderness First Responder</span>, and an <span
                 class="emph">Outward Bound Japan instructor</span
@@ -135,7 +272,7 @@ image: '/images/about-banner.jpg';
             finance firm, and in web development. After receiving a Masters Degree in Sustainability Studies in Sweden,
             he worked for one of Japan's leading Sustainability Consultancy in Tokyo. He draws on these past
             regular-life experiences in Japan to inform his current lust for travel.
-        </p>
+        </p> -->
 
         <blockquote>
             Kevin was instrumental in all our very special memories of the most fantastic Japan experiences. Hoping we
@@ -153,100 +290,100 @@ image: '/images/about-banner.jpg';
             our tours; you’re like family, and part of a community of explorers, dreamers, and storytellers. - Kevin
         </blockquote>
     </div>
-</BaseLayout>
 
-<style lang="scss">
-    @use '../styles/global' as *;
-    .attention-catcher {
-        padding-top: 20px;
-        padding-bottom: 30px;
-        overflow: hidden;
-        position: relative;
-    }
-    .attention-catcher h2,
-    h4 {
-        opacity: 0;
-        animation: fadeIn 4s forwards;
-        animation-timing-function: ease-out;
-        position: relative;
-    }
-
-    .attention-catcher h2 {
-        font-size: 1.7em;
-    }
-    .attention-catcher h2 span {
-        font-size: 1em;
-    }
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-
-    @include respond-to(xxlarge) {
-    }
-
-    @include respond-to(xlarge) {
-    }
-
-    @include respond-to(large) {
+    <style lang="scss">
+        @use '../styles/global' as *;
         .attention-catcher {
-            padding-top: 0px;
-            padding-bottom: 20px;
+            padding-top: 20px;
+            padding-bottom: 30px;
+            overflow: hidden;
+            position: relative;
         }
-    }
-
-    @include respond-to(medium) {
-        .btn-container {
-            justify-content: center !important; /* Center the button */
-            margin-top: 5px; /* Add some space above the button */
-        }
-
-        .container .row {
-            flex-direction: column; /* Stack the elements vertically */
-            align-items: center; /* Center align the children */
+        .attention-catcher h2,
+        h4 {
+            opacity: 0;
+            animation: fadeIn 4s forwards;
+            animation-timing-function: ease-out;
+            position: relative;
         }
 
-        .container .col-md-3 {
-            width: 100%; /* Full width on smaller screens */
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1em;
+        .attention-catcher h2 {
+            font-size: 1.7em;
+        }
+        .attention-catcher h2 span {
+            font-size: 1em;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
-        h1 {
+        @include respond-to(xxlarge) {
+        }
+
+        @include respond-to(xlarge) {
+        }
+
+        @include respond-to(large) {
+            .attention-catcher {
+                padding-top: 0px;
+                padding-bottom: 20px;
+            }
+        }
+
+        @include respond-to(medium) {
+            .btn-container {
+                justify-content: center !important; /* Center the button */
+                margin-top: 5px; /* Add some space above the button */
+            }
+
+            .container .row {
+                flex-direction: column; /* Stack the elements vertically */
+                align-items: center; /* Center align the children */
+            }
+
+            .container .col-md-3 {
+                width: 100%; /* Full width on smaller screens */
+                display: flex;
+                justify-content: center;
+                margin-bottom: 1em;
+            }
+
+            h1 {
+                text-align: center;
+            }
+        }
+        .centered {
             text-align: center;
         }
-    }
-    .centered {
-        text-align: center;
-    }
-    h2 {
-        font-size: 1.5em;
-        margin-top: 30px;
-        /* color: var(--bs-primary); */
-    }
-    h2.larger {
-        font-size: 2em;
-    }
-    h3 {
-        margin-top: 30px;
-        font-weight: bolder;
-    }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            /* color: var(--bs-primary); */
+        }
+        h2.larger {
+            font-size: 2em;
+        }
+        h3 {
+            margin-top: 30px;
+            font-weight: bolder;
+        }
 
-    .about-right {
-        float: right;
-        width: 60%;
-        margin-left: 10px;
-        @include respond-to(small) {
-            margin: 0px;
-            width: 100%;
+        .about-right {
+            float: right;
+            width: 60%;
+            margin-left: 10px;
+            @include respond-to(small) {
+                margin: 0px;
+                width: 100%;
+            }
+            @include respond-to(medium) {
+                width: 100%;
+            }
         }
-        @include respond-to(medium) {
-            width: 100%;
-        }
-    }
-</style>
+    </style>
+</BaseLayout>

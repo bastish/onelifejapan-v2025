@@ -1,0 +1,388 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PurchaseBlock from '../components/PurchaseBlock.astro';
+import GenericSlider from '../components/GenericSlider.astro';
+import '../styles/global.scss';
+
+const slogan = 'About One Life Japan'; // Set the height for 'about' page
+//const slogan = 'More than 90% of visitors to Japan do not leave Japans Golden Route (Tokyo, Kyoto, Osaka)';
+const pageBlurb2 =
+    '<div class="centered"><h2 class="emph">More than 90% of visitors to Japan do not leave Japans Golden Route (Tokyo, Kyoto, Osaka)</h2></div><p class="centered">Yet, most of what The Golden Route has to offer, can be found throughout Japan - without the shoulder to shoulder tourist crowds.</p><div class="centered"><h2 class="emph larger">Where do you want your Japan adventure to take <em>you</em>?</h2></div>'; // Set image for 'about' page
+
+const pageBlurb =
+    "When you want to go it alone, but don't know where to go. We are happy to put our <span class='emph'>over twenty years of travel planning experience and knowldege</span> of rural, off the beaten path locations in Japan to work for you. self-guided itineraries and <span class='emph'>remote support</span> so you can have <span class='emph'>ultimate freedom with peace of mind</span>"; //
+
+const sliderText = '<div class="where-do-you">Where do you want your Japan adventure to take <em>you</em>?</div>'; // Set image for 'about' page
+
+// Frontmatter for SEO
+title: 'About One Life Japan Hike & Bike Adventures';
+canonical: 'https://www.onelifejapan.com/about/';
+description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+image: '/images/about-banner.jpg';
+---
+
+<BaseLayout title="About One Life Japan Hike & Bike Adventures" page="about" sliderid="4">
+    <div class="custom-container simple-page-body">
+        <!-- <div class="centered attention-catcher">
+            <h2>More than 90% of visitors to Japan do not leave Japan's Golden Route</h2>
+            <h4>(Tokyo, Kyoto, Osaka)</h4>
+        </div> -->
+        <!-- <div class="frame">
+            <GenericSlider
+                sliderImageId="23"
+                height={180}
+                sliderText={sliderText}
+                imageAnimationDelay="0s"
+                textAnimationDelay="2.5s"
+                preventShrink="true"
+            />
+        </div> -->
+
+        <PurchaseBlock page={'self-guided'} slogan={slogan} pageBlurb={pageBlurb} />
+
+        <br />
+        <p>
+            Our self-guided trips are <span class="emph">not pre-packaged tour itineraries</span>. While we certainly
+            use the locations and routes we know and love, each itinerary is <span class="emph">
+                custom planned to fit your schedule, interests</span
+            >, the amount of physical activity you're looking for, and takes into account the rest of your time in Japan
+            to ensure you <span class="emph">see something new and unique</span>.
+        </p>
+        <p>
+            To get some possible itinerary inspiration, just look at some of the other <a href="/"
+                >custom guided tours</a
+            > we offer, and let us know “I want something like that.” Or, if you have a specific location in mind, let us
+            know, and we can plan around that. Trips can be <span class="emph"
+                >bicycle, walking, hiking, just relaxing in rural Japan</span
+            >, or any combination.
+        </p>
+
+        <h3>What We Provide</h3>
+        <ul class="collapsible-list">
+            <li>
+                <details>
+                    <summary>Itinerary Planning</summary>
+                    <p>
+                        We will work with you <span class="emph">one-on-one to develop a solid rural excursion</span> to
+                        fit with the rest of your overall Japan itinerary. While we don't plan your entire time in Japan
+                        - leaving the Golden Route portions to you - we’ll help you seamlessly integrate a rural experience
+                        into it.
+                    </p>
+                    <ul>
+                        <li>Best location to start & finish</li>
+                        <li>Getting there and away</li>
+                        <li>Seasonal highlights / special events</li>
+                        <li>What (if anything) you might want to swap from the main itinerary to see rural Japan</li>
+                    </ul>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Highlights Along the Way</summary>
+                    <p>
+                        In the self-guided route map, we include details about the various points of interest along the
+                        way:
+                    </p>
+                    <ul>
+                        <li>Highlight description</li>
+                        <li>Links to relevant information sources</li>
+                        <li>Business hours</li>
+                        <li>Ticket prices</li>
+                        <li>Expected time to spend</li>
+                        <li>Transportation options</li>
+                    </ul>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Routes for Phone or GPS Device</summary>
+                    <p>
+                        We provide you with <span class="emph">detailed maps for your journey</span>, including GPX
+                        files that can be used with a free app for real-time navigation on your phone, or any Garmin or
+                        other GPS device. We can also provide you with a rental Garmin device if needed.
+                    </p>
+                    <p>
+                        In addition to the main route, where possible, we provide <span class="emph"
+                            >multiple options</span
+                        >
+                        of different difficulty levels and routes that pass by different highlights, so you can decide for
+                        yourself at any time.
+                    </p>
+                    <p>
+                        Along with the real-time navigation routes, we’ll also prepare <span class="emph">
+                            maps for public transport and daily sightseeing</span
+                        >. If there are changes to the plan due to weather or a special event that causes a delay, we’ll
+                        update the online maps to reflect the best new course of action.
+                    </p>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Mobile Real-Time Itinerary Information App</summary>
+                    <p>
+                        We’ll share a personal portal for your mobile device, keeping all of the day's relevant
+                        information—maps, highlights, interesting things along the way, and even the weather report—just
+                        one tap away. We also use this app to communicate any daily alerts or potential changes, so you
+                        don’t need to worry about checking email, and we won’t have to disturb your trip.
+                    </p>
+                    <ul>
+                        <li>All maps (highlights, important stops, routes)</li>
+                        <li>Links to download GPS routes, including last-minute updates</li>
+                        <li>General information about the area and helpful links</li>
+                        <li>Weather report</li>
+                        <li>Important alerts or messages from us</li>
+                    </ul>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Logistics Support</summary>
+                    <p>
+                        We’ll handle all the research and preparation needed to ensure a smooth transition from before
+                        you start your One Life Japan portion of the journey. You’ll have detailed instructions on how
+                        to manage every step of the way, and where possible, we’ll contact innkeepers or experience
+                        providers to make sure they’re expecting and ready for you.
+                    </p>
+                    <p>We’re also available to answer questions along the way, make unplanned changes, and ...</p>
+                    <ul>
+                        <li>Step-by-step instructions for purchasing tickets or checking in</li>
+                        <li>Step-by-step instructions for checking in</li>
+                        <li>Communication assistance with innkeeper</li>
+                        <li>Assistance with luggage transfer and other special needs</li>
+                        <li>Answer any questions along the way and make unplanned changes</li>
+                    </ul>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Accommodation Reservation Support</summary>
+                    <p>
+                        During the planning stage, we’ll work with you to <span class="emph"
+                            >find the ideal accommodation</span
+                        >, presenting available options we think will fit your needs. Once you’ve selected the
+                        accommodation, we’ll ensure that the inn is available and <span class="emph"
+                            >assist you in making the reservations</span
+                        >.
+                    </p>
+                    <ul>
+                        <li>Accommodation suggestions</li>
+                        <li>Booking assistance</li>
+                        <li>Communication with innkeeper regarding meals, etc.</li>
+                    </ul>
+                    <div class="fine-print">
+                        * Note: Inn prices are not included in the self-guided package. You’ll pay directly to the
+                        accommodation, but we’ll assist in the reservation process.
+                    </div>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Bicycle / Gear Rental Support</summary>
+                    <p>
+                        While not all of our trips require bicycles, if you’re planning to do a bicycle tour, we’ll
+                        assist in <span class="emph">procuring bicycles and gear</span>. Depending on the location, this
+                        might mean using our own bikes (which we’ll have ready for you), or renting from a third-party
+                        shop—in which case we’ll make sure the <span class="emph">bikes are ready and waiting</span> for
+                        you when you arrive to pick them up.
+                    </p>
+                    <p>
+                        Some bike rental places may not have <span class="emph">all the peripheral gear you want</span>,
+                        like a phone holder for the handlebars, extra headlamps, waterproof bags, or rain gear. We’ll
+                        make sure you have what you need for your journey.
+                    </p>
+                    <p>
+                        Some more adventurous folks might want to try <span class="emph"
+                            >bike-packing with a tent and sleeping bag</span
+                        >. We can arrange for that as well.
+                    </p>
+                    <ul>
+                        <li>Bicycle rental arrangements</li>
+                        <li>Bicycle touring peripheral gear arrangements</li>
+                        <li>Bike-packing gear arrangements</li>
+                    </ul>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary>Remote On-Call Support</summary>
+                    <p>
+                        We are <span class="emph">available for direct phone calls in an emergency</span>. We're also
+                        available for daily chats or calls to discuss any <span class="emph">changes in plans</span>,
+                        answer questions about what to do next, or even just to help communicate something important to
+                        your innkeeper.
+                    </p>
+                    <p>
+                        You also have the <span class="emph">option to share your location</span> with us. We don’t intend
+                        to spy—but this has come in handy. For example, if someone drifted a bit off the expected route,
+                        we were able to reach out before it became an issue. More commonly, if an innkeeper is concerned
+                        that you haven’t shown up on time, they’ll contact us, and <span class="emph"
+                            >we can assure them that you’re on your way</span
+                        >, let them know you’ll be running late, or proactively reach out ourselves if we notice a
+                        delay.
+                    </p>
+                </details>
+            </li>
+        </ul>
+
+        <!-- <ul class="checklist">
+                <li>Itinerary Planning<p>Some stuff about it</p></li>
+                <li>Highlights along the way<p>Some stuff about it</p></li>
+                <li>Logistics Support<p>Some stuff about it</p></li>
+                <li>Routes for Phone or GPS device<p>Some stuff about it</p></li>
+                <li>Accommodation Reservation Support<p>Some stuff about it</p></li>
+                <li>Bicycle / gear rental support<p>Some stuff about it</p></li>
+                <li>Remote on Call Support<p>Some stuff about it</p></li>
+            </ul> -->
+        <h3>Pricing</h3>
+
+        <p>
+            We want to make <span class="emph">traveling rural Japan accessible for anyone</span>, regardless of budget.
+            A self-guided trip is a perfect way to <span class="emph">confidently get off the Golden Route</span>, and
+            we’re confident that we can make it affordable.
+        </p>
+
+        <p>
+            Pricing has a lot of variables—it depends on the length of the trip, how much preparation is needed, what
+            kind of gear needs to be arranged, and so on. <a
+                href="/contact/"
+                title="Get in touch with our support team"
+            >
+                Contact us</a
+            > with more information for a free initial consult. Based on your current travel plans, we’ll discuss some potential
+            itineraries along with a rough price estimate. Once we settle on something more concrete and it’s confirmed,
+            we’ll begin the more in-depth planning.
+        </p>
+
+        <blockquote>
+            I don't know how you find them, but I’m sure <span class="emph"
+                >we never would’ve gone down some of those roads</span
+            > if they weren’t on the map.
+        </blockquote>
+
+        <blockquote>
+            Oh my gosh, when we lost track of time, we were so worried the innkeeper would be angry that we were late
+            for dinner. So it was such a surprise when <span class="emph">she actually drove up smiling</span> and led us
+            to the inn. She had put everything on hold and let us take a bath and relax a bit. Thank you so much for calling
+            her.
+        </blockquote>
+
+        <blockquote>
+            Kevin was such an angel when planning. He was so patient with all my questions. I was so worried about
+            getting lost, but the <span class="emph">maps were so easy to follow</span>, and I could use my phone for
+            directions. I was so happy to do this trip on my own and not have to worry about anything. I could just
+            enjoy the scenery and the people. <span class="emph">I'm so glad I found One Life Japan.</span>
+        </blockquote>
+    </div>
+
+    <style lang="scss">
+        @use '../styles/global' as *;
+        .attention-catcher {
+            padding-top: 20px;
+            padding-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .attention-catcher h2,
+        h4 {
+            opacity: 0;
+            animation: fadeIn 4s forwards;
+            animation-timing-function: ease-out;
+            position: relative;
+        }
+
+        .attention-catcher h2 {
+            font-size: 1.7em;
+        }
+        .attention-catcher h2 span {
+            font-size: 1em;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @include respond-to(xxlarge) {
+        }
+
+        @include respond-to(xlarge) {
+        }
+
+        @include respond-to(large) {
+            .attention-catcher {
+                padding-top: 0px;
+                padding-bottom: 20px;
+            }
+        }
+
+        @include respond-to(medium) {
+            .btn-container {
+                justify-content: center !important; /* Center the button */
+                margin-top: 5px; /* Add some space above the button */
+            }
+
+            .container .row {
+                flex-direction: column; /* Stack the elements vertically */
+                align-items: center; /* Center align the children */
+            }
+
+            .container .col-md-3 {
+                width: 100%; /* Full width on smaller screens */
+                display: flex;
+                justify-content: center;
+                margin-bottom: 1em;
+            }
+
+            h1 {
+                text-align: center;
+            }
+        }
+        .centered {
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            /* color: var(--bs-primary); */
+        }
+        h2.larger {
+            font-size: 2em;
+        }
+        h3 {
+            margin-top: 30px;
+            font-weight: bolder;
+        }
+
+        .about-right {
+            float: right;
+            width: 60%;
+            margin-left: 10px;
+            @include respond-to(small) {
+                margin: 0px;
+                width: 100%;
+            }
+            @include respond-to(medium) {
+                width: 100%;
+            }
+        }
+
+        .fine-print {
+            font-size: 0.8em;
+            display: block;
+            margin-top: 10px;
+            margin-left: 10px;
+            font-style: italic;
+            color: var(--bs-primary-dark);
+        }
+    </style>
+</BaseLayout>

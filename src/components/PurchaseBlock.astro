@@ -13,6 +13,11 @@ if (itinerary) {
 let height;
 let backgroundImage;
 let backgroundSize;
+let buttontext = 'Book an Adventure';
+
+if (itinerary && itinerary.custom_itinerary) {
+    buttontext = 'Create a Similar Adventure';
+}
 
 switch (page) {
     case 'itinerary':
@@ -29,20 +34,26 @@ switch (page) {
         break;
     case 'about':
         slogan = '';
+        buttontext = 'Inquire Now';
+        break;
+    case 'self-guided':
+        slogan = 'Self Guided and Planning Support'; // Set the height for 'about' page
+        buttontext = 'Get Started Now';
         //pageBlurb = '';
         break;
-
     case 'contact':
         slogan = 'Contact One Life Japan '; // Set the height for 'about' page
         pageBlurb = ''; // Set image for 'about' page
+        buttontext = 'Contact us To Learn More';
         break;
     case 'customIndex':
         slogan = 'Custom Hike, Bike, & Walking Adventures in Japan'; // Set the height for 'about' page
         pageBlurb = ''; // Set image for 'about' page
+        buttontext = 'Request an Adventure';
         break;
     default:
         slogan = 'Active Hike, Bike, & Walking Adventure in Rural Japan';
-        pageBlurb = `We have <span class="emph">twenty years of experience</span> providing <span class="emph">fun, learningful adventure</span> itineraries in the small village we call home, and throughout Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
+        pageBlurb = `We have <span class="emph">twenty years of experience</span> providing <span class="emph">fun, learningful adventure</span> itineraries in and around our small village, and throughout Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
         break;
 }
 
@@ -67,9 +78,7 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
                         animate__customFadeIn--right
                         book-link`
         >
-            <a href="/contact" class="btn-u btn-u-lg rounded5 book-link">
-                Book an Adventure <i class="fa fa-arrow-right"></i></a
-            >
+            <a href="/contact" class="btn-u btn-u-lg rounded5 book-link"> {buttontext} &#8250;&#8250;</a>
         </div>
     </div>
 </div>

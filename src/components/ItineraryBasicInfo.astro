@@ -3,8 +3,8 @@ const itinerary = Astro.props.itinerary;
 import { convertLineBreaksToParagraphs } from '../utils/utilities.ts';
 let formattedLongDescription: string = convertLineBreaksToParagraphs(itinerary.longDescription);
 
-// import MapModal from '../MapModal.astro';
-// import DifficultyModal from '../DifficultyModal.astro';
+import MapModal from '../components/MapModal.astro';
+import DifficultyModal from '../components/DifficultyModal.astro';
 import '../styles/global.scss';
 formattedLongDescription = itinerary.longDescription;
 ---
@@ -56,24 +56,24 @@ formattedLongDescription = itinerary.longDescription;
                         </div>
                     )
                 }
-                <!-- <div class="row">
-                        <div class="cell label">Region:</div>
-                        {
-                            itinerary.regions.length > 0 ? (
-                                <div class="cell cell-content">
-                                    <MapModal itinerary={itinerary} />
-                                </div>
-                            ) : (
-                                <div class="cell cell-content">Multiple Regions</div>
-                            )
-                        }
+                <div class="row">
+                    <div class="cell label">Region:</div>
+                    {
+                        itinerary.regions.length > 0 ? (
+                            <div class="cell cell-content">
+                                <MapModal itinerary={itinerary} />
+                            </div>
+                        ) : (
+                            <div class="cell cell-content">Multiple Regions</div>
+                        )
+                    }
+                </div>
+                <div class="row">
+                    <div class="cell label">Difficulty:</div>
+                    <div class="cell cell-content">
+                        <DifficultyModal itinerary={itinerary} />
                     </div>
-                    <div class="row">
-                        <div class="cell label">Difficulty:</div>
-                        <div class="cell cell-content">
-                            <DifficultyModal itinerary={itinerary} />
-                        </div>
-                    </div> -->
+                </div>
             </div>
             <div class="fineprint-pricing">
                 * This is not a pacakge tour. All trips are somewhat customaizable. This is an estimate of what you can

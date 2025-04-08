@@ -1,0 +1,108 @@
+---
+// IsItForYou.astro
+import IsItForYouDetails from '../components/IsItForYouDetails.astro';
+export interface Props {
+    show: 'modal' | 'collapse';
+}
+const { show } = Astro.props;
+---
+
+{
+    show === 'collapse' ? (
+        // Collapsible version
+        <ul class="collapsible-list card">
+            <li>
+                <details>
+                    <summary>Is a OneLife Japan Trip for You? &#8250;&#8250;</summary>
+                    <IsItForYouDetails />
+                </details>
+            </li>
+        </ul>
+    ) : (
+        // Modal version using Bootstrap markup
+        <>
+            <button
+                type="button"
+                class="btn btn-primary for-you-button"
+                data-bs-toggle="modal"
+                data-bs-target="#isitForYouModal"
+            >
+                Is a OneLife Japan Trip for You? &#8250;&#8250;
+            </button>
+
+            <div
+                class="modal fade"
+                id="isitForYouModal"
+                tabindex="-1"
+                aria-labelledby="isitForYouModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog modal-xl custom-width-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="isitForYouModalLabel">
+                                Is a OneLife Japan Trip for You?
+                            </h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                        </div>
+                        <div class="modal-body">
+                            <IsItForYouDetails />
+                        </div>{' '}
+                        <button type="button" class="for-you-button close" data-bs-dismiss="modal" aria-label="Close">
+                            Go Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+<style lang="scss">
+    @use '../styles/global' as *;
+    .for-you-button {
+        font-size: 1.4em;
+        background: var(--bs-link-color) !important;
+        color: var(--bs-primary-dark);
+        color: var(--bs-link-color);
+        color: #fff;
+        border-radius: 10px;
+    }
+    .for-you-button.close {
+        margin: auto;
+        margin-bottom: 20px;
+        width: 50%;
+    }
+    @media (max-width: $small-screen) {
+        .for-you-button {
+            margin-top: 20px;
+        }
+    }
+
+    .custom-width-modal {
+        max-width: 80%;
+        @include respond-to(medium) {
+            max-width: 80%;
+        }
+        @include respond-to(small) {
+            max-width: 100%;
+            //margin: 0px !important;
+        }
+    }
+
+    /* If you want to target specific breakpoints, use media queries.
+     For example, to use 80% width only above 980px: */
+
+    .modal-content {
+        border: 2px solid var(--bs-primary-ultradark);
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-top: 80px;
+        text-align: left;
+        @include respond-to(small) {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+    }
+</style>

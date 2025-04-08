@@ -65,7 +65,7 @@ import logo from '../../assets/olj_logo.png';
                         <!-- Nested submenu for Custom Adventures -->
                         <li class="dropdown-submenu">
                             <a class="dropdown-item main-item" href="/itinerary/7/custom-wanderlust/"
-                                >Custom Adventures</a
+                                >Custom Itineraries ››</a
                             >
                             <ul class="dropdown-menu">
                                 <li>
@@ -85,12 +85,12 @@ import logo from '../../assets/olj_logo.png';
                                 </li>
                             </ul>
                         </li>
-                        <li><hr class="dropdown-divider" /></li>
+                        <!-- <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#">Intensity</a></li>
-                        <li><a class="dropdown-item" href="#">Photos</a></li>
+                        <li><a class="dropdown-item" href="#">Photos</a></li> -->
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">Self-Guided</a></li>
+                <li class="nav-item"><a class="nav-link" href="/self-guided/">Self-Guided</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="/journeys/">Blog</a></li>
@@ -215,8 +215,32 @@ import logo from '../../assets/olj_logo.png';
         margin-left: 15px; /* Indent to visually group under the main item */
         //border-left: 2px solid #ccc; /* Optional: Visual separator */
     }
+    .dropdown-submenu .dropdown-menu ul {
+        border-top: 0px solid #ccc; /* Optional: Visual separator */
+        border-left: 0px solid #ccc; /* Optional: Visual separator */
+        border-right: 0px solid #ccc; /* Optional: Visual separator */
+    }
     .dropdown-submenu li {
         border: 0px;
+    }
+
+    /* Nested submenu for Custom Adventures should be indented only, with no box */
+    .dropdown-submenu .dropdown-menu {
+        display: block; /* Always display the submenu */
+        position: static; /* Remove any absolute positioning */
+        margin-left: 15px; /* Indent the submenu */
+        background: transparent; /* Remove the background */
+        border: none; /* Remove any borders */
+        box-shadow: none; /* Remove any shadow */
+        padding: 0; /* Remove extra padding, if any */
+    }
+
+    /* Optionally, adjust the individual submenu items */
+    .dropdown-submenu .dropdown-menu .dropdown-item {
+        background: transparent; /* Ensure items are transparent */
+        border: none; /* Remove item borders */
+        padding-left: 15px; /* Optionally add extra left padding for text */
+        /* You can also adjust font-size, color, etc., if needed */
     }
 </style>
 

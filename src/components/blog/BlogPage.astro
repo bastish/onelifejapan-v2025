@@ -17,13 +17,31 @@ const { posts = [], pageTitle = 'Blog' } = Astro.props;
             posts.length > 0 ? (
                 posts.map((post: any) => (
                     <article>
-                        <h2>{post.title}</h2>
+                        <h2>
+                            {post.title}{' '}
+                            <small>
+                                ( in{' '}
+                                {new Date(post.date_published).toLocaleDateString('en-US', {
+                                    month: 'long',
+                                    //day: 'numeric',
+                                })}{' '}
+                                )
+                            </small>
+                        </h2>
                         <div class="blog-post">
                             <div set:html={post.content} />
                         </div>
-                        <p>
+                        {/* <p>
                             <small>Published on {new Date(post.date_published).toLocaleDateString()}</small>
-                        </p>
+                        </p> */}
+                        {/* <p>
+                            <small>
+                                {new Date(post.date_published).toLocaleDateString('en-US', {
+                                    month: 'long',
+                                    day: 'numeric',
+                                })}
+                            </small>
+                        </p> */}
                     </article>
                 ))
             ) : (

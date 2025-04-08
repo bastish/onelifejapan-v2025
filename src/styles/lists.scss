@@ -99,9 +99,105 @@ ul.checklist.x li:before {
     }
 }
 
-// @media (max-width: 480px) {
-//     .long-desc-list {
-//         margin-bottom: 10px;
-//         margin-right: 5px;
-//     }
+.collapsible-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 20px 0;
+    font-size: 1.2em;
+}
+
+.collapsible-list li {
+    margin-bottom: 10px;
+    color: var(--bs-link-color);
+    background: var(--bs-primary-light-opaque);
+}
+
+.collapsible-list li p {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 1em;
+}
+.collapsible-list li ul li {
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    background: inherit;
+}
+.collapsible-list details {
+    border: 1px solid var(--bs-primary-light);
+    border-radius: 10px;
+    padding: 0.5em;
+    border-radius: 4px;
+}
+
+.collapsible-list summary {
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+}
+
+/* Optional: add a little animation for the opening/closing */
+.collapsible-list details[open] summary {
+    /* for example, change color when open */
+    color: var(--bs-primary-dark);
+}
+
+// // Original one. on Photography trip do not cofuse
+
+// .collapsible-checklist {
+//     list-style-type: none;
+//     padding: 0;
+//     margin: 0;
+// }
+
+// .collapsible-checklist li {
+//     margin-bottom: 10px;
+// }
+
+// .checklist-collapsible {
+//     cursor: pointer;
+//     border: none;
+//     text-align: left;
+//     outline: none;
+//     color: var(--bs-link-color);
+//     position: relative;
+//     padding-left: 20px; /* Adjust space for the triangle */
+// }
+
+// .checklist-collapsible::before {
+//     content: '\25B6'; /* Right-pointing triangle */
+//     content: '\25B7'; /* Right-pointing triangle */
+//     content: '\27A4'; /* Right-pointing triangle */
+//     content: '\25B8'; /* Right-pointing triangle */
+
+//     position: absolute;
+//     left: 0;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     transition: transform 0.3s;
+//     color: var(--bs-primary); /* Use a custom property or default to primary color */
+// }
+
+// .checklist-collapsible.active::before {
+//     /*content: "\25BD"; /* White Down-Pointing Triangle */
+//     transform: translateY(-50%) rotate(90deg);
+// }
+
+// .checklist-content {
+//     max-height: 0;
+//     overflow: hidden;
+//     margin-top: 0;
+//     margin-bottom: 0;
+//     padding-top: 0;
+//     padding-bottom: 0;
+//     /* transition: max-height 0.5s ease-out,
+//                 padding 0.5s ease-out,
+//                 margin-top 0.5s ease-out,
+//                 margin-bottom 0.5s ease-out; */
+// }
+
+// .checklist-content.open {
+//     max-height: 1000px; /* Arbitrary high value to allow full expansion */
+//     padding: 10px 15px;
+//     margin-top: 10px;
+//     margin-bottom: 10px;
 // }
