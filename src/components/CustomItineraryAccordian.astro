@@ -61,6 +61,93 @@ const { routes } = Astro.props;
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // ----- Settings -----
+        // You can adjust the behavior by changing the delay or offset here
+        // (for itineraries we want to restore the saved position exactly)
+        const scrollDelay = 100; // delay (ms) before the scroll restoration kicks in
+
+        // ----- 1. Capture Scroll Position on Click & Load Content -----
+        // This mimics the highlight functionality by capturing the current scroll position.
+        let savedScrollPos = window.scrollY || window.pageYOffset;
+
+        document.querySelectorAll<HTMLButtonElement>('.accordion-button').forEach((button) => {
+            button.addEventListener('click', () => {
+                // Save the scroll position when the user clicks the button.
+                savedScrollPos = window.scrollY || window.pageYOffset;
+
+                // --- Content Loading ---
+                const targetSelector = button.getAttribute('data-bs-target');
+                if (!targetSelector) return;
+
+                const contentContainer = document.querySelector(
+                    `${targetSelector} .accordion-body .accordion-content-placeholder`,
+                ) as HTMLElement | null;
+                if (!contentContainer) return;
+
+                // Extract the route id from the container id (assumed format: "accordion-content-{id}")
+                const idMatch = contentContainer.id.match(/accordion-content-(.+)/);
+                if (!idMatch) return;
+                const routeId = idMatch[1];
+
+                // Only fetch the content if it hasn't been loaded already.
+                if (!contentContainer.dataset.loaded) {
+                    fetch(`/route-accordian/${routeId}/`)
+                        .then((response) => response.text())
+                        .then((html: string) => {
+                            contentContainer.innerHTML = html;
+                            contentContainer.dataset.loaded = 'true';
+                            // Optionally, dispatch an event if needed:
+                            document.dispatchEvent(new Event('ajaxContentLoaded'));
+                        })
+                        .catch((err: Error) => {
+                            contentContainer.innerHTML = `<p>Error loading content.</p>`;
+                            console.error(err);
+                        });
+                }
+            });
+        });
+
+        // ----- 2. Restore the Saved Scroll Position After Panel Opens -----
+        // This is the key extra step from the highlight code.
+        // Once an accordion panel finishes opening (via Bootstrap’s shown.bs.collapse event),
+        // restore the scroll position to what was saved on click.
+        document.querySelectorAll<HTMLDivElement>('.accordion-collapse').forEach((collapseEl) => {
+            collapseEl.addEventListener('shown.bs.collapse', (event: Event) => {
+                setTimeout(() => {
+                    window.scrollTo({ top: savedScrollPos, behavior: 'instant' });
+                }, scrollDelay);
+            });
+        });
+
+        // ----- 3. Hash-Based Navigation (Optional, as you already have) -----
+        function openAccordionForHash(): void {
+            const hash = window.location.hash;
+            if (hash) {
+                const slug = hash.substring(1); // Remove '#' from the hash.
+                const targetButton = document.querySelector(
+                    `button[data-route-slug="${slug}"]`,
+                ) as HTMLButtonElement | null;
+                if (targetButton) {
+                    // If the panel is collapsed, trigger a click.
+                    if (targetButton.classList.contains('collapsed')) {
+                        targetButton.click();
+                    }
+                    // Restore the saved scroll position after opening.
+                    setTimeout(() => {
+                        window.scrollTo({ top: savedScrollPos, behavior: 'instant' });
+                    }, scrollDelay);
+                }
+            }
+        }
+
+        // Check the hash on page load and listen for hash changes.
+        openAccordionForHash();
+        window.addEventListener('hashchange', openAccordionForHash);
+    });
+</script>
+<!-- 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
         // Listen for clicks on accordion buttons
         document.querySelectorAll<HTMLButtonElement>('.accordion-button').forEach((button) => {
             button.addEventListener('click', (event: Event) => {
@@ -96,6 +183,7 @@ const { routes } = Astro.props;
         });
     });
 </script>
+
 <script>
     // Function to open the accordion item based on the current hash.
     function openAccordionForHash(): void {
@@ -165,7 +253,7 @@ const { routes } = Astro.props;
 
     // Listen for hash changes (e.g., when clicking a menu link).
     window.addEventListener('hashchange', openAccordionForHash);
-</script>
+</script> -->
 
 <style lang="scss">
     .chevron-icon {

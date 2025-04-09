@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 public/reference
 DummyComponents
+
+# server api endpoints private
+www

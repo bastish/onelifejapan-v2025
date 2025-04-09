@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import PurchaseBlock from '../components/PurchaseBlock.astro';
 import ContactSuccessMessage from '../components/ContactSuccessMessage.astro';
-
+import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 // Frontmatter for SEO
 title: 'Contact One Life Japan Hike & Bike Adventures';
 canonical: 'https://www.onelifejapan.com/contact/';
@@ -16,6 +16,15 @@ description: "Discover One Life Japan's unique bike, hike, and walking adventure
         <div class="tab-v1">
             <div id="form">
                 <ContactForm />
+                <div
+                    style="display: flex; margin-bottom: 20px; align-items: center; justify-content: center; gap:10px;"
+                >
+                    <BaseGeneralModal show="modal" content="isItForYou" />
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; gap:10px;">
+                    <BaseGeneralModal show="modal" content="difficulty" />
+                    <BaseGeneralModal show="modal" content="priceEstimate" />
+                </div>
             </div>
             <div id="success">
                 <ContactSuccessMessage />

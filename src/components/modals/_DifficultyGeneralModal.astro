@@ -1,6 +1,6 @@
 ---
-// IsItForYou.astro
-import IsItForYouDetails from '../components/IsItForYouDetails.astro';
+// DifficultyGeneralModal.astro
+import DifficultyContent from './DifficultyContent.astro';
 export interface Props {
     show: 'modal' | 'collapse';
 }
@@ -13,8 +13,8 @@ const { show } = Astro.props;
         <ul class="collapsible-list card">
             <li>
                 <details>
-                    <summary>Is a OneLife Japan Trip for You? &#8250;&#8250;</summary>
-                    <IsItForYouDetails />
+                    <summary>About Difficulty Levels &#8250;&#8250;</summary>
+                    <DifficultyContent />
                 </details>
             </li>
         </ul>
@@ -25,28 +25,28 @@ const { show } = Astro.props;
                 type="button"
                 class="btn btn-primary for-you-button"
                 data-bs-toggle="modal"
-                data-bs-target="#isitForYouModal"
+                data-bs-target="#difficultyModal"
             >
-                Is a OneLife Japan Trip for You? &#8250;&#8250;
+                About Difficulty Levels &#8250;&#8250;
             </button>
 
             <div
                 class="modal fade"
-                id="isitForYouModal"
+                id="difficultyModal"
                 tabindex="-1"
-                aria-labelledby="isitForYouModalLabel"
+                aria-labelledby="difficultyLevelsModalLabel"
                 aria-hidden="true"
             >
                 <div class="modal-dialog modal-xl custom-width-modal">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title" id="isitForYouModalLabel">
-                                Is a OneLife Japan Trip for You?
+                            <h2 class="modal-title" id="difficultyLevelsModalLabel">
+                                Difficulty Levels
                             </h2>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                         </div>
                         <div class="modal-body">
-                            <IsItForYouDetails />
+                            <DifficultyContent />
                         </div>{' '}
                         <button type="button" class="for-you-button close" data-bs-dismiss="modal" aria-label="Close">
                             Go Back
@@ -59,14 +59,15 @@ const { show } = Astro.props;
 }
 
 <style lang="scss">
-    @use '../styles/global' as *;
+    @use '../../styles/global' as *;
     .for-you-button {
-        font-size: 1.4em;
+        font-size: 1em;
         background: var(--bs-link-color) !important;
         color: var(--bs-primary-dark);
         color: var(--bs-link-color);
         color: #fff;
-        border-radius: 10px;
+        border-radius: 5px;
+        padding: 10px;
     }
     .for-you-button.close {
         margin: auto;
@@ -104,5 +105,41 @@ const { show } = Astro.props;
             padding-left: 2px;
             padding-right: 2px;
         }
+    }
+    h2.modal-title {
+        font-size: 1.8em !important;
+        font-weight: bold !important;
+        @include respond-to(small) {
+            font-size: 1.3em !important;
+        }
+    }
+</style>
+
+<style>
+    a {
+        display: inline-block;
+        /* Adjust spacing between link and indicator as needed */
+    }
+
+    .level-indicator {
+        display: inline-flex;
+        gap: 5px; /* Space between circles */
+        vertical-align: middle; /* Align with the middle of the link */
+        margin-left: 10px;
+    }
+
+    .circle {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #eee; /* Default color for empty circles */
+        border: 1px solid #ccc;
+    }
+
+    .level-1 .circle:nth-child(1),
+    .level-2 .circle:nth-child(-n + 2),
+    .level-3 .circle:nth-child(-n + 3),
+    .level-4 .circle:nth-child(-n + 4) {
+        background-color: var(--bs-primary-light); /* Filled circle color */
     }
 </style>

@@ -2,6 +2,8 @@
 const itinerary = Astro.props.itinerary;
 // import DifficultySvgFilter from './DifficultySvgFilter.astro';
 import GenericSlider from './GenericSlider.astro';
+import DifficultyContent from '../components/modals/DifficultyContent.astro';
+import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 import { baseHost } from '../utils/utilities.ts';
 ---
 
@@ -80,7 +82,9 @@ import { baseHost } from '../utils/utilities.ts';
         <GenericSlider sliderImageId="64" height={200} />
     </div>
     <hr />
-    <span set:html={itinerary.difficultyDescription} />
+    {itinerary.id === 7 ? <DifficultyContent /> : <span set:html={itinerary.difficultyDescription} />}
+
+    <BaseGeneralModal show="modal" content="difficulty" />
 </div>
 
 {

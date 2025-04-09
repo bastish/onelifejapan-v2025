@@ -1,0 +1,223 @@
+---
+// BaseGeneralModal.astro
+import PriceEstimateContent from './PriceEstimateContent.astro';
+import DifficultyContent from './DifficultyContent.astro';
+import IsItForYouContent from './IsItForYouContent.astro';
+
+export interface Props {
+    /**
+     * Content type determines which content gets rendered.
+     * Acceptable values:
+     * - "priceEstimate"
+     * - "difficulty"
+     * - "isItForYou"
+     */
+    content: 'priceEstimate' | 'difficulty' | 'isItForYou';
+    show: 'modal' | 'collapse';
+}
+const { content, show } = Astro.props;
+
+let title = '';
+let buttonText = '';
+
+if (content === 'priceEstimate') {
+    title = 'Pricing a Custom Trip';
+    buttonText = 'About Customized Estimates';
+} else if (content === 'difficulty') {
+    title = 'Difficulty Levels';
+    buttonText = 'About Difficulty Levels';
+} else if (content === 'isItForYou') {
+    title = 'Is a OneLife Japan Trip for You?';
+    buttonText = 'Is a OneLife Japan Trip for You? ';
+}
+---
+
+<>
+    <div class="modal-scope">
+        {
+            show === 'collapse' ? (
+                <ul class="collapsible-list card">
+                    <li>
+                        <details>
+                            <summary>{buttonText}</summary>
+                            {content === 'priceEstimate' && <PriceEstimateContent />}
+                            {content === 'difficulty' && <DifficultyContent />}
+                            {content === 'isItForYou' && <IsItForYouContent />}
+                        </details>
+                    </li>
+                </ul>
+            ) : (
+                <>
+                    <button
+                        type="button"
+                        class="btn btn-primary for-you-button"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#${content}Modal`}
+                    >
+                        {buttonText}
+                    </button>
+
+                    <div
+                        class="modal fade"
+                        id={`${content}Modal`}
+                        tabindex="-1"
+                        aria-labelledby={`${content}ModalLabel`}
+                        aria-hidden="true"
+                    >
+                        <div class="modal-dialog modal-xl custom-width-modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title" id={`${content}ModalLabel`}>
+                                        {title}
+                                    </h2>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    />
+                                </div>
+                                <div class="modal-body">
+                                    {content === 'priceEstimate' && <PriceEstimateContent />}
+                                    {content === 'difficulty' && <DifficultyContent />}
+                                    {content === 'isItForYou' && <IsItForYouContent />}
+                                </div>
+                                <button
+                                    type="button"
+                                    class="for-you-button close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    Go Back
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )
+        }
+    </div>
+</>
+
+<style lang="scss">
+    @use '../../styles/global' as *;
+
+    .for-you-button {
+        font-size: 1em;
+        background: var(--bs-link-color) !important;
+        /* Fallback color if needed: */
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .for-you-button.close {
+        margin: auto;
+        margin-bottom: 20px;
+        width: 50%;
+    }
+
+    @media (max-width: $small-screen) {
+        .for-you-button {
+            margin-top: 20px;
+        }
+    }
+
+    .custom-width-modal {
+        max-width: 80%;
+        @include respond-to(medium) {
+            max-width: 80%;
+        }
+        @include respond-to(small) {
+            max-width: 100%;
+        }
+    }
+
+    .modal-content {
+        border: 2px solid var(--bs-primary-ultradark);
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-top: 80px;
+        text-align: left;
+        @include respond-to(small) {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+    }
+
+    h2.modal-title {
+        font-size: 1.8em !important;
+        font-weight: bold !important;
+        @include respond-to(small) {
+            font-size: 1.3em !important;
+        }
+    }
+</style>
+
+<style>
+    /* Shared additional styles */
+    a {
+        display: inline-block;
+    }
+
+    .level-indicator {
+        display: inline-flex;
+        gap: 5px;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    .circle {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: 1px solid #ccc;
+    }
+
+    .level-1 .circle:nth-child(1),
+    .level-2 .circle:nth-child(-n + 2),
+    .level-3 .circle:nth-child(-n + 3),
+    .level-4 .circle:nth-child(-n + 4) {
+        background-color: var(--bs-primary-light);
+    }
+</style>
+
+<style lang="scss">
+    :global(.modal-scope h3) {
+        font-size: 1.3em !important;
+        border-bottom: 1px solid var(--bs-primary-dark) !important;
+        margin-bottom: 20px !important;
+    }
+
+    :global(.modal-scope h4) {
+        font-size: 1.8em !important;
+        border-bottom: 1px solid var(--bs-primary-dark) !important;
+        margin-bottom: 20px !important;
+        margin-top: 50px;
+    }
+
+    :global(.modal-scope .for-you-button) {
+        font-size: 1em !important;
+        background: var(--bs-link-color) !important;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    :global(.modal-scope .for-you-button.close) {
+        margin: auto;
+        margin-bottom: 20px;
+        width: 50%;
+    }
+
+    :global(.modal-scope .custom-width-modal) {
+        max-width: 80%;
+    }
+
+    :global(.modal-scopep .li-title) {
+        margin-bottom: 0px;
+    }
+    /* Add any additional global rules here if needed */
+</style>

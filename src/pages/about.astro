@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PurchaseBlock from '../components/PurchaseBlock.astro';
 import GenericSlider from '../components/GenericSlider.astro';
-import IsItForYou from '../components/IsItForYou.astro';
+import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 import '../styles/global.scss';
 
 const slogan = 'About One Life Japan'; // Set the height for 'about' page
@@ -53,6 +53,10 @@ image: '/images/about-banner.jpg';
                 know the backroads, the seasons, and the people
             </span> who shape the rhythm of everyday life.
         </p>
+
+        <div class="centered" style="margin-bottom:20px;">
+            <BaseGeneralModal show="modal" content="isItForYou" />
+        </div>
         <p>
             Our trips introduce not just places, but the<span class="emph"> people and everyday culture</span> that make
             them meaningful. For us, the magic lies in <span class="emph">shared moments with locals</span>,
@@ -60,16 +64,18 @@ image: '/images/about-banner.jpg';
                 >unexpected stories that unfold along the way</span
             >.
         </p>
-
-        <div class="centered" style="margin-bottom:20px;">
-            <IsItForYou show="modal" />
-        </div>
         <p>
-            <span class="emph">Each trip is custom-designed</span> to match your pace and travel style. Whether it's a two-day
-            countryside break, a one-week Bike & Hike challenge, a relaxed family adventure, or a one-month culture and language
-            immersion for students - we build each trip to fit the people taking it.<span class="emph">
-                We love a good challenge</span
-            >, whether it's physical or about opening perspectives,<span class="emph">
+            <span class="emph">Each trip is custom-designed</span> to match your pace and travel style. Whether it's a <a
+                href="/itinerary/4/3-days-off-the-path/"
+                title="Short Rural Immersian in Japan">two-day countryside break</a
+            >, a <a href="/itinerary/5/autumn-hike-and-bike-adventure/" title="Aumun Bike & Hike in Rural Japan"
+                >one-week Bike & Hike challenge</a
+            >, a <a href="/itinerary/1/family-japan-adventure/" title="Bike adventure in rural Japan for families"
+                >relaxed family adventure</a
+            >, or a one-month culture and language immersion for students - we build each trip to fit the people taking
+            it.<span class="emph"> We love a good challenge</span>, whether it's physical or about opening perspectives,<span
+                class="emph"
+            >
                 but we always keep it within reach</span
             >.
         </p>
@@ -109,70 +115,10 @@ image: '/images/about-banner.jpg';
                 your story
             </span>. That’s where we focus.
         </p>
-
-        <!-- 
-
-        <p>
-            We have <span class="emph">twenty years of experience</span> helping people venture into lesser visited rural
-            areas - <span class="emph">since 2005</span> - between the bullet train stops and beyond the postcards and tourist
-            hotspots, <span class="emph">introducing the people, places, and lifestyle and culture</span>. For us it's
-            about the <span class="emph">moments shared with locals</span>, and in the breathtaking vistas that await
-            off the main roads and the stories that unfold long the way - slowing down and eperince it in a <span
-                class="emph">relaxed, active, and adventureful way</span
-            > on foot or by bicycle.
-        </p>
-
-        <div class="centered" style="margin-bottom:50px;">
-            <h2 class="emph">Our adventures are custom made to fit your travel style.</h2>
+        <div style="display: flex; align-items: center; justify-content: center; gap:10px;">
+            <BaseGeneralModal show="modal" content="difficulty" />
+            <BaseGeneralModal show="modal" content="priceEstimate" />
         </div>
-        <p>
-            We have trips to fit most needs and schedules, such as 2-days in the countryside, a challenging 1-week Bike
-            & Hike, 4 and 5 day family trips, and even a 1-month Japan language & culture immersion course for students.
-            We thrive on challenge - physical challenge as well as challenging pre-held beliefs, but strive to make sure
-            the challenge is not too much for the individual.
-        </p>
-        <p>
-            Our programs are designed to communicate and reveal meanings and relationships of cultural and natural
-            heritage to the public, through first hand involvement with an object, artifact, landscape, monument or
-            site. Through this we aim to forge an emotional and intellectual connection between the interests of
-            participants and the meanings inherent in the cultural resource being studied.
-        </p>
-        <IsItForYou show="collapse" />
-
-        <p>
-            We want to <span class="emph">help you to explore</span>, not to dictate exactly what you should look at and
-            adhere to strict time schedules. We <span class="emph">go with the flow and adjust</span> according to your interest.
-            We <span class="emph">facilitate interaction with locals</span>, and ensure that <span class="emph"
-                >even if you do get "lost", you will never be truly lost</span
-            >, allowing you to explore without worry.
-        </p>
-
-        <p>
-            For many people, especially first time travelers, the where to go is pretty much set. The way to make your
-            trip unique is to start thinking about the how to get there. The itineraries I see are all about points, but
-            no one discusses what will happing in the time - a huge chuknk of time in Japan - as you travel between
-            those points. 2/3 of your trip. [represenation of how much of each day is spend at "attractions" vs "travel"
-            vs in-between interactions]
-        </p>
-
-        <p>
-            We travel by <span class="emph">bicycle and on foot</span>, but the main focus is not to log as many
-            kilometers as possible, rather bicycle and walking are simply the preferred mode of travel <span
-                class="emph">to allow you to keep it slow</span
-            >, so you can enjoy the area. While not opposed to some challenge, to <span class="emph"
-                >keep a focus on adventure</span
-            >, We provide e-assist bicycles in addtion to regular cross bikes. When the distances between locations are
-            too far to allow a relaxing ride or walk, alternative transportation is available to <span class="emph"
-                >provide shortcuts</span
-            > to ensure your cycling or walking time is spent in the best locations.
-        </p>
-
-        <p>
-            We can plan and faclitate adventures in the <span class="emph">countless rural areas across Japan</span>,
-            but our <span class="emph">base, main playground, and the community we know best</span>, and can make you
-            feel at home is a <span class="emph">rural area of Northern Nagano</span>. - Iiyama, Nozawa Onsen Village,
-            Sakae Mura, Kijima Daira, and Tsunan Town.
-        </p> -->
 
         <hr />
         <h3>About Your Facilitator</h3>
@@ -226,53 +172,6 @@ image: '/images/about-banner.jpg';
                 connect people with place
             </span> - often with a few unexpected moments of real-life hospitality along the way.
         </p>
-
-        <!-- Kevin has been <span
-                class="emph">living, studying, working, and adventuring in Japan for nearly thirty years</span
-            >, having lived in Kyushu, Shikoku and Tokyo before he and his wife <span class="emph"
-                >moved to a small rural village</span
-            > in Northern Nagano's Snow Country in 2006 to begin <span class="emph"
-                >farming rice, shoveling snow, and guiding rural tours as One Life Japan.</span
-            > -->
-        <!-- 
-        <p>
-            With an uncanny ability to intuit which path will lead to <span class="emph">the next great adventure</span
-            >, <span class="emph">community ties, personal experience, and careful research</span>, trip planning, and
-            preparation. Kevin speaks <span class="emph">Japanese and English</span>, with the ability to charm even the
-            most serious of local farmers into a conversation about politics, food, or most often, life in the
-            mountains.
-        </p>
-
-        <p>
-            <span class="emph">Kevin has jounreyed extensivly</span> around Japan by foot, bicycle, van, train, ferry, and
-            even hitchiking. He has led adventures from the <span class="emph">islands ofKyushu</span>, to the <span
-                class="emph">summit of Japan's highest mountains</span
-            >, through blzzards and typhoons.
-        </p>
-
-        <p>In addition to leading 0ne Life Japan Hike, Bike and Walking Tours, Kevin's resume includes:</p>
-        <ul>
-            <li>Sea kayak instructor in Maine</li>
-            <li>Outward Bound outdoor education instructor training in the US and Japan</li>
-            <li>Outward Bound Japan field instructor</li>
-            <li>Canyoning guide in Nagano</li>
-            <li>Trained as a Wilderness First Responder</li>
-            <li>Ogranic Rice Farmer</li>
-        </ul>
-        <p>
-            Still, his passion is for the less extreme, slow paced realxing <span class="emph"
-                >adventures that connect people with place</span
-            >, and when his mojo is working, he has been known to even work in an unplanned home-cooked dinner and peek
-            into the real life of the locals.
-        </p>
-        <p>
-            Kevin is trained as an <span class="emph">American Wilderness First Responder</span>, and an <span
-                class="emph">Outward Bound Japan instructor</span
-            >. In a previous life, before making the leap to rural life, Kevin worked in Tokyo for a major Japanese
-            finance firm, and in web development. After receiving a Masters Degree in Sustainability Studies in Sweden,
-            he worked for one of Japan's leading Sustainability Consultancy in Tokyo. He draws on these past
-            regular-life experiences in Japan to inform his current lust for travel.
-        </p> -->
 
         <blockquote>
             Kevin was instrumental in all our very special memories of the most fantastic Japan experiences. Hoping we
