@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "scripts": {
         "dev": "DEV_HOST=$(node get-ip.cjs) astro dev --host",
-        "build": "astro build",
+        "build": "DEV_HOST=$(node get-ip.cjs) astro build",
         "preview": "astro preview",
         "astro": "astro"
     },

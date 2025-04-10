@@ -28,7 +28,13 @@ const { highlight, modalId } = Astro.props;
                 <div class="external-links-container">
                     {highlight.external_links.map((link: any, linkIndex: number) => (
                         <div class="external-link-item">
-                            <a href={link.url} target="_blank" rel="noopener noreferrer" class="external">
+                            <a
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="external"
+                                title={link.name}
+                            >
                                 <div class="thumbnail">
                                     <img
                                         src={baseHost + link.screenshot_small}

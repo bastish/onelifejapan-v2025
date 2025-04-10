@@ -13,16 +13,21 @@ const monthCounts = await response.json();
         <p>Take a peek into what's happening at different times of the year</p>
     </div>
     <ul id="month-archive-list" style="list-style: none; padding: 0;">
-        {monthCounts.length > 0 ? (
-            monthCounts.map(({ month, count }) => (
-                <li>
-                    <a href={`/journeys/month/${month.toLowerCase()}/`}>
-                        {month} ({count})
-                    </a>
-                </li>
-            ))
-        ) : (
-            <li>No posts available yet.</li>
-        )}
+        {
+            monthCounts.length > 0 ? (
+                monthCounts.map(({ month, count }) => (
+                    <li>
+                        <a
+                            href={`/journeys/month/${month.toLowerCase()}/`}
+                            title={`Photos from ${month.toLowerCase()}`}
+                        >
+                            {month} ({count})
+                        </a>
+                    </li>
+                ))
+            ) : (
+                <li>No posts available yet.</li>
+            )
+        }
     </ul>
 </div>

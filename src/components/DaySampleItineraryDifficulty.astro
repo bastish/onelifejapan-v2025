@@ -24,7 +24,11 @@ const { dayItinerary, modalId } = Astro.props;
                 </div> */}
                 <div class="route-card">
                     <div class="map-col">
-                        <a href="#" data-modal-id={`routeImagesBootStrapSliderModal-${route.id}`}>
+                        <a
+                            href="#"
+                            data-modal-id={`routeImagesBootStrapSliderModal-${route.id}`}
+                            title="View detailed route map"
+                        >
                             <img class="map-thumb" src={baseHost + route.sliderImages[0]} alt="Route Map" />
                         </a>
                     </div>
