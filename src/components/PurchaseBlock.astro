@@ -42,13 +42,13 @@ switch (page) {
         //pageBlurb = '';
         break;
     case 'contact':
-        slogan = 'Contact One Life Japan '; // Set the height for 'about' page
+        slogan = 'Inquire About an Adventure '; // Set the height for 'about' page
         pageBlurb = ''; // Set image for 'about' page
-        buttontext = 'Contact us To Learn More';
+        buttontext = '';
         break;
     case 'customIndex':
         slogan = 'Custom Hike, Bike, & Walking Adventures in Japan'; // Set the height for 'about' page
-        pageBlurb = ''; // Set image for 'about' page
+        pageBlurb = 'All of <span class="emph">our trips are custom made</span>, but many follow routes through the areas we know well - mostly in Northern Nagano.'; // Set image for 'about' page
         buttontext = 'Request an Adventure';
         break;
     default:
@@ -58,7 +58,8 @@ switch (page) {
 }
 
 const fadeInClass = page !== 'about' ? 'animate__customFadeIn' : '';
-const hiddenClass = page == 'contact' ? 'hidden' : '';
+//const hiddenClass = page == 'contact' ? 'hidden' : '';
+const hiddenClass = page == '' ? 'hidden' : '';
 ---
 
 <div class=`container purchase-block
@@ -68,18 +69,23 @@ const hiddenClass = page == 'contact' ? 'hidden' : '';
             <h1 class="slogan-header">{slogan}</h1>
             <p class="blurb" set:html={pageBlurb} />
         </div>
-        <div
-            class=`col-md-3 d-flex 
-                        align-items-center 
-                        justify-content-end
-                        btn-buy 
-                        btn-container
-                        ${fadeInClass}  
-                        animate__customFadeIn--right
-                        book-link`
-        >
-            <a href="/contact" class="btn-u btn-u-lg rounded5 book-link"> {buttontext} &#8250;&#8250;</a>
-        </div>
+        { buttontext ? (
+        
+            <div
+                class=`col-md-3 d-flex 
+                            align-items-center 
+                            justify-content-end
+                            btn-buy 
+                            btn-container
+                            ${fadeInClass}  
+                            animate__customFadeIn--right
+                            book-link`
+            >
+                <a href="/contact" class="btn-u btn-u-lg rounded5 book-link"> {buttontext} &#8250;&#8250;</a>
+            </div>
+        ) 
+            : '' 
+        }
     </div>
 </div>
 

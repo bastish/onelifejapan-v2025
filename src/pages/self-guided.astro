@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PurchaseBlock from '../components/PurchaseBlock.astro';
 import GenericSlider from '../components/GenericSlider.astro';
+import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 import '../styles/global.scss';
 
 const slogan = 'About One Life Japan'; // Set the height for 'about' page
@@ -240,6 +241,11 @@ image: '/images/about-banner.jpg';
                 <li>Bicycle / gear rental support<p>Some stuff about it</p></li>
                 <li>Remote on Call Support<p>Some stuff about it</p></li>
             </ul> -->
+        <div class="modal-buttons">
+            <BaseGeneralModal show="modal" content="isItForYou" />
+            <BaseGeneralModal show="modal" content="difficulty" />
+            <BaseGeneralModal show="modal" content="priceEstimate" />
+        </div>
         <h3>Pricing</h3>
 
         <p>
@@ -383,6 +389,17 @@ image: '/images/about-banner.jpg';
             margin-left: 10px;
             font-style: italic;
             color: var(--bs-primary-dark);
+        }
+        .modal-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            @include respond-to(small) {
+                margin-top: -20px;
+            }
         }
     </style>
 </BaseLayout>
