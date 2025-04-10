@@ -78,7 +78,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <h5 class="modal-title" id="errorModalLabel">Oops. Somethings Missing ¯\_(ツ)_/¯</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -92,7 +92,8 @@
 </div>
 
 <!-- Additional Custom Styles -->
-<style>
+<style lang="scss">
+    @use '../styles/global' as *;
     /* Hide screen reader-only labels visually while keeping accessibility */
     .sr-only {
         position: absolute;
@@ -106,6 +107,14 @@
     /* Slight padding adjustments for form groups */
     .form-group {
         margin-bottom: 1rem;
+    }
+    .btn {
+        background: var(--bs-link-color);
+    }
+    @include respond-to(small) {
+        .modal-title {
+            font-size: 1.2em;
+        }
     }
 </style>
 
