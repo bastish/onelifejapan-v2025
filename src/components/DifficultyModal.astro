@@ -2,11 +2,7 @@
 const { itinerary } = Astro.props;
 ---
 
-<!-- <a href="#" data-bs-toggle="modal" data-bs-target={`#difficulty-modal-${itinerary.activityLevel.id}`}>
-    {itinerary.activityLevel.title}
-</a> -->{
-    itinerary.activityLevel.title
-}
+{itinerary.activityLevel.title}
 <span class=`level-indicator level-${itinerary.activityLevel.level}`>
     <div class="circle"></div>
     <div class="circle"></div>

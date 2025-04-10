@@ -1,0 +1,72 @@
+.PHONY: build collect preview serve deploy_stage deploy_master deploy_github archive_branches deploy_all
+
+# Step 1: Build the Astro site
+build:
+	@echo "Running npm build..."
+	npm run build
+
+# Step 2: Collect and process images
+collect:
+	@echo "Collecting images..."
+	python3 collect_images.py
+	@echo "Collecting full URL images..."
+	python3 collect_images_fullurl.py
+	@echo "Resizing collected images..."
+	python3 collected_images_resize.py
+
+# Optional: Preview locally (either with npm preview or a simple HTTP server)
+preview:
+	@echo "Starting preview with npm..."
+	npm run preview
+	@echo "OR, if outside the Astro directory:"
+	@echo "cd dist && python3 -m http.server 8005"
+	# Uncomment the following line if you want to use the Python HTTP server:
+	# cd dist && python3 -m http.server 8005
+
+# Deployment to staging branch
+deploy_stage:
+	@echo "Deploying to stage..."
+	cd onelifejapan-deployed-site && \
+	git checkout stage && \
+	rm -rf dist && \
+	cp -r /Users/kevincameron/Documents/onelifejapan_static_2023/redesign/dist dist && \
+	git add . && \
+	git commit -m "Deploy [add slash to end of linke] for stage" && \
+	git push origin stage
+
+# Deployment to master/production branch
+deploy_master:
+	@echo "Deploying to master..."
+	cd onelifejapan-deployed-site && \
+	git checkout master && \
+	rm -rf dist/ && \
+	git checkout stage -- dist/ && \
+	git add dist/ && \
+	git commit -m "Update Production [ add slash to end of linke ]" && \
+	git push origin master
+
+# Deployment to GitHub Pages
+deploy_github:
+	@echo "Deploying to GitHub Pages..."
+	cd /path/to/onelifejapan.com-deployed && \
+	git checkout -b gh-pages && \
+	git add . && \
+	git commit -m "Deploy to GitHub Pages" && \
+	git push origin gh-pages
+
+# Archive feature branches after merging
+archive_branches:
+	@echo "Archiving feature branches..."
+	git checkout feature/blog-from-api && \
+	git checkout master && \
+	git pull origin master && \
+	git merge feature/blog-from-api && \
+	git push origin master && \
+	git branch -m feature/blog-from-api archive/blog-from-api && \
+	git push origin archive/blog-from-api && \
+	git branch -r && \
+	git push origin --delete feature/blog-from-api
+
+# Run all tasks in sequence
+deploy_all: build collect preview deploy_stage deploy_master deploy_github archive_branches
+	@echo "All deployment tasks completed!"
