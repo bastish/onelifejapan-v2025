@@ -187,28 +187,26 @@ const textOverlayStyle = `animation-delay: calc(${textAnimationDelay} + ${imageA
 </style>
 
 <header class="bg-light">
-    <header class="bg-light">
-        {
-            sliderImage ? (
-                <div
-                    id={`imageScrollContainer-${uniqueId}`}
-                    class={`image-scroll-container ${preventShrink ? 'prevent-shrink' : ''}`}
-                    style={inlineStyle}
-                    data-unique-id={uniqueId}
-                >
-                    <button class="scroll-btn left" data-direction="left" data-unique-id={uniqueId}>
-                        <i class="fas fa-chevron-left" />
-                    </button>
-                    <button class="scroll-btn right" data-direction="right" data-unique-id={uniqueId}>
-                        <i class="fas fa-chevron-right" />
-                    </button>
-                    {sliderText && <div class="text-overlay" style={textOverlayStyle} set:html={sliderText} />}
-                </div>
-            ) : (
-                <div>No Slider Image Available {uniqueId}</div>
-            )
-        }
-    </header>
+    {
+        sliderImage ? (
+            <div
+                id={`imageScrollContainer-${uniqueId}`}
+                class={`image-scroll-container ${preventShrink ? 'prevent-shrink' : ''}`}
+                style={inlineStyle}
+                data-unique-id={uniqueId}
+            >
+                <button class="scroll-btn left" data-direction="left" data-unique-id={uniqueId}>
+                    <i class="fas fa-chevron-left" />
+                </button>
+                <button class="scroll-btn right" data-direction="right" data-unique-id={uniqueId}>
+                    <i class="fas fa-chevron-right" />
+                </button>
+                {sliderText && <div class="text-overlay" style={textOverlayStyle} set:html={sliderText} />}
+            </div>
+        ) : (
+            <div>No Slider Image Available {uniqueId}</div>
+        )
+    }
 </header>
 
 <script>

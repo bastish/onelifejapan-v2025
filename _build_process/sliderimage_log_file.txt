@@ -1,0 +1,2 @@
+sliderimage_log_file log:
+

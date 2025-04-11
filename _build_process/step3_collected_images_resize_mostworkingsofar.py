@@ -29,15 +29,15 @@ with open(copy_log_file, 'w', encoding='utf-8') as f:
 images = defaultdict(lambda: {"sizes": set()})
 
 #############################################
-# 4. Regex Patterns for Basic Cases
+# 4. Regex Patterns to Identify Image References in HTML
 #############################################
-# (a) Background images in CSS (e.g. slider images) – record desired height and update URL.
+# (a) Background images in CSS; record the desired height.
 pattern_bg = re.compile(
     r'background-image:\s*url\(["\']?(?P<url>/assets/(?!blog/)[^"\'\s]+)["\']?\).*?height:\s*(?P<height>\d+)(?:px)?\s*;',
     re.DOTALL | re.IGNORECASE
 )
 
-# (b) <img> tags – record width (or determine from asset) and update URL.
+# (b) <img> tags. Note: We relax the width matching to accept an optional "px".
 pattern_img = re.compile(
     r'<img\s+[^>]*?src=["\'](?P<url>/assets/(?!blog/)[^"\']+)["\'](?P<attrs>[^>]*?)>',
     re.IGNORECASE | re.DOTALL
@@ -48,10 +48,10 @@ pattern_img = re.compile(
 #############################################
 def update_img_tag(tag, new_src, new_width, new_height):
     """
-    Update an <img> tag by replacing:
+    Update <img> tag by replacing:
       - The src attribute with new_src,
-      - The width attribute to new_width (adds "px" if missing),
-      - The height attribute to new_height (adds "px" if missing).
+      - The width attribute to new_width (adds px if missing),
+      - The height attribute to new_height (adds px if missing).
     """
     # Replace the src attribute.
     tag = re.sub(r'src=["\'][^"\']+["\']', f'src="{new_src}"', tag)
@@ -68,83 +68,14 @@ def update_img_tag(tag, new_src, new_width, new_height):
     return tag
 
 #############################################
-# 6. Custom Case: Plug-in Handlers
-#############################################
-def process_responsive_picture(match):
-    """
-    Sample custom case: process <span> elements that contain a <picture> block
-    with responsive images.
-    
-    In this example, the maximum size is forced to 350px. This handler looks for
-    <source> and <img> tags within the match and updates their URLs so that the
-    new file name includes "-350px" (if not already present).
-
-    You can change MAX_DIM or add additional handling here.
-    """
-    MAX_DIM = 350  # Adjust this as needed.
-    
-    # The matched content is the entire span element.
-    block = match.group(0)
-    
-    # For each URL inside this block, update the file name if it includes a dimension indicator.
-    # Here we simply force the dimension to MAX_DIM for the <source> and <img> tags.
-    def replace_url(m):
-        orig_url = m.group('url')
-        # Build the new URL with the "-350px" suffix (if not already having that exact dimension).
-        if f'-{MAX_DIM}px' not in orig_url:
-            safe_relative_path = orig_url.replace('/assets/', '').replace('%20', '_').replace(' ', '_')
-            new_url = f'/assets/{os.path.splitext(safe_relative_path)[0]}-{MAX_DIM}px.jpg'
-            return m.group(0).replace(orig_url, new_url)
-        return m.group(0)
-    
-    # Define a simple regex that matches the url attribute in both <source> and <img> tags.
-    url_pattern = re.compile(r'(src(?:set)?=["\'])(?P<url>/assets/[^"\']+)(["\'])', re.IGNORECASE)
-    updated_block = url_pattern.sub(replace_url, block)
-    
-    # Optionally, if you need to enforce style max-width in the inline style, update that as well.
-    # Example: Replace "max-width: XXpx" with max-width: 350px.
-    updated_block = re.sub(r'(max-width:\s*)(\d+)(px)', f'\\1{MAX_DIM}\\3', updated_block)
-    
-    # Log the custom case handling.
-    print("Processed custom responsive picture block (forced max dim: 350px).")
-    return updated_block
-
-# List of custom cases. Each entry is a dictionary that must include:
-#   - 'pattern': a compiled regex to match a specific block in your HTML.
-#   - 'handler': the function to call with the match object.
-custom_cases = [
-    {
-        'pattern': re.compile(
-            r'<span\s+class=["\']responsive-framed-floating-picture[^>]*>.*?</span>',
-            re.DOTALL | re.IGNORECASE
-        ),
-        'handler': process_responsive_picture,
-        'description': 'Responsive framed picture block (max 350px)'
-    },
-    # You can add new cases here as they arise.
-]
-
-def process_custom_cases(content):
-    """
-    Process all custom cases in the list over the provided HTML content.
-    """
-    for case in custom_cases:
-        pattern = case['pattern']
-        handler = case['handler']
-        content = pattern.sub(handler, content)
-    return content
-
-#############################################
-# 7. HTML Processing: Standard Updates
+# 6. HTML Processing: Recording Dimensions and Updating HTML
 #############################################
 def process_file(file_path):
     """
-    Read an HTML file and process:
-      (a) CSS background-image rules,
-      (b) <img> tags, and
-      (c) custom cases.
-    
-    Updates the file if any changes are detected.
+    Read an HTML file, record desired dimensions from:
+      - CSS background-image rules (recorded as height), and
+      - <img> tags (recorded as width if available, or determined from asset file).
+    For <img> tags the tag is updated to use the new optimized image filename.
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -172,7 +103,6 @@ def process_file(file_path):
         # Replace the original URL with the new URL in the matched string.
         updated_bg = match.group(0).replace(url, new_url)
         return updated_bg
-
     content = pattern_bg.sub(bg_replacer, content)
 
     # (b) Process <img> tags.
@@ -182,7 +112,9 @@ def process_file(file_path):
         attrs = match.group('attrs')
 
         dimension = None
-        # Step 1: Look for a width attribute.
+        dim_type = "width"  # Default to width
+        
+        # Step 1: Look for a width attribute (allowing optional "px").
         width_match = re.search(r'width=["\'](\d+)(?:px)?["\']', attrs)
         if width_match:
             dimension = int(width_match.group(1))
@@ -194,7 +126,7 @@ def process_file(file_path):
                 dimension = int(style_width_match.group(1))
                 print(f'Found inline max-width for {url}: {dimension}px')
 
-        # Step 3: If no width information, try to determine it from the asset.
+        # Step 3: If no width information, try opening the image to get its size.
         if dimension is None:
             local_img_path = os.path.join(assets_dir, url.replace('/assets/', ''))
             if os.path.exists(local_img_path):
@@ -208,16 +140,21 @@ def process_file(file_path):
                     print(f"Error opening {local_img_path}: {e}")
             else:
                 print(f"Asset file not found for {url}.")
-
+        
+        # If still no dimension, skip tag update.
         if not dimension:
             print(f'No width found for <img> {url}. Leaving tag unchanged.')
             return full_tag
 
+        # Record the dimension (we record as width for <img> tags).
         images[url]["sizes"].add((dimension, "width"))
-
+        
+        # Step 4: Compute the new optimized file URL.
+        # Generate a safe relative path and then add the suffix '-{dimension}px'
         safe_relative_path = url.replace('/assets/', '').replace('%20', '_').replace(' ', '_')
         new_url = f'/assets/{os.path.splitext(safe_relative_path)[0]}-{dimension}px.jpg'
         
+        # Step 5: Open the asset file to compute new height from aspect ratio.
         local_img_path = os.path.join(assets_dir, url.replace('/assets/', ''))
         new_height = 0
         if os.path.exists(local_img_path):
@@ -238,21 +175,20 @@ def process_file(file_path):
             outf.write(log_line + "\n")
         print(log_line)
 
+        # Step 6: Update the tag with new src, width, and height.
         new_tag = update_img_tag(full_tag, new_url, dimension, new_height)
         return new_tag
 
     content = pattern_img.sub(img_replacer, content)
 
-    # (c) Process custom cases.
-    content = process_custom_cases(content)
-
+    # Only write back if changes occurred.
     if content != original_content:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
         print(f"Updated HTML file: {file_path}")
 
 #############################################
-# 8. Image Resizing Functions
+# 7. Image Resizing Functions
 #############################################
 def resize_image(img, *, height=None, width=None):
     """
@@ -273,14 +209,19 @@ def resize_and_save_images():
     the smallest value if multiple are recorded), and save the optimized file.
     """
     for url, data in images.items():
+        # Build a safe file name portion.
         safe_relative_path = url.replace('/assets/', '').replace('%20', '_').replace(' ', '_')
+        # Choose the smallest dimension if several exist.
         desired_dims = [dimension for (dimension, _) in data["sizes"]]
         if not desired_dims:
             print(f"No recorded dimension for {url}. Skipping.")
             continue
         target_dim = min(desired_dims)
+        # Determine type; if any “height” match is recorded at this dimension, use height,
+        # otherwise assume width.
         types = [typ for (dim, typ) in data["sizes"] if dim == target_dim]
         target_type = "height" if "height" in types else "width"
+
         new_img_path = os.path.join(assets_dir, f'{os.path.splitext(safe_relative_path)[0]}-{target_dim}px.jpg')
         print(f"Resizing {url}: target {target_type} = {target_dim}px => {new_img_path}")
         try:
@@ -302,7 +243,7 @@ def resize_and_save_images():
             print(f"Error resizing image for {url}: {e}")
 
 #############################################
-# 9. Process HTML Files and Resize Images
+# 8. Process HTML Files and Resize Images
 #############################################
 for root, dirs, files in os.walk(dist_dir):
     for file in files:
@@ -314,7 +255,7 @@ for root, dirs, files in os.walk(dist_dir):
 resize_and_save_images()
 
 #############################################
-# 10. Final Log Message
+# 9. Final Log Message
 #############################################
 print(f'\nChanges logged in {output_file}')
 print(f'Resize operations logged in {copy_log_file}')

@@ -31,7 +31,7 @@ const { itinerary, dayItinerary } = Astro.props;
         <div class="frame">
             {
                 dayItinerary.sliderImage ? (
-                    <GenericSlider sliderImageId={dayItinerary.sliderImage.id} height={300} />
+                    <GenericSlider sliderImageId={dayItinerary.sliderImage.id} height={200} />
                 ) : (
                     <div>No Slider Image Available</div> // Or any other fallback content
                 )

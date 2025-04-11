@@ -1,24 +1,32 @@
 import os
 import re
 import requests
-import json      # <-- ensure this is imported
-import html      # <-- ensure this is imported
+import json
+import html
 from urllib.parse import unquote
 
 # Define flag
 ONLY_WRITE_CHANGES = False  # Set to False to actually perform the copy and update
 
-# Define directories
-#dist_dir = 'dist'
-dist_dir = '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist'
+#############################################
+# 1. Directory Definitions
+#############################################
+
+# Get files from this external directory
+original_assets_source_dir = '/Users/kevincameron/Documents/onelifejapan_static_2023/redesign/assets'
+
+# this repositorry directories
+abs_path = '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025'
+dist_dir = os.path.join(abs_path, 'dist')
 assets_dir = os.path.join(dist_dir, 'assets')
-#project_assets_dir = 'assets'  # Directory where original assets are stored
-project_assets_dir = '/Users/kevincameron/Documents/onelifejapan_static_2023/redesign/assets'
+# Log Files
+output_file = os.path.join(abs_path, '_build_process', 'dist_changes.txt')
+found_images_file =  os.path.join(abs_path, '_build_process', 'dist_found_images.txt')
+copy_log_file = os.path.join(abs_path, '_build_process', 'dist_copy_log.txt')
+sliderimage_log_file = os.path.join(abs_path, '_build_process', 'sliderimage_log_file.txt')
+
 image_urls = set()
-output_file = '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/_build_process/dist_changes.txt'
-found_images_file = '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/_build_process/dist_found_images.txt'
-copy_log_file = '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/_build_process/dist_copy_log.txt'
-sliderimage_log_file = '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/_build_process/dist_sliderimage_log_file.txt'
+
 
 # Ensure assets directory exists
 os.makedirs(assets_dir, exist_ok=True)
@@ -36,10 +44,9 @@ with open(copy_log_file, 'w', encoding='utf-8') as f:
 with open(sliderimage_log_file, 'w', encoding='utf-8') as f:
     f.write('sliderimage_log_file log:\n\n')
 
+
 # Helper function to add image URL
 def add_image_url(url, file_path):
-    
-    
     image_urls.add(url)
     relative_path = url.replace('/assets/', '')
     safe_relative_path = relative_path.replace('%20', '_').replace(' ', '_')  # Replace spaces with underscores
@@ -64,8 +71,8 @@ def copy_and_save_image(url, safe_relative_path):
 
     # Decode URL to handle any encoding issues
     decoded_url = unquote(url.replace('/assets/', ''))
-    local_img_path = os.path.join(project_assets_dir, decoded_url)
-    safe_local_img_path = os.path.join(project_assets_dir, decoded_url.replace('%20', ' ').replace(' ', '_'))
+    local_img_path = os.path.join(original_assets_source_dir, decoded_url)
+    safe_local_img_path = os.path.join(original_assets_source_dir, decoded_url.replace('%20', ' ').replace(' ', '_'))
     
     new_img_path = os.path.join(assets_dir, safe_relative_path)
     os.makedirs(os.path.dirname(new_img_path), exist_ok=True)

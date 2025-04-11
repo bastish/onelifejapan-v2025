@@ -39,8 +39,8 @@ width = `${width}px`;
     style={`float: ${float}; display: inline-block; margin: 10px 20px; margin-${float}: 0px;`}
 >
     <picture>
-        <source media="(min-width: 1200px)" srcset={baseHost + imageData!.srcLarge} type="image/jpeg" />
-        <source media="(min-width: 400px)" srcset={baseHost + imageData!.srcMedium} type="image/jpeg" />
+        <!-- <source media="(min-width: 1200px)" srcset={baseHost + imageData!.srcLarge} type="image/jpeg" />
+        <source media="(min-width: 400px)" srcset={baseHost + imageData!.srcMedium} type="image/jpeg" /> -->
         <img
             src={baseHost + imageData!.srcMedium}
             style={`max-width: ${width}; height: auto; display: block; margin: 0 auto; border: 0px;`}
