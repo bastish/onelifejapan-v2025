@@ -1,27 +1,17 @@
 ---
 // src/components/Head/SeoMetaTags.astro
 
-import { defaultKeywordsList } from "./keywords";
+import { defaultKeywordsList } from './keywords';
 
-const {
-  title, 
-  description, 
-  image, 
-  canonical,
-  openGraph = {},
-  twitter = {},
-  keywords,
-  robots,
-} = Astro.props;
-
-
+const { title, description, image, canonical, openGraph = {}, twitter = {}, keywords, robots } = Astro.props;
 
 const defaultCanonical = Astro.url.href;
-const defaultTitle = "OneLife Japan: Rural Hiking and Adventure Tours in Japan";
-const defaultDescription = "Explore OneLife Japan's rural hiking, biking, and walking tours across Japan. Discover off-the-beaten-path adventures.";
-const defaultImage = "/assets/og.jpg";
+const defaultTitle = 'OneLife Japan: Rural Hiking and Adventure Tours in Japan';
+const defaultDescription =
+    "Explore OneLife Japan's rural hiking, biking, and walking tours across Japan. Discover off-the-beaten-path adventures.";
+const defaultImage = '/assets/og.jpg';
 const defaultKeywords = defaultKeywordsList;
-const defaultRobots = "index, follow";
+const defaultRobots = 'index, follow';
 ---
 
 <!-- SEO Meta Tags -->
@@ -42,4 +32,3 @@ const defaultRobots = "index, follow";
 <meta name="twitter:description" content={description || defaultDescription} />
 <meta name="twitter:image" content={image || defaultImage} />
 <meta name="twitter:card" content="summary_large_image" />
-

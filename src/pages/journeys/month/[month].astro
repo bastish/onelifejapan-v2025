@@ -1,0 +1,46 @@
+---
+// Import necessary components and utilities
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogPage from '../../../components/blog/BlogPage.astro';
+import { loadPostsByMonth } from '../../../utils/loadBlog';
+
+// Pre-generate paths for all months
+export async function getStaticPaths() {
+    if (process.env.DISABLE_BLOG === 'true') {
+        return [];
+    }
+    const months = [
+        'january',
+        'february',
+        'march',
+        'april',
+        'may',
+        'june',
+        'july',
+        'august',
+        'september',
+        'october',
+        'november',
+        'december',
+    ];
+
+    // Generate paths for each month
+    return months.map((month) => ({
+        params: { month },
+    }));
+}
+
+// Get the current month from Astro params
+const { month } = Astro.params;
+
+// Fetch posts for the given month from the WordPress API
+const filteredPosts = await loadPostsByMonth(month);
+
+// Set the page title
+const pageTitle = `One Life Japan in ${month.charAt(0).toUpperCase() + month.slice(1)}`;
+const page = `journeys/month/${month}`;
+---
+
+<BaseLayout title={pageTitle} page={page}>
+    <BlogPage posts={filteredPosts} pageTitle={pageTitle} />
+</BaseLayout>

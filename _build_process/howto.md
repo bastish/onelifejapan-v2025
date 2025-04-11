@@ -1,3 +1,5 @@
+0. delete dist + dist_fresh
+
 1. npm run build
    Was going to fast for server so used
    import { limitedFetch } from './limitedFetch';
@@ -13,17 +15,8 @@
 ############
 OK
 
-4. python3 collected_images_resize.py  
-   SKips blog images directory
-
-OK
-
 CHECK IT on local to make sure images / etc
 
-In development directory
-npm run preview
-
-OR if not in astro directory (and to ensure no intefearnace by Node/Astro)
 python3 -m http.server 8005 --directory dist
 
 <!-- cd dist
@@ -42,6 +35,10 @@ A dedicated branch for deployment purposes. It can be the same as stage or a sep
 production (or live):
 Sometimes used interchangeably with main, but in some workflows, it's a separate branch reflecting the live site. -->
 
+cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deployed-site
+git clone https://github.com/your-username/your-repo.git
+cd onelifejapan-deployed-site
+
 - cd onelifejapan-deployed-site
 - checkout stage
   git checkout stage
@@ -49,10 +46,10 @@ Sometimes used interchangeably with main, but in some workflows, it's a separate
 - delete dist dir #
   rm -rf dist
 - cp new dist into it
-  cp -r /Users/kevincameron/Documents/onelifejapan_static_2023/redesign/dist dist
+  cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
 
 git add .
-git commit -m "Deploy [add slash t end of linke] for stage"
+git commit -m "Deploy [New Design Remake With SiteMap] for stage"
 git push origin stage
 
 - check it on vercel
@@ -63,7 +60,7 @@ git checkout master
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [ add slash to end of linke ] "
+git commit -m " Update Production [ NEw Design With Sitemap ] "
 git push origin master
 
 -- CLEAN UP

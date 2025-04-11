@@ -89,6 +89,12 @@
     justify-content: space-between;
     padding-top: 20px;
     flex-wrap: wrap; /* Allow wrapping */
+    background: white;
+    padding: 20px;
+    border: 1px solid var(--bs-primary-dark) !important;
+    box-shadow: 1px 1px 100px #ccc;
+    margin-top: 10px !important;
+    border-radius: 10px;
 }
 
 #blog-posts {
@@ -121,6 +127,11 @@
     border-radius: 5px;
     border-bottom: var(--bs-primary-light);
     border-top: 1px solid var(--bs-primary-ultradark);
+}
+
+h1.bloghead {
+    font-size: 1.8em;
+    padding-bottom: 20px;
 }
 
 .archive-container {
@@ -280,13 +291,6 @@
     border: 0px solid #ccc;
     text-align: center;
     padding: 20px;
-}
-
-.blog-content-container {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 20px;
-    flex-wrap: wrap; /* Allow wrapping */
 }
 
 #blog-posts {

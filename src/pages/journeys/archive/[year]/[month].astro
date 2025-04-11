@@ -1,0 +1,77 @@
+---
+// journeys/[year]/[month].astro
+
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BlogPage from '../../../../components/blog/BlogPage.astro';
+import { loadPostsByMonth } from '../../../../utils/loadBlog';
+
+const { year, month }: { year?: string | number; month?: string } = Astro.params;
+
+if (typeof year !== 'string' || typeof month !== 'string') {
+    throw new Error(`Invalid parameters: year=${year}, month=${month}`);
+}
+
+const yearStr = String(year);
+const monthStr = String(month).toLowerCase();
+
+// Pre-generate paths for all year/month combinations
+export async function getStaticPaths() {
+    if (process.env.DISABLE_BLOG === 'true') {
+        return [];
+    }
+    const months = [
+        'january',
+        'february',
+        'march',
+        'april',
+        'may',
+        'june',
+        'july',
+        'august',
+        'september',
+        'october',
+        'november',
+        'december',
+    ];
+
+    const paths: any[] = [];
+    // for (let year = 2011; year <= new Date().getFullYear(); year++) {
+    //     months.forEach((month) => {
+    //         paths.push({
+    //             params: {
+    //                 year: year.toString(), // Ensure year is a string
+    //                 month: month.toLowerCase(), // Ensure month is lowercase
+    //             },
+    //         });
+    //     });
+    // }
+
+    //console.log('Generated paths:', paths);
+    return paths;
+}
+
+// Fetch posts by month from the server
+const posts = await loadPostsByMonth(monthStr!);
+
+// Filter posts by the specific year
+const filteredPosts = posts.filter((post: any) => {
+    const postYear = new Date(post.date).getFullYear().toString();
+    return postYear === yearStr;
+});
+
+// Set the page title
+const pageTitle = `One Life Japan Bike, Hike, Walking and Wandering tours in ${monthStr!.charAt(0).toUpperCase() + monthStr!.slice(1)} ${yearStr}`;
+const page = `journeys/archive/${yearStr}/${monthStr}`;
+---
+
+<BaseLayout title={pageTitle} page={page}>
+    {
+        filteredPosts.length > 0 ? (
+            <BlogPage posts={filteredPosts} pageTitle={pageTitle} />
+        ) : (
+            <div class="no-posts">
+                <h2>No posts for this month</h2>
+            </div>
+        )
+    }
+</BaseLayout>

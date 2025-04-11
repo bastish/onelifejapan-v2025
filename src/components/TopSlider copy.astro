@@ -1,0 +1,127 @@
+---
+// TopSlider.astro
+// Any TypeScript logic for scripts can go here
+
+const page = Astro.props.page;
+
+let height;
+let backgroundImage;
+
+switch (page) {
+    case 'index':
+        height = '193px'; // Set the height for 'about' page
+        backgroundImage = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    case 'adventures':
+        height = '120px'; // Set the height for 'about' page
+        backgroundImage = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    case 'faq':
+        height = '193px'; // Set the height for 'about' page
+        backgroundImage = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    case 'about':
+        height = '120px'; // Set the height for 'about' page
+        backgroundImage = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    case 'journeys':
+        height = '193px'; // Set the height for 'about' page
+        backgroundImage = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    case 'contact':
+        height = '193px'; // Set the height for 'about' page
+        backgroundImage = '/assets/bg_long.jpg'; // Set image for 'about' page
+        break;
+    default:
+        height = '193px'; // Default height
+        backgroundImage = '/assets/bg_long.jpg'; // Default image
+        //backgroundImage = '/assets/header_default.jpg'; 
+        break;
+}
+
+// Prepare inline style string
+const inlineStyle = `height: ${height}; 
+    background-image: url('${backgroundImage}'); 
+    background-size: 1902px ${height}; 
+    background-repeat: repeat-x; 
+    overflow: hidden; 
+    position: relative; 
+    transition: background-position 0.5s ease;`;
+
+---
+
+ 
+<header class="bg-light">
+<div id="imageScrollContainer" class="image-scroll-container" style={inlineStyle}>
+    <button id="scrollLeft" class="scroll-btn left"><i class="fas fa-chevron-left"></i></button>
+    <button id="scrollRight" class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
+</div>
+</header>
+
+<style>
+    .XXimage-scroll-container {
+        width: 100%; /* Full width of the container */
+        /* height: 193px; Fixed height, adjust as needed 
+        background-image: url('/assets/bg_long.jpg');
+        background-size: 1902px 193px;  */
+        background-repeat: repeat-x; /* Repeat horizontally */
+        /* Adjust based on your image's dimensions */
+        overflow: hidden; /* Hide overflow */
+        position: relative; /* For positioning content inside, if needed */   
+        transition: background-position 0.5s ease; /* Smooth transition for background position */
+    }
+    
+    .image-scroll-container {
+        /* Previous styles */
+        position: relative; /* Ensure this is set for positioning children absolutely */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .scroll-btn {
+        position: absolute;
+        top: 50%; /* Center vertically */
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+    
+    .scroll-btn.left {
+        left: 10px; /* Distance from the left edge */
+    }
+    
+    .scroll-btn.right {
+        right: 10px; /* Distance from the right edge */
+    }
+    
+    .scroll-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7); /* Slightly less transparent on hover */
+    }
+    
+    </style>
+    
+<script>
+    let currentPosition = 0; // Initial background position
+
+    function updateBackgroundPosition() {
+        const container = document.getElementById('imageScrollContainer');
+        container!.style.backgroundPosition = `${currentPosition}px center`;
+    }
+
+    document.getElementById('scrollLeft')!.addEventListener('click', function() {
+        currentPosition += 200; // Adjust value for desired scroll amount
+        updateBackgroundPosition();
+    });
+
+    document.getElementById('scrollRight')!.addEventListener('click', function() {
+        currentPosition -= 200; // Adjust value for desired scroll amount
+        updateBackgroundPosition();
+    });
+</script>

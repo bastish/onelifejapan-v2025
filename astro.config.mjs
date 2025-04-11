@@ -4,13 +4,13 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+    site: 'https://www.onelifejapan.com',
     outDir: './dist',
+    integrations: [react(), sitemap()],
     style: {
         sass: {
-            site: 'https://www.onelifejapan.com',
             // Tell Sass to look in the node_modules directory for imports
             includePaths: ['./node_modules'],
-            integrations: [react(), sitemap()],
         },
     },
 });

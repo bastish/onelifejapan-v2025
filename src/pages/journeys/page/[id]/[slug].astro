@@ -1,0 +1,63 @@
+---
+// journeys/[id]/[slug].astro
+
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BlogPage from '../../../../components/blog/BlogPage.astro';
+import { loadBlog } from '../../../../utils/loadBlog';
+
+// Extract `id` and `slug` from parameters
+const { id, slug }: { id?: string; slug?: string } = Astro.params;
+
+if (!id || !slug) {
+    throw new Error('ID and slug parameters are required.');
+}
+
+// Pre-generate paths for all posts by ID and slug
+const postCount: number = 10;
+export async function getStaticPaths() {
+    if (process.env.DISABLE_BLOG === 'true') {
+        return [];
+    }
+
+    const postCount: number = 10;
+    const posts = await loadBlog(postCount); // Fetch all posts from API
+
+    // Generate paths for each post
+    const paths = posts.map((post: any) => ({
+        params: { id: post.id.toString(), slug: post.slug }, // Ensure `id` is a string
+    }));
+
+    //console.log(paths);
+    return paths;
+}
+
+// Fetch all posts
+const posts = await loadBlog(postCount);
+
+// Find the matching post by `id` and `slug`
+const post = posts.find((p: any) => p.id.toString() === id);
+
+if (!post) {
+    throw new Error(`Post with ID: ${id} not found.`);
+}
+const filteredPosts = [post];
+const pageTitle = post.title;
+const page = `journeys/page/${id}/${slug}`;
+---
+
+<BaseLayout title={pageTitle} page={page}>
+    <!-- <BlogPage posts={[post]} pageTitle={pageTitle} /> -->
+
+    <BlogPage posts={filteredPosts} pageTitle={pageTitle} />
+    <!-- <div id="blog-post-container">
+        <article>
+            <h1 class="blog-header">{post.title}</h1>
+            <p>
+                <small>Published on {new Date(post.date_published).toLocaleDateString()}</small>
+            </p>
+            <div class="blog-post-content">
+                <div set:html={post.content}></div>
+            </div>
+        </article>
+    </div> -->
+</BaseLayout>
