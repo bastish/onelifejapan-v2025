@@ -2,13 +2,15 @@
    Was going to fast for server so used
    import { limitedFetch } from './limitedFetch';
 
-2. python3 collect_images.py
+2. source env/bin/activate
 
-Worked fine.
-Still requires s
+3. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part1_collect_images.py
 
-3. python3 collect_images_fullurl.py
+4. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/step2_collect_images_fullurl.py
 
+5. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/step3_collected_images_resize.py
+
+############
 OK
 
 4. python3 collected_images_resize.py  

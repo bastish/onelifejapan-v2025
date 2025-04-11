@@ -1,6 +1,7 @@
 import os
 import shutil
 from PIL import Image
+import re
 
 # -------------------------------
 # Configuration
@@ -117,7 +118,7 @@ def process_manifest():
                 height_limit = slider_max_height  # e.g., 175 px
             elif "top_sliders" in rel_path_lower:
                 height_limit = special_slider_max_height  # e.g., 193 px
-            elif "/routes/10/chart" in rel_path_lower:
+            elif re.search(r'/routes/\d+/chart', rel_path_lower):
                 width_limit = chart_width  # e.g., 620 px
 
             try:
