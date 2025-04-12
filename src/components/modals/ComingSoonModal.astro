@@ -1,0 +1,59 @@
+---
+const modalId = `comingSoonModal`;
+const { showCustomTopLink } = Astro.props;
+---
+
+<div class="modal fade" id="comingSoonModal" tabindex="-1" aria-labelledby="comingSoonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="comingSoonModalLabel">Summary Coming Soon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>We're working writing up the summary of this adventure.</p>
+
+                <p>In the mean time, you may be interested in our:</p>
+                <ul class="coming-soon-list">
+                    {
+                        showCustomTopLink ? (
+                            <li>
+                                <a
+                                    href="/itinerary/7/custom-wanderlust/"
+                                    title="Custom Japan Rural Bike and Walking Trips"
+                                >
+                                    Custom Bike Trips in Japan &#8250;&#8250;
+                                </a>
+                            </li>
+                        ) : (
+                            <li>
+                                <a href="/" title="Custom Japan Rural Bike and Walking Trips">
+                                    Regular Customizable Rural Japan Itineraries &#8250;&#8250;
+                                </a>
+                            </li>
+                        )
+                    }
+                    <li>
+                        <a href="/self-guided/" title="Self Guided Walk and Bike Itineraries in Rural Japan">
+                            Self Guided Walk and Bike Itinerary options &#8250;&#8250;
+                        </a>
+                    </li>
+                </ul>
+                <p>
+                    <a href="/contact/" title="Contact One Life Japan"> Please contact One Life Japan </a>{' '}
+                    if this area is someplace you think you would be interested to visit.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Close </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .coming-soon-list li {
+        margin-top: 10px;
+        font-size: 1.2em;
+    }
+</style>

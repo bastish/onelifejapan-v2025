@@ -5,12 +5,16 @@ import VercelTracker from './VercelTracker.astro';
 
 const { title, description } = Astro.props;
 const defaultCanonical = Astro.url.href;
+const defaultDescription =
+    "Explore OneLife Japan's rural hiking, biking, and walking tours across Japan. Discover off-the-beaten-path adventures.";
 ---
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <meta name="description" content={description || defaultDescription} />
+
     <!-- Open Graph Tags -->
     <SeoMetaTags title={title} description={description} />
 

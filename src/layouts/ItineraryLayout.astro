@@ -15,6 +15,7 @@ import ItineraryPricingDetails from '../components/ItineraryPricingDetails.astro
 import ItineraryDatesAndAvailability from '../components/ItineraryDatesAndAvailability.astro';
 import CustomItinerarySampleItinerarySection from '..//components/CustomItinerarySampleItinerarySection.astro';
 import CustomItineraryPossibleHighlights from '../components/CustomItineraryPossibleHighlights.astro';
+import ComingSoonModal from '../components/modals/ComingSoonModal.astro';
 //import CustomItineraryCollapsibleChecklist from '../components/CustomItineraryCollapsibleChecklist.astro';
 //import CustomItinerary from '../components/CustomItinerary.astro';
 import ItinerarySectionContainer from '../components/ItinerarySectionContainer.astro';
@@ -22,25 +23,14 @@ import ItineraryLayoutNav from '../components/ItineraryLayoutNav.astro';
 import background from '../assets/background.svg';
 import '../styles/global.scss';
 
-let itinerary: any = Astro.props.itinerary;
-import { loadItinerary } from '../utils/loadItinerary.ts';
-import { loadCustomItinerary, customItineraryList } from '../utils/loadCustomItinerary';
+import { customItineraryList } from '../utils/loadCustomItinerary';
 //let itinerary = await loadItinerary(id);
 
-// // astro-dynamic-embed
-//console.log(itinerary.pricingIntro);
-import { AstroEmbedComponents, embedComponents } from '../astroEmbedComponent/astroEmbedComponents';
-let aecComponents: any[] = [];
-[aecComponents, itinerary] = embedComponents(aecComponents, itinerary);
-
-const {
-    title,
-    description
-} = itinerary;
-
+let itinerary: any = Astro.props.itinerary;
 let page = 'itinerary';
 let customItineraries = null;
 let customClass = '';
+let isCustom = itinerary?.custom_itinerary;
 
 if (itinerary.id === 7) {
     page = 'customIndex';
@@ -48,15 +38,23 @@ if (itinerary.id === 7) {
     customClass = 'is-custom';
 }
 
+
+// // astro-dynamic-embed
+import { AstroEmbedComponents, embedComponents } from '../astroEmbedComponent/astroEmbedComponents';
+let aecComponents: any[] = [];
+[aecComponents, itinerary] = embedComponents(aecComponents, itinerary);
+
+
+
 const hasDayItineraries = itinerary && itinerary.dayItineraries && itinerary.dayItineraries.length > 0;
 const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_itinerary.routes.length > 0;
-
+const hasCustomHighlights = itinerary?.custom_itinerary?.highlight_desc;
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
-        <HeadComponent title={title} description={description} />
+        <HeadComponent title={itinerary.metaTitle || itinerary.title} description={itinerary.metaDescription} />
         <slot name="head" />
     </head>
     <body>
@@ -96,7 +94,7 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
             
             
             <ItineraryCardList itineraries={customItineraries} page={page} />
-
+            <ComingSoonModal />
 
 
 
@@ -115,10 +113,10 @@ const hasCustomRoutes = itinerary?.custom_itinerary?.routes && itinerary.custom_
 
 
             <!-- Hihglights Section -->
-            {page === 'customIndex' ? <></> :
+            {page === 'customIndex' ||  (isCustom && !hasCustomHighlights) ? <></> :
                 <ItinerarySectionContainer sectionTitle="Possible Highlights" sectionAnchorId="highlights">
-                    {!hasCustomRoutes && <ItineraryPossibleHighlights itinerary={itinerary} /> }
-                    {hasCustomRoutes && <CustomItineraryPossibleHighlights itinerary={itinerary} /> }
+                    {(!hasCustomRoutes && !isCustom) && <ItineraryPossibleHighlights itinerary={itinerary} /> }
+                    {(hasCustomRoutes) && <CustomItineraryPossibleHighlights itinerary={itinerary} /> }
                     
                 </ItinerarySectionContainer>
             }

@@ -7,22 +7,16 @@ import '../styles/global.scss';
 
 const slogan = 'About One Life Japan'; // Set the height for 'about' page
 //const slogan = 'More than 90% of visitors to Japan do not leave Japans Golden Route (Tokyo, Kyoto, Osaka)';
-const pageBlurb2 =
-    '<div class="centered"><h2 class="emph">More than 90% of visitors to Japan do not leave Japans Golden Route (Tokyo, Kyoto, Osaka)</h2></div><p class="centered">Yet, most of what The Golden Route has to offer, can be found throughout Japan - without the shoulder to shoulder tourist crowds.</p><div class="centered"><h2 class="emph larger">Where do you want your Japan adventure to take <em>you</em>?</h2></div>'; // Set image for 'about' page
 
 const pageBlurb =
     "When you want to go it alone, but don't know where to go. We are happy to put our <span class='emph'>over twenty years of travel planning experience and knowldege</span> of rural, off the beaten path locations in Japan to work for you. self-guided itineraries and <span class='emph'>remote support</span> so you can have <span class='emph'>ultimate freedom with peace of mind</span>"; //
 
-const sliderText = '<div class="where-do-you">Where do you want your Japan adventure to take <em>you</em>?</div>'; // Set image for 'about' page
-
-// Frontmatter for SEO
-title: 'About One Life Japan Hike & Bike Adventures';
-canonical: 'https://www.onelifejapan.com/about/';
-description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
-image: '/images/about-banner.jpg';
+const title = 'Self-Guided Rural Japan Adventures';
+const description =
+    'Plan your self-guided journey through rural Japan with detailed maps, flexible routes, and real-time support—designed for independent travelers who want to explore authentic countryside experiences at their own pace.';
 ---
 
-<BaseLayout title="About One Life Japan Hike & Bike Adventures" page="about" sliderid="4">
+<BaseLayout title={title} description={description} page="self-guided">
     <div class="custom-container simple-page-body">
         <PurchaseBlock page={'self-guided'} slogan={slogan} pageBlurb={pageBlurb} />
 

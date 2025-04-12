@@ -10,8 +10,8 @@ import background from '../assets/background.svg';
 import '../styles/global.scss';
 
 const {
-    title = 'OneLifeJapan',
-    description = 'OneLife Japan: Hike, Bike and Walking Adventures in Rural Japan',
+    title = 'One Life Japan Hike, Bike & Walking Adventures',
+    description, //= 'One Life Japan provides active, educational customizable bicycle and walking tours in rural Japan. We use bicycles as a vehicle for exploration of culture and expanding comfort-zones.',
     page = 'index',
 } = Astro.props;
 ---
@@ -19,7 +19,7 @@ const {
 <!doctype html>
 <html lang="en">
     <head>
-        <HeadComponent title={title} description={description} />
+        <HeadComponent title={title} description={Astro.props.description} />
         <slot name="head" />
     </head>
     <body>

@@ -12,6 +12,8 @@
 
 5. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/step3_collected_images_resize.py
 
+6. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part4_delete_source_images.py
+
 ############
 OK
 
@@ -36,8 +38,8 @@ production (or live):
 Sometimes used interchangeably with main, but in some workflows, it's a separate branch reflecting the live site. -->
 
 cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deployed-site
-git clone https://github.com/your-username/your-repo.git
-cd onelifejapan-deployed-site
+git clone https://github.com/bastish/onelifejapan.com-deployed.git
+cd onelifejapan.com-deployed
 
 - cd onelifejapan-deployed-site
 - checkout stage
@@ -49,7 +51,7 @@ cd onelifejapan-deployed-site
   cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
 
 git add .
-git commit -m "Deploy [New Design Remake With SiteMap] for stage"
+git commit -m "Deploy [New Design Touchup Added Meta Descriptions] for stage"
 git push origin stage
 
 - check it on vercel
@@ -60,12 +62,15 @@ git checkout master
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [ NEw Design With Sitemap ] "
+git commit -m " Update Production [New Design Touchup Added Meta Descriptions]"
 git push origin master
 
 -- CLEAN UP
 git gc --prune=now --aggressive
 
+####################
+####################
+####################
 ####################
 
 GIT HUB PAGES

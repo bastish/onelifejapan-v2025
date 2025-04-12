@@ -18,14 +18,12 @@ const sliderTextx =
 
 const sliderText = '<div class="where-do-you">Where do you want your Japan adventure to take <em>you</em>?</div>'; // Set image for 'about' page
 
-// Frontmatter for SEO
-title: 'About One Life Japan Hike & Bike Adventures';
-canonical: 'https://www.onelifejapan.com/about/';
-description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
-image: '/images/about-banner.jpg';
+const title = 'About One Life Japan Hike & Bike Adventures in Rural Japan';
+const description =
+    "Discover One Life Japan—led by a local guide with 30+ years' experience, we offer personalized tours that take you beyond Japan’s Golden Route into its authentic countryside and vibrant culture.";
 ---
 
-<BaseLayout title="About One Life Japan Hike & Bike Adventures" page="about" sliderid="4">
+<BaseLayout title={title} description={description} page="about" sliderid="4">
     <div class="custom-container simple-page-body">
         <div class="centered attention-catcher">
             <h2>More than 90% of visitors to Japan do not leave Japan's Golden Route</h2>
@@ -46,76 +44,54 @@ image: '/images/about-banner.jpg';
 
         <br />
         <p>
-            <span class="emph">Since 2005</span>, we've helped travelers venture beyond the bullet train stops and
-            glossy postcards, into <span class="emph">lesser-visited rural areas</span> where life unfolds at a slower pace.
-            <span class="emph">One Life Japan is based in the countryside</span> we explore, and our roots in the region
-            run deep. We're not just passing through - we live here, work here, and <span class="emph">
-                know the backroads, the seasons, and the people
-            </span> who shape the rhythm of everyday life.
+            <span class="emph">Since 2005</span>, One Life Japan has been helping travelers explore parts of Japan’s
+            countryside that most never see -<span class="emph"> on foot, by bike, and at a slower pace</span>. We guide
+            people away from the bullet train lines, the crowds, and the famous Instagram stops into quieter, rural
+            areas where daily life still shapes the experience.
         </p>
-
-        <div class="centered" style="margin-bottom:20px;">
-            <BaseGeneralModal show="modal" content="isItForYou" />
-        </div>
+        <div class="frame" style="margin-bottom: 20px;"><GenericSlider sliderImageId={73} height={200} /></div>
         <p>
-            Our trips introduce not just places, but the<span class="emph"> people and everyday culture</span> that make
-            them meaningful. For us, the magic lies in <span class="emph">shared moments with locals</span>,
-            breathtaking vistas far from the main roads, and the <span class="emph"
-                >unexpected stories that unfold along the way</span
-            >.
+            Our home base is in Northern Nagano, near villages like Iiyama, Nozawa Onsen, and Sakae. It’s where One Life
+            Japan started, <span class="emph">where we have deep ties</span>, and where most of our trips take place. We
+            know the backroads, the <span class="emph">rhythms of the land, the seasons, and the people.</span>
         </p>
         <p>
-            <span class="emph">Each trip is custom-designed</span> to match your pace and travel style. Whether it's a <a
+            Each trip is <span class="emph">custom-designed, not pre-packaged.</span> They are based on our experience and
+            on what opportunities present themselves at the time you visit. Some are short and relaxed, others more physically
+            or culturally challenging. Whether it's a <a
                 href="/itinerary/4/3-days-off-the-path/"
                 title="Short Rural Immersian in Japan">two-day countryside break</a
             >, a <a href="/itinerary/5/autumn-hike-and-bike-adventure/" title="Aumun Bike & Hike in Rural Japan"
                 >one-week Bike & Hike challenge</a
             >, a <a href="/itinerary/1/family-japan-adventure/" title="Bike adventure in rural Japan for families"
                 >relaxed family adventure</a
-            >, or a one-month culture and language immersion for students - we build each trip to fit the people taking
-            it.<span class="emph"> We love a good challenge</span>, whether it's physical or about opening perspectives,<span
-                class="emph"
-            >
-                but we always keep it within reach</span
-            >.
+            >, or a one-month culture and language immersion for students - all are <span class="emph">
+                shaped around your timing, comfort level, and what you’re hoping
+            </span> to get out of the trip. Nothing is fixed in stone - we plan based on real knowledge of the region and
+            what’s possible, not fixed tour dates or generic routes.
+        </p>
+        <p>
+            We travel mostly by bike and on foot - not to rack up miles, but because it’s <span class="emph">
+                the best way to fully see things properly
+            </span>. We use trains and transfers when needed, and e-bikes are available to keep things accessible
+            without losing the feeling of <span class="emph">moving through a place under your own power.</span>
         </p>
 
         <p>
-            We believe that travel is not just about what you see, but how you experience it. Our programs are built to
-            reveal the <span class="emph">meaning and relationships</span> behind Japan’s cultural and natural heritage—through
-            first-hand encounters with landscapes, traditions, and communities. The goal isn’t just to see rural Japan, but
-            to feel a connection to it as place.
+            What we offer is grounded. It’s <span class="emph">not a fantasy of “lost Japan.”</span> Expect simplicity, not
+            spectacle. Real encounters, not rehearsed ones. It’s <span class="emph"
+                >real, modern life in rural Japan</span
+            > - a flexible way to experience places where the main story is you, and the people you meet - not tourism.
         </p>
 
         <p>
-            Our home base - and <span class="emph">the region we know best</span> - is in Northern Nagano: Iiyama, Nozawa
-            Onsen Village, Sakae Mura, Kijima Daira, and Tsunan Town.<span class="emph">
-                We travel by bike and on foot</span
-            >, not to rack up kilometers, but because they’re the <span class="emph"
-                >best way to stay grounded and explore deeply</span
-            >. For longer distances, we mix in trains or transfers to keep the rhythm balanced. E-bikes are available
-            for those who want to <span class="emph">keep things active but accessible</span>.
-        </p>
-
-        <p>
-            We don't dictate where to look or rush you through a checklist. Instead,<span class="emph">
-                we create space for exploration</span
-            >, adjusting to your interests and giving you the <span class="emph"
-                >confidence to wander without worry</span
-            >. Even if you do get a little "lost," you're never truly lost—we’re there to back you up, not hold your
-            hand.
-        </p>
-
-        <p>
-            For many visitors, the "where" is already decided. <span class="emph"
-                >What makes a trip meaningful is the "how"</span
-            > - the time in between the sights. The landscapes you move through. The strangers who become characters in <span
-                class="emph"
-            >
-                your story
-            </span>. That’s where we focus.
+            If that sounds like your kind of trip,<span class="emph"> we can't wait to help make it happen</span>. We
+            don't give you a checklist - we give you space to explore, adjust to your pace, and back you up when you
+            need it. <span class="emph">Even if you get a little “lost,” you’re never truly lost</span>. We’re there to
+            back you up, not hold your hand.
         </p>
         <div style="display: flex; align-items: center; justify-content: center; gap:10px;">
+            <BaseGeneralModal show="modal" content="isItForYou" />
             <BaseGeneralModal show="modal" content="difficulty" />
             <BaseGeneralModal show="modal" content="priceEstimate" />
         </div>

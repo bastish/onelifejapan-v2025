@@ -1,12 +1,54 @@
 ---
 import ItineraryCardList from '../components/ItineraryCardList.astro';
-import Layout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadItineraries } from '../utils/loadItineraries.ts';
+
+import { customItineraryList } from '../utils/loadCustomItinerary';
+
+import ComingSoonModal from '../components/modals/ComingSoonModal.astro';
 //import PurchaseBlock from "../components/PurchaseBlock.astro";
 
 const itineraries = await loadItineraries('top'); // Fetch itineraries for the 'top' slug
+
+let customItineraries = await customItineraryList();
+
+// Frontmatter for SEO
+title: 'One Life Japan Hike, Bike & Walking Adventures';
+description: 'One Life Japan provides active, educational customizable bicycle and walking tours in rural Japan. We use bicycles as a vehicle for exploration of culture and expanding comfort-zones.';
 ---
 
-<Layout>
-    <ItineraryCardList itineraries={itineraries} page="index" />
-</Layout>
+<BaseLayout title={Astro.props.title} description={Astro.props.description}>
+    <div class="custom-container itinerary-main">
+        <ItineraryCardList itineraries={itineraries} page="index" />
+        <div class="dividing-header">
+            <h2>Past Custom Trips</h2>
+            <p>
+                For those looking to <span class="emph">explore a differnet region</span>, cover more ground over a
+                wider range of multiple regions, or maybe you just want something that starts a bit closer to the rest
+                of your itinerary. Below are <span class="emph">just a few examples</span> of some <a
+                    href="/itinerary/7/custom-wanderlust/"
+                    title="Custom Japan Rural Bike and Walking Trips"
+                >
+                    Custom Bike Trips
+                </a> we have done on request in the past.
+            </p>
+        </div>
+        <ItineraryCardList itineraries={customItineraries} page="customIndex" />
+        <ComingSoonModal showCustomTopLink={true} />
+    </div>
+
+    <!-- Place your global modal here -->
+</BaseLayout>
+
+<style lang="scss">
+    @use '../styles/global' as *;
+    .dividing-header h2 {
+        font-size: 1.9em;
+    }
+    .dividing-header {
+        @include respond-to(small) {
+            padding-left: 10px;
+            padding-left: 10px;
+        }
+    }
+</style>

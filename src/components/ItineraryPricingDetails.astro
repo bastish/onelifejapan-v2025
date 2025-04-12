@@ -22,15 +22,16 @@ const{ itinerary }  = Astro.props;
                             )
                         }
                         </div>
-                        <div class="pricing-button-container">
+                        <div style="display: flex; align-items: center; justify-content: center; gap:10px; margin-top: 20px; flex-wrap: wrap;">
+                            { itinerary.pricing.prices && itinerary.pricing.prices.length < 1 && (
+                            <BaseGeneralModal show="modal" content="priceEstimate" />
+                            )}
                             <a href="/contact" title="Inquire About A Custom Japan Bike Trip" class="btn-main-style detail-btn btn btn-brd rounded btn-u-sm rounded-2x">
                                 Inquire About A Trip Like This ››&nbsp;
                             </a>
                             
-                            <div style="margin: 20px; display: inline;">
-                            <BaseGeneralModal show="modal" content="priceEstimate" />
-                            </div>
                         </div>
+
                     </div>
                 ) : (
                     ''
@@ -58,6 +59,10 @@ const{ itinerary }  = Astro.props;
                                             <div class="pricing-column pricing-price">{row.price}</div>
                                         </div>
                                     ))}
+                                </div>
+                                <div style="display: flex; align-items: left; justify-content: left; gap:10px; margin-top: 20px; flex-wrap: wrap;">
+                                    <BaseGeneralModal show="modal" content="priceEstimate" />
+                                    
                                 </div>
                             </div>
                             <div class="pricing-includes-container">

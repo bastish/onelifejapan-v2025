@@ -5,12 +5,12 @@ import PurchaseBlock from '../components/PurchaseBlock.astro';
 import ContactSuccessMessage from '../components/ContactSuccessMessage.astro';
 import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 // Frontmatter for SEO
-title: 'Contact One Life Japan Hike & Bike Adventures';
-canonical: 'https://www.onelifejapan.com/contact/';
-description: "Discover One Life Japan's unique bike, hike, and walking adventures off the beaten path across rural Japan.";
+const title = 'Contact One Life Japan Bike, Hike & Walking Adventures';
+const description =
+    'Contact One Life Japan to design your custom countryside adventure. Our expert team will help create a tailored bike, hike, or walking tour—just fill in your details and get started.';
 ---
 
-<BaseLayout title="Contact One Life Japan Bike, Hike & Walking Adventures" page="contact">
+<BaseLayout title={title} description={description} page="contact">
     <div class="custom-container simple-page-body">
         <PurchaseBlock page={'contact'} />
         <div class="modal-buttons">
