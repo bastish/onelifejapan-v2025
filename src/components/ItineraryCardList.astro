@@ -1,6 +1,10 @@
 ---
 import ItineraryCard from './ItineraryCard.astro';
-const { itineraries, page } = Astro.props;
+const { itineraries, page, skipCommingSoon } = Astro.props;
+let filteredItineraries = itineraries;
+if (skipCommingSoon) {
+    filteredItineraries = itineraries.filter((itinerary: any) => !itinerary.comming_soon_status);
+}
 
 // Chunk the itineraries into groups of three
 function chunk(arr: any, size: any) {
@@ -14,8 +18,8 @@ function chunk(arr: any, size: any) {
     }
     return result;
 }
-const row3 = chunk(itineraries, 3);
-const row4 = chunk(itineraries, 4);
+const row3 = chunk(filteredItineraries, 3);
+const row4 = chunk(filteredItineraries, 4);
 ---
 
 <a id="itinerary-cards" class="fixed-header-anchor"></a>

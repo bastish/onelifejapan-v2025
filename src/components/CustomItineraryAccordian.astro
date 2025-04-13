@@ -42,6 +42,7 @@ const { routes } = Astro.props;
                         <div id={`accordion-content-${route.id}`} class="accordion-content-placeholder">
                             <p>Loading content…</p>
                         </div>
+                        <div set:html={route.description} />
                         {/* <CustomItineraryRouteAccordianItem route={route} modalId={modalId} /> */}
                     </div>
                 </div>
