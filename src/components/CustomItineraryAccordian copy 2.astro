@@ -1,4 +1,6 @@
 ---
+import CustomItineraryRouteAccordianItem from './CustomItineraryRouteAccordianItem.astro';
+import RWGPSMapEmbed from './RWGPSMapEmbed.astro';
 const modalId = 'RouteImageModal';
 const { routes } = Astro.props;
 ---
@@ -7,10 +9,10 @@ const { routes } = Astro.props;
 <div class="collapsible-accordion">
     {
         routes?.map((route: any) => (
-            <div class="collapsible-item" id={`item-${route.id}`}>
+            <div class="collapsible-item" id={`item-${route.id}`} key={route.id}>
                 <h2 class="collapsible-header">
                     <button type="button" class="collapsible-btn" data-route-slug={route.slug} data-route-id={route.id}>
-                        <span class="collapsible-icon">▶︎</span> {route.title}
+                        {route.title}
                     </button>
                 </h2>
                 <div class="collapsible-content">
@@ -18,6 +20,11 @@ const { routes } = Astro.props;
                         <p>Loading content…</p>
                     </div>
                     <div set:html={route.description} />
+                    {/*
+          Optionally, you could uncomment the following if you want to include
+          the CustomItineraryRouteAccordianItem as well:
+          <CustomItineraryRouteAccordianItem route={route} modalId={modalId} />
+        */}
                 </div>
             </div>
         ))
@@ -25,76 +32,31 @@ const { routes } = Astro.props;
 </div>
 
 <style lang="scss">
-    @use '../styles/global' as *;
-
     .collapsible-accordion {
         margin-bottom: 2rem;
-        border-radius: 5px 5px 0 0;
     }
 
     .collapsible-header {
         margin: 0;
-        border-bottom: 1px solid var(--bs-primary);
     }
 
     .collapsible-btn {
         width: 100%;
-        background: white;
+        background: #eee;
         border: none;
         outline: none;
         text-align: left;
         padding: 1rem;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        color: var(--bs-primary-dark);
-        font-weight: 600;
         transition: background 0.3s;
-        border-radius: 5px 5px 0 0;
-        @include respond-to(small) {
-            padding-left: 10px;
-        }
     }
 
     .collapsible-btn:hover {
-        background-color: var(--bs-primary-light-opaque);
-        background-color: var(--bs-link-color-opaque) !important;
-        color: var(--bs-link-color);
+        background: #ddd;
     }
 
-    /* When the item is active, change the background of the button */
-    .collapsible-item.active .collapsible-btn {
-        background-color: var(--bs-primary-dark);
-        background-color: var(--bs-primary-light-opaque);
-        background-color: var(--bs-link-color-opaque) !important;
-        color: var(--bs-link-color);
-    }
-
-    .collapsible-icon {
-        display: inline-block;
-        transition: transform 0.3s ease;
-        margin-right: 0.5rem;
-        @include respond-to(small) {
-            font-size: 0.8em;
-            margin-right: 5px;
-        }
-    }
-
-    /* Accordion item styling */
-    .collapsible-item {
-        margin-bottom: 5px;
-        border: 1px solid var(--bs-primary);
-        border-bottom: 0;
-        border-radius: 5px 5px 0 0;
-    }
-
-    /* Rotate icon when active */
-    .collapsible-item.active .collapsible-btn .collapsible-icon {
-        transform: rotate(90deg);
-    }
-
-    /* Collapsible content is hidden by default */
+    /* Content is hidden by default; note the transition on max-height */
     .collapsible-content {
         max-height: 0;
         overflow: hidden;
@@ -103,46 +65,36 @@ const { routes } = Astro.props;
         padding: 0 1rem;
     }
 
-    /* When active, show full content height and add bottom border */
+    /* When an item is active, allow the content to be visible */
     .collapsible-item.active .collapsible-content {
-        border-bottom: 1px solid var(--bs-primary);
+        /* Setting a high max-height so the container expands enough */
+        max-height: 100vh;
         padding: 1rem;
-        @include respond-to(small) {
-            padding: 0.5rem;
-        }
-    }
-
-    .accordion-content-placeholder {
-        border-radius: 4px;
-        background: #f8f9fa;
-        padding: 0;
-        @include respond-to(small) {
-            padding: 0;
-        }
     }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Get all collapsible buttons.
+        // Get all collapsible buttons
         const buttons = document.querySelectorAll('.collapsible-btn');
         buttons.forEach((button) => {
             button.addEventListener('click', function () {
-                const item = button.closest('.collapsible-item') as HTMLElement;
-                const content = item.querySelector('.collapsible-content') as HTMLElement;
+                const item = button.closest('.collapsible-item');
+                const content = item.querySelector('.collapsible-content');
                 const routeId = button.getAttribute('data-route-id');
 
-                // Toggle active state on the item.
+                // Toggle the active class on the collapsible item
                 if (item.classList.contains('active')) {
-                    // Collapse item.
+                    // Collapse item
                     item.classList.remove('active');
-                    content.style.maxHeight = '';
+                    content.style.maxHeight = null;
                 } else {
-                    // Expand this item.
+                    // Expand this item
                     item.classList.add('active');
+                    // Set maxHeight to its scrollHeight so the content becomes visible
                     content.style.maxHeight = content.scrollHeight + 'px';
 
-                    // Load dynamic content if not loaded.
+                    // Load dynamic content if not loaded
                     const contentContainer = document.getElementById(`accordion-content-${routeId}`);
                     if (contentContainer && contentContainer.dataset.loaded !== 'true') {
                         fetch(`/route-accordian/${routeId}/`)
@@ -151,8 +103,6 @@ const { routes } = Astro.props;
                                 contentContainer.innerHTML = html;
                                 contentContainer.dataset.loaded = 'true';
                                 document.dispatchEvent(new Event('ajaxContentLoaded'));
-                                // Update max-height after new content loads.
-                                content.style.maxHeight = content.scrollHeight + 'px';
                             })
                             .catch((err) => {
                                 contentContainer.innerHTML = `<p>Error loading content.</p>`;

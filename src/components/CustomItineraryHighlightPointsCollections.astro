@@ -1,6 +1,5 @@
 ---
 const { itinerary } = Astro.props;
-
 const endpoint = `http://127.0.0.1:8011/api/itinerary/${itinerary.id}/highlightpoints/`;
 
 // Fetch the highlight collections for the itinerary.
@@ -10,11 +9,9 @@ console.log('endpoint:', endpoint);
 try {
     const res = await fetch(endpoint);
     data = await res.json();
-    //console.log('data:', data);
 } catch (error) {
     console.error('Error fetching highlight collections:', error);
 }
-
 ---
 
 <div class="highlight-collections">
@@ -24,7 +21,6 @@ try {
                 // Each collection gets its own accordion container.
                 <div class="accordion mb-3" id={`accordionCollection-${colIndex}`}>
                     {collection.map((highlight: any, hlIndex: number) => {
-                        //console.log('highlight:', highlight);
                         const collapseId = `collapse-${colIndex}-${hlIndex}`;
                         const headingId = `heading-${colIndex}-${hlIndex}`;
                         return (
@@ -38,7 +34,7 @@ try {
                                         aria-expanded="false"
                                         aria-controls={collapseId}
                                     >
-                                        {highlight.title}
+                                        <span class="collapsible-icon">▶︎</span> {highlight.title}
                                     </button>
                                 </h2>
                                 <div
@@ -67,59 +63,87 @@ try {
         )
     }
 </div>
-
-<div style="display: none;">
-    <span id="chevronRight">
-        ▶︎
-    </span>
-    <span id="chevronDown">
-    </span>
-</div>
-
 <style lang="scss">
+    @use '../styles/global' as *;
+    
+    .accordion-item {
+      margin-bottom: 5px;
+      /* Added: Top border with primary dark color */
+      border-top: 1px solid var(--bs-primary-dark);
+      background: transparent;
+      border-radius: 5px 5px 0 0;
+    }
+    
     .compact-trigger {
-        padding: 1rem 0.5rem;
-        font-size: 1.2rem;
-        line-height: 1;
-        background: transparent;
-        border: none;
-        color: var(--bs-primary-dark);
-        font-weight: 600;
-        width: 100%;
-        text-align: left;
+      padding: 1rem 0.5rem;
+      font-size: 1.2rem;
+      line-height: 1;
+      background: transparent;
+      border: none;
+      color: var(--bs-primary-dark);
+      font-weight: 600;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      /* Added transition for background on hover */
+      transition: background 0.3s;
+      background: white;
+      border-radius: 5px 5px 0 0;
     }
-    .compact-trigger::before {
-        /* content: '•'; */
-        margin-right: 0.3rem;
-        color: var(--bs-primary);
+    
+    /* Added hover rule so the button background becomes opaque */
+    .compact-trigger:hover {
+      background-color: var(--bs-primary-light-opaque)!important;
+      background-color: var(--bs-link-color-opaque)!important;
+      color: var(--bs-link-color);
+     
     }
+    
+    /* Add the arrow icon before the title */
+    .compact-trigger .collapsible-icon {
+      padding-left: 0.5rem;
+      margin-right: 0.5rem;
+      transition: transform 0.3s ease;
+      @include respond-to(small) {
+        padding-left: 5px;
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+    }
+    
+    /* When expanded (aria-expanded true) change background and rotate icon */
+    .highlight-accordion-button[aria-expanded="true"] {
+      background-color: var(--bs-primary-light-opaque);
+      background-color: var(--bs-link-color-opaque)!important;
+      color: var(--bs-link-color);
+    }
+    
+    .highlight-accordion-button[aria-expanded="true"] .collapsible-icon {
+      transform: rotate(90deg);
+    }
+    
     .accordion-header {
-        margin: 0;
+      margin: 0;
+      border-radius: 5px 5px 0 0;
+      border-top: var(--bs-primary-dark)!important;
     }
+    
     .highlight-content-placeholder {
-        padding: 10px;
-        border: 1px solid var(--bs-primary-light);
-        border-radius: 4px;
-        background: #f8f9fa;
+      padding: 10px;
+      border: 1px solid var(--bs-primary-light);
+      border-radius: 4px;
+      background: #f8f9fa;
     }
-
-    .no-info {
-        color: var(--bs-primary);
-        font-weight: 800;
-        margin-top: 10px;
-        margin-top: 10px;
-        font-size: 1.3em;
-        display: block;
-    }
+    
     .accordion-collapse {
-    transition: none !important;
-}
-</style>
-
+      transition: none !important;
+    }
+  </style>
+  
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const accordionButtons = document.querySelectorAll('.highlight-accordion-button');
-
     accordionButtons.forEach((button) => {
         button.addEventListener('click', () => {
             const collapseSelector = button.getAttribute('data-bs-target');
@@ -146,26 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Use Bootstrap’s collapse events to adjust scroll.
     document.querySelectorAll('.accordion-collapse').forEach((collapseEl) => {
-        collapseEl.addEventListener('shown.bs.collapse', (event) => {
-            // The new active element (the one that just expanded)
-            const target = event.target as HTMLElement;
+        collapseEl.addEventListener('shown.bs.collapse', (event: any) => {
+            const target = event.target;
             // Use scrollIntoView for a smooth scroll after the panel is shown
             setTimeout(() => {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100); // Delay, adjust timing according to your animation speed
+            }, 100);
         });
     });
 });
 document.addEventListener('DOMContentLoaded', () => {
     let savedScrollPos = 0;
-
     // Capture the scroll position when an accordion header is clicked.
     document.querySelectorAll('.highlight-accordion-button').forEach(button => {
         button.addEventListener('click', () => {
             savedScrollPos = window.scrollY || window.pageYOffset;
         });
     });
-
     // After the panel is fully expanded, reset scroll position.
     document.querySelectorAll('.accordion-collapse').forEach(collapseEl => {
         collapseEl.addEventListener('shown.bs.collapse', () => {
@@ -173,6 +194,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-
 </script>

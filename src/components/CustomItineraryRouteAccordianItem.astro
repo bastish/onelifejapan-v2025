@@ -71,187 +71,190 @@ const hasEmbedPlaceholder = route.description && route.description.includes('cla
                 </div>
             )
         }
-
+        <!-- 
         <div class="route-description">
             <div class="route-highlights-box">
                 <h4>Day's Highlights:</h4>
                 <ul class="checklist">
                     {route.highlights.map((highlight: any) => <li>{highlight}</li>)}
                 </ul>
-            </div>
-            <!-- <div set:html={route.description} /> -->
-        </div>
+            </div> -->
+        <!-- <div set:html={route.description} /> -->
     </div>
+</div>
 
-    <style lang="scss">
-        @use '../styles/global' as *;
-        /* Image slider and thumbnails */
-        .image-slider {
-            position: relative;
-            width: 50%;
-            overflow: hidden; /* hide native scrollbar */
-        }
-        .image-container {
-            display: flex;
-            transition: transform 0.3s ease;
-            overflow-x: hidden;
-            gap: 10px;
-            white-space: nowrap;
-            margin-top: 10px;
+<style lang="scss">
+    @use '../styles/global' as *;
+    /* Image slider and thumbnails */
+    .image-slider {
+        position: relative;
+        width: 50%;
+        overflow: hidden; /* hide native scrollbar */
+    }
+    .image-container {
+        display: flex;
+        transition: transform 0.3s ease;
+        overflow-x: hidden;
+        gap: 10px;
+        white-space: nowrap;
+        margin-top: 10px;
+    }
+    .map-thumb {
+        flex: 0 0 auto;
+        min-width: 150px;
+        /* width: 150px; */
+        max-width: 150px;
+        height: auto;
+        margin-right: 5px;
+    }
+    .frame {
+        max-width: 100%;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    /* Scroll buttons styling */
+    .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        padding: 8px;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 16px;
+        line-height: 1;
+    }
+    .scroll-button.left {
+        left: 5px;
+    }
+    .scroll-button.right {
+        right: 5px;
+    }
+
+    /* Overall layout: stats on the left, images on the right */
+    .images-and-stats {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    .route-images {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Stats styling */
+    .stats {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-family: Arial, sans-serif;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+    .stats .col {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 2px 0;
+    }
+    .stats .col-title {
+        display: inline-block;
+        width: 100px;
+        font-weight: bold;
+        color: #333;
+        margin-right: 10px;
+    }
+    .stats p {
+        margin: 0;
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    /* Responsive: stack stats and images vertically on smaller screens */
+    @media (max-width: $medium-screen) {
+        .images-and-stats {
+            flex-direction: column;
         }
         .map-thumb {
             flex: 0 0 auto;
-            min-width: 150px;
-            /* width: 150px; */
-            max-width: 150px;
+            min-width: 100px;
+            max-width: 100px;
             height: auto;
-            margin-right: 5px;
+            margin-right: 3px;
         }
-        .frame {
-            max-width: 100%;
-            height: auto;
-            margin-right: 10px;
-        }
+    }
 
-        /* Scroll buttons styling */
-        .scroll-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            padding: 8px;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 16px;
-            line-height: 1;
-        }
-        .scroll-button.left {
-            left: 5px;
-        }
-        .scroll-button.right {
-            right: 5px;
-        }
+    .route-description {
+        margin-top: 10px;
+    }
 
-        /* Overall layout: stats on the left, images on the right */
-        .images-and-stats {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
+    .route-highlights-box {
+        border: 1px solid #528c1f;
+        border-left: 2px solid #528c1f;
+        border-radius: 8px;
+        margin-left: 20px;
+        margin-right: 15px;
+        margin-bottom: 25px;
+        width: 45%;
+        display: none;
+        float: right;
+        background: var(--bs-primary-ultralight);
+        box-shadow: 2px 2px 15px #ccc;
+    }
 
-        /* Stats styling */
-        .stats {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            font-family: Arial, sans-serif;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-        .stats .col {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 2px 0;
-        }
-        .stats .col-title {
-            display: inline-block;
-            width: 100px;
-            font-weight: bold;
-            color: #333;
-            margin-right: 10px;
-        }
-        .stats p {
-            margin: 0;
-            color: #555;
-            font-size: 0.95em;
-        }
+    .route-highlights-box ul {
+        margin-left: 20px;
+        margin-right: 15px;
+    }
 
-        /* Responsive: stack stats and images vertically on smaller screens */
-        @media (max-width: $medium-screen) {
-            .images-and-stats {
-                flex-direction: column;
-            }
-            .map-thumb {
-                flex: 0 0 auto;
-                min-width: 100px;
-                max-width: 100px;
-                height: auto;
-                margin-right: 3px;
-            }
-        }
+    .route-highlights-box h4 {
+        background: var(--bs-primary-dark);
+        margin-top: 0;
+        /* Adjust padding on the header as desired */
+        padding: 10px 15px;
+        /* Use negative margins to pull h4 out of the container's padding */
+        /* margin: -15px -15px 15px -20px; */
+        width: 100%;
+        color: #fff;
+    }
 
-        .route-description {
-            margin-top: 20px;
-        }
+    .route-embededmap-box {
+        width: 100%;
+    }
+</style>
 
-        .route-highlights-box {
-            border: 1px solid #528c1f;
-            border-left: 2px solid #528c1f;
-            border-radius: 8px;
-            margin-left: 20px;
-            margin-right: 15px;
-            margin-bottom: 25px;
-            width: 45%;
-            display: none;
-            float: right;
-            background: var(--bs-primary-ultralight);
-            box-shadow: 2px 2px 15px #ccc;
-        }
+<script>
+    // Attach scroll event listeners to each slider instance
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.image-slider').forEach((slider) => {
+            const container = slider.querySelector('.image-container');
+            const leftButton = slider.querySelector('.scroll-button.left');
+            const rightButton = slider.querySelector('.scroll-button.right');
 
-        .route-highlights-box ul {
-            margin-left: 20px;
-            margin-right: 15px;
-        }
+            leftButton!.addEventListener('click', () => {
+                container!.scrollBy({ left: -100, behavior: 'smooth' });
+            });
 
-        .route-highlights-box h4 {
-            background: var(--bs-primary-dark);
-            margin-top: 0;
-            /* Adjust padding on the header as desired */
-            padding: 10px 15px;
-            /* Use negative margins to pull h4 out of the container's padding */
-            /* margin: -15px -15px 15px -20px; */
-            width: 100%;
-            color: #fff;
-        }
-
-        .route-embededmap-box {
-            width: 100%;
-        }
-    </style>
-
-    <script>
-        // Attach scroll event listeners to each slider instance
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.image-slider').forEach((slider) => {
-                const container = slider.querySelector('.image-container');
-                const leftButton = slider.querySelector('.scroll-button.left');
-                const rightButton = slider.querySelector('.scroll-button.right');
-
-                leftButton!.addEventListener('click', () => {
-                    container!.scrollBy({ left: -100, behavior: 'smooth' });
-                });
-
-                rightButton!.addEventListener('click', () => {
-                    container!.scrollBy({ left: 100, behavior: 'smooth' });
-                });
+            rightButton!.addEventListener('click', () => {
+                container!.scrollBy({ left: 100, behavior: 'smooth' });
             });
         });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.route-description').forEach((container) => {
-                const highlightsBox = container.querySelector('.route-highlights-box') as HTMLElement;
-                const placeholder = container.querySelector('.route-highlights');
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.route-description').forEach((container) => {
+            const highlightsBox = container.querySelector('.route-highlights-box') as HTMLElement;
+            const placeholder = container.querySelector('.route-highlights');
 
-                if (highlightsBox && placeholder) {
-                    placeholder.replaceWith(highlightsBox);
-                    highlightsBox.style.display = 'inline-block';
-                    //highlightsBox.style.float = 'right';
-                }
-            });
+            if (highlightsBox && placeholder) {
+                placeholder.replaceWith(highlightsBox);
+                highlightsBox.style.display = 'inline-block';
+                //highlightsBox.style.float = 'right';
+            }
         });
-    </script>
-</div>
+    });
+</script>
