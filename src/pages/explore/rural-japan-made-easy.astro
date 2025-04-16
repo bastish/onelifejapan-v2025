@@ -1,0 +1,363 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PurchaseBlock from '../../components/PurchaseBlock.astro';
+import GenericSlider from '../../components/GenericSlider.astro';
+import BaseGeneralModal from '../../components/modals/BaseGeneralModal.astro';
+import '../../styles/global.scss';
+
+const devOnly = true;
+const sliderText = 'But there’s a whole different side of Japan waiting — if you’re willing to go a bit further.';
+const title = 'About One Life Japan Hike & Bike Adventures in Rural Japan';
+const description =
+    "Discover One Life Japan—led by a local guide with 30+ years' experience, we offer personalized tours that take you beyond Japan’s Golden Route into its authentic countryside and vibrant culture.";
+---
+
+<BaseLayout title={title} description={description} page="about" sliderid="4" devOnly={devOnly}>
+    <div class="custom-container simple-page-body">
+        <div class="landing-container">
+            <div class="centered attention-catcher">
+                <h1>Experience Rural Japan by Bike, on Foot, or with Just a Bit of Help</h1>
+                <h2>
+                    Custom trips from fully guided to self-guided. Anywhere in Japan. At your pace. Within your budget.
+                </h2>
+            </div>
+            <div class="frame">
+                <GenericSlider
+                    sliderImageId="23"
+                    height={180}
+                    sliderText={sliderText}
+                    imageAnimationDelay="0s"
+                    textAnimationDelay="2.5s"
+                    preventShrink="true"
+                />
+            </div>
+
+            <section class="landing-hero">
+                <h1>📝 Experience Rural Japan by Bike, on Foot, or with Just a Bit of Help</h1>
+                <p>
+                    Custom trips from fully guided to self-guided. Anywhere in Japan. At your pace. Within your budget.
+                </p>
+            </section>
+
+            <section class="landing-body">
+                <h2>👣 Not a Package Tour</h2>
+                <p>
+                    We’ve been guiding visitors through Japan’s countryside for 20 years — from family-friendly bike
+                    trips to solo hiking journeys. We help people build custom experiences outside the tourist zones,
+                    without needing to join a group, speak Japanese, or spend a fortune.
+                </p>
+
+                <ul>
+                    <li>✅ Local trains, bikes, or luggage transfers — all arranged</li>
+                    <li>✅ Quiet towns, not tourist crowds</li>
+                    <li>✅ Optional guiding (all day or just at key moments)</li>
+                    <li>✅ Cultural add-ons (like soba-making or local farm visits)</li>
+                    <li>✅ 3 days to one month</li>
+                    <li>✅ Clear pricing — with no surprise upsells</li>
+                </ul>
+
+                <p>
+                    Some of our guests swap in one of our trips instead of a day in Hakone, Shirakawago, or Kanazawa.
+                    Others add a short self-guided detour between Tokyo and Kyoto.
+                </p>
+                <p>
+                    Getting off the golden route for a few days is easier than you think. Sure Takayama, Kanazawa
+                    Shirakawago are popular alternative destinations, but those are still not quite rural Japan. Magome
+                    and Tsumago are tourist-rural that is they are out of the city, but still highly dependent on
+                    tourism. That is great, nd we like to go there too, One life Japan will help you get to the real
+                    rural areas where tourims is not the main industry. we can work in Tsumago + more rural.
+                </p>
+                <p>
+                    Our tours can be short enough to fit accommodate the rest of your tirp. Other companeis are 7, 8 or
+                    even 11 days. We depart in the morning and finish in the evening. Does not include meeting as one
+                    day, or wake up and depart as one day. Most tours say 8 days, but day 1 is meeting at the hotel the
+                    night before, and the day 8 is wake up and depart form hotel. They start in Tokyo and end in Tokyo
+                    include the hotel beore and after. We are happy to help you decide on a place to stay, but that is
+                    not considered part of your jounrey with us. You trip starts early in the morning (or as early as
+                    you can meet us) and goes until as late are you want on the last day. We will plan in in a way that
+                    you arrive at a convenient station. We think you can handleTokyo on your own and are cabpable of
+                    geting to the starting point so we do not have to include transporation form the city to the start
+                </p><ul>
+                    <li>Only pay for the days you actually travel.</li>
+
+                    <li>
+                        Unlike many tours that run fixed 9- or 11-day itineraries (often starting with a meet-up in
+                        Tokyo and ending with a hotel checkout), our trips are fully custom — which means:
+                    </li>
+
+                    <li>Every day is a full day of travel — no filler days, no wasted time.</li>
+
+                    <li>Start where it makes sense, not just where everyone else does.</li>
+
+                    <li>End at a convenient station, with a smooth transition to your next destination.</li>
+
+                    <li>
+                        Whether you have 3 days or 13, we make the most of every moment — and you only pay for what you
+                        use.
+                    </li>
+                </ul>
+                <section class="one-way-trip">
+                    <h2>Go One-Way — No Need to Loop Back</h2>
+                    <p>
+                        Our trips don’t have to be round trips. You can ride <em>out</em> from Kyoto (or any starting point)
+                        into the countryside — for 2, 3, or 5 days — and finish wherever it makes the most sense for your
+                        next stop.
+                    </p>
+                    <ul>
+                        <li><strong>No backtracking.</strong> Start in one region, finish in another.</li>
+                        <li>
+                            <strong>Flexible endings.</strong> We’ll meet you at the end, collect the bikes, and have your
+                            luggage waiting.
+                        </li>
+                        <li>
+                            <strong>Easy transfers.</strong> We plan routes that finish near train stations with direct access
+                            to Kyoto, Tokyo, or wherever you're headed next.
+                        </li>
+                    </ul>
+                    <p>
+                        It’s a smooth way to add a rural adventure between big-city stops — without losing time or
+                        convenience.
+                    </p>
+                </section>
+
+                <p>
+                    Most tours include a bit of handholding. We think you are capable of navigating yourself, so you
+                    don't need us in the areas on the golden route. We won't charge you for that.
+                </p>
+                <p>If you really want to go to Takayama, instead of taking the bus there, ride a bike.</p>
+                <h2>That’s exactly what we do.</h2>
+                <p>
+                    Our we have been doing it for twenty years where we live and are a part of the community. We share
+                    with you roads that are only accessilbe when you slow down to ride or walk. We can take you to the
+                    inns and arrange the experiences that
+                </p>
+                <p>
+                    Sure, you can do it on your own, but and we can help with that too, oryou can go with a guide who
+                    lives in rural community for almost twenty years. We can just help you plan and organize, or give
+                    partial assist, or fullly guided. Bike walk hike, or any combination. Mountains and temples and
+                    onesen
+                </p>
+
+                <h2>Not a Tour Package. A Real Adventure.</h2>
+                <p>
+                    Whether you're a solo traveler on a shoestring budget, a couple looking for a slow travel
+                    experience, or someone who just wants a few days to reset and explore, we help you build your own
+                    rural Japan trip.
+                </p>
+                <p>
+                    “You could piece together a rural bike trip yourself in Japan. If you speak Japanese, know the
+                    terrain, can ship luggage, avoid tunnels, and know which roads to skip… go for it. Or, let me handle
+                    all of it — and just ride.” Or maybe you are just overwhelmed by the amount of information. Let us
+                    sift through it for you and suggest what we think will fit.
+                </p>
+                <p>
+                    Want a bike tour that doesn’t go to Kanazawa, Hakone, or Takayama? Good. Because I don’t offer
+                    those. I’ve spent 20 years designing rural bike trips that show you the side of Japan that
+                    influencers don’t photograph. From onsen villages with zero tourists, to valleys you’ve never heard
+                    of, I plan fully custom trips for families, couples, and solo travelers — from light rides with
+                    cultural stops to full-on bikepacking. No crowds. No buses. Just bikes, maps, mountains, and me.
+                </p>
+                <p>
+                    One way trip - ride from Kyoto and meet up with your luggage two or three or four days later at a
+                    conveniencet train station of your choosing.
+                </p>
+
+                <p>Try local Foods and specialities drop down that highlights regional foods</p>
+                <h2>### 🏞️ Totally Custom, Totally Doable You tell us:</h2>
+
+                <ul>
+                    <li>- Where you’ll be</li>
+                    <li>- How many days you have</li>
+                    <li>- Your budget and interests</li>
+                    <li>
+                        And we’ll suggest something that fits. You don’t need to fit into a tour. The trip will fit
+                        around **you**.
+                    </li>
+                </ul>
+            </section>
+
+            <checklist>
+                listof popular places check the ones on your itinerary. How many times mentioned in Reddit (chart) "off
+                the beatne path-ness" level
+                <ul>
+                    <li>Tokyo</li>
+                    <li>Kyoto</li>
+                    <li>Hikone</li>
+                    <li>Hakone</li>
+                    <li>Kanazawa</li>
+                    <li>Shirakawago</li>
+                    <li>Nagano</li>
+                    <li>Fukuoka</li>
+                    <li>Fuji</li>
+                    <li>Sakae Mura</li>
+                    <li>Gujyo Hachiman</li>
+                    <li>Matsumoto</li>
+                </ul>
+            </checklist>
+
+            <section class="landing-pricing">
+                <h2>💬 Sample Pricing</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Style</th>
+                            <th>Example Cost (Per Person / Day)</th>
+                            <th>Includes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fully Guided</td>
+                            <td>¥30,000–¥50,000</td>
+                            <td>Guide, bike, train, lodging, meals, activities</td>
+                        </tr>
+                        <tr>
+                            <td>Self-Guided</td>
+                            <td>¥10,000–¥20,000</td>
+                            <td>Itinerary planning, reservations, luggage transfers</td>
+                        </tr>
+                        <tr>
+                            <td>Support-only</td>
+                            <td>Varies</td>
+                            <td>You ride, we handle the rest (gear + logistics)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    - No risk. You don't have to sign up to an anonymous form or anyhting until we have worked together
+                    and solidified an itinerary.
+                </p>
+
+                ### ✅ Affordable. Flexible. Memorable.h2 We’re a small independent guide service based in northern
+                Nagano, but we work across Japan. Our guests have ranged from budget backpackers to multi-gen
+                families—and most say it was the highlight of their trip.
+
+                <p>
+                    <em
+                        >Note: A single cooking class in Kyoto costs ¥10,000. One day of cycling with us covers your
+                        transport, meals, sightseeing, and experiences — and no group tours required.</em
+                    >
+                </p>
+            </section>
+
+            <section class="landing-audience">
+                <h2>🧭 Who This Is For</h2>
+                <ul>
+                    <li>First-timers looking to see more than Tokyo, Kyoto, Osaka</li>
+                    <li>DIY-minded travelers who want flexibility but also local insights</li>
+                    <li>Families, couples, or solo travelers looking for something to remember</li>
+                </ul>
+            </section>
+
+            <section class="landing-cta">
+                <a href="/contact" class="cta-button">Get Sample Itineraries and Free Planning Advice →</a>
+            </section>
+        </div>
+    </div>
+
+    <style lang="scss">
+        @use '../../styles/global' as *;
+        .landing-container {
+            background: white;
+            border: 1px solid var(--bs-primary-dark);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+        .attention-catcher {
+            padding-top: 20px;
+            padding-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .attention-catcher h2,
+        h4 {
+            opacity: 0;
+            animation: fadeIn 4s forwards;
+            animation-timing-function: ease-out;
+            position: relative;
+        }
+
+        .attention-catcher h2 {
+            font-size: 1.7em;
+        }
+        .attention-catcher h2 span {
+            font-size: 1em;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @include respond-to(xxlarge) {
+        }
+
+        @include respond-to(xlarge) {
+        }
+
+        @include respond-to(large) {
+            .attention-catcher {
+                padding-top: 0px;
+                padding-bottom: 20px;
+            }
+        }
+
+        @include respond-to(medium) {
+            .btn-container {
+                justify-content: center !important; /* Center the button */
+                margin-top: 5px; /* Add some space above the button */
+            }
+
+            .container .row {
+                flex-direction: column; /* Stack the elements vertically */
+                align-items: center; /* Center align the children */
+            }
+
+            .container .col-md-3 {
+                width: 100%; /* Full width on smaller screens */
+                display: flex;
+                justify-content: center;
+                margin-bottom: 1em;
+            }
+
+            h1 {
+                text-align: center;
+            }
+        }
+        .centered {
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            /* color: var(--bs-primary); */
+        }
+        h2.larger {
+            font-size: 2em;
+        }
+        h3 {
+            margin-top: 30px;
+            font-weight: bolder;
+        }
+
+        .about-right {
+            float: right;
+            width: 60%;
+            margin-left: 10px;
+            @include respond-to(small) {
+                margin: 0px;
+                width: 100%;
+            }
+            @include respond-to(medium) {
+                width: 100%;
+            }
+        }
+    </style>
+</BaseLayout>

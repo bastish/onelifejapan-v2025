@@ -1,0 +1,195 @@
+---
+// CustomerReviewSlider.astro
+
+const allowedWidths = ['one', 'two', 'three'] as const;
+type ShowOption = (typeof allowedWidths)[number];
+
+let show = (Astro.props.show || 'one') as ShowOption;
+
+const reviews = [
+    {
+        text: 'We saw a side of Japan we didn’t even know existed. The support was perfect — we felt independent but never lost.',
+    },
+    {
+        text: 'Way beyond what we expected. From biking through rice fields to soaking in onsen — this was the real Japan.',
+    },
+    {
+        text: 'Perfect with kids. We didn’t have to worry about logistics at all, and our kids loved every moment.',
+    },
+    {
+        text: 'A refreshing change from the typical tours. No crowds, just peaceful countryside and great food.',
+    },
+    {
+        text: 'Super flexible planning. We felt like we had our own personal Japan expert.',
+    },
+];
+show = 'one';
+show = 'two';
+show = 'three';
+const widthMap = {
+    one: '100%',
+    two: '50%',
+    three: '12.3333%',
+};
+const slideWidth = widthMap[show] || '100%';
+---
+
+<section class="landing-testimonials">
+    <h2>What Past Guests Say</h2>
+    <div class="slider-container">
+        <button class="arrow left" aria-label="Previous">&#8249;</button>
+        <div class="slider-track" style={`--slide-width: ${slideWidth}`}>
+            {
+                [...reviews, ...reviews, ...reviews].map((review, index) => (
+                    <div class="slide" data-index={index}>
+                        <blockquote>{review.text}</blockquote>
+                    </div>
+                ))
+            }
+        </div>
+        <button class="arrow right" aria-label="Next">&#8250;</button>
+    </div>
+</section>
+
+<style lang="scss">
+    @use '../styles/global' as *;
+    .landing-testimonials {
+        margin: 2rem 0;
+        position: relative;
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 1rem;
+            transition: transform 0.5s ease-in-out;
+            will-change: transform;
+        }
+
+        .slide {
+            min-width: var(--slide-width);
+            width: var(--slide-width);
+            scroll-snap-align: start;
+            background: white;
+            padding: 5px;
+            border: 0px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        blockquote {
+            font-style: italic;
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.4;
+            @include respond-to(small) {
+            }
+        }
+
+        .arrow {
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .left {
+            position: absolute;
+            left: 0;
+        }
+
+        .right {
+            position: absolute;
+            right: 0;
+        }
+
+        // @media (max-width: 768px) {
+        //     .slide {
+        //         min-width: 100% !important;
+        //         width: 100% !important;
+        //     }
+        // }
+    }
+</style>
+
+<script type="module">
+    let currentIndex = 0;
+    const track = document.querySelector('.slider-track');
+    const slides = document.querySelectorAll('.slide');
+    const getVisibleCount = () => {
+        const width = getComputedStyle(track).getPropertyValue('--slide-width').trim();
+        if (width === '100%') return 1;
+        if (width === '50%') return 2;
+        if (width === '33.3333%') return 3;
+        return 1;
+    };
+
+    let visibleCount = getVisibleCount();
+    const stepSize = visibleCount;
+    const originalCount = slides.length / 3;
+
+    const updateSlider = () => {
+        const slideWidth = slides[0].offsetWidth + 16;
+        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    };
+
+    const moveNext = () => {
+        currentIndex += stepSize;
+        updateSlider();
+
+        if (currentIndex >= originalCount * 2) {
+            setTimeout(() => {
+                track.style.transition = 'none';
+                currentIndex = originalCount;
+                updateSlider();
+                void track.offsetWidth;
+                track.style.transition = 'transform 0.5s ease-in-out';
+            }, 510);
+        }
+    };
+
+    const movePrev = () => {
+        if (currentIndex <= 0) {
+            track.style.transition = 'none';
+            currentIndex = originalCount;
+            updateSlider();
+            void track.offsetWidth;
+            track.style.transition = 'transform 0.5s ease-in-out';
+        }
+        currentIndex -= stepSize;
+        updateSlider();
+    };
+
+    const resetInterval = () => {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(() => {
+            moveNext();
+        }, 7000);
+    };
+
+    document.querySelector('.arrow.left').addEventListener('click', () => {
+        movePrev();
+        resetInterval();
+    });
+    document.querySelector('.arrow.right').addEventListener('click', () => {
+        moveNext();
+        resetInterval();
+    });
+
+    let autoScrollInterval = setInterval(() => {
+        moveNext();
+    }, 7000);
+
+    window.addEventListener('resize', () => {
+        visibleCount = getVisibleCount();
+    });
+</script>

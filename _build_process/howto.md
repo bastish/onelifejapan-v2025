@@ -6,13 +6,25 @@
 
 2. source env/bin/activate
 
+# Collect images
+
 3. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part1_collect_images.py
 
-4. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/step2_collect_images_fullurl.py
+# Resize / optimize images
 
-5. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/step3_collected_images_resize.py
+4. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part2_optimize_images.py
+
+# rewrite image src paths to webp
+
+5. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part3_change_paths_to_webp.py
+
+# Remove heavy jpgs
 
 6. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part4_delete_source_images.py
+
+# remove dev only pages
+
+7. python3 /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/\_build_process/part5_remove_dev_only_pages.py
 
 ############
 OK
@@ -41,7 +53,8 @@ cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deplo
 git clone https://github.com/bastish/onelifejapan.com-deployed.git
 cd onelifejapan.com-deployed
 
-- cd onelifejapan-deployed-site
+- cd onelifejapan.com-deployed
+
 - checkout stage
   git checkout stage
 
@@ -51,7 +64,7 @@ cd onelifejapan.com-deployed
   cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
 
 git add .
-git commit -m "Deploy [New Design Touchup Added Meta Descriptions] for stage"
+git commit -m "Deploy [updated og image try 3] for stage"
 git push origin stage
 
 - check it on vercel
@@ -62,7 +75,7 @@ git checkout master
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [New Design Touchup Added Meta Descriptions]"
+git commit -m " Update Production [updated og image try remobed keyowrds]"
 git push origin master
 
 -- CLEAN UP

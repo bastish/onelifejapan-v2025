@@ -210,6 +210,10 @@ if __name__ == '__main__':
     collected_image_urls = process_html_files()
     with open(manifest_file, 'w', encoding='utf-8') as mf:
         for url in collected_image_urls:
+            if url == '/assets/olj-og.png':
+                continue
+            if url == '/assets/olj-og.jpg':
+                continue
             normalized = url.replace('%20', '_').replace(' ', '_')
             mf.write(f'{normalized}\n')
         

@@ -13,12 +13,14 @@ const {
     title = 'One Life Japan Hike, Bike & Walking Adventures',
     description, //= 'One Life Japan provides active, educational customizable bicycle and walking tours in rural Japan. We use bicycles as a vehicle for exploration of culture and expanding comfort-zones.',
     page = 'index',
+    devOnly = false,
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
+        {devOnly && <meta name="dev-only" content="true" />}
         <HeadComponent title={title} description={Astro.props.description} />
         <slot name="head" />
     </head>

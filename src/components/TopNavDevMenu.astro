@@ -1,0 +1,33 @@
+---
+//import NavUtilities from './NavUtilities.astro';
+import '../styles/global.scss';
+const isDev = import.meta.env.DEV;
+---
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+        Adventures &amp; Tours
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="dropdown-item" href="/explore/rural-japan-made-easy/">rural-japan-made-easy</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="/explore/explore-rural-japan/">explore-rural-japan</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="/explore/family-friendly-japan-trips/">family-friendly-japan-trips</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="/explore/japan-countryside-bike-tours/">japan-countryside-bike-tours</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="/explore/japan-self-guided-adventure-tours/"
+                >japan-self-guided-adventure-tours</a
+            >
+        </li>
+        <li>
+            <a class="dropdown-item" href="/explore/rural-japan-walking-tours/">rural-japan-walking-tours</a>
+        </li>
+    </ul>
+</li>

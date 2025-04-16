@@ -4,6 +4,7 @@
 const itinerary = Astro.props.itinerary;
 const page = Astro.props.page;
 let slogan = Astro.props.slogan;
+let mobileSlogan = Astro.props.slogan;
 let pageBlurb = Astro.props.pageBlurb;
 
 if (itinerary) {
@@ -37,8 +38,9 @@ switch (page) {
         buttontext = 'Inquire Now';
         break;
     case 'self-guided':
-        slogan = 'Self Guided and Planning Support'; // Set the height for 'about' page
+        slogan = 'Rural Japan Self Guided Planning & Support'; // Set the height for 'about' page
         buttontext = 'Get Started Now';
+        mobileSlogan = 'Self Guided Planning & Support';
         //pageBlurb = '';
         break;
     case 'contact':
@@ -57,6 +59,8 @@ switch (page) {
         break;
 }
 
+mobileSlogan != slogan ? mobileSlogan : slogan
+
 const fadeInClass = page !== 'about' ? 'animate__customFadeIn' : '';
 //const hiddenClass = page == 'contact' ? 'hidden' : '';
 const hiddenClass = page == '' ? 'hidden' : '';
@@ -66,7 +70,9 @@ const hiddenClass = page == '' ? 'hidden' : '';
     ${hiddenClass}`>
     <div class="row">
         <div class=`col-md-9  ${fadeInClass}  animate__customFadeIn--left`>
-            <h1 class="slogan-header">{slogan}</h1>
+            <h1 class="slogan-header">
+                <span class="default-h1">{slogan}</span>
+                <span class="mobile-h1">{mobileSlogan}</span></h1>
             <p class="blurb" set:html={pageBlurb} />
         </div>
         { buttontext ? (
@@ -150,6 +156,10 @@ const hiddenClass = page == '' ? 'hidden' : '';
     .slogan-header {
         font-size: 2em !important;
     }
+
+    .mobile-h1 {
+            display: none;
+        }
     @media (max-width: 765px) {
         .btn-container {
             justify-content: center !important;
@@ -171,10 +181,34 @@ const hiddenClass = page == '' ? 'hidden' : '';
             text-align: center;
         }
     }
+
+    @media (max-width: $large-screen) {
+        .mobile-h1 {
+            display: block;
+        }
+        .default-h1 {
+            display: none;
+        }
+    }
+    @media (max-width: $medium-screen) {
+        .mobile-h1 {
+            display: block;
+        }
+        .default-h1 {
+            display: none;
+        }
+    }
+
     @media (max-width: $small-screen) {
         .container {
             padding-left: 10px;
             padding-right: 10px;
+        }
+        .mobile-h1 {
+            display: block;
+        }
+        .default-h1 {
+            display: none;
         }
     }
 

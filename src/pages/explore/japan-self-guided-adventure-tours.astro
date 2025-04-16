@@ -1,0 +1,344 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PurchaseBlock from '../../components/PurchaseBlock.astro';
+import GenericSlider from '../../components/GenericSlider.astro';
+import BaseGeneralModal from '../../components/modals/BaseGeneralModal.astro';
+import '../../styles/global.scss';
+
+const devOnly = true;
+const sliderText = 'But there’s a whole different side of Japan waiting — if you’re willing to go a bit further.';
+const title = 'Self Guided Tours in Rural Japan Countryside, Off the The Golden Route - From One Life Japan';
+const description =
+    "Discover One Life Japan—led by a local guide with 30+ years' experience, we offer personalized tours that take you beyond Japan’s Golden Route into its authentic countryside and vibrant culture.";
+---
+
+<BaseLayout title={title} description={description} page="about" sliderid="4" devOnly={devOnly}>
+    <div class="custom-container simple-page-body">
+        <div class="landing-container">
+            <section class="landing-page-section">
+                <header class="hero">
+                    <h1>📝 Experience Rural Japan by Bike, on Foot, or with Just a Bit of Help</h1>
+                    <p>
+                        Custom trips from fully guided to self-guided. Anywhere in Japan. At your pace. Within your
+                        budget.
+                    </p>
+                    <em
+                        >This isn’t a typical tour site with flashy slogans. If you're curious about what a real
+                        countryside trip in Japan is like, this page has everything you need to know — no sugarcoating.</em
+                    >
+                </header>
+
+                <section class="start-to-finish">
+                    <h2>
+                        Start where you already are.<br />End where you're going.<br /><em
+                            >And make the part between unforgettable.</em
+                        >
+                    </h2>
+                    <p>
+                        You don’t have to carve out a huge block of time to experience rural Japan. If you're heading
+                        from Tokyo to Kyoto, or starting your second trip to Japan, we help you turn the <em
+                            >getting there</em
+                        > into the <em>best part</em>.
+                    </p>
+                    <p>
+                        Whether it's two days or ten, we make sure the part between the big cities becomes your most
+                        memorable stretch — filled with local meals, countryside trails, onsen stays, and bike routes
+                        you won’t find in any group tour.
+                    </p>
+                </section>
+
+                <section class="not-a-tour">
+                    <h2>👣 Not a Package Tour</h2>
+                    <p>
+                        We’ve been guiding visitors through Japan’s countryside for 20 years — from family-friendly bike
+                        trips to solo hiking journeys. We help people build custom experiences outside the tourist
+                        zones, without needing to join a group, speak Japanese, or spend a fortune.
+                    </p>
+                    <ul>
+                        <li>✅ Local trains, bikes, or luggage transfers — all arranged</li>
+                        <li>✅ Quiet towns, not tourist crowds</li>
+                        <li>✅ Optional guiding (all day or just at key moments)</li>
+                        <li>✅ Cultural add-ons (like soba-making or local farm visits)</li>
+                        <li>✅ 3 days to one month</li>
+                        <li>✅ Clear pricing — with no surprise upsells</li>
+                    </ul>
+                    <p>
+                        Sure, Takayama and Magome feel remote, but they’re still built around tourism. We go deeper — to
+                        real countryside where tourism isn’t the main industry.
+                    </p>
+                    <p>
+                        Some guests swap in one of our trips instead of a day in Hakone, Shirakawago, or Kanazawa.
+                        Others add a short self-guided detour between Tokyo and Kyoto. Getting off the Golden Route is
+                        easier than you think.
+                    </p>
+                    <p>
+                        Already planning to go to Kanazawa, why not get there the slow way and see what everyone on the
+                        train is missing.
+                    </p>
+                </section>
+
+                <section class="pay-for-days">
+                    <h2>🧳 Pay for the Days You Travel — Nothing More</h2>
+                    <p>
+                        Many package tours advertise 10 days, with one day is meeting at the hotel for orientation the
+                        night before, the last day is saying goodbye after checkout. And one or more of the days are
+                        filled up with transit.
+                    </p>
+                    <p>
+                        <strike>
+                            We don’t charge you for time you don’t need us. You already know how to take the train or
+                            get to a hotel. So instead of wasting a day just moving, we turn that transit into part of
+                            the adventure.
+                        </strike>
+                    </p>
+                    <p>
+                        We knwo you can ride the train on your own without a guide. We know you can find your way from
+                        the hotel to a meeting point in the morning. We make the transit the trip.
+                    </p>
+
+                    <ul>
+                        <li>Only pay for the days you actually travel</li>
+                        <li>No generic meet-up days or early dismissals</li>
+                        <li>Start where it makes sense, not where everyone else starts</li>
+                        <li>End at a convenient station and continue your journey</li>
+                        <li>3 days or 13 — we make every moment count</li>
+                    </ul>
+                </section>
+
+                <section class="one-way">
+                    <h2>🚴‍♀️ Go One-Way — No Need to Loop Back</h2>
+                    <p>
+                        Dpeending on the itinerary, you don’t need to return to the start. Begin right from Kyoto (or
+                        wherever you are), and head to your next destination on bike or walking. Spend a few days in the
+                        countryside, and finish where you would have gone to next anyway.
+                    </p>
+                    <p>
+                        Depending on the itinerary, you don’t need to return to where you started. Start in Kyoto (or
+                        wherever you are), head into the countryside, and end where you’re already planning to go next.
+                    </p>
+
+                    <p>
+                        <strike>
+                            For example, already planning on going to Kanzawa after Kyoto? Instead of making a day trip
+                            to see nearby rural area, only to end up back in Kyoto and depart for Kanazawa the next day,
+                            start in in Kyoto, head north to the Japan Sea coast, enjoying the real rural Japan along
+                            the way, ending close to Kanzawa.</strike
+                        >
+                    </p>
+                    <p>
+                        Already planning to visit Kanazawa? Why not ride there from Kyoto, through coastal towns and
+                        mountain villages you’d otherwise miss?
+                    </p>
+                    <p>
+                        Don't worry about logistics, the bike is your transport, the van has your luggage, and we work
+                        with you to find the best out of the way accommodation. Don't worry about what there is to do.
+                        Getting there is what there is to do. Riding the bike through the rural areas with freedom to
+                        stop and explore. Arrive feeling that you have earned that hot-spring and futon.
+                    </p>
+                    <ul>
+                        <li><strong>No backtracking</strong> — start in one region, finish in another</li>
+                        <li>
+                            <strong>Flexible endings</strong> — we meet you, collect bikes, and deliver your luggage
+                        </li>
+                        <li>
+                            <strong>Easy transfers</strong> — routes end near train stations with direct lines to Kyoto,
+                            Tokyo, etc.
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="family-support">
+                    <h2>👨‍👩‍👧‍👦 Ideal for Families and Flexible Groups</h2>
+                    <p>
+                        Not sure how far the kids can ride? No problem. We build in flexibility for tired legs, weather
+                        changes, or spontaneous detours. Bikes and luggage are carried for you, so that is one less
+                        thing to worry about, and transportation can be arranged. Everything is flexible, so we can
+                        stick close to a local train line, making it easy for everyone or just some to hop on a train if
+                        needed whitle some continue to ride — we’ll all meet up later.
+                    </p>
+                    <p>
+                        This is a supported, logistically planned trip with real freedom. More personalized than a group
+                        tour — perfect for travelers who want the adventure without the stress.
+                    </p>
+                    <p>
+                        We know a lot about a lot of places, and little about even more, but once we have a route set,
+                        we scour the entire route for everything you will need, every point of interest, no matter how
+                        small. We will share it, but only if you want. You can also just explore and be surprised.
+                    </p>
+                    <p>
+                        We will research potential for an activiy or encoutner, reserve possible rural activities if
+                        needed and make sure you are in the right place at the right time.On a semi-supported trip, we
+                        are also driing ahead and making sure that you don't miss anything because you are concentrating
+                        on the road.
+                    </p>
+                </section>
+
+                <section class="guided-option">
+                    <h2>🙋 Want a more didicated Guide with knowldege and experience of coutnry life? No Problem.</h2>
+                    <p>
+                        These A-to-B trips can be fully guided too. We’ll ride with you, not just taking care of the
+                        logistics, but help you connect with the places along the way, pointing out things that you may
+                        not have noticed but we do due to our twenty years of living in rural Japan.
+                    </p>
+                    <p>
+                        Lookging to go a long way? Maybe you take the bike all the way from Kyoto to Fukuoka but not
+                        engouh time? We'll use a train part way. If the guide is riding with you we’ll use rinko bicycle
+                        bags to cover long stretches by train or ride them onto a ferry and get back on the bike
+                        wherever we want. Maybe take them on the ferry to Shikoku? Don't worry about where we end. You
+                        will drop the bikes and catch the train on to your next destination. Let us worry about cleaning
+                        up.
+                    </p>
+                </section>
+
+                <section class="real-adventure">
+                    <h2>🗾 Not a Tour Package. A Real Adventure.</h2>
+                    <p>
+                        We’ve spent two decades living in rural Japan and building relationships with the people and
+                        places that make these routes possible. Whether you want to walk, bike, hike, or mix it all
+                        together, we’ll help you design something that fits — from the food to the pacing. We know a lot
+                        of the best routes, but we also know that there is no one best way to fit them together for
+                        everyone.
+                    </p>
+                    <p>
+                        So this is not a cookie-cutter self-guided tour. We plan it with you and with you in mind to
+                        make sure that each day is appropraite, and not just the most convenient for us to plan en
+                        masse.
+                    </p>
+                    <p>
+                        You could figure it out yourself, but we’ve already done the scouting. Let us show you the good
+                        roads, the right ryokan, and the little surprises in between.
+                    </p>
+                    <p>
+                        We also can provide fully self-guided. We will help set you up with an itinerary, plans, maps,
+                        where to rent bikes, help you work out the best way to get the bieks back (even if we go just to
+                        pick them up for you). We can make sure you have proper gear needed, your luggage is forwarded
+                        and keep a watchfull eye on your from afar.
+                    </p>
+                    <p>
+                        We can even provdie you with bike-packing gear and some general direction tips allowing you to
+                        have the ultimate freedom.
+                    </p>
+                </section>
+
+                <section class="pricing">
+                    <h2>💬 Sample Cost Estimates</h2>
+                    <p>
+                        Because it is not a cookie cutter, accommodation costs are estimates of what to expect. We do
+                        not have particular places reserved, we work with you to make reservations on what fits your
+                        budget and needs.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr><th>Style</th><th>Per Person / Day</th><th>Esitmate Includes</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                ><td>Fully Guided</td><td>¥30,000–¥50,000</td><td
+                                    >Guide, bike, transportation en route, lodging, meals, activities. We eat with you
+                                    and stay in the inn with you.</td
+                                ></tr
+                            >
+                            <tr
+                                ><td>Supported Self-Guided</td><td>¥15,000 ~ ¥20,000</td><td
+                                    >Planning, reservations, luggage transfers. We will be shadowing you, appearing when
+                                    you needs us, but like ninja, we can dissapear into the shadows. You are more on
+                                    your own to explore, meals at the inn are on your own, as to keep the price low for
+                                    you, we may not even be in the same inn.<br />
+                                    You can expect to spend betwee 9,000 ~ 12,000 / night per person at small inns with traditional,
+                                    local breakfast and dinner included. Of course more luxury is also avaiable.
+                                </td></tr
+                            >
+                            <tr
+                                ><td>Support-Only</td><td>Varies</td><td
+                                    >You ride, we provide logistics support, maps, rental and reservation assistance,
+                                    and anything else you need to make get into the countryside without worry. We are
+                                    also available for remote phone support if needed, and optional bicycle pickup so
+                                    you can be on your way after the trip wihtout worrying about the bikes.
+                                </td></tr
+                            >
+                        </tbody>
+                    </table>
+                    <p>
+                        Let us know your budget, and we will do our best to help you get a real rural Japan experience
+                        trying to keep the cost within what you would normally plan to spend for a day anway doing
+                        something in the city and taking a train. * <em
+                            >A cooking class in Kyoto might cost ¥10,000. One day with us often includes that, plus
+                            transport, meals, scenery, and no group tour crowds.</em
+                        >
+                    </p>
+                    <p>
+                        Tell us your budget, and we’ll help you get a real rural experience—often for the same price (or
+                        less) than a sightseeing day in the city.
+                    </p>
+                </section>
+
+                <section class="audience">
+                    <h2>🧭 Who This Is For</h2>
+                    <p>
+                        Its not just about getting off the beaten path. In fact, the beaten path is beaten for a reason.
+                        The destinatons are great. That is why people go there. We focud more on finding the value in
+                        the *getting there*. Kyoto is great. Kanazawa is great. What's in between? Ever wonder what is
+                        happening in those small towns that flash by the train window as you shuttle from hot-spot to
+                        hot-spot? We don't try to eliminate the hot spots, we just want to see what is between them.
+                    </p>
+                    <p>Every place on this list is worth visiting.</p>
+                    <p>[list of famous place] explands to show what is in between</p>
+                    <p>Most of our clients are:</p>
+                    <p>Every place on this list is worth visiting:</p>
+
+                    <ul>
+                        <li>Tokyo → Kyoto</li>
+                        <li>Kyoto → Kanazawa</li>
+                        <li>Osaka → Hiroshima</li>
+                        <li>Takayama → Matsumoto</li>
+                    </ul>
+
+                    <p>
+                        We’re not here to tell you to skip them. We’re here to ask:
+                        <strong>What’s between them?</strong>
+                    </p>
+
+                    <p>
+                        What towns flash by on the train ride from Tokyo to Kanazawa? What’s in that valley between
+                        Kyoto and the Japan Sea coast? What if the journey between the highlights became the highlight?
+                    </p>
+
+                    <p>That’s what we build — trips through the places you’d never notice unless you slowed down.</p>
+
+                    <ul>
+                        <li>First-timers looking to see more than Tokyo, Kyoto, Osaka (shorter 3+ day trips)</li>
+                        <li>
+                            Repeat visitors to Japan who have already seen the Golden Route and are looking for
+                            something different (5+ days)
+                        </li>
+                        <li>DIY-minded travelers who want flexibility but also local insights</li>
+                        <li>
+                            Families looking for something that the whole family can enjoy at a relaxed, flexible pace.
+                        </li>
+                        <li>
+                            Couples looking to get away form the crowds and have time in a setting that feels more
+                            private.
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="cta-final">
+                    <p>
+                        If your not sure, don't worry. Contacting us is risk free. We can share some ideas that fit with
+                        your existing itinerary, based on our twenty years of extensive travlel experience, and you
+                        decide if it is worth pursuing.
+                    </p>
+                    <p>
+                        It's never too late to consider book. While booking ahead of time gives more time to plan, and
+                        ensure more options for accommodations, the whole point is adventure, and spur of the moment
+                        always works out fine too. If we are free for hte dates, we can find something that fits the
+                        bill. If not, we can try to do adjustments
+                    </p>
+                    <a href="/contact" class="cta-button">👉 Get Sample Itineraries and Free Planning Advice →</a>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <style lang="scss"></style>
+</BaseLayout>

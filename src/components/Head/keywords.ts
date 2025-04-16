@@ -1,5 +1,18 @@
 // src/components/Head/keywords.ts
 export const defaultKeywordsRaw = `
+Japan Bike Tour,
+Cycling in Japan,
+Rural Japan Tours,
+Self-Guided Japan Trips,
+Family-Friendly Japan Tour,
+Custom Japan Itinerary,
+Japan Hiking and Walking Tours,
+Off the Beaten Path Japan,
+Japanese Countryside Travel,
+Adventure Travel Japan
+`;
+
+export const XdefaultKeywordsRaw = `
 Japan
 Bike Tour
 Biking Japan

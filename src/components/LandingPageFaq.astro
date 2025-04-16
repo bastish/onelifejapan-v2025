@@ -1,0 +1,121 @@
+---
+// FaqToggleSection.astro
+const { mode = 'collapsible' } = Astro.props; // 'collapsible' or 'static'
+const isStatic = mode === 'static';
+---
+
+<div class={`${mode}`}>
+    <h2>Frequently Asked Questions</h2>
+
+    <details open={isStatic}>
+        <summary><span>How much does it cost?</span></summary>
+        <ul class="checklist">
+            <li><strong>Self-guided planning:</strong> from ¥10,000/day<br /></li>
+            <li><strong>Supported semi-guided:</strong> from ¥20,000/day<br /></li>
+            <li><strong>Fully guided:</strong> from ¥30,000/day<br /></li>
+        </ul>
+        <p>*Per person / per day</p>
+        <p>
+            Pricing depends on factors like how much support you want, if you're biking or walking, and the length of
+            the trip. We work with your budget to create the best experience — without pushing anything you don’t need.
+        </p>
+        <p class="finetext">Estimate will include bicycle and gear rental, but not:</p>
+        <ul>
+            <li>
+                <em>Accommodation: starting around ¥9,000–¥12,000/night (with dinner and breakfast).</em>
+            </li>
+            <li>
+                <em>Attraction & Entrance fess: as needed</em>
+            </li>
+            <li>
+                <em>Train Rides: as needed</em>
+            </li>
+        </ul>
+    </details>
+
+    <details open={isStatic}>
+        <summary><span>How long are the trips?</span></summary>
+        <p>Anywhere from 2 days to 1 month. Usually about 4 ~ 5 days. All flexible and tailored to your trip.</p>
+        <p>
+            Want a 3-day bike ride from Kyoto to the coast, then train to Kanazawa? Easy. Prefer a longer journey from
+            Osaka to Hiroshima, mixing bike and local train as needed? No problem. We build it around your energy level
+            and timing. Want to try, but unsure if you can make it the entire distance? No problem. Go as far as you can
+            and local train will take you the rest of the way.
+        </p>
+        <p>
+            For walking trips, we skip long or urban road stretches in favor of the most scenic sections. We can mix in
+            local trains or luggage shuttles to keep the experience comfortable.
+        </p>
+    </details>
+
+    <details open={isStatic}>
+        <summary><span>How hard are the trips?</span></summary>
+        <p>As hard — or as easy — as you want them to be.</p>
+        <p>
+            Some guests want full days of riding or hiking, others just a few scenic hours each morning. Rainy day? Skip
+            ahead by train. Traveling with kids or grandparents? We’ll build in flexibility so everyone enjoys the pace.
+        </p>
+    </details>
+
+    <details open={isStatic}>
+        <summary><span>Who is it for?</span></summary>
+        <p>
+            <ul class="checklist">
+                <li>Families, couples, and solo travelers.</li>
+                <li>First-timers to Japan with time or urge to get off the Golden Route.</li>
+                <li>Repeat visitors to Japan who already seen the Golden Route</li>
+                <li>Travelers who want flexibility, not tour buses.</li>
+                <li>Anyone feeling a bit overwhelmed at planning their own out-of-the ordinary adventure.</li>
+            </ul>
+        </p>
+    </details>
+
+    <details open={isStatic}>
+        <summary><span>When should I book?</span></summary>
+        <p>The earlier, the better — but last-minute can work too. If the dates are free, we’ll make it happen.</p>
+        <p>
+            For solo travelers, get in touch early and if there is enough time, we will try to find others to join your
+            dates for company, and help keep the cost down.
+        </p>
+    </details>
+</div>
+
+<style lang="scss">
+    .landing-faqs {
+        margin-top: 2rem;
+
+        details {
+            margin-bottom: 1rem;
+            border: 1px solid var(--bs-primary-dark);
+            padding: 1rem;
+            border-radius: 6px;
+            background: #f9f9f9;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        &.static details[open] summary {
+            cursor: default;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        &.static summary::marker {
+            display: none;
+        }
+
+        &.static summary span {
+            font-weight: bold;
+            display: inline;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin: 0.5rem 0;
+        }
+    }
+</style>
