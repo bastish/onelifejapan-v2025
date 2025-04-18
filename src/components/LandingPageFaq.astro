@@ -1,121 +1,282 @@
 ---
 // FaqToggleSection.astro
 const { mode = 'collapsible' } = Astro.props; // 'collapsible' or 'static'
-const isStatic = mode === 'static';
+let isStatic = mode === 'static';
+isStatic = false;
 ---
 
-<div class={`${mode}`}>
-    <h2>Frequently Asked Questions</h2>
-
+<div class={`faq-section ${isStatic ? 'static' : 'collapsible'}`}>
     <details open={isStatic}>
-        <summary><span>How much does it cost?</span></summary>
-        <ul class="checklist">
-            <li><strong>Self-guided planning:</strong> from ¥10,000/day<br /></li>
-            <li><strong>Supported semi-guided:</strong> from ¥20,000/day<br /></li>
-            <li><strong>Fully guided:</strong> from ¥30,000/day<br /></li>
-        </ul>
-        <p>*Per person / per day</p>
-        <p>
-            Pricing depends on factors like how much support you want, if you're biking or walking, and the length of
-            the trip. We work with your budget to create the best experience — without pushing anything you don’t need.
-        </p>
-        <p class="finetext">Estimate will include bicycle and gear rental, but not:</p>
-        <ul>
-            <li>
-                <em>Accommodation: starting around ¥9,000–¥12,000/night (with dinner and breakfast).</em>
-            </li>
-            <li>
-                <em>Attraction & Entrance fess: as needed</em>
-            </li>
-            <li>
-                <em>Train Rides: as needed</em>
-            </li>
-        </ul>
-    </details>
-
-    <details open={isStatic}>
-        <summary><span>How long are the trips?</span></summary>
-        <p>Anywhere from 2 days to 1 month. Usually about 4 ~ 5 days. All flexible and tailored to your trip.</p>
-        <p>
-            Want a 3-day bike ride from Kyoto to the coast, then train to Kanazawa? Easy. Prefer a longer journey from
-            Osaka to Hiroshima, mixing bike and local train as needed? No problem. We build it around your energy level
-            and timing. Want to try, but unsure if you can make it the entire distance? No problem. Go as far as you can
-            and local train will take you the rest of the way.
-        </p>
-        <p>
-            For walking trips, we skip long or urban road stretches in favor of the most scenic sections. We can mix in
-            local trains or luggage shuttles to keep the experience comfortable.
-        </p>
-    </details>
-
-    <details open={isStatic}>
-        <summary><span>How hard are the trips?</span></summary>
-        <p>As hard — or as easy — as you want them to be.</p>
-        <p>
-            Some guests want full days of riding or hiking, others just a few scenic hours each morning. Rainy day? Skip
-            ahead by train. Traveling with kids or grandparents? We’ll build in flexibility so everyone enjoys the pace.
-        </p>
-    </details>
-
-    <details open={isStatic}>
-        <summary><span>Who is it for?</span></summary>
-        <p>
+        <summary
+            ><strong>Who is it for?</strong><span class="description"
+                >Couples, families, solo travelers & first-timers</span
+            ></summary
+        >
+        <div class="answer">
             <ul class="checklist">
-                <li>Families, couples, and solo travelers.</li>
-                <li>First-timers to Japan with time or urge to get off the Golden Route.</li>
-                <li>Repeat visitors to Japan who already seen the Golden Route</li>
-                <li>Travelers who want flexibility, not tour buses.</li>
-                <li>Anyone feeling a bit overwhelmed at planning their own out-of-the ordinary adventure.</li>
+                <li>
+                    <strong>Couples, families, small groups — and solo travelers.</strong> We tailor each trip to match your
+                    pace, comfort, and group dynamic.
+                </li>
+                <li>
+                    <strong>First-time visitors who want more than Tokyo & Kyoto.</strong> Add rural beauty and authentic
+                    stops to your trip.
+                </li>
+                <li>
+                    <strong>Repeat visitors ready to go deeper.</strong> You’ve seen the big cities — now you want something
+                    different.
+                </li>
+                <li>
+                    <strong>Adventurous travelers who don’t want to plan every detail.</strong> We handle logistics, you
+                    enjoy the journey.
+                </li>
             </ul>
-        </p>
+        </div>
     </details>
-
     <details open={isStatic}>
-        <summary><span>When should I book?</span></summary>
-        <p>The earlier, the better — but last-minute can work too. If the dates are free, we’ll make it happen.</p>
-        <p>
-            For solo travelers, get in touch early and if there is enough time, we will try to find others to join your
-            dates for company, and help keep the cost down.
-        </p>
+        <summary
+            ><strong>Can I go solo?</strong>
+            <span class="description">Yes, with a few notes on cost and options</span></summary
+        >
+        <div class="answer">
+            <ul class="checklist">
+                <li>
+                    <strong>Self-guided is most affordable.</strong> Solo trips work great with remote support and a custom
+                    plan.
+                </li>
+                <li>
+                    <strong>Guided options available.</strong> Less cost-effective, but we’ll always be transparent.
+                </li>
+                <li>
+                    <strong>Want a travel buddy?</strong> We may be able to match you with others for shared dates and savings.
+                </li>
+            </ul>
+        </div>
     </details>
-</div>
+    <details open={isStatic}>
+        <summary
+            ><strong>How long are the trips?</strong>
+            <span class="description">Usually 3–5 days, but flexible</span></summary
+        >
+        <div class="answer">
+            <ul class="checklist">
+                <li><strong>2 days:</strong> A taste of rural Japan. Often loops back to your starting point.</li>
+                <li><strong>3 days:</strong> Time to slow down and get closer to your next destination.</li>
+                <li><strong>4–5 days:</strong> The sweet spot. Enough time to unwind and discover freely.</li>
+                <li><strong>6–7+ days:</strong> Ideal for multi-activity trips and deeper exploration.</li>
+            </ul>
+        </div>
+    </details>
+    <details open={isStatic}>
+        <summary
+            ><strong>How hard is it?</strong>
+            <span class="description">As challenging or relaxing as you like</span></summary
+        >
+        <div class="answer">
+            <p>
+                We match the trip to your comfort level — whether it’s slow walks with kids or full-day rides. It’s all
+                about your pace, with plenty of flexibility built in.
+            </p>
+            <p><a href="/difficulty-levels">More about activity levels ››</a></p>
+        </div>
+    </details>
+    <details open={isStatic}>
+        <summary><strong>Best season?</strong><span class="description">Every season has its charm</span></summary>
+        <div class="answer">
+            <ul class="checklist">
+                <li><strong>Summer:</strong> High elevations, forests, rivers. We keep you cool.</li>
+                <li><strong>Autumn:</strong> Color, crisp air, and harvest season.</li>
+                <li><strong>Winter:</strong> Quiet coastlines or snow adventures — your pick.</li>
+                <li><strong>Spring:</strong> More than cherry blossoms. Fresh roads, fewer crowds.</li>
+                <li><strong>Rainy/Typhoon:</strong> Not a deal-breaker. Flexibility is key.</li>
+            </ul>
+        </div>
+    </details>
+    <details open={isStatic}>
+        <summary
+            ><strong>How much does it cost?</strong><span class="description">Starts from ¥10,000/day per person</span
+            ></summary
+        >
+        <div class="answer">
+            <ul class="checklist">
+                <li><strong>Self-guided:</strong> from ¥10,000/day</li>
+                <li><strong>Semi-guided:</strong> from ¥20,000/day</li>
+                <li><strong>Fully guided:</strong> from ¥30,000/day</li>
+            </ul>
+            <p class="finetext">
+                *Prices per person/day. Includes bike & gear rental. Accommodation, train rides, and attractions not
+                included.
+            </p>
+        </div>
+    </details>
+    <details open={isStatic}>
+        <summary
+            ><strong>What's included?</strong><span class="description"
+                >Itinerary, maps, support — with more if needed</span
+            ></summary
+        >
+        <div class="answer">
+            <ul class="checklist">
+                <li><strong>Self-guided:</strong> Route plan, GPS maps, reservations help, message support.</li>
+                <li><strong>Semi-guided:</strong> All of the above, plus baggage transfers and check-ins.</li>
+                <li><strong>Fully guided:</strong> We ride or walk with you, help with meals and local interaction.</li>
+            </ul>
+            <p class="finetext">
+                <strong>Accommodation is not included</strong> in the base price, but we’ll help book great options that
+                suit your trip and budget.
+            </p>
+        </div>
+    </details>
+    <details open={isStatic}>
+        <summary
+            ><strong>When should I book?</strong><span class="description">
+                Earlier is better, but last-minute may work</span
+            ></summary
+        >
+        <div class="answer">
+            <p>Solo? Reach out early so we can help match you. Otherwise, if we’re free — we’ll make it happen.</p>
+        </div>
+    </details>
 
-<style lang="scss">
-    .landing-faqs {
-        margin-top: 2rem;
-
+    <style lang="scss">
+        @use '../styles/global' as *;
         details {
-            margin-bottom: 1rem;
-            border: 1px solid var(--bs-primary-dark);
-            padding: 1rem;
-            border-radius: 6px;
-            background: #f9f9f9;
+            margin-bottom: 30px;
+        }
+        span.description {
+            display: block;
+            padding-left: 20px;
+            color: var(--text-dark);
+            font-weight: normal;
+            font-size: 1em;
+        }
+
+        .landing-faqs {
+            margin-top: 2rem;
+
+            details {
+                margin-bottom: 1rem;
+                border: 1px solid var(--bs-primary-dark);
+                padding: 1rem;
+                border-radius: 6px;
+                background: #f9f9f9;
+            }
+
+            summary {
+                cursor: pointer;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            &.static details[open] summary {
+                cursor: default;
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            &.static summary::marker {
+                display: none;
+            }
+
+            &.static summary span {
+                font-weight: bold;
+                display: inline;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                margin: 0.5rem 0;
+            }
         }
 
         summary {
-            cursor: pointer;
+            border-top: 1px solid var(--bs-primary-dark);
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            color: var(--bs-primary-dark);
             font-weight: 600;
-            margin-bottom: 0.5rem;
         }
+        .answer {
+            margin-top: 20px;
+            padding-left: 5px;
+        }
+        .checklist li {
+            font-size: 1em;
+            font-weight: normal !important;
+        }
+    </style>
 
-        &.static details[open] summary {
-            cursor: default;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
+    <!-- 
 
-        &.static summary::marker {
-            display: none;
-        }
+    <summary><span>When is the best time to go?</span></summary>
+<div class="answer">
+  <p>Honestly? Anytime. Every season has something special — and we tailor trips to fit it.</p>
 
-        &.static summary span {
-            font-weight: bold;
-            display: inline;
-            margin-bottom: 0.5rem;
-        }
+  <ul class="checklist">
+    <li>
+      <strong>Summer:</strong>
+      <div>
+        Yes, it's hot. But not everywhere. We plan trips to higher elevations, forested areas, and rivers.
+        A shady hike or a post-ride soak makes all the difference.
+      </div>
+    </li>
+    <li>
+      <strong>Autumn:</strong>
+      <div>
+        Crisp air, changing leaves, and harvest season. It’s popular, so we’ll help navigate the crowds and
+        secure the right stays.
+      </div>
+    </li>
+    <li>
+      <strong>Winter:</strong>
+      <div>
+        Great for quieter trips, citrus season, or snow walks in select regions. Coastal areas stay mild,
+        and we’ll equip you with warm, weatherproof gear.
+      </div>
+    </li>
+    <li>
+      <strong>Spring:</strong>
+      <div>
+        Yes, cherry blossoms — but also quiet roads, fresh greens, and rural life shaking off winter.
+        There’s more than just sakura.
+      </div>
+    </li>
+    <li>
+      <strong>Rainy or Typhoon season:</strong>
+      <div>
+        Not as bad as people say. Rain brings atmosphere and drama. And if the weather turns? We pivot.
+        It’s part of the story.
+      </div>
+    </li>
+  </ul>
 
-        p {
-            margin: 0.5rem 0;
-        }
-    }
-</style>
+  <p>
+    We’ll help you choose the right region for the right season — and adjust plans as needed. Rural life
+    goes on, rain or shine. So will your trip.
+  </p>
+</div> -->
+
+    <!-- 
+    <details open={isStatic}>
+        <summary><span>How long are the trips?</span></summary>
+        <div class="answer">
+            <p>
+                Trips can range from 2 days to 2 weeks or more — but most people find 4–6 days is the sweet spot. It's
+                all flexible and built around your energy, interests, and available time.
+            </p>
+            <p>
+                Want a 3-day ride from Kyoto to the coast, then hop a train to Kanazawa? Easy. Prefer a longer trip from
+                Osaka to Hiroshima, mixing bike and local train as needed? No problem. We’ll shape it to fit your pace
+                and comfort.
+            </p>
+            <p>
+                For walking trips, we skip long or urban stretches in favor of the most scenic sections, with options to
+                use local trains or luggage shuttles for comfort.
+            </p>
+            <p>
+                Two-day trips are possible, but we recommend at least 3–4 days if you want to feel like you’re truly
+                going somewhere, not just looping back. The longer you go, the more there is to discover.
+            </p>
+        </div>
+    </details> -->
+</div>

@@ -20,25 +20,36 @@ const description =
     <div class="custom-container simple-page-body">
         <div class="hero-header">
             <h1>Explore Rural Japan Your Way</h1>
-            <h2>Multi-day countryside trips - by bike, walk, or both</h2>
+            <!-- <h2>Multi-day countryside trips - by bike, walk, or both</h2>
+            <h2>Flexible support. Guided & self-guided</h2> -->
 
+            <h2>Custom countryside trips — by bike, on foot, or both</h2>
+            <h2>Flexible support — self-guided, semi-guided, or fully guided</h2>
             <!-- <p>
                 Looking for a real Japan experience, away from the crowds? Our rural Japan trips take you through small
                 towns, scenic farmland, and quiet backroads — with flexible support whether you're on foot, bike, or
                 just soaking it in.
             </p> -->
-            <h2>Flexible support. Guided & self-guided</h2>
             <!-- <h2>From ¥20,000 per person, per day</h2> -->
         </div>
         <div class="landing-container">
             <section class="landing-intro">
+                <h2>We Design Your Journey Through Rural Japan</h2>
                 <p>
-                    <span class="emph first-words">So, you’ve already planned</span> the Golden Route - Kyoto, Tokyo, Osaka,
-                    maybe even Hakone, Takayama and Kanazawa. These places are great, and there's a reason they’re crowd
-                    favorites. But you’ve also wondered what it's like in<span class="emph">
-                        the places in between</span
-                    > - the quiet towns, the back roads, the parts most travelers miss.
+                    <span class="emph first-words">We design flexible countryside itineraries</span> - by bike, on foot,
+                    or a mix of both - <span class="emph">tailored to your schedule, comfort, and curiosity</span>.
+                    Whether <span class="emph">fully guided or just planning and logistics</span>, we help turn the
+                    space between the famous stops into the <span class="emph">best part of the trip</span>.
                 </p>
+                <h2>Go Beyond the Golden Route</h2>
+                <p>
+                    Perhaps you’ve <span class="emph">already planned the Golden Route</span> - Kyoto, Tokyo, Osaka, maybe
+                    even Hakone, Takayama and Kanazawa. These places are great, and <span class="emph"
+                        >there's a reason they’re crowd favorites</span
+                    >. But you’ve also wondered what it's like in<span class="emph"> the places in between</span> - the quiet
+                    towns, the back roads, <span class="emph">the parts most travelers miss</span>.
+                </p>
+                <h2>Accessible Rural Japan — No Car Needed</h2>
                 <p>
                     Maybe you’ve been <span class="emph">told you need a car</span> to see the countryside, or to get "off
                     the beaten path".<span class="emph"> You don’t</span>. Many <span class="emph"
@@ -46,16 +57,6 @@ const description =
                     >, and more accessible than you think - <span class="emph"><em>if</em></span> you know <span
                         class="emph">where to go, how to get there</span
                     > and you're willing to slow down.
-                </p>
-                <p>
-                    <span class="emph">We help turn the areas between</span> the famous stops into <span class="emph"
-                        >the best part of the trip</span
-                    >
-                    - by <span class="emph">bike, on foot, or a mix of both.</span> From <span class="emph"
-                        >guiding to planning and logistics</span
-                    >, We design flexible countryside itineraries <span class="emph"
-                        >tailored to your schedule, comfort, and curiosity</span
-                    >.
                 </p>
 
                 <!--             
@@ -82,10 +83,12 @@ const description =
             <!-- <GenericSlider sliderImageId={20} height={250} /> -->
 
             <section class="landing-routes">
+                <h2>Between the Highlights - The journey is the destination.</h2>
                 <LandingPageRouteToggler />
             </section>
 
             <section class="landing-faqs">
+                <h2>Some Details</h2>
                 <LandingPageFaq mode="static" />
             </section>
             <!-- <GenericSlider sliderImageId={28} height={250} /> -->
@@ -116,104 +119,104 @@ const description =
     </div>
 
     <style lang="scss"></style>
-</BaseLayout>
 
-<style lang="scss">
-    @use '../../styles/global' as *;
+    <style lang="scss">
+        @use '../../styles/global' as *;
 
-    h1 {
-        font-size: 2.3em;
-        text-align: center;
-        font-weight: 700;
-    }
-    h2 {
-        font-size: 1.5em;
-        text-align: center;
-    }
-    .first-words {
-        font-size: 1.1em;
-    }
-    .custom-container {
-        //border: 1px solid red !important;
-        margin-top: -5px !important;
-        @include respond-to(small) {
-            padding-left: 0px;
-            padding-right: 0px;
+        h1 {
+            font-size: 2.3em;
+            text-align: center;
+            font-weight: 700;
+        }
+        h2 {
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .first-words {
+            font-size: 1.1em;
+        }
+        .custom-container {
+            //border: 1px solid red !important;
             margin-top: -5px !important;
+            @include respond-to(small) {
+                padding-left: 0px;
+                padding-right: 0px;
+                margin-top: -5px !important;
+            }
         }
-    }
-    .simple-page-body {
-        background: white;
-        //padding: 10px;
-        border: 1px solid var(--bs-primary-dark);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-        @include respond-to(small) {
-            max-width: 100%;
+        .simple-page-body {
+            background: white;
+            //padding: 10px;
+            border: 1px solid var(--bs-primary-dark);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            @include respond-to(small) {
+                max-width: 100%;
+            }
         }
-    }
-    .landing-container {
-        padding-left: 20px;
-        padding-right: 20px;
-        @include respond-to(small) {
-            padding-left: 10px;
-            padding-right: 10px;
+        .landing-container {
+            padding-left: 20px;
+            padding-right: 20px;
+            @include respond-to(small) {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
         }
-    }
-    .cta-container {
-        width: 100%;
-        text-align: center;
-        padding: 20px;
-    }
-    .cta-button {
-        display: inline-block;
-        padding: 0.75rem 1.5rem;
-        background-color: var(--bs-link-color);
-        color: white;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        text-align: center;
-        transition: background 0.2s ease;
-        margin: auto;
-        &:hover {
-            background-color: var(--bs-primary);
+        .cta-container {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
         }
-    }
-    section {
-        margin-bottom: 40px;
-        //border: 1px solid red;
-    }
-    :global(.landing-container h2) {
-        //border: 1px solid red;
-        font-size: 1.5em;
-        margin-bottom: 20px;
-        margin-bottom: 20px;
-        padding: 10px;
-    }
-    .landing-intro h2 {
-        display: inline-block;
-        background: #e9f3e0; // soft background color
-        color: var(--bs-primary-dark);
-        padding: 0.25em 0.5em;
-        border-radius: 6px;
-        font-weight: 600;
-    }
-    .landing-intro {
-        padding-top: 20px;
-        //text-align: center;
-        // padding: 2rem 1rem;
-        // max-width: 800px;
-        // margin: 0 auto;
-    }
-    .hero-header {
-        width: 100%;
-        background: #e9f3e0; // soft background color
-        color: var(--bs-primary-dark);
-        padding-bottom: 10px;
-        padding-top: 10px;
-        border-bottom: 1px solid var(--bs-primary-dark);
-        margin-top: 0px;
-        //border: 1px solid red;
-    }
-</style>
+        .cta-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--bs-link-color);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s ease;
+            margin: auto;
+            &:hover {
+                background-color: var(--bs-primary);
+            }
+        }
+        section {
+            margin-bottom: 40px;
+            //border: 1px solid red;
+        }
+        :global(.landing-container h2) {
+            //border: 1px solid red;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        .landing-intro h2 {
+            display: inline-block;
+            background: #e9f3e0; // soft background color
+            color: var(--bs-primary-dark);
+            padding: 0.25em 0.5em;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .landing-intro {
+            padding-top: 20px;
+            //text-align: center;
+            // padding: 2rem 1rem;
+            // max-width: 800px;
+            // margin: 0 auto;
+        }
+        .hero-header {
+            width: 100%;
+            background: #e9f3e0; // soft background color
+            color: var(--bs-primary-dark);
+            padding-bottom: 10px;
+            padding-top: 10px;
+            border-bottom: 1px solid var(--bs-primary-dark);
+            margin-top: 0px;
+            //border: 1px solid red;
+        }
+    </style>
+</BaseLayout>

@@ -99,15 +99,30 @@ const routes: Route[] = [
 ];
 ---
 
-<h2>In Between the Golden Route</h2>
+<p>
+    If you’ve <span class="emph">already planned some major destinations</span> — Kyoto, Tokyo, Kanazawa, Osaka — maybe you’ve
+    also looked up the fastest way to get between them. But <span class="emph"
+        >between those well-known hubs are villages, coastlines, and mountain passes</span
+    >
+    most travelers never see.
+</p>
 
+<p>
+    Below are <span class="emph">just a few examples</span> of how what might otherwise be more travel time between well-known
+    destinations can
+    <span class="emph">become a meaningful part of your trip</span> if you <span class="emph">don’t just pass by</span>,
+    but take the <span class="emph">opportunity to discover</span> what’s in between.
+</p>
 <div class="routes-grid" id="route-toggler" data-routes={JSON.stringify(routes)}>
     <div class="route-buttons">
+        <!-- 
         <p>
-            Tell us where you are already planning to go. Fore everyplace you've heard of, there's someplace along the
-            way you probably never have, as well as plenty of smaller destinations better seen as a pass through than a
-            day-trip.
+            Below are just a few examples of how what might otherwise be more travel between well-known destinations can
+            become a meaningful part of your trip — you’ve already committed to the journey, so why not make it count by
+            discovering what’s in between?
         </p>
+
+        <p>Most travelers treat the space between stops as a gap to cross. We treat it as a chapter worth reading.</p> -->
 
         {
             routes.map((route, index) => (
@@ -117,7 +132,8 @@ const routes: Route[] = [
             ))
         }
         <p class="fineprint">
-            Routes follow train lines, allowing for partial rides to fit your schedule - from as little as 3 ~ days.
+            Routes can follow train lines, allowing for partial rides to fit your schedule - from as little as 2 ~ 3
+            days.
         </p>
     </div>
 
@@ -174,7 +190,7 @@ const routes: Route[] = [
 
     updateUI(routes[0]);
 </script>
-
+<!-- 
 <style lang="scss">
     @use '../styles/global' as *;
     // .routes-grid {
@@ -281,7 +297,7 @@ const routes: Route[] = [
         margin: 10px 0 0;
         padding-left: 0;
     }
-</style>
+</style> -->
 <style lang="scss">
     @use '../styles/global' as *;
 
@@ -300,5 +316,88 @@ const routes: Route[] = [
         border-radius: 2px;
         backdrop-filter: blur(2px);
         list-style: none;
+    }
+</style>
+
+<style>
+    .routes-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: flex-start; /* Align items to the top of the container */
+        justify-content: flex-start; /* Ensure left-alignment on large screens */
+        align-items: center; /* Align items to the top of the container */
+        justify-content: flex-start; /* Ensure left-alignment on large screens */
+        @media (max-width: 768px) {
+            flex-direction: column; /* Stack buttons and map vertically on small screens */
+        }
+    }
+
+    .route-buttons {
+        display: flex;
+        flex-wrap: wrap; /* Allow buttons to wrap to new lines if necessary */
+        gap: 0.1rem;
+        margin-bottom: 20px; /* Ensure space between buttons and map */
+        justify-content: flex-start; /* Align buttons to the left */
+    }
+
+    .route-button {
+        padding: 0.5rem 1rem; /* Add padding inside buttons */
+        margin: 0.25rem 0;
+        border: 1px solid var(--bs-primary-dark);
+        background: white;
+        cursor: pointer;
+        text-align: left;
+        border-radius: 5px;
+        white-space: nowrap; /* Prevent the text from breaking inside buttons */
+    }
+
+    .route-button.selected {
+        background-color: var(--bs-primary-dark);
+        color: white;
+    }
+
+    .route-map {
+        flex-grow: 1;
+        max-width: 600px; /* Limit width of the map */
+        width: 100%;
+        position: relative;
+    }
+
+    .map-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+
+    .map-wrapper img {
+        max-width: 100%; /* Make sure the map image is responsive */
+        height: auto;
+    }
+
+    .overlay-top,
+    .overlay-bottom {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+        top: 10px;
+        left: 10px;
+    }
+
+    .overlay-top {
+        top: 10px;
+        left: 10px;
+    }
+
+    .overlay-bottom {
+        bottom: 0px;
+        left: 10px;
+    }
+
+    .fineprint {
+        margin: 10px 0 0;
+        padding-left: 0;
     }
 </style>

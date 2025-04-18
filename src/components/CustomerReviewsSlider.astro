@@ -35,7 +35,6 @@ const slideWidth = widthMap[show] || '100%';
 ---
 
 <section class="landing-testimonials">
-    <h2>What Past Guests Say</h2>
     <div class="slider-container">
         <button class="arrow left" aria-label="Previous">&#8249;</button>
         <div class="slider-track" style={`--slide-width: ${slideWidth}`}>
@@ -96,8 +95,8 @@ const slideWidth = widthMap[show] || '100%';
         .arrow {
             background: rgba(0, 0, 0, 0.1);
             border: none;
-            padding: 0.5rem 1rem;
-            font-size: 1.5rem;
+            padding: 0.5rem 0.7rem;
+            font-size: 1rem;
             cursor: pointer;
             z-index: 2;
         }
@@ -122,6 +121,7 @@ const slideWidth = widthMap[show] || '100%';
 </style>
 
 <script type="module">
+    const autoScrollEnabled = false;
     let currentIndex = 0;
     const track = document.querySelector('.slider-track');
     const slides = document.querySelectorAll('.slide');
@@ -170,6 +170,7 @@ const slideWidth = widthMap[show] || '100%';
     };
 
     const resetInterval = () => {
+        if (!autoScrollEnabled) return;
         clearInterval(autoScrollInterval);
         autoScrollInterval = setInterval(() => {
             moveNext();
@@ -184,10 +185,11 @@ const slideWidth = widthMap[show] || '100%';
         moveNext();
         resetInterval();
     });
-
-    let autoScrollInterval = setInterval(() => {
-        moveNext();
-    }, 7000);
+    // Start auto-scroll if enabled
+    let autoScrollInterval = null;
+    if (autoScrollEnabled) {
+        autoScrollInterval = setInterval(moveNext, 7000);
+    }
 
     window.addEventListener('resize', () => {
         visibleCount = getVisibleCount();

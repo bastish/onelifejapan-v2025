@@ -1,0 +1,80 @@
+---
+let taglines = [
+    'Add the Rural Heart to Your Journey',
+    'Beyond the Cityscape: The Countryside Awaits',
+    'Take the Scenic Route Between Your Stops',
+    'Discover the Quiet Paths Between the Highlights',
+    'The Perfect Countryside Addition to Your Japan Trip',
+    'Enhance Your Japan Adventure with Rural Treasures',
+    'Explore the Hidden Countryside Between the Cities',
+    'A Rural Detour to Your Japan Journey',
+    'Add More to Your Itinerary with Rural Japan',
+    'The Journey Beyond the Famous Cities',
+    'Where the Real Japan Lies, Just Off the Beaten Path',
+    'Make Your Japan Experience Complete with Rural Stops',
+    'Experience the Peace Between the Bustling Cities',
+    'From Cities to Countryside: Extend Your Adventure',
+    'Your Trip, with a Rural Twist',
+    'Add a Touch of Tranquil Japan to Your Travel Plans',
+    'Go Further: Discover Japan’s Hidden Villages',
+    'See What’s In Between: Rural Japan Awaits',
+    'Extend Your Journey to Japan’s Quiet Corners',
+    'Fill In the Gaps with Rural Japan’s Charm',
+];
+taglines = [
+    'Add the Rural Heart to Your Journey',
+    'Beyond the Cityscape: The Countryside Awaits',
+    'Take the Scenic Route Between Your Stops',
+    'Discover the Quiet Paths Between the Highlights',
+    'The Perfect Countryside Addition to Your Japan Trip',
+    'Enhance Your Japan Adventure with Rural Treasures',
+    'Explore the Hidden Countryside Between the Cities',
+    'A Rural Detour to Your Japan Journey',
+    'Add More to Your Itinerary with Rural Japan',
+    'The Journey Beyond the Famous Cities',
+    'Where the Real Japan Lies, Just Off the Beaten Path',
+    'Make Your Japan Experience Complete with Rural Stops',
+    'Experience the Peace Between the Bustling Cities',
+    'From Cities to Countryside: Extend Your Adventure',
+    'Your Trip, with a Rural Twist',
+    'Add a Touch of Tranquil Japan to Your Travel Plans',
+    'Go Further: Discover Japan’s Hidden Villages',
+    'See What’s In Between: Rural Japan Awaits',
+    'Extend Your Journey to Japan’s Quiet Corners',
+    'Fill In the Gaps with Rural Japan’s Charm',
+];
+taglines = [
+    'Just Off the Golden Route',
+    "The Golden Route's Rural Backbone",
+    'Explore the Rural Backbone of the Golden Route',
+    'A Rural Detour for Your Japan Journey',
+    'Take the Golden Route, Then Go Further',
+    'A Rural Detour to Your Japan Journey',
+    'Exploring the In Between Places',
+    'Take a Rural Detour',
+    'Take the Long Way',
+];
+
+const taglinesJson = JSON.stringify(taglines);
+---
+
+<span class="tagline" data-taglines={taglinesJson}>{taglines[0]}</span>
+
+<script type="module">
+    const taglineElement = document.querySelector('.tagline');
+    const taglines = JSON.parse(taglineElement.getAttribute('data-taglines'));
+
+    let currentTaglineIndex = 0;
+
+    taglineElement.addEventListener('click', () => {
+        currentTaglineIndex = (currentTaglineIndex + 1) % taglines.length;
+        taglineElement.textContent = taglines[currentTaglineIndex];
+    });
+</script>
+
+<style>
+    .tagline {
+        cursor: pointer;
+        display: inline;
+    }
+</style>

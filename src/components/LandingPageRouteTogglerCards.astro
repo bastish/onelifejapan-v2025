@@ -1,0 +1,424 @@
+---
+import TagLineChanger from './TagLineChanger.astro';
+import { baseHost } from '../utils/utilities.ts';
+
+type Route = {
+    key: string;
+    label: string;
+    images: string[];
+    stops: string[];
+    overlay?: string;
+    days?: string;
+};
+
+const routes: Route[] = [
+    {
+        key: 'kyoto-kanazawa',
+        label: 'Kyoto → Kanazawa',
+        images: [
+            `${baseHost}/assets/img/2024/media/routes/108/358/kyoto-kanazawa-route-examples-Kyoto%20Kanazwa%20Example-medium.jpg`,
+        ],
+        stops: [
+            'Biwako',
+            'Hikone',
+            'Takashima',
+            'Miyama',
+            'Kayabuki-no-sato',
+            'Ayabe',
+            'Maizuru',
+            'Takahama',
+            'Obama',
+            'Wakasa Coast',
+            'Mikata Lakes',
+            'Fukui',
+            'Ono',
+            'Kanazawa',
+        ],
+        overlay: 'top',
+        days: '2 ~ 5',
+    },
+    {
+        key: 'kyoto-matsumoto',
+        label: 'Kyoto → Nakasendo → Matsumoto',
+        images: [
+            `${baseHost}/assets/img/2024/media/routes/109/359/kyoto-matsumoto-example-Kyoto-matsumoto-example-medium.jpg`,
+        ],
+        stops: [
+            'Biwako',
+            'Nakasendo',
+            'Hikone',
+            'Sekigahara',
+            'Gifu',
+            'Toki',
+            'Ena',
+            'Magome',
+            'Tsumago',
+            'Kiso Valley',
+            'Shiojiri',
+            'Azumino',
+        ],
+        overlay: 'top',
+        days: '3 ~ 5',
+    },
+    {
+        key: 'osaka-hiroshima',
+        label: 'Osaka → Hiroshima',
+        images: [
+            `${baseHost}/assets/img/2024/media/routes/110/360/osaka-hiroshima-sexample-osaka-hiroshima-sexample-medium.jpg`,
+        ],
+        stops: [
+            'Kobe',
+            'Seto Ferry',
+            'Tsuyama',
+            'Miyoshi',
+            'Takamatsu',
+            'Zentsuji',
+            'Kotohira',
+            'Tosa',
+            'Matsuyama',
+            'Shimanami Kaido',
+            'Kure',
+        ],
+        overlay: 'top',
+        days: '3 ~ 5',
+    },
+    {
+        key: 'osaka-matsuyama',
+        label: 'Osaka → Matsuyama',
+        images: [
+            `${baseHost}/assets/img/2024/media/routes/111/361/osaka-matsuyama-example-osaka-matsuyama-example-medium.jpg`,
+        ],
+        stops: ['Kobe', 'Seto Ferry', 'Takamatsu', 'Zentsuji', 'Kotohira', 'Tosa', 'Matsuyama', 'Kure'],
+        overlay: 'top',
+        days: '3 ~ 5',
+    },
+    {
+        key: 'kyoto-tottori',
+        label: 'Kyoto → Tottori',
+        images: [
+            `${baseHost}/assets/img/2024/media/routes/112/362/kyoto-tottori-example-kyoto-tottori-example-medium.jpg`,
+        ],
+        stops: ['Sanin Train', 'Kameoka', 'Fukuchiyama', 'Wadayama', 'Mt. Hyono', 'Kuwahara', 'Tottori'],
+        overlay: 'bottom',
+        days: '2 ~ 5',
+    },
+];
+---
+
+<p>
+    If you’ve <span class="emph">already planned some major destinations</span> — Kyoto, Tokyo, Kanazawa, Osaka — maybe you’ve
+    also looked up the fastest way to get between them. But
+    <span class="emph">between those well-known hubs</span> are villages, coastlines, and mountain passes most travelers
+    never see.
+</p>
+<p>
+    Below are <span class="emph">just a few examples</span> of how what might otherwise be more travel time between well-known
+    destinations can <span class="emph">become a meaningful part of your trip</span> if you <span class="emph"
+        >don’t just pass by</span
+    >, but take the
+    <span class="emph">opportunity to discover</span> what’s in between.
+</p>
+
+<div class="carousel">
+    <div class="carousel-track">
+        {
+            routes.map((route) => (
+                <div class="slide">
+                    <div class="info-item">
+                        <h2>{route.label}</h2>
+                        <img src={route.images[0]} alt={route.label} class="info-image" />
+                        <h2>{route.days} days</h2>
+                        <p>
+                            {route.stops.map((stop) => (
+                                <span class="stop">{stop}</span>
+                            ))}
+                        </p>
+                        <p class="fineprint">
+                            * Routes can follow train lines, allowing for partial rides to fit your schedule.
+                        </p>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+    <div class="dots">
+        {routes.map((_, i) => <span class="dot" data-index={i} />)}
+    </div>
+</div>
+
+<style lang="scss">
+    @use '../styles/global' as *;
+    .carousel {
+        position: relative;
+        overflow: hidden;
+        margin-top: 40px;
+        @include respond-to(small) {
+            //border: 1px solid red;
+            padding: 0px;
+        }
+    }
+    .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+        @include respond-to(small) {
+            //        border: 1px solid red;
+            padding: 0px;
+        }
+    }
+    /* default: 3 across */
+    .slide {
+        flex: 0 0 calc(100% / 2);
+        box-sizing: border-box;
+        padding: 0 10px;
+        @include respond-to(small) {
+            //    border: 1px solid red;
+            padding: 0px;
+        }
+    }
+
+    /* between 768px and 1200px: 2 across */
+    @media (max-width: 1200px) and (min-width: 769px) {
+        .slide {
+            flex: 0 0 50%;
+        }
+    }
+
+    /* ≤ 768px: 1 across */
+    @media (max-width: 768px) {
+        .slide {
+            flex: 0 0 100%;
+        }
+    }
+
+    .info-item {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        @include respond-to(small) {
+            padding: 10px;
+        }
+
+        .info-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stop {
+            display: inline-block;
+            border: 1px solid var(--bs-primary-dark);
+            padding: 5px;
+            margin: 2px;
+            border-radius: 5px;
+        }
+
+        .fineprint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+    }
+
+    .dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+    .dot {
+        width: 8px;
+        height: 8px;
+        background: #ccc;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .dot.active {
+        background: #333;
+    }
+</style>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.querySelector('.carousel-track');
+        const dots = Array.from(document.querySelectorAll('.dot'));
+        const carousel = document.querySelector('.carousel');
+        let currentDot = 0;
+        let isMovingNext = false;
+
+        // get a fresh slide width (adapts to 1/2/3‑across)
+        function getSlideWidth() {
+            return track.firstElementChild.getBoundingClientRect().width;
+        }
+
+        // highlight dot
+        function setActiveDot(i) {
+            dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+            currentDot = i;
+        }
+
+        // forward: slide left, then on transitionend append first slide
+        function moveNext() {
+            isMovingNext = true;
+            const w = getSlideWidth();
+            track.style.transition = 'transform 0.5s ease';
+            track.style.transform = `translateX(-${w}px)`;
+        }
+
+        // backward: prepend last slide, jump left, then animate back to zero
+        function movePrev() {
+            const w = getSlideWidth();
+            track.style.transition = 'none';
+            track.insertBefore(track.lastElementChild, track.firstElementChild);
+            track.style.transform = `translateX(-${w}px)`;
+            requestAnimationFrame(() => {
+                track.style.transition = 'transform 0.5s ease';
+                track.style.transform = 'translateX(0)';
+            });
+            // update dot immediately
+            const prevDot = (currentDot - 1 + dots.length) % dots.length;
+            setActiveDot(prevDot);
+        }
+
+        // when forward animation ends, do the reorder & update dot
+        track.addEventListener('transitionend', () => {
+            if (!isMovingNext) return;
+            isMovingNext = false;
+
+            // strip transition, reset transform, append first
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0)';
+            track.appendChild(track.firstElementChild);
+
+            // advance dot
+            const nextDot = (currentDot + 1) % dots.length;
+            setActiveDot(nextDot);
+        });
+
+        // auto‑play every 6s
+        setInterval(moveNext, 6000);
+
+        // dot clicks
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                // calculate distance to shift
+                const diff = (i - currentDot + dots.length) % dots.length;
+                if (diff === 0) return;
+                if (diff <= dots.length / 2) {
+                    // move forward diff times
+                    for (let k = 0; k < diff; k++) moveNext();
+                } else {
+                    // move backward dots.length - diff times
+                    for (let k = 0; k < dots.length - diff; k++) movePrev();
+                }
+            });
+        });
+
+        // swipe support
+        let startX = 0;
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.changedTouches[0].clientX;
+        });
+        carousel.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const dx = endX - startX;
+            if (dx > 50) {
+                movePrev();
+            } else if (dx < -50) {
+                moveNext();
+            }
+        });
+
+        // initial dot
+        setActiveDot(0);
+    });
+</script>
+
+<!-- 
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.querySelector('.carousel-track');
+        const dots = Array.from(document.querySelectorAll('.dot'));
+        let currentDot = 0;
+
+        // helper to get the current slide width
+        const getSlideWidth = () => track.firstElementChild.getBoundingClientRect().width;
+
+        // mark initial dot
+        dots[currentDot].classList.add('active');
+
+        // animate one slide left
+        function moveOne() {
+            const w = getSlideWidth();
+            track.style.transition = 'transform 0.5s ease';
+            track.style.transform = `translateX(-${w}px)`;
+        }
+
+        // after animation, reorder and reset
+        track.addEventListener('transitionend', () => {
+            // remove animation, reset position
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0)';
+
+            // move the first slide to the end
+            track.appendChild(track.firstElementChild);
+
+            // advance dot
+            currentDot = (currentDot + 1) % dots.length;
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentDot));
+        });
+
+        // autoplay
+        setInterval(moveOne, 6000);
+
+        // clicking dots jumps straight to that slide
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                // turn off animation so we can reorder instantly
+                track.style.transition = 'none';
+                // calculate how many times to shift
+                const shiftCount = (i - currentDot + dots.length) % dots.length;
+                for (let j = 0; j < shiftCount; j++) {
+                    track.appendChild(track.firstElementChild);
+                }
+                // reset transform & update dots
+                track.style.transform = 'translateX(0)';
+                dots.forEach((d, k) => d.classList.toggle('active', k === i));
+                currentDot = i;
+            });
+        });
+    });
+</script> -->
+
+<!--
+    {
+        routes.map((route, index) => (
+            <div class="info-item">
+                <img src={routes[index].images[0]} alt="Beyond the Golden Route" class="info-image" />
+                <h2>{routes[index].label}</h2>
+                <p>
+                    {routes[index].stops.map((stop) => (
+                        <span class="stop" style="border: 1px solid red; padding: 5px;">
+                            {stop}
+                        </span>
+                    ))}
+                </p>
+                <p class="fineprint">
+                    * Routes can follow train lines, allowing for partial rides to fit your schedule - from as little as
+                    2 ~ 3 days.
+                </p>
+            </div>
+        ))
+    }
+-->

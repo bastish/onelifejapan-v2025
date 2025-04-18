@@ -13,6 +13,7 @@
         "@astrojs/sitemap": "^3.3.0",
         "@babel/runtime": "^7.27.0",
         "@geist-ui/icons": "^1.0.2",
+        "@splidejs/splide": "^4.1.4",
         "astro": "^5.5.5",
         "astro-embed-components-in-content": "file:astro-embed-components-in-content-0.0.1.tgz",
         "bootstrap": "^5.3.3",
