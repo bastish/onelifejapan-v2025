@@ -1,0 +1,208 @@
+---
+// CustomerReviewSlider.astro
+
+// 1. Keep your `show` prop (one/two/three) as default slides count
+const allowedShows = ['one', 'two', 'three'] as const;
+type ShowOption = (typeof allowedShows)[number];
+const show = (Astro.props.show || 'one') as ShowOption;
+
+// Map `show` → number: one=1, two=2, three=3
+const defaultSlides = { one: 1, two: 2, three: 3 }[show];
+
+// Build query string (unchanged)
+const ids = Astro.props.ids as (number | string)[] | undefined;
+const tags = Astro.props.tags as (number | string)[] | undefined;
+const params = new URLSearchParams();
+if (ids && ids.length) params.set('ids', ids.join(','));
+else if (tags && tags.length) params.set('tags', tags.join(','));
+const url = `http://127.0.0.1:8011/api/quotation/${params.toString() ? `?${params}` : ''}`;
+
+// Fetch & shape data (unchanged)
+const res = await fetch(url);
+if (!res.ok) throw new Error(`Failed to fetch quotations: ${res.status}`);
+const data: Array<{ id: number; quote: string }> = await res.json();
+const reviews = data.map((item) => ({ text: item.quote }));
+
+// Duplicate for infinite scroll (unchanged)
+const slides = [...reviews, ...reviews, ...reviews];
+---
+
+<div class="slider-container">
+    <button class="arrow left" aria-label="Previous">&#8249;</button>
+
+    <!-- 2. Set the CSS var for default slides-per-view -->
+    <div class="slider-track" style={`--slides-per-view: ${defaultSlides};`}>
+        {
+            slides.map((r, i) => (
+                <div class="slide" data-index={i}>
+                    <blockquote set:html={r.text} />
+                </div>
+            ))
+        }
+    </div>
+
+    <button class="arrow right" aria-label="Next">&#8250;</button>
+</div>
+
+<style lang="scss">
+    @use '../styles/global' as *;
+
+    .slider-container {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid red;
+        width: 100%;
+    }
+
+    .slider-track {
+        /* default = your prop’s value */
+        /* CSS var is set inline from `defaultSlides` */
+        display: flex;
+        gap: 1rem;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+        max-width: 100%;
+    }
+
+    /* tablet: cap at 2 slides */
+    @media (max-width: 768px) {
+        .slider-track {
+            --slides-per-view: 2;
+        }
+    }
+
+    /* mobile: cap at 1 slide */
+    @media (max-width: 480px) {
+        .slider-track {
+            --slides-per-view: 1;
+        }
+    }
+
+    .slide {
+        /* N = var(--slides-per-view), so each slide is 100%/N of the container */
+        flex: 0 0 calc(100% / var(--slides-per-view));
+        max-width: calc(100% / var(--slides-per-view));
+        box-sizing: border-box;
+
+        background: white;
+        border: 1px solid var(--bs-primary-dark);
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        scroll-snap-align: start;
+
+        /* force long text to wrap */
+        overflow-wrap: break-word;
+    }
+
+    blockquote {
+        margin: 0;
+        padding: 0.5rem;
+        font-style: italic;
+        font-size: 0.9em;
+        line-height: 1.4;
+    }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.1);
+        border: none;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .left {
+        left: 0.5rem;
+    }
+    .right {
+        right: 0.5rem;
+    }
+</style>
+
+<script type="module">
+    const autoScrollEnabled = false;
+    let currentIndex = 0;
+
+    const container = document.querySelector('.slider-container');
+    const track = document.querySelector('.slider-track');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    console.log('slides-per-view →', getComputedStyle(track).getPropertyValue('--slides-per-view'));
+
+    if (!container || !track || slides.length === 0) {
+        console.error('Slider init failed');
+    } else {
+        // Read the CSS var for how many slides to show right now
+        function getVisibleCount() {
+            const v = getComputedStyle(track).getPropertyValue('--slides-per-view');
+            const n = parseInt(v, 10);
+            return isNaN(n) || n < 1 ? 1 : n;
+        }
+
+        let visibleCount = getVisibleCount();
+        let stepSize = visibleCount;
+        const originalCount = slides.length / 3;
+
+        function updateSlider() {
+            // Scroll by full container-width pages
+            const pageIndex = currentIndex / visibleCount;
+            const pageWidth = container.offsetWidth;
+            track.style.transform = `translateX(-${pageIndex * pageWidth}px)`;
+        }
+
+        function moveNext() {
+            currentIndex += stepSize;
+            updateSlider();
+            if (currentIndex >= originalCount * 2) {
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    currentIndex = originalCount;
+                    updateSlider();
+                    void track.offsetWidth;
+                    track.style.transition = 'transform 0.5s ease-in-out';
+                }, 510);
+            }
+        }
+
+        function movePrev() {
+            if (currentIndex <= 0) {
+                track.style.transition = 'none';
+                currentIndex = originalCount;
+                updateSlider();
+                void track.offsetWidth;
+                track.style.transition = 'transform 0.5s ease-in-out';
+            }
+            currentIndex -= stepSize;
+            updateSlider();
+        }
+
+        function resetInterval() {
+            if (!autoScrollEnabled) return;
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = setInterval(moveNext, 7000);
+        }
+
+        container.querySelector('.arrow.left').addEventListener('click', () => {
+            movePrev();
+            resetInterval();
+        });
+        container.querySelector('.arrow.right').addEventListener('click', () => {
+            moveNext();
+            resetInterval();
+        });
+
+        let autoScrollInterval = null;
+        if (autoScrollEnabled) {
+            autoScrollInterval = setInterval(moveNext, 7000);
+        }
+
+        window.addEventListener('resize', () => {
+            visibleCount = getVisibleCount();
+            stepSize = visibleCount;
+            updateSlider();
+        });
+    }
+</script>

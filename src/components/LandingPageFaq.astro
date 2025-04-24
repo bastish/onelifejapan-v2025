@@ -1,6 +1,7 @@
 ---
 // FaqToggleSection.astro
 const { mode = 'collapsible' } = Astro.props; // 'collapsible' or 'static'
+import LandingPageSampleDay from '../components/LandingPageSampleDay.astro';
 let isStatic = mode === 'static';
 isStatic = false;
 ---
@@ -8,8 +9,7 @@ isStatic = false;
 <div class={`faq-section ${isStatic ? 'static' : 'collapsible'}`}>
     <details open={isStatic}>
         <summary
-            ><strong>Who is it for?</strong><span class="description"
-                >Couples, families, solo travelers & first-timers</span
+            ><h3>Who is it for?</h3><span class="description">Couples, families, solo travelers & first-timers</span
             ></summary
         >
         <div class="answer">
@@ -35,7 +35,7 @@ isStatic = false;
     </details>
     <details open={isStatic}>
         <summary
-            ><strong>Can I go solo?</strong>
+            ><h3>Can I go solo?</h3>
             <span class="description">Yes, with a few notes on cost and options</span></summary
         >
         <div class="answer">
@@ -55,7 +55,7 @@ isStatic = false;
     </details>
     <details open={isStatic}>
         <summary
-            ><strong>How long are the trips?</strong>
+            ><h3>How long are the trips?</h3>
             <span class="description">Usually 3–5 days, but flexible</span></summary
         >
         <div class="answer">
@@ -67,9 +67,20 @@ isStatic = false;
             </ul>
         </div>
     </details>
+
+    <details open={isStatic}>
+        <summary>
+            <h3>What does a typical day look like?</h3>
+            <span class="description"
+                >Beacuse it is so flexible, "typical" is something we try to avoid, but here is a common pattern:
+            </span>
+        </summary>
+        <LandingPageSampleDay />
+    </details>
+
     <details open={isStatic}>
         <summary
-            ><strong>How hard is it?</strong>
+            ><h3>How hard is it?</h3>
             <span class="description">As challenging or relaxing as you like</span></summary
         >
         <div class="answer">
@@ -81,7 +92,7 @@ isStatic = false;
         </div>
     </details>
     <details open={isStatic}>
-        <summary><strong>Best season?</strong><span class="description">Every season has its charm</span></summary>
+        <summary><h3>What's the best season?</h3><span class="description">Every season has its charm</span></summary>
         <div class="answer">
             <ul class="checklist">
                 <li><strong>Summer:</strong> High elevations, forests, rivers. We keep you cool.</li>
@@ -94,8 +105,7 @@ isStatic = false;
     </details>
     <details open={isStatic}>
         <summary
-            ><strong>How much does it cost?</strong><span class="description">Starts from ¥10,000/day per person</span
-            ></summary
+            ><h3>How much does it cost?</h3><span class="description">Starts from ¥10,000/day per person</span></summary
         >
         <div class="answer">
             <ul class="checklist">
@@ -111,8 +121,7 @@ isStatic = false;
     </details>
     <details open={isStatic}>
         <summary
-            ><strong>What's included?</strong><span class="description"
-                >Itinerary, maps, support — with more if needed</span
+            ><h3>What's included?</h3><span class="description">Itinerary, maps, support — with more if needed</span
             ></summary
         >
         <div class="answer">
@@ -129,7 +138,7 @@ isStatic = false;
     </details>
     <details open={isStatic}>
         <summary
-            ><strong>When should I book?</strong><span class="description">
+            ><h3>When should I book?</h3><span class="description">
                 Earlier is better, but last-minute may work</span
             ></summary
         >
@@ -150,6 +159,14 @@ isStatic = false;
             font-weight: normal;
             font-size: 1em;
         }
+        summary h3 {
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 0; /* Remove bottom margin */
+            display: inline; /* Makes the h3 inline */
+            margin-right: 10px; /* Optional: Adds space between h3 and the description */
+        }
 
         .landing-faqs {
             margin-top: 2rem;
@@ -166,6 +183,14 @@ isStatic = false;
                 cursor: pointer;
                 font-weight: 600;
                 margin-bottom: 0.5rem;
+                display: inline-flex; /* Makes summary inline with its content */
+                align-items: center; /* Vertically align content in the middle */
+                padding-left: 0; /* Remove default padding that creates space for the triangle */
+                list-style: none; /* Removes the default triangle icon */
+            }
+
+            summary .description {
+                font-weight: normal; /* Adjust description font weight */
             }
 
             &.static details[open] summary {
@@ -191,14 +216,15 @@ isStatic = false;
 
         summary {
             border-top: 1px solid var(--bs-primary-dark);
+            padding-top: 5px;
             margin-bottom: 10px;
             font-size: 1.3em;
             color: var(--bs-primary-dark);
             font-weight: 600;
         }
-        .answer {
+        :global(.answer) {
             margin-top: 20px;
-            padding-left: 5px;
+            padding-left: 20px;
         }
         .checklist li {
             font-size: 1em;

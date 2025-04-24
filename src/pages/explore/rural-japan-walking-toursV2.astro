@@ -9,10 +9,11 @@ import TagLineChanger from '../../components/TagLineChanger.astro';
 import LandingPageCards from '../../components/LandingPageCards.astro';
 import '../../styles/global.scss';
 
+import LandingPageWhyOneLifeJapan from '../../components/LandingPageWhyOneLifeJapan.astro';
 import LandingPageRouteToggler from '../../components/LandingPageRouteToggler.astro';
 import LandingPageRouteTogglerCards from '../../components/LandingPageRouteTogglerCards.astro';
 import LandingPageFaq from '../../components/LandingPageFaq.astro';
-
+import LandingPageSampleDay from '../../components/LandingPageSampleDay.astro';
 const devOnly = true;
 const sliderText = 'But there’s a whole different side of Japan waiting — if you’re willing to go a bit further.';
 const title = 'Walking Tours in Rural Japan - From One Life Japan';
@@ -38,11 +39,11 @@ const description =
             <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
         </div>
         <div class="frame">
-            <GenericSlider sliderImageId={24} height={250} />
+            <GenericSlider sliderImageId={73} height={250} />
         </div>
         <section class="landing-testimonials">
             <!-- <h2>What Past Guests Say</h2> -->
-            <CustomerReviewsSlider show="three" />
+            <CustomerReviewsSlider show={3} />
         </section>
         <section class="landing-routes">
             <!-- <h2>Between the Highlights are More Highlights.</h2>
@@ -55,12 +56,24 @@ const description =
             <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
         </div>
         <div class="frame">
-            <GenericSlider sliderImageId={3} height={250} />
+            <GenericSlider sliderImageId={24} height={250} />
+            <!-- <GenericSlider sliderImageId={3} height={250} /> -->
         </div>
+
         <section class="landing-faqs">
             <h2>Q & A</h2>
             <LandingPageFaq mode="static" />
         </section>
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
+        </div>
+        <section class="landing-faqs">
+            <h2>Why Travel with One Life Japan?</h2>
+            <LandingPageWhyOneLifeJapan />
+        </section>
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
+        </div>
         <!-- <GenericSlider sliderImageId={1} height={250} /> -->
     </div>
 

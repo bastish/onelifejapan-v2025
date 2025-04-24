@@ -1,197 +1,184 @@
 ---
-// CustomerReviewSlider.astro
+const show = Number(Astro.props.show ?? 3);
+const spv = [1, 2, 3].includes(show) ? show : 3;
 
-const allowedWidths = ['one', 'two', 'three'] as const;
-type ShowOption = (typeof allowedWidths)[number];
+// Fetch reviews server-side
+const ids = Astro.props.ids as (number | string)[] | undefined;
+const tags = Astro.props.tags as (number | string)[] | undefined;
+const params = new URLSearchParams();
+if (ids && ids.length) params.set('ids', ids.join(','));
+else if (tags && tags.length) params.set('tags', tags.join(','));
+const url = `http://127.0.0.1:8011/api/quotation/${params.toString() ? '?' + params : ''}`;
 
-let show = (Astro.props.show || 'one') as ShowOption;
+const res = await fetch(url);
+if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+const data: Array<{ id: number; quote: string }> = await res.json();
+const reviews = data.map((d) => ({ text: d.quote }));
 
-const reviews = [
-    {
-        text: 'We saw a side of Japan we didn’t even know existed. The support was perfect — we felt independent but never lost.',
-    },
-    {
-        text: 'Way beyond what we expected. From biking through rice fields to soaking in onsen — this was the real Japan.',
-    },
-    {
-        text: 'Perfect with kids. We didn’t have to worry about logistics at all, and our kids loved every moment.',
-    },
-    {
-        text: 'A refreshing change from the typical tours. No crowds, just peaceful countryside and great food.',
-    },
-    {
-        text: 'Super flexible planning. We felt like we had our own personal Japan expert.',
-    },
-];
-show = 'one';
-show = 'two';
-show = 'three';
-const widthMap = {
-    one: '100%',
-    two: '50%',
-    three: '12.3333%',
-};
-const slideWidth = widthMap[show] || '100%';
+// JSON for the client
+const reviewsJson = JSON.stringify(reviews);
 ---
 
-<section class="landing-testimonials">
-    <div class="slider-container">
-        <button class="arrow left" aria-label="Previous">&#8249;</button>
-        <div class="slider-track" style={`--slide-width: ${slideWidth}`}>
-            {
-                [...reviews, ...reviews, ...reviews].map((review, index) => (
-                    <div class="slide" data-index={index}>
-                        <blockquote>{review.text}</blockquote>
-                    </div>
-                ))
-            }
+<div class="quote-section" data-reviews={reviewsJson}>
+    <button class="arrow left quote-prev" aria-label="Previous">&#8249;</button>
+
+    <div class="quote-track">
+        <div class="quote-item first">
+            <blockquote>{reviews[0]?.text || 'No quote available'}</blockquote>
         </div>
-        <button class="arrow right" aria-label="Next">&#8250;</button>
+        <div class="quote-item second">
+            <blockquote>{reviews[1]?.text || 'No quote available'}</blockquote>
+        </div>
+        <div class="quote-item third">
+            <blockquote>{reviews[2]?.text || 'No quote available'}</blockquote>
+        </div>
     </div>
-</section>
+
+    <button class="arrow right quote-next" aria-label="Next">&#8250;</button>
+</div>
 
 <style lang="scss">
-    @use '../styles/global' as *;
-    .landing-testimonials {
-        margin: 2rem 0;
+    .quote-section {
+        display: flex;
+        gap: 20px; /* Space between cards */
+        margin-top: 40px;
+        width: 100%;
         position: relative;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .slider-container {
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
+    .quote-track {
+        display: flex;
+        gap: 20px; /* Space between cards */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .quote-item {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 0px;
+        text-align: center;
+        flex: 1;
+        width: 30%; /* Make each card take up 1/3 of the space */
+        display: inline-block;
+        box-sizing: border-box;
+        opacity: 1; /* Default visibility */
+        transition: opacity 0.5s ease; /* Smooth fade transition */
+    }
+
+    blockquote {
+        margin: 0;
+        border-top: 1px solid var(--bs-primary-dark);
+        border-bottom: 1px solid var(--bs-primary-dark);
+        font-style: italic;
+        font-size: 0.9em;
+        line-height: 1.4;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.1);
+        border: none;
+        padding: 0.5rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .arrow.left {
+        left: 0.5rem;
+    }
+
+    .arrow.right {
+        right: 0.5rem;
+    }
+
+    /* Hide the third card on medium screens (below 1200px) */
+    @media (max-width: 1200px) {
+        .third {
+            display: none;
         }
+    }
 
-        .slider-track {
-            display: flex;
-            gap: 1rem;
-            transition: transform 0.5s ease-in-out;
-            will-change: transform;
+    /* Hide the second and third cards on small screens (below 768px) */
+    @media (max-width: 768px) {
+        .second,
+        .third {
+            display: none;
         }
-
-        .slide {
-            min-width: var(--slide-width);
-            width: var(--slide-width);
-            scroll-snap-align: start;
-            background: white;
-            padding: 5px;
-            border: 0px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
-
-        blockquote {
-            font-style: italic;
-            margin: 0;
-            font-size: 1rem;
-            line-height: 1.4;
-            @include respond-to(small) {
-            }
-        }
-
-        .arrow {
-            background: rgba(0, 0, 0, 0.1);
-            border: none;
-            padding: 0.5rem 0.7rem;
-            font-size: 1rem;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .left {
-            position: absolute;
-            left: 0;
-        }
-
-        .right {
-            position: absolute;
-            right: 0;
-        }
-
-        // @media (max-width: 768px) {
-        //     .slide {
-        //         min-width: 100% !important;
-        //         width: 100% !important;
-        //     }
-        // }
     }
 </style>
 
-<script type="module">
-    const autoScrollEnabled = false;
-    let currentIndex = 0;
-    const track = document.querySelector('.slider-track');
-    const slides = document.querySelectorAll('.slide');
-    const getVisibleCount = () => {
-        const width = getComputedStyle(track).getPropertyValue('--slide-width').trim();
-        if (width === '100%') return 1;
-        if (width === '50%') return 2;
-        if (width === '33.3333%') return 3;
-        return 1;
-    };
-
-    let visibleCount = getVisibleCount();
-    const stepSize = visibleCount;
-    const originalCount = slides.length / 3;
-
-    const updateSlider = () => {
-        const slideWidth = slides[0].offsetWidth + 16;
-        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-    };
-
-    const moveNext = () => {
-        currentIndex += stepSize;
-        updateSlider();
-
-        if (currentIndex >= originalCount * 2) {
-            setTimeout(() => {
-                track.style.transition = 'none';
-                currentIndex = originalCount;
-                updateSlider();
-                void track.offsetWidth;
-                track.style.transition = 'transform 0.5s ease-in-out';
-            }, 510);
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.quote-section');
+        if (!container) {
+            console.error('Container not found');
+            return;
         }
-    };
 
-    const movePrev = () => {
-        if (currentIndex <= 0) {
-            track.style.transition = 'none';
-            currentIndex = originalCount;
-            updateSlider();
-            void track.offsetWidth;
-            track.style.transition = 'transform 0.5s ease-in-out';
+        const reviews = JSON.parse(container.dataset.reviews || '[]');
+        let current = 0;
+        const totalQuotes = reviews.length;
+
+        // Populate initial cards with quotes
+        const cards = container.querySelectorAll('.quote-item');
+
+        const updateQuotes = () => {
+            const visibleCards = Array.from(cards).filter((card) => card.style.display !== 'none');
+            const numVisible = visibleCards.length;
+
+            // Adjust the content based on how many cards are visible
+            visibleCards.forEach((card, index) => {
+                const quote = reviews[(current + index) % totalQuotes]?.text || 'No quote available';
+
+                // Fade out the card before updating the text
+                card.style.opacity = '0';
+
+                setTimeout(() => {
+                    // Update the quote text after fade-out
+                    card.querySelector('blockquote').innerHTML = quote;
+
+                    // Fade in the new quote
+                    card.style.opacity = '1';
+                }, 500); // Wait for fade-out to finish before updating the quote
+            });
+        };
+
+        // Next button event listener
+        const nextBtn = container.querySelector('.quote-next');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const visibleCards = Array.from(cards).filter((card) => card.style.display !== 'none');
+                const numVisible = visibleCards.length;
+
+                current = (current + numVisible) % totalQuotes; // Loop through as many quotes as visible
+                updateQuotes();
+            });
+        } else {
+            console.warn('Next button not found');
         }
-        currentIndex -= stepSize;
-        updateSlider();
-    };
 
-    const resetInterval = () => {
-        if (!autoScrollEnabled) return;
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = setInterval(() => {
-            moveNext();
-        }, 7000);
-    };
+        // Previous button event listener
+        const prevBtn = container.querySelector('.quote-prev');
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const visibleCards = Array.from(cards).filter((card) => card.style.display !== 'none');
+                const numVisible = visibleCards.length;
 
-    document.querySelector('.arrow.left').addEventListener('click', () => {
-        movePrev();
-        resetInterval();
-    });
-    document.querySelector('.arrow.right').addEventListener('click', () => {
-        moveNext();
-        resetInterval();
-    });
-    // Start auto-scroll if enabled
-    let autoScrollInterval = null;
-    if (autoScrollEnabled) {
-        autoScrollInterval = setInterval(moveNext, 7000);
-    }
+                current = (current - numVisible + totalQuotes) % totalQuotes; // Loop backwards by visible number
+                updateQuotes();
+            });
+        } else {
+            console.warn('Previous button not found');
+        }
 
-    window.addEventListener('resize', () => {
-        visibleCount = getVisibleCount();
+        // Initialize the display of quotes
+        updateQuotes();
     });
 </script>

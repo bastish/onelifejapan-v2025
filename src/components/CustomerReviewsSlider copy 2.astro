@@ -1,0 +1,157 @@
+---
+const show = Number(Astro.props.show ?? 1);
+const spv = [1, 2, 3].includes(show) ? show : 1;
+
+// fetch reviews server-side
+const ids = Astro.props.ids as (number | string)[] | undefined;
+const tags = Astro.props.tags as (number | string)[] | undefined;
+const params = new URLSearchParams();
+if (ids && ids.length) params.set('ids', ids.join(','));
+else if (tags && tags.length) params.set('tags', tags.join(','));
+const url = `http://127.0.0.1:8011/api/quotation/${params.toString() ? '?' + params : ''}`;
+
+const res = await fetch(url);
+if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+const data: Array<{ id: number; quote: string }> = await res.json();
+const reviews = data.map((d) => ({ text: d.quote }));
+
+// JSON for the client
+const reviewsJson = JSON.stringify(reviews);
+---
+
+<div class="slider-container" data-reviews={reviewsJson}>
+    <button class="arrow left" aria-label="Previous">&#8249;</button>
+
+    <!-- inline --spv sets the # of boxes -->
+    <div class="slider-track" style={`--spv:${spv}`}>
+        {
+            Array.from({ length: spv }).map((_, i) => (
+                <div class="slide" data-box={i}>
+                    <blockquote />
+                </div>
+            ))
+        }
+    </div>
+
+    <button class="arrow right" aria-label="Next">&#8250;</button>
+</div>
+
+<style lang="scss">
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slider-track {
+        display: flex;
+        gap: 1rem;
+        /* --spv comes from inline style and is clamped by media queries below */
+    }
+
+    @media (max-width: 768px) {
+        .slider-track {
+            --spv: min(var(--spv), 2);
+        }
+    }
+    @media (max-width: 480px) {
+        .slider-track {
+            --spv: 1;
+        }
+    }
+
+    .slide {
+        flex: none;
+        width: calc(100% / var(--spv)); /* exactly 100%/N of the container */
+        box-sizing: border-box;
+        padding: 0.5rem;
+        background: white;
+        border: 1px solid var(--bs-primary-dark);
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        overflow-wrap: break-word;
+
+        opacity: 1;
+        transition: opacity 0.4s ease;
+    }
+
+    blockquote {
+        margin: 0;
+        font-style: italic;
+        font-size: 0.9em;
+        line-height: 1.4;
+    }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.1);
+        border: none;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .arrow.left {
+        left: 0.5rem;
+    }
+    .arrow.right {
+        right: 0.5rem;
+    }
+</style>
+
+<script type="module">
+    // parse reviews from data-reviews attribute
+    const container = document.querySelector('.slider-container');
+    const reviews = container ? JSON.parse(container.dataset.reviews || '[]') : [];
+
+    const track = container.querySelector('.slider-track');
+    const slides = Array.from(container.querySelectorAll('.slide'));
+    const prevBtn = container.querySelector('.arrow.left');
+    const nextBtn = container.querySelector('.arrow.right');
+    let current = 0;
+
+    if (!track || slides.length === 0) {
+        console.error('Slider init failed');
+    } else {
+        // read current slides-per-view
+        function getSPV() {
+            const v = getComputedStyle(track).getPropertyValue('--spv');
+            const n = parseInt(v, 10);
+            return isNaN(n) || n < 1 ? 1 : n;
+        }
+
+        // populate the fixed boxes
+        function fill() {
+            const spv = getSPV();
+            slides.forEach((slide, i) => {
+                const block = slide.querySelector('blockquote');
+                if (i < spv) {
+                    slide.style.display = '';
+                    const idx = (current + i) % reviews.length;
+                    block.innerHTML = reviews[idx].text;
+                    slide.style.opacity = '1';
+                } else {
+                    slide.style.display = 'none';
+                }
+            });
+        }
+
+        // fade out, advance, fade in
+        function change(delta) {
+            const spv = getSPV();
+            slides.slice(0, spv).forEach((s) => (s.style.opacity = '0'));
+            setTimeout(() => {
+                current = (current + delta + reviews.length) % reviews.length;
+                fill();
+            }, 300);
+        }
+
+        prevBtn.addEventListener('click', () => change(-1));
+        nextBtn.addEventListener('click', () => change(1));
+        window.addEventListener('resize', fill);
+
+        // initial render
+        fill();
+    }
+</script>
