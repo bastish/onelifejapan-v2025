@@ -14,7 +14,7 @@ type Route = {
 const routes: Route[] = [
     {
         key: 'kyoto-kanazawa',
-        label: 'Kyoto → Kanazawa',
+        label: 'Kyoto ↔︎ Kanazawa',
         images: [
             `${baseHost}/assets/img/2024/media/routes/108/358/kyoto-kanazawa-route-examples-Kyoto%20Kanazwa%20Example-medium.jpg`,
         ],
@@ -39,7 +39,7 @@ const routes: Route[] = [
     },
     {
         key: 'kyoto-matsumoto',
-        label: 'Kyoto → Nakasendo → Matsumoto',
+        label: 'Kyoto ↔︎ Nakasendo ↔︎ Matsumoto',
         images: [
             `${baseHost}/assets/img/2024/media/routes/109/359/kyoto-matsumoto-example-Kyoto-matsumoto-example-medium.jpg`,
         ],
@@ -62,7 +62,7 @@ const routes: Route[] = [
     },
     {
         key: 'osaka-hiroshima',
-        label: 'Osaka → Hiroshima',
+        label: 'Osaka ↔︎ Hiroshima',
         images: [
             `${baseHost}/assets/img/2024/media/routes/110/360/osaka-hiroshima-sexample-osaka-hiroshima-sexample-medium.jpg`,
         ],
@@ -84,7 +84,7 @@ const routes: Route[] = [
     },
     {
         key: 'osaka-matsuyama',
-        label: 'Osaka → Matsuyama',
+        label: 'Osaka ↔︎ Matsuyama',
         images: [
             `${baseHost}/assets/img/2024/media/routes/111/361/osaka-matsuyama-example-osaka-matsuyama-example-medium.jpg`,
         ],
@@ -94,7 +94,7 @@ const routes: Route[] = [
     },
     {
         key: 'kyoto-tottori',
-        label: 'Kyoto → Tottori',
+        label: 'Kyoto ↔︎ Tottori',
         images: [
             `${baseHost}/assets/img/2024/media/routes/112/362/kyoto-tottori-example-kyoto-tottori-example-medium.jpg`,
         ],
@@ -125,14 +125,20 @@ const routes: Route[] = [
             routes.map((route) => (
                 <div class="slide">
                     <div class="info-item">
-                        <h2>{route.label}</h2>
+                        <>
+                            <h2>
+                                {route.label}
+                                <br />
+                                <span class="day-count">{route.days} days</span>
+                            </h2>
+                        </>
                         <img src={route.images[0]} alt={route.label} class="info-image" />
-                        <h2>{route.days} days</h2>
-                        <p>
+                        <h2>The Places In-Between:</h2>
+                        <div>
                             {route.stops.map((stop) => (
-                                <span class="stop">{stop}</span>
+                                <span class="stop">{stop} | </span>
                             ))}
-                        </p>
+                        </div>
                         <p class="fineprint">
                             * Routes can follow train lines, allowing for partial rides to fit your schedule.
                         </p>
@@ -214,14 +220,22 @@ const routes: Route[] = [
             font-size: 1.5rem;
             margin-bottom: 15px;
         }
+        .day-count {
+            font-size: 0.8em;
+        }
 
         .stop {
             display: inline-block;
-            border: 1px solid var(--bs-primary-dark);
-            padding: 5px;
+            border: 0px solid var(--bs-primary-dark);
+            border-bottom: 0px solid var(--bs-primary-dark);
+            padding: 2px;
+            padding-bottom: 2px;
             margin: 2px;
-            border-radius: 5px;
+            border-radius: 0px;
         }
+        // .stop:after {
+        //     content: '|';
+        // }
 
         .fineprint {
             font-size: 0.9rem;

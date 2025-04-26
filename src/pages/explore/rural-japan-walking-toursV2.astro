@@ -38,10 +38,13 @@ const description =
         <div class="cta-container">
             <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
         </div>
-        <div class="frame">
-            <GenericSlider sliderImageId={73} height={250} />
-        </div>
+
         <section class="landing-testimonials">
+            <h2>Past Experiences in the Japanese Countryside with One Life Japan</h2>
+            <div class="frame">
+                <GenericSlider sliderImageId={73} height={250} />
+            </div>
+
             <!-- <h2>What Past Guests Say</h2> -->
             <CustomerReviewsSlider show={3} />
         </section>
@@ -71,9 +74,7 @@ const description =
             <h2>Why Travel with One Life Japan?</h2>
             <LandingPageWhyOneLifeJapan />
         </section>
-        <div class="cta-container">
-            <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
-        </div>
+
         <!-- <GenericSlider sliderImageId={1} height={250} /> -->
     </div>
 
@@ -195,17 +196,17 @@ const description =
             }
         }
 
-        .cta-container {
+        :global(.cta-container) {
             width: 100%;
             text-align: center;
             padding: 20px;
         }
         /* CTA Button */
-        .cta-button {
+        :global(.cta-button) {
             display: inline-block;
             padding: 1.5rem 1.5rem;
             background-color: var(--bs-link-color);
-            color: white;
+            color: white !important;
             font-weight: 600;
             font-size: 1.3em;
             border: none;

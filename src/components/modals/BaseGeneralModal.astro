@@ -14,12 +14,12 @@ export interface Props {
      */
     content: 'priceEstimate' | 'difficulty' | 'isItForYou';
     show: 'modal' | 'collapse';
+    trigger?: 'link' | 'button';
 }
-const { content, show } = Astro.props;
-
+const { content, show, trigger = 'button' } = Astro.props;
 let title = '';
 let buttonText = '';
-
+const isInlineLink = show === 'modal' && trigger === 'link';
 if (content === 'priceEstimate') {
     title = 'Pricing a Custom Trip';
     buttonText = 'About Customized Estimates';
@@ -48,14 +48,26 @@ if (content === 'priceEstimate') {
                 </ul>
             ) : (
                 <>
-                    <button
-                        type="button"
-                        class="btn btn-primary for-you-button"
-                        data-bs-toggle="modal"
-                        data-bs-target={`#${content}Modal`}
-                    >
-                        {buttonText}
-                    </button>
+                    {isInlineLink ? (
+                        <button
+                            type="button"
+                            class="modal-link-inline"
+                            data-bs-toggle="modal"
+                            data-bs-target={`#${content}Modal`}
+                        >
+                            {buttonText}
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            class="btn btn-primary for-you-button"
+                            data-bs-toggle="modal"
+                            data-bs-target={`#${content}Modal`}
+                            aria-label={title}
+                        >
+                            {buttonText}
+                        </button>
+                    )}
 
                     <div
                         class="modal fade"
@@ -115,6 +127,19 @@ if (content === 'priceEstimate') {
         margin: auto;
         margin-bottom: 20px;
         width: 50%;
+    }
+    .modal-link-inline {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        color: var(--bs-link-color); // or whatever your site uses for links
+        text-decoration: underline;
+        cursor: pointer;
+        display: inline;
+        line-height: inherit;
+        display: inline-block;
     }
 
     @media (max-width: $small-screen) {

@@ -38,6 +38,8 @@ const reviewsJson = JSON.stringify(reviews);
 </div>
 
 <style lang="scss">
+    @use '../styles/global' as *;
+
     .quote-section {
         display: flex;
         gap: 20px; /* Space between cards */
@@ -76,6 +78,9 @@ const reviewsJson = JSON.stringify(reviews);
         font-size: 0.9em;
         line-height: 1.4;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        @include respond-to(small) {
+            font-size: 0.8em;
+        }
     }
 
     .arrow {
@@ -97,18 +102,15 @@ const reviewsJson = JSON.stringify(reviews);
     .arrow.right {
         right: 0.5rem;
     }
-
-    /* Hide the third card on medium screens (below 1200px) */
-    @media (max-width: 1200px) {
-        .third {
+    .third {
+        @include respond-to(large) {
             display: none;
         }
     }
-
     /* Hide the second and third cards on small screens (below 768px) */
-    @media (max-width: 768px) {
-        .second,
-        .third {
+    .second,
+    .third {
+        @include respond-to(small) {
             display: none;
         }
     }

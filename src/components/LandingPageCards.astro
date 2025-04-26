@@ -33,7 +33,7 @@ import { baseHost } from '../utils/utilities.ts';
             />
         </div>
         <div class="dots"></div>
-        <h2>We Design Your Journey Through Rural Japan</h2>
+        <h2>A Journey Through Rural Japan, Designed for You</h2>
         <p>
             <span class="emph first-words">We design flexible countryside itineraries</span> - by bike, on foot, or a mix
             of both - <span class="emph">tailored to your schedule, comfort, and curiosity</span>. Whether <span
@@ -53,8 +53,8 @@ import { baseHost } from '../utils/utilities.ts';
         <div class="dots"></div>
         <h2>Accessible Japan Countryside - Without a Car</h2>
         <p>
-            Maybe you’ve been <span class="emph">told you need a car</span> to see the countryside, or to get "off the beaten
-            path". <span class="emph">You don’t</span>. Many <span class="emph"
+            Maybe you’ve been <span class="emph">told you need a car</span> to see the countryside, or in order to get "off
+            the beaten path". <span class="emph">You don’t</span>. Many <span class="emph"
                 >rural towns are eager and ready for visitors</span
             >, and more accessible than you think - <span class="emph"><em>if</em></span> you know <span class="emph"
                 >where to go, how to get there</span
@@ -171,7 +171,7 @@ import { baseHost } from '../utils/utilities.ts';
             '/assets/img/2024/media/photos/1172/DSC_0098_copy_large.jpg',
             '/assets/img/2024/media/photos/506/dsc_5923_4728811819_o_large.jpg',
             '/assets/img/2024/media/photos/372/dsc03208-copy_21248424000_o_large.jpg',
-            '/assets/img/2024/media/photos/1416/dsc_9098jpg_300691120_o_large.jpg',
+            //'/assets/img/2024/media/photos/1416/dsc_9098jpg_300691120_o_large.jpg',
             '/assets/img/2024/media/photos/1099/all_photos_Kanat_2019.06.30__06.04_DSC_0138_copy_large.jpg',
             '/assets/img/2024/media/photos/1101/Photos_from_2019_DSC_0163_copy_large.jpg',
             '/assets/img/2024/media/photos/1858/dsc_2305_8219819739_o_large.jpg',
@@ -224,7 +224,7 @@ import { baseHost } from '../utils/utilities.ts';
             '/assets/img/2024/media/photos/181/p1050121_1jpg_1805050338_o_large.jpg',
             '/assets/img/2024/media/photos/176/dsc_1767_8187281170_o_large.jpg',
             '/assets/img/2024/media/photos/177/dsc_2250_8220899002_o_large.jpg',
-            '/assets/img/2024/media/photos/715/dsc_0205-copyjpg_2642388558_o_large.jpg',
+            //'/assets/img/2024/media/photos/715/dsc_0205-copyjpg_2642388558_o_large.jpg',
             '/assets/img/2024/media/photos/33/dsc_9153jpg_300691413_o_large.jpg',
             '/assets/img/2024/media/photos/279/dsc_4381-copy_3692724373_o_large.jpg',
             '/assets/img/2024/media/photos/272/dsc_8340-copy_3975037281_o_large.jpg',
@@ -271,6 +271,14 @@ import { baseHost } from '../utils/utilities.ts';
             '/assets/img/2024/media/photos/1156/DSC_0105_copy1_large.jpg',
             '/assets/img/2024/media/photos/1153/DSC_0123_copy_large.jpg',
             '/assets/img/2024/media/photos/1222/IMG_20240420_183432_large.jpg',
+            '/assets/img/2024/media/photos/2562/dsc_2325_1jpg_2824259777_o_large.jpg',
+            '/assets/img/2024/media/photos/2569/dsc_9694-copyjpg_2621266726_o_large.jpg',
+            '/assets/img/2024/media/photos/2566/dsc_0083-copy_3453631007_o_large.jpg',
+            '/assets/img/2024/media/photos/2538/2039799276_6a20b3c04c_o_large.jpg',
+            '/assets/img/2024/media/photos/2544/dsc_1096-copyjpg_2787509829_o_large.jpg',
+            '/assets/img/2024/media/photos/2570/dsc_9719-copyjpg_2620445277_o_large.jpg',
+            '/assets/img/2024/media/photos/2588/dsc_2320_1jpg_2824259365_o_large.jpg',
+            '/assets/img/2024/media/photos/2589/dsc_8849-copyjpg_2552602779_o_large.jpg',
         ];
         const cycleImages = cyclePaths.map((path) => baseHost + path);
         const allUrls = cyclePaths.map((path) => baseHost + path);
@@ -343,6 +351,11 @@ import { baseHost } from '../utils/utilities.ts';
 <style lang="scss">
     @use '../styles/global' as *;
 
+    h2 {
+        //border: 1px solid red !important;
+        color: var(--bs-primary-ultradark) !important;
+        margin-top: 10px;
+    }
     .info-image {
         width: 100%;
         height: auto;
