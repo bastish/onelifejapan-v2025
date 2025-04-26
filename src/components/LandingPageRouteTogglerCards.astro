@@ -38,6 +38,78 @@ const routes: Route[] = [
         days: '2 ~ 5',
     },
     {
+        key: 'nagoya-kanazawa',
+        label: 'Nagoya ↔︎ Kanazawa',
+        images: [
+            `${baseHost}/assets/img/2024/media/routes/113/363/nagoya-kanazawa-example-kyoto-tottori-example-medium.jpg`,
+        ],
+        stops: [
+            'Inuyama',
+            'Mino',
+            'Yunohara Onsen',
+            'Gujyo Hachiman',
+            'Lake Kuzuryu',
+            'Ono',
+            'Katsuyama',
+            'Mt. Echizenkabuto',
+            'Torigoe',
+            'Hakusan',
+        ],
+        overlay: 'bottom',
+        days: '2 ~ 5',
+    },
+    {
+        key: 'kyoto-takayama',
+        label: 'Kyoto ↔︎ (Nakasendo) ↔︎ Takayama',
+        images: [`${baseHost}/assets/img/2024/media/routes/115/366/kyoto-takayama-kyoto-takayama-example-medium.jpg`],
+        stops: [
+            'Biwako',
+            'Hikone',
+            'Sekigahara',
+            'Gifu',
+            'Toki',
+            'Ena',
+            'Magome',
+            'Tsumago',
+            'Nakasendo',
+            'Kiso Valley',
+            'Kaida Kogen',
+            'Ontake',
+            'Inuyama',
+            'Mino',
+            'Gujyu Hachiman',
+            'Takasu',
+            'Shokawa no Sato',
+            'Kiyomi',
+        ],
+        overlay: 'bottom',
+        days: '3 ~ 5',
+    },
+
+    {
+        key: 'nagoya-takayama',
+        label: 'Nagoya ↔︎ (Nakasendo) ↔︎ Takayama',
+        images: [`${baseHost}/assets/img/2024/media/routes/114/364/nagoya-takayama-kyoto-tottori-example-medium.jpg`],
+        stops: [
+            'Iwamura',
+            'Ena',
+            'Nakasendo',
+            'Magome',
+            'Tsumago',
+            'Nagiso',
+            'Gero',
+            'Hida Osaka',
+            'Inuyama',
+            'Mino',
+            'Gujyu Hachiman',
+            'Takasu',
+            'Shokawa no Sato',
+            'Kiyomi',
+        ],
+        overlay: 'bottom',
+        days: '2 ~ 4',
+    },
+    {
         key: 'kyoto-matsumoto',
         label: 'Kyoto ↔︎ Nakasendo ↔︎ Matsumoto',
         images: [
@@ -133,7 +205,7 @@ const routes: Route[] = [
                             </h2>
                         </>
                         <img src={route.images[0]} alt={route.label} class="info-image" />
-                        <h2>The Places In-Between:</h2>
+                        <h2>Some Places In-Between:</h2>
                         <div>
                             {route.stops.map((stop) => (
                                 <span class="stop">{stop} | </span>
@@ -150,6 +222,10 @@ const routes: Route[] = [
     <div class="dots">
         {routes.map((_, i) => <span class="dot" data-index={i} />)}
     </div>
+
+    <!-- Navigation buttons -->
+    <button class="carousel-nav prev">&#8249;&#8249;</button>
+    <button class="carousel-nav next">&#8250;&#8250;</button>
 </div>
 
 <style lang="scss">
@@ -261,8 +337,199 @@ const routes: Route[] = [
     .dot.active {
         background: #333;
     }
-</style>
 
+    .carousel {
+        position: relative;
+        overflow: hidden;
+        margin-top: 40px;
+    }
+    .carousel-nav {
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none; /* Avoid interaction when hidden */
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    /* Arrows become visible on hover over the carousel */
+    .carousel:hover .carousel-nav {
+        opacity: 1;
+        pointer-events: auto; /* Enable interaction on hover */
+    }
+
+    /* Ensure visibility and interaction on all screens */
+    .carousel-nav.prev {
+        left: 10px;
+    }
+
+    .carousel-nav.next {
+        right: 10px;
+    }
+
+    /* Make sure the carousel arrows are positioned well on mobile screens */
+    @media (max-width: 768px) {
+        .carousel-nav {
+            opacity: 1; /* Ensure the arrows are always visible on mobile */
+            pointer-events: auto; /* Enable interaction without hover */
+            top: 35%;
+        }
+
+        /* Make the arrows slightly larger on mobile for better usability */
+        .carousel-nav {
+            font-size: 2rem;
+            padding: 12px;
+        }
+    }
+</style>
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.querySelector('.carousel-track');
+        const dots = Array.from(document.querySelectorAll('.dot'));
+        const carousel = document.querySelector('.carousel');
+        const prevButton = document.querySelector('.carousel-nav.prev');
+        const nextButton = document.querySelector('.carousel-nav.next');
+        let currentDot = 0;
+        let isMovingNext = false;
+
+        // Set default and manual control delays
+        let defaultScrollDelay = 6000; // Default to 6 seconds
+        let manualControlDelay = 60000; // 60 seconds after manual control
+
+        let autoScrollInterval; // Will store the interval reference for clearing when needed
+
+        // Function to get the width of each slide
+        function getSlideWidth() {
+            return track.firstElementChild.getBoundingClientRect().width;
+        }
+
+        // Set active dot
+        function setActiveDot(i) {
+            dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+            currentDot = i;
+        }
+
+        // Move carousel to next slide
+        function moveNext() {
+            isMovingNext = true;
+            const w = getSlideWidth();
+            track.style.transition = 'transform 0.5s ease';
+            track.style.transform = `translateX(-${w}px)`;
+        }
+
+        // Move carousel to previous slide
+        function movePrev() {
+            const w = getSlideWidth();
+            track.style.transition = 'none';
+            track.insertBefore(track.lastElementChild, track.firstElementChild);
+            track.style.transform = `translateX(-${w}px)`;
+            requestAnimationFrame(() => {
+                track.style.transition = 'transform 0.5s ease';
+                track.style.transform = 'translateX(0)';
+            });
+            const prevDot = (currentDot - 1 + dots.length) % dots.length;
+            setActiveDot(prevDot);
+        }
+
+        // When forward animation ends, update the carousel
+        track.addEventListener('transitionend', () => {
+            if (!isMovingNext) return;
+            isMovingNext = false;
+
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0)';
+            track.appendChild(track.firstElementChild);
+
+            const nextDot = (currentDot + 1) % dots.length;
+            setActiveDot(nextDot);
+        });
+
+        // Button click events to move next or previous
+        nextButton.addEventListener('click', () => {
+            moveNext();
+            setManualControl();
+        });
+
+        prevButton.addEventListener('click', () => {
+            movePrev();
+            setManualControl();
+        });
+
+        // Start auto-scroll with the specified delay
+        function startAutoScroll(interval) {
+            // Ensure any existing interval is cleared before starting a new one
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+            }
+            autoScrollInterval = setInterval(moveNext, interval);
+        }
+
+        // Pause the auto-scroll
+        function pauseAutoScroll() {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval); // Simply clear the interval when paused
+            }
+        }
+
+        // Set manual control for the scroll and adjust the delay to 60 seconds
+        function setManualControl() {
+            pauseAutoScroll(); // Pause auto-scroll immediately
+            // After the manual interaction, wait for 60 seconds before resuming
+            setTimeout(() => {
+                startAutoScroll(defaultScrollDelay); // Resumes auto-scroll every 6 seconds after delay
+            }, manualControlDelay); // Delay before resuming
+        }
+
+        // Dot clicks
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                const diff = (i - currentDot + dots.length) % dots.length;
+                if (diff === 0) return;
+                if (diff <= dots.length / 2) {
+                    for (let k = 0; k < diff; k++) moveNext();
+                } else {
+                    for (let k = 0; k < dots.length - diff; k++) movePrev();
+                }
+                setManualControl(); // Trigger manual control after clicking a dot
+            });
+        });
+
+        // Swipe support for touch events
+        let startX = 0;
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.changedTouches[0].clientX;
+        });
+        carousel.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const dx = endX - startX;
+            if (dx > 50) {
+                movePrev();
+            } else if (dx < -50) {
+                moveNext();
+            }
+            setManualControl(); // Trigger manual control after swipe
+        });
+
+        // Set the first dot as active
+        setActiveDot(0);
+
+        // Start the auto-scroll initially with default 6-second interval
+        startAutoScroll(defaultScrollDelay);
+    });
+</script>
+
+<!-- 
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
         const track = document.querySelector('.carousel-track');
@@ -357,82 +624,4 @@ const routes: Route[] = [
         // initial dot
         setActiveDot(0);
     });
-</script>
-
-<!-- 
-<script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-        const track = document.querySelector('.carousel-track');
-        const dots = Array.from(document.querySelectorAll('.dot'));
-        let currentDot = 0;
-
-        // helper to get the current slide width
-        const getSlideWidth = () => track.firstElementChild.getBoundingClientRect().width;
-
-        // mark initial dot
-        dots[currentDot].classList.add('active');
-
-        // animate one slide left
-        function moveOne() {
-            const w = getSlideWidth();
-            track.style.transition = 'transform 0.5s ease';
-            track.style.transform = `translateX(-${w}px)`;
-        }
-
-        // after animation, reorder and reset
-        track.addEventListener('transitionend', () => {
-            // remove animation, reset position
-            track.style.transition = 'none';
-            track.style.transform = 'translateX(0)';
-
-            // move the first slide to the end
-            track.appendChild(track.firstElementChild);
-
-            // advance dot
-            currentDot = (currentDot + 1) % dots.length;
-            dots.forEach((d, i) => d.classList.toggle('active', i === currentDot));
-        });
-
-        // autoplay
-        setInterval(moveOne, 6000);
-
-        // clicking dots jumps straight to that slide
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                // turn off animation so we can reorder instantly
-                track.style.transition = 'none';
-                // calculate how many times to shift
-                const shiftCount = (i - currentDot + dots.length) % dots.length;
-                for (let j = 0; j < shiftCount; j++) {
-                    track.appendChild(track.firstElementChild);
-                }
-                // reset transform & update dots
-                track.style.transform = 'translateX(0)';
-                dots.forEach((d, k) => d.classList.toggle('active', k === i));
-                currentDot = i;
-            });
-        });
-    });
 </script> -->
-
-<!--
-    {
-        routes.map((route, index) => (
-            <div class="info-item">
-                <img src={routes[index].images[0]} alt="Beyond the Golden Route" class="info-image" />
-                <h2>{routes[index].label}</h2>
-                <p>
-                    {routes[index].stops.map((stop) => (
-                        <span class="stop" style="border: 1px solid red; padding: 5px;">
-                            {stop}
-                        </span>
-                    ))}
-                </p>
-                <p class="fineprint">
-                    * Routes can follow train lines, allowing for partial rides to fit your schedule - from as little as
-                    2 ~ 3 days.
-                </p>
-            </div>
-        ))
-    }
--->

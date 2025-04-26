@@ -165,8 +165,8 @@ const textOverlayStyle = `animation-delay: calc(${textAnimationDelay} + ${imageA
             background-size: auto 125px !important; /* Adjust background size */
         }
         .image-scroll-container {
-            height: 150px !important; /* Adjust height for smaller screens */
-            background-size: auto 150px !important; /* Adjust background size */
+            height: 200px !important; /* Adjust height for smaller screens */
+            background-size: auto 200px !important; /* Adjust background size */
         }
 
         .image-scroll-container.prevent-shrink {
@@ -177,6 +177,14 @@ const textOverlayStyle = `animation-delay: calc(${textAnimationDelay} + ${imageA
         .scroll-btn {
             font-size: 1.5rem; /* Adjust button size */
             padding: 0.5rem; /* Adjust button padding */
+        }
+
+        .scroll-btn.left {
+            left: 5px; /* Distance from the left edge */
+        }
+
+        .scroll-btn.right {
+            right: 5px; /* Distance from the right edge */
         }
 
         .text-overlay {
