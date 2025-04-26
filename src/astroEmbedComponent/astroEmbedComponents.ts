@@ -1,10 +1,6 @@
 import type { Attributes } from 'astro-embed-components-in-content';
 import { parseDynamicContent, addUidsToContents } from 'astro-embed-components-in-content';
-import {
-    dynamicConfig,
-    allowedConfig,
-    allowedDynamicComponents,
-} from './astroEmbedComponentsConfig';
+import { dynamicConfig, allowedConfig, allowedDynamicComponents } from './astroEmbedComponentsConfig';
 
 // @ts-ignore
 import AstroEmbedComponents from './AstroEmbedComponents.astro';
@@ -29,10 +25,7 @@ interface ComponentEntry {
  * @param {string} content - Content to parse for dynamic components.
  * @returns {[ComponentEntry[], string]} - Updated aecComponents array and content.
  */
-export const embedComponents = (
-    aecComponents: ComponentEntry[],
-    content: string
-): [ComponentEntry[], string] => {
+export const embedComponents = (aecComponents: ComponentEntry[], content: string): [ComponentEntry[], string] => {
     // Add unique IDs to content based on allowed configurations
     const updatedContent = addUidsToContents(allowedConfig, content) as string;
 
@@ -78,5 +71,5 @@ export const embedComponents = (
  * - Ensure that the components listed in your configuration (e.g., `allowedDynamicComponents`)
  *   are correctly imported and available within your project structure.
  * - Adjust the import paths (`'../astroEmbedComponent/embedComponents'` and
- *   `'src/astroEmbedComponent/AstroEmbedComponents.astro'`) to match your project’s file structure.
+ *   `'src/astroEmbedComponent/AstroEmbedComponents.astro'`) to match your project's file structure.
  */

@@ -62,8 +62,8 @@ ul.checklist.x li:before {
 /* Override float-end on small screens and stack columns */
 @media (max-width: 1200px) {
     .row.list-container.long-desc-list {
-        //display: block; /* revert to block so it doesn’t float */
-        float: none !important; /* override Bootstrap’s float-end */
+        //display: block; /* revert to block so it doesn't float */
+        float: none !important; /* override Bootstrap's float-end */
         // display: none;
         margin-left: 0px;
         @include respond-to(small) {
