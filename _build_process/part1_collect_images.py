@@ -14,8 +14,6 @@ sys.path.insert(0, build_process_path)
 from part0_dist_refresh import reset_dist
 reset_dist(reset_flag=True)
 
-
-
 from part1_edge_cases import process_links_json
 
 # Define flag
@@ -148,6 +146,7 @@ def copy_images(image_url_set):
     for img_url in image_url_set:
         # Get the relative path by removing the "/assets/" prefix.
         relative_path = img_url.replace('/assets/', '')
+        decoded_path = unquote(relative_path)  # decode %20 to spaces etc.
         new_img_path = os.path.join(assets_dir, relative_path)
         os.makedirs(os.path.dirname(new_img_path), exist_ok=True)
 
@@ -236,7 +235,7 @@ if __name__ == '__main__':
     # Step 1.5: Load additional image URLs from JSON
     extra_image_urls = load_additional_image_references()
     collected_image_urls.update(extra_image_urls)
-    
+
     with open(manifest_file, 'w', encoding='utf-8') as mf:
         for url in collected_image_urls:
             if url == '/assets/olj-og.png':

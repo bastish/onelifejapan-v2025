@@ -98,22 +98,23 @@ import { baseHost } from '../utils/utilities.ts';
             console.error('Failed to load card-images-pre-defined.json:', error);
             predefinedGroups = [];
         }
-        // Normalize predefined groups to baseHost
+
+        // Normalize predefined groups for dev mode (to use baseHost) and prod mode (relative paths)
         predefinedGroups = predefinedGroups.map((group) =>
             group.map((url) => {
                 if (url.startsWith('/assets/')) {
-                    return baseHost + url;
+                    return url; // Keep relative paths as they are
                 }
                 if (url.includes('/assets/')) {
                     const idx = url.indexOf('/assets/');
-                    return baseHost + url.slice(idx);
+                    return url.slice(idx); // Ensure the path starts with "/assets/"
                 }
-                return url;
+                return '/assets/' + url; // Default fallback for non-asset URLs
             }),
         );
 
         const predefinedFlat = predefinedGroups.flat();
-        const randomPool = allImagePaths.map((path) => baseHost + path).filter((url) => !predefinedFlat.includes(url));
+        const randomPool = allImagePaths.map((path) => path).filter((url) => !predefinedFlat.includes(url));
         const shuffledRandom = shuffle([...randomPool]);
 
         // Build groups
@@ -133,12 +134,19 @@ import { baseHost } from '../utils/utilities.ts';
             groups.push(trio);
         }
 
+        function fullUrl(path) {
+            if (baseHost && path.startsWith('/')) {
+                return baseHost + path;
+            }
+            return path;
+        }
+
         function preloadGroup(index) {
             const group = groups[index];
             if (!group || group.length !== 3) return;
             group.forEach((imgUrl) => {
                 const img = new Image();
-                img.src = imgUrl;
+                img.src = fullUrl(imgUrl);
             });
         }
 
@@ -147,7 +155,7 @@ import { baseHost } from '../utils/utilities.ts';
             group.forEach((imgUrl, idx) => {
                 const imgEl = cards[idx]?.querySelector('.info-image');
                 if (imgEl) {
-                    imgEl.src = imgUrl;
+                    imgEl.src = fullUrl(imgUrl);
                     imgEl.style.opacity = 1;
                 }
             });
@@ -157,7 +165,6 @@ import { baseHost } from '../utils/utilities.ts';
 
         function transitionGroup(group) {
             if (!group || group.length !== 3) return;
-
             cards.forEach((wrapper, idx) => {
                 const imgEl = wrapper.querySelector('.info-image');
                 if (!imgEl) return;
@@ -173,11 +180,11 @@ import { baseHost } from '../utils/utilities.ts';
 
                         const preload = new Image();
                         preload.onload = () => {
-                            imgEl.src = group[idx];
+                            imgEl.src = fullUrl(group[idx]);
                             imgEl.style.transition = 'opacity 0.5s ease-in';
                             imgEl.style.opacity = 1;
                         };
-                        preload.src = group[idx];
+                        preload.src = fullUrl(group[idx]);
                     },
                     { once: true },
                 );
@@ -228,7 +235,6 @@ import { baseHost } from '../utils/utilities.ts';
             const combined = predefinedFlat.concat(randomPool);
             let available = shuffle([...combined]);
             groups = [];
-
             while (available.length >= 3) {
                 const trio = available.splice(0, 3);
                 groups.push(trio);
@@ -259,304 +265,6 @@ import { baseHost } from '../utils/utilities.ts';
     });
 </script>
 
-<!-- 
-<style lang="scss">
-    @use '../styles/global' as *;
-
-    h2 {
-        //border: 1px solid red !important;
-        color: var(--bs-primary-ultradark) !important;
-        margin-top: 10px;
-    }
-    .info-image {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-        margin-bottom: 20px;
-        transition: opacity 0.5s ease; /* < -  add this */
-        opacity: 1; /* ensure starting at full opacity */
-    }
-    .info-item {
-        position: relative;
-        overflow: hidden; /* clip the pseudo */
-    }
-
-    .info-item::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image: var(--next-image);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        opacity: 0;
-        transition: opacity 0.1s ease;
-        z-index: 1;
-    }
-
-    .info-item.fade::before {
-        opacity: 1;
-    }
-
-    .info-image {
-        display: block;
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        transition: opacity 0.6s ease;
-        position: relative;
-        z-index: 0;
-        opacity: 1;
-    }
-
-    .landing-page-cards {
-        display: grid; /* Use CSS Grid */
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on large screens */
-        gap: 30px;
-        margin-top: 40px;
-        width: 100%;
-        grid-auto-flow: row; /* Ensure items are arranged in rows */
-        @include respond-to(small) {
-            // padding: 10px;
-            // width: 50%;
-        }
-    }
-
-    /* Style for individual info items */
-    .info-item {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 15px;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .info-image {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-        margin-bottom: 20px;
-    }
-
-    .info-item h2 {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 15px;
-    }
-
-    .info-item p {
-        font-size: 1.1rem;
-        color: #666;
-        line-height: 1.6;
-    }
-
-    /* Responsive Layout */
-    @media (max-width: 1200px) {
-        .landing-page-cards {
-            grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
-            gap: 20px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .landing-page-cards {
-            grid-template-columns: 1fr; /* 1 column on smaller screens */
-
-            grid-auto-flow: row;
-            gap: 15px;
-        }
-
-        /* This places the middle card at the top of the grid when on smaller screens */
-        .landing-page-cards .info-item:nth-child(2) {
-            grid-row: 1; /* Place the second card in the first row */
-            grid-auto-flow: row;
-        }
-    }
-
-    .image-container {
-        position: relative;
-        /* choose one of these: */
-
-        /* A) Fixed height: */
-        height: 250px; /* or whatever constant height you need */
-        width: 100%;
-        overflow: hidden;
-
-        /*  -  -  -  or  -  -  -  */
-
-        /* B) Aspect‐ratio (keeps it proportional to width): */
-        /* aspect-ratio: 16 / 9; */
-        /* width: 100%; */
-        /* overflow: hidden; */
-    }
-
-    .image-container::before {
-        /* no change here except ensure it covers the same area: */
-        position: absolute;
-        inset: 0;
-        background-image: var(--next-image);
-        background-size: cover; /* crop to fill */
-        background-position: center; /* center the crop */
-        background-repeat: no-repeat;
-        opacity: 0;
-        transition: opacity 0.6s ease;
-        z-index: 1;
-    }
-
-    .image-container.fade::before {
-        opacity: 1;
-    }
-
-    .info-image {
-        /* fill the container, but crop any overflow */
-        width: 100%;
-        height: 250px;
-        object-fit: cover; /* fill & crop */
-        transition: opacity 0.6s ease;
-        position: relative;
-        z-index: 0;
-        opacity: 1;
-    }
-
-    .dots {
-        position: absolute;
-        bottom: 8px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 6px;
-        z-index: 2;
-    }
-    .dot {
-        width: 6px;
-        height: 6px;
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-    .dot.active {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    .outer-container {
-        position: relative;
-        width: 100%;
-    }
-
-    .landing-page-cards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        margin-top: 40px;
-        width: 100%;
-        grid-auto-flow: row;
-    }
-
-    .card-nav-buttons {
-        position: absolute;
-        top: 125px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 10px;
-        pointer-events: none; /* allow underlying elements to still be clickable */
-        z-index: 10;
-    }
-
-    .nav-button {
-        pointer-events: auto; /* buttons themselves are clickable */
-        background: rgba(0, 0, 0, 0.9);
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-    .nav-button:hover {
-        background: rgba(0, 0, 0, 0.6);
-    }
-
-    .nav-left {
-        margin-left: 2px;
-    }
-
-    .nav-right {
-        margin-right: 2px;
-    }
-    .nav-button.nav-left,
-    .nav-button.nav-right {
-        padding: 4px 6px !important; /* much smaller padding */
-        margin: 2px !important; /* small margin */
-        width: 25px;
-        height: 40px;
-        border-radius: 5px;
-        font-size: 1.5rem;
-        line-height: 1;
-        background: rgba(0, 0, 0, 0.1); /* semi-transparent background */
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .nav-button.nav-left:hover,
-    .nav-button.nav-right:hover {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    @media (max-width: 768px) {
-        .nav-button {
-            display: none;
-        }
-    }
-    @include respond-to(large) {
-        .landing-page-cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-auto-flow: row;
-            gap: 15px;
-            justify-items: center; /* optional: center the cards if you want */
-            align-items: start; /* optional: align cards properly */
-        }
-
-        .image-container {
-            height: 350px;
-        }
-        .info-image {
-            height: 350px;
-        }
-    }
-    @include respond-to(small) {
-        .landing-page-cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-auto-flow: row;
-            gap: 15px;
-            justify-items: center; /* optional: center the cards if you want */
-            align-items: start; /* optional: align cards properly */
-        }
-        .image-container {
-            height: 275px;
-        }
-        .info-image {
-            height: 275px;
-        }
-    }
-</style> -->
 <style lang="scss">
     @use '../styles/global' as *;
 

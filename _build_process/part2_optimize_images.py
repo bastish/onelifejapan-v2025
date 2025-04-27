@@ -20,11 +20,11 @@ report_file = os.path.join(abs_path, '_build_process', 'optimization_report.txt'
 # Optional parameters:
 max_width = 700            # Maximum width for resizing images (if applicable)
 jpeg_quality = 65          # Quality for JPEG optimization (0-100)
-webp_quality = 65          # Quality setting for WebP conversion (0-100)
+webp_quality = 80          # Quality setting for WebP conversion (0-100)
 webp_method = 6            # Compression method for WebP (0=fastest, 6=slowest/best)
 
 # Slider-specific conditions:
-slider_max_height = 175    # Slider images in media/slider_images => 175 px height
+slider_max_height = 250    # Slider images in media/slider_images => 175 px height
 special_slider_max_height = 193  # Images in top_sliders => 193 px height
 chart_width = 620  # Images in top_sliders => 193 px height
 
