@@ -18,7 +18,7 @@ report_file = os.path.join(abs_path, '_build_process', 'optimization_report.txt'
 
 
 # Optional parameters:
-max_width = 600            # Maximum width for resizing images (if applicable)
+max_width = 700            # Maximum width for resizing images (if applicable)
 jpeg_quality = 65          # Quality for JPEG optimization (0-100)
 webp_quality = 65          # Quality setting for WebP conversion (0-100)
 webp_method = 6            # Compression method for WebP (0=fastest, 6=slowest/best)

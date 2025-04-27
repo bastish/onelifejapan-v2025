@@ -49,7 +49,9 @@ A dedicated branch for deployment purposes. It can be the same as stage or a sep
 production (or live):
 Sometimes used interchangeably with main, but in some workflows, it's a separate branch reflecting the live site. -->
 
-cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deployed-site
+##cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deployed-site
+
+open /Users/kevincameron/Documents/OLJDevProjects/OLJVercelDeploy
 git clone https://github.com/bastish/onelifejapan.com-deployed.git
 cd onelifejapan.com-deployed
 

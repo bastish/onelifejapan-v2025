@@ -115,6 +115,30 @@ def process_html_files():
                         
     return image_urls
 
+
+def load_additional_image_references():
+    additional_urls = set()
+    predefined_json_path = os.path.join(abs_path, 'public', 'data', 'card-images-pre-defined.json')
+    paths_json_path = os.path.join(abs_path, 'public', 'data', 'card-image-paths.json')
+
+    if os.path.exists(predefined_json_path):
+        with open(predefined_json_path, 'r', encoding='utf-8') as f:
+            predefined_data = json.load(f)
+            for sublist in predefined_data:
+                for url in sublist:
+                    if '/assets/' in url:
+                        idx = url.find('/assets/')
+                        asset_url = url[idx:]
+                        additional_urls.add(asset_url)
+
+    if os.path.exists(paths_json_path):
+        with open(paths_json_path, 'r', encoding='utf-8') as f:
+            paths_data = json.load(f)
+            for path in paths_data:
+                if path.startswith('/assets/'):
+                    additional_urls.add(path)
+
+    return additional_urls
 #############################################
 # FUNCTION: copy_images
 # Main Responsibility: Copy image files from the external assets library to the
@@ -208,6 +232,11 @@ def normalize_files_and_html():
 if __name__ == '__main__':
     # Step 1: Process HTML files – update references and collect image URLs.
     collected_image_urls = process_html_files()
+
+    # Step 1.5: Load additional image URLs from JSON
+    extra_image_urls = load_additional_image_references()
+    collected_image_urls.update(extra_image_urls)
+    
     with open(manifest_file, 'w', encoding='utf-8') as mf:
         for url in collected_image_urls:
             if url == '/assets/olj-og.png':

@@ -70,7 +70,6 @@ import { baseHost } from '../utils/utilities.ts';
         <button id="next-group" class="nav-button nav-right">&raquo;</button>
     </div>
 </div>
-
 <script is:inline>
     document.addEventListener('DOMContentLoaded', async () => {
         const container = document.querySelector('.landing-page-cards');
@@ -99,6 +98,19 @@ import { baseHost } from '../utils/utilities.ts';
             console.error('Failed to load card-images-pre-defined.json:', error);
             predefinedGroups = [];
         }
+        // Normalize predefined groups to baseHost
+        predefinedGroups = predefinedGroups.map((group) =>
+            group.map((url) => {
+                if (url.startsWith('/assets/')) {
+                    return baseHost + url;
+                }
+                if (url.includes('/assets/')) {
+                    const idx = url.indexOf('/assets/');
+                    return baseHost + url.slice(idx);
+                }
+                return url;
+            }),
+        );
 
         const predefinedFlat = predefinedGroups.flat();
         const randomPool = allImagePaths.map((path) => baseHost + path).filter((url) => !predefinedFlat.includes(url));
@@ -109,7 +121,6 @@ import { baseHost } from '../utils/utilities.ts';
         visitCount++;
         localStorage.setItem('landingPageCardsVisitCount', visitCount.toString());
 
-        // Only show predefined groups if visits <= 2
         if (visitCount <= 2) {
             for (const group of predefinedGroups) {
                 if (group.length === 3) groups.push(group);
@@ -122,6 +133,15 @@ import { baseHost } from '../utils/utilities.ts';
             groups.push(trio);
         }
 
+        function preloadGroup(index) {
+            const group = groups[index];
+            if (!group || group.length !== 3) return;
+            group.forEach((imgUrl) => {
+                const img = new Image();
+                img.src = imgUrl;
+            });
+        }
+
         function showGroup(group) {
             if (!group || group.length !== 3) return;
             group.forEach((imgUrl, idx) => {
@@ -131,6 +151,8 @@ import { baseHost } from '../utils/utilities.ts';
                     imgEl.style.opacity = 1;
                 }
             });
+            preloadGroup(currentGroupIndex + 1);
+            preloadGroup(currentGroupIndex + 2);
         }
 
         function transitionGroup(group) {
@@ -160,6 +182,8 @@ import { baseHost } from '../utils/utilities.ts';
                     { once: true },
                 );
             });
+            preloadGroup(currentGroupIndex + 1);
+            preloadGroup(currentGroupIndex + 2);
         }
 
         function fadeToNext() {
@@ -178,16 +202,15 @@ import { baseHost } from '../utils/utilities.ts';
             }
             transitionGroup(groups[currentGroupIndex]);
         }
+
         function startAutoScroll() {
             const id = setInterval(fadeToNext, scrollTime);
             window._landingPageCardIntervals.push(id);
         }
 
         function resetAutoScroll() {
-            // Clear all existing timers
             window._landingPageCardIntervals.forEach(clearInterval);
             window._landingPageCardIntervals = [];
-            // Start a NEW timer
             const id = setInterval(fadeToNext, scrollTime);
             window._landingPageCardIntervals.push(id);
         }
@@ -198,7 +221,7 @@ import { baseHost } from '../utils/utilities.ts';
             clearTimeout(autoResumeTimer);
             autoResumeTimer = setTimeout(() => {
                 startAutoScroll();
-            }, scrollTime); // 30 seconds pause
+            }, scrollTime);
         }
 
         function rerandomizeAll() {
@@ -207,7 +230,7 @@ import { baseHost } from '../utils/utilities.ts';
             groups = [];
 
             while (available.length >= 3) {
-                const trio = available.splice(0, 3); // Take first three and remove them
+                const trio = available.splice(0, 3);
                 groups.push(trio);
             }
         }
@@ -220,25 +243,22 @@ import { baseHost } from '../utils/utilities.ts';
             return array;
         }
 
-        // Button handlers
         document.getElementById('next-group')?.addEventListener('click', () => {
             fadeToNext();
-            //pauseAutoScrollAndResume();
             resetAutoScroll();
         });
         document.getElementById('prev-group')?.addEventListener('click', () => {
             fadeToPrev();
-            //pauseAutoScrollAndResume();
             resetAutoScroll();
         });
 
-        // Start
         window._landingPageCardIntervals = window._landingPageCardIntervals || [];
         let autoResumeTimer = null;
         showGroup(groups[currentGroupIndex]);
         startAutoScroll();
     });
 </script>
+
 <!-- 
 <style lang="scss">
     @use '../styles/global' as *;
