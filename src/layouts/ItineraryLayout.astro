@@ -71,7 +71,7 @@ const hasCustomHighlights = itinerary?.custom_itinerary?.highlight_desc;
         { itinerary.id != '7' &&
         <ItineraryLayoutNav itinerary={itinerary} />
     }                
-        <div class="custom-container itinerary-main">   
+        <div class="custom-container itinerary-main itinerary-page-body">   
 
             <ItinerarySectionContainer>
                 <PurchaseBlock page={page} itinerary={itinerary} />
@@ -249,6 +249,20 @@ const hasCustomHighlights = itinerary?.custom_itinerary?.highlight_desc;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 }
+
+
+
+
+.itinerary-page-body {
+        background: white;
+        border: 1px solid var(--bs-primary-dark);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        padding: 15px;
+        margin-top: 5px;
+        @include respond-to(small) {
+            padding: 0px;
+        }
+    }
 
 </style>
 

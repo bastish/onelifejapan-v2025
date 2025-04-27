@@ -1,0 +1,184 @@
+---
+import { baseHost } from '../utils/utilities.ts';
+
+const cyclePaths = [
+    '/assets/img/2024/media/photos/1596/planting-rice_3658443428_o_large.jpg',
+    '/assets/img/2024/media/photos/1579/dsc_0010_3462687976_o_large.jpg',
+    '/assets/img/2024/media/photos/1567/dsc_0743-copy_3516763152_o_large.jpg',
+    '/assets/img/2024/media/photos/1555/volunteers_3946409006_o_large.jpg',
+    '/assets/img/2024/media/photos/215/p1050236_1jpg_1804387999_o_large.jpg',
+    '/assets/img/2024/media/photos/267/dsc_9041-copy_3994582679_o_large.jpg',
+    '/assets/img/2024/media/photos/191/p1050284_1jpg_1804426377_o_large.jpg',
+    '/assets/img/2024/media/photos/187/p1020923_1jpg_440526301_o_large.jpg',
+];
+
+const allImages = cyclePaths.map((path) => baseHost + path);
+---
+
+<div class="landing-page-cards">
+    <div class="info-item">
+        <div class="image-container" data-card="0">
+            <img src={allImages[0]} alt="Beyond the Golden Route" class="info-image" id="card-0" />
+        </div>
+        <div class="dots"></div>
+        <h2>Destinations Just Off the Golden Route</h2>
+        <p>
+            Perhaps you've <span class="emph">already planned the Golden Route</span> - Kyoto, Tokyo, Osaka, maybe even Hakone,
+            Takayama, and Kanazawa. These places are great, and <span class="emph"
+                >there's a reason they're crowd favorites</span
+            >. But you've also wondered what it's like in <span class="emph">the places in between</span> - the quiet towns,
+            the back roads, <span class="emph">the parts most travelers miss</span>.
+        </p>
+    </div>
+
+    <div class="info-item">
+        <div class="image-container" data-card="1">
+            <img src={allImages[1]} alt="Journey Through Rural Japan" class="info-image" id="card-1" />
+        </div>
+        <div class="dots"></div>
+        <h2>A Journey Through Rural Japan, Designed for You</h2>
+        <p>
+            <span class="emph first-words">We design flexible countryside itineraries</span> - by bike, on foot, or a mix
+            of both - <span class="emph">tailored to your schedule, comfort, and curiosity</span>. Whether <span
+                class="emph">fully guided or just planning and logistics</span
+            >, we help turn the space between the famous stops into the <span class="emph">best part of the trip</span>.
+        </p>
+    </div>
+
+    <div class="info-item">
+        <div class="image-container" data-card="2">
+            <img src={allImages[2]} alt="Accessible Rural Japan" class="info-image" id="card-2" />
+        </div>
+        <div class="dots"></div>
+        <h2>Accessible Japan Countryside - Without a Car</h2>
+        <p>
+            Maybe you've been <span class="emph">told you need a car</span> to see the countryside, or in order to get "off
+            the beaten path". <span class="emph">You don't</span>. Many <span class="emph"
+                >rural towns are eager and ready for visitors</span
+            >, and more accessible than you think - <span class="emph"><em>if</em></span> you know <span class="emph"
+                >where to go, how to get there</span
+            > and you're willing to slow down.
+        </p>
+    </div>
+</div>
+
+<div class="editing-controls">
+    <h3>Editing Card:</h3>
+    <button id="edit-0" class="edit-button active">Card 1</button>
+    <button id="edit-1" class="edit-button">Card 2</button>
+    <button id="edit-2" class="edit-button">Card 3</button>
+</div>
+
+<div class="thumbnail-grid">
+    {
+        allImages.map((img, index) => (
+            <img src={img} class="thumbnail" data-img={img} data-index={index} alt={`Thumbnail ${index}`} />
+        ))
+    }
+</div>
+
+<div class="save-controls">
+    <button id="save-set" class="save-button">Save This Trio</button>
+    <div id="saved-sets"></div>
+</div>
+
+<script is:inline>
+    let activeCard = 0;
+    const assignedImages = [null, null, null];
+    const usageCount = {};
+
+    document.querySelectorAll('.edit-button').forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+            activeCard = idx;
+            document.querySelectorAll('.edit-button').forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    document.querySelectorAll('.thumbnail').forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+            const imgSrc = thumb.dataset.img;
+            document.getElementById(`card-${activeCard}`).src = imgSrc;
+            assignedImages[activeCard] = imgSrc;
+            updateUsage(imgSrc);
+        });
+    });
+
+    document.getElementById('save-set').addEventListener('click', () => {
+        if (assignedImages.includes(null)) {
+            alert('Assign all three cards before saving.');
+            return;
+        }
+        const savedSets = document.getElementById('saved-sets');
+        const div = document.createElement('div');
+        div.className = 'saved-set';
+        div.textContent = assignedImages.join(', ');
+        savedSets.appendChild(div);
+    });
+
+    function updateUsage(imgSrc) {
+        usageCount[imgSrc] = (usageCount[imgSrc] || 0) + 1;
+        document.querySelectorAll(`.thumbnail[data-img="${imgSrc}"]`).forEach((t) => {
+            t.classList.toggle('used-twice', usageCount[imgSrc] > 1);
+        });
+    }
+</script>
+
+<style lang="scss">
+    @use '../styles/global' as *;
+
+    .editing-controls {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .edit-button {
+        margin: 0 5px;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        background: #f9f9f9;
+        cursor: pointer;
+    }
+    .edit-button.active {
+        background: #0070f3;
+        color: #fff;
+    }
+
+    .thumbnail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .thumbnail {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border: 2px solid transparent;
+        cursor: pointer;
+    }
+
+    .thumbnail.used-twice {
+        border-color: red;
+    }
+
+    .save-controls {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .save-button {
+        padding: 10px 20px;
+        background: green;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .saved-set {
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+</style>

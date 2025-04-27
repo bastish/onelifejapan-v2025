@@ -37,11 +37,25 @@ const {
 
         {page === 'index' && <PurchaseBlock page={page} />}
 
-        <main class="custom-container">
+        <main class="custom-container itinerary-page-body">
             <slot />
         </main>
 
         <!-- <BottomBanner /> -->
         <Footer />
+
+        <style lang="scss">
+            @use '../styles/global' as *;
+            .itinerary-page-body {
+                background: white;
+                border: 1px solid var(--bs-primary-dark);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+                padding: 15px;
+                margin-top: 5px;
+                @include respond-to(small) {
+                    padding: 0px;
+                }
+            }
+        </style>
     </body>
 </html>

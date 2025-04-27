@@ -13,11 +13,7 @@ const description =
 <BaseLayout title={title} description={description} page="contact">
     <div class="custom-container simple-page-body">
         <PurchaseBlock page={'contact'} />
-        <div class="modal-buttons">
-            <BaseGeneralModal show="modal" content="isItForYou" />
-            <BaseGeneralModal show="modal" content="difficulty" />
-            <BaseGeneralModal show="modal" content="priceEstimate" />
-        </div>
+
         <ContactForm />
         <div class="hide-success">
             <ContactSuccessMessage />

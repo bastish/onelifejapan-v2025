@@ -1,6 +1,7 @@
 ---
 import TagLineChanger from './TagLineChanger.astro';
 import { baseHost } from '../utils/utilities.ts';
+import { LandingPageCardsImagePaths } from './LandingPageCardsImagePaths.ts';
 ---
 
 <div class="landing-page-cards" data-base-host={baseHost}>
@@ -13,7 +14,7 @@ import { baseHost } from '../utils/utilities.ts';
             />
         </div>
         <div class="dots"></div>
-        <h2><TagLineChanger /></h2>
+        <h2>Destinations Just Off the Golden Route</h2>
         <p>
             Perhaps you've <span class="emph">already planned the Golden Route</span> - Kyoto, Tokyo, Osaka, maybe even Hakone,
             Takayama, and Kanazawa. These places are great, and <span class="emph"
@@ -62,18 +63,19 @@ import { baseHost } from '../utils/utilities.ts';
         </p>
     </div>
 </div>
-
+<!-- 
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
         const container = document.querySelector('.landing-page-cards');
         const baseHost = container.dataset.baseHost;
-        const cyclePaths = [
+        const LandingPageCardsImagePaths = [
             //'/assets/img/2024/media/photos/1604/nozawana-tsuke_4104336968_o_large.jpg',
             '/assets/img/2024/media/photos/1596/planting-rice_3658443428_o_large.jpg',
             '/assets/img/2024/media/photos/1579/dsc_0010_3462687976_o_large.jpg',
             '/assets/img/2024/media/photos/1567/dsc_0743-copy_3516763152_o_large.jpg',
             '/assets/img/2024/media/photos/1555/volunteers_3946409006_o_large.jpg',
             //'/assets/img/2024/media/photos/1544/dsc_5384-copy_3028987487_o_large.jpg',
+            '/assets/img/2024/media/photos/2649/Screenshot_2025-04-26_at_22.58.04.png',
             '/assets/img/2024/media/photos/215/p1050236_1jpg_1804387999_o_large.jpg',
             '/assets/img/2024/media/photos/267/dsc_9041-copy_3994582679_o_large.jpg',
             '/assets/img/2024/media/photos/191/p1050284_1jpg_1804426377_o_large.jpg',
@@ -279,9 +281,10 @@ import { baseHost } from '../utils/utilities.ts';
             '/assets/img/2024/media/photos/2570/dsc_9719-copyjpg_2620445277_o_large.jpg',
             '/assets/img/2024/media/photos/2588/dsc_2320_1jpg_2824259365_o_large.jpg',
             '/assets/img/2024/media/photos/2589/dsc_8849-copyjpg_2552602779_o_large.jpg',
+            '/assets/img/2024/media/photos/2648/Screenshot_2025-04-26_at_22.57.24_large.png',
         ];
-        const cycleImages = cyclePaths.map((path) => baseHost + path);
-        const allUrls = cyclePaths.map((path) => baseHost + path);
+        const cycleImages = LandingPageCardsImagePaths.map((path) => baseHost + path);
+        const allUrls = LandingPageCardsImagePaths.map((path) => baseHost + path);
         // split into three arrays
         // Fisher–Yates shuffle helper
         function shuffle(array) {
@@ -343,6 +346,78 @@ import { baseHost } from '../utils/utilities.ts';
             }
 
             // start auto‑cycle every 5s
+            setInterval(fadeToNext, 9500);
+        });
+    });
+</script> -->
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.querySelector('.landing-page-cards');
+        const baseHost = container.dataset.baseHost;
+
+        // Fetch the image paths dynamically
+        let LandingPageCardsImagePaths = [];
+        try {
+            const res = await fetch('/data/card-image-paths.json'); // your JSON file
+            LandingPageCardsImagePaths = await res.json();
+        } catch (error) {
+            console.error('Error loading card image paths:', error);
+            return;
+        }
+
+        const cycleImages = LandingPageCardsImagePaths.map((path) => baseHost + path);
+        const allUrls = LandingPageCardsImagePaths.map((path) => baseHost + path);
+
+        // Fisher–Yates shuffle helper
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const cardImages = [
+            shuffle(allUrls.filter((_, i) => i % 3 === 0)),
+            shuffle(allUrls.filter((_, i) => i % 3 === 1)),
+            shuffle(allUrls.filter((_, i) => i % 3 === 2)),
+        ];
+
+        container.querySelectorAll('.image-container').forEach((wrapper, idx) => {
+            const images = cardImages[idx];
+            let current = 0;
+            const imgEl = wrapper.querySelector('.info-image');
+
+            // Show first image
+            imgEl.src = images[0];
+
+            function fadeToNext() {
+                current = (current + 1) % images.length;
+                const newSrc = images[current];
+
+                imgEl.style.transition = 'opacity 2s ease-out';
+                imgEl.style.opacity = 0;
+
+                imgEl.addEventListener(
+                    'transitionend',
+                    function onEnd(e) {
+                        if (e.propertyName !== 'opacity') return;
+                        imgEl.removeEventListener('transitionend', onEnd);
+
+                        const preload = new Image();
+                        preload.onload = () => {
+                            imgEl.src = newSrc;
+                            imgEl.style.transition = 'opacity 0.5s ease-in';
+                            imgEl.style.opacity = 1;
+                        };
+                        preload.src = newSrc;
+                    },
+                    { once: true },
+                );
+            }
+
+            // Start auto cycle every 9.5 seconds
             setInterval(fadeToNext, 9500);
         });
     });
@@ -437,7 +512,7 @@ import { baseHost } from '../utils/utilities.ts';
     }
 
     .info-item p {
-        font-size: 1rem;
+        font-size: 1.1rem;
         color: #666;
         line-height: 1.6;
     }

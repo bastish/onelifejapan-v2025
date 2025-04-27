@@ -14,7 +14,7 @@ if (itinerary) {
 let height;
 let backgroundImage;
 let backgroundSize;
-let buttontext = 'Book an Adventure';
+let buttontext = 'Add Rural Japan to Your Trip';
 
 if (itinerary && itinerary.custom_itinerary) {
     buttontext = 'Create a Similar Adventure';
@@ -39,23 +39,27 @@ switch (page) {
         break;
     case 'self-guided':
         slogan = 'Rural Japan Self Guided Planning & Support'; // Set the height for 'about' page
-        buttontext = 'Get Started Now';
+        buttontext = 'Get Help Planning Your Trip in Rural Japan';
         mobileSlogan = 'Self Guided Planning & Support';
         //pageBlurb = '';
         break;
     case 'contact':
-        slogan = 'Inquire About an Adventure '; // Set the height for 'about' page
+        slogan = 'Need Help Adding Rural Japan to Your Trip?'; // Set the height for 'about' page
         pageBlurb = ''; // Set image for 'about' page
         buttontext = '';
+        mobileSlogan = 'Need Help Adding Rural Japan to Your Trip?';
         break;
     case 'customIndex':
         slogan = 'Custom Hike, Bike, & Walking Adventures in Japan'; // Set the height for 'about' page
         //pageBlurb = 'All of <span class="emph">our trips are custom made</span>, but many follow routes through the areas we know well - mostly in Northern Nagano.'; // Set image for 'about' page
-        buttontext = 'Request an Adventure';
+        buttontext = 'Add Rural Japan to Your Trip';
         break;
     default:
-        slogan = 'Active Hike, Bike, & Walking Adventure in Rural Japan';
-        pageBlurb = `We have <span class="emph">twenty years of experience</span> providing <span class="emph">fun, learningful adventure</span> itineraries in and around our small village, and throughout Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
+        slogan = 'Real Bike, Hike, and Walking Adventures in Rural Japan';
+        pageBlurb =  `<span class="emph">Since 2005</span>, we've been crafting small, personal <span class="emph">trips through Japan's countryside</span> - from our home village in Northern Nagano to <span class="emph">lesser traveled towns and villages</span> across the country.
+
+Our itineraries are designed not just to <span class="emph">show you rural Japan</span>, but to spark discovery about a new landscape, a new culture, and maybe even a little about yourself.`;
+        // pageBlurb = `We have <span class="emph">twenty years of experience</span> providing <span class="emph">fun, learningful adventure</span> itineraries in and around our small village, and throughout Japan's countryside - since <span class="emph">since 2005</span>. Our itinerary suggestions are designed to help participants make <span class="emph">discoveries about Japan</span>, about an unfamiliar <span class="emph">environment</span>, and <span class="emph">about themselves</span>.`;
         break;
 }
 
@@ -87,7 +91,7 @@ const hiddenClass = page == '' ? 'hidden' : '';
                             animate__customFadeIn--right
                             book-link`
             >
-                <a href="/contact" title="Book a Trip With One Life Japan" class="btn-u btn-u-lg rounded5 book-link"> {buttontext} &#8250;&#8250;</a>
+                <a href="/contact" title="Book a Trip With One Life Japan" class="btn-u btn-u-lg rounded5 book-link"> {buttontext}&nbsp;&#8250;&#8250;</a>
             </div>
         ) 
             : '' 
@@ -125,6 +129,7 @@ const hiddenClass = page == '' ? 'hidden' : '';
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        padding: 5px 18px;
     }
     .btn-buy a {
         border: 1px solid var(--bs-primary-light);
@@ -213,7 +218,7 @@ const hiddenClass = page == '' ? 'hidden' : '';
     }
 
     a.book-link {
-        font-size: 1.5em;
+        //font-size: 1.5em;
         background: var(--bs-link-color) !important;
         color: var(--bs-primary-dark);
         color: var(--bs-link-color);
@@ -225,7 +230,10 @@ const hiddenClass = page == '' ? 'hidden' : '';
         color: var(--bs-link-color);
     }
     .book-link {
-        font-size: 1.5em;
+        font-size: 1.3em;
+        @include respond-to(small) {
+            font-size: 1.3em;
+        }
     }
     @media (max-width: $small-screen) {
         .book-link {

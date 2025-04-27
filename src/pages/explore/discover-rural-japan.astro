@@ -12,6 +12,7 @@ import '../../styles/global.scss';
 import LandingPageWhyOneLifeJapan from '../../components/LandingPageWhyOneLifeJapan.astro';
 import LandingPageRouteToggler from '../../components/LandingPageRouteToggler.astro';
 import LandingPageRouteTogglerCards from '../../components/LandingPageRouteTogglerCards.astro';
+import LandingPageCardsEditorTool from '../../components/LandingPageCardsEditorTool.astro';
 import LandingPageFaq from '../../components/LandingPageFaq.astro';
 import LandingPageSampleDay from '../../components/LandingPageSampleDay.astro';
 const devOnly = true;
@@ -34,13 +35,20 @@ const description =
 
         <!-- Landing Page Content -->
         <LandingPageCards />
+        <!-- <LandingPageCardsEditorTool /> -->
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
+            <p class="small-note">
+                There's plenty of advice online from tourists who have visited rural Japan - but if you want help from
+                someone who's lived it and guided visitors through it for nearly two decades, feel free to reach out for
+                a no-commitment consultation.
+            </p>
+
+            <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
         </div>
 
         <section class="landing-testimonials">
-            <h2>Past Experiences in the Japanese Countryside with One Life Japan</h2>
+            <h2>Other's Japan Countryside Experiences with One Life Japan</h2>
             <div class="frame">
                 <GenericSlider sliderImageId={77} height={250} />
             </div>
@@ -56,7 +64,7 @@ const description =
             <!-- <LandingPageRouteToggler /> -->
         </section>
         <div class="cta-container">
-            <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
+            <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
         </div>
         <!-- <div class="frame">
             <GenericSlider sliderImageId={24} height={250} />
@@ -71,7 +79,7 @@ const description =
             <LandingPageFaq mode="static" />
         </section>
         <div class="cta-container">
-            <a href="/contact" class="cta-button">Get Sample Itineraries & Estimate &#8250;&#8250;</a>
+            <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
         </div>
         <section class="landing-faqs">
             <h2>Why Journey with One Life Japan?</h2>
@@ -83,8 +91,14 @@ const description =
 
     <style lang="scss">
         @use '../../styles/global' as *;
-        .simple-page-body {
+        .small-note {
+            font-size: 1em;
+            color: #777;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            text-align: left;
         }
+
         .attention-catcher {
             padding-top: 20px;
             padding-bottom: 30px;
@@ -188,21 +202,11 @@ const description =
             margin-top: 20px;
         }
 
-        .simple-page-body {
-            background: white;
-            border: 1px solid var(--bs-primary-dark);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-            padding: 20px;
-
-            @include respond-to(small) {
-                padding: 10px;
-            }
-        }
-
         :global(.cta-container) {
             width: 100%;
             text-align: center;
             padding: 20px;
+            margin-top: 20px;
         }
         /* CTA Button */
         :global(.cta-button) {

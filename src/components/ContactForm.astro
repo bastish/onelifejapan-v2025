@@ -1,16 +1,40 @@
+---
+import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
+---
+
 <!-- Contact Page Markup --><!-- Use a Bootstrap Card for the Form Container -->
 <form id="contactForm" novalidate>
-    <p class="mb-4">
-        To enquire about a trip, please contact us via email or with the form below with the dates and type of itinerary
-        you are interested in, as well as any other details that will help us design the perfect adventure for you.
-    </p>
-    <p class="text-center">
+    <div class="contact-intro">
+        <div class="intro-text">
+            <p>
+                Not sure where to start? No problem. Whether you already have an idea in mind or you're just curious
+                what's possible, feel free to reach out.
+            </p>
+            <p>
+                Tell us your travel dates (if you know them), anything you're interested in - biking, walking,
+                sightseeing, relaxing. <span class="emph">We'll help shape a trip</span> that fits you.
+            </p>
+            <p>
+                <span class="emph">No pressure, no commitment</span> — just real advice from someone who knows rural Japan
+                really well.
+            </p>
+        </div>
+
+        <div class="modal-buttons">
+            <BaseGeneralModal show="modal" content="isItForYou" trigger="link" />
+            <BaseGeneralModal show="modal" content="difficulty" trigger="link" />
+            <BaseGeneralModal show="modal" content="priceEstimate" trigger="link" />
+        </div>
+    </div>
+    <p>
+        You can reach me directly at
         <a
-            href="mailto:tours@onelifejapan.com"
+            href="mailto:kevin@onelifejapan.com"
             title="Contact One Life Japan"
-            class="font-weight-bold text-decoration-none">tours@onelifejapan.com</a
-        >
+            class="font-weight-bold text-decoration-none">kevin@onelifejapan.com</a
+        >, including the following information, or <a href="#form">use the form below</a> - whichever you prefer.
     </p>
+    <!-- Suggested info list -->
 
     <ul class="checklist" id="question-list">
         <li class="mb-2">Potential Dates?</li>
@@ -23,7 +47,8 @@
         <li class="mb-2">Do you have any special requirements for accommodations?</li>
         <li>Do you have any specific dietary restrictions or allergies?</li>
     </ul>
-
+    <a id="form"></a>
+    <h3 style="margin-top: 20px; margin-bottom:20px;">Contact One Life Japan</h3>
     <!-- Contact Form -->
     <div class="form-group">
         <label for="name" class="sr-only">Your Name</label>
@@ -118,6 +143,41 @@
     @include respond-to(small) {
         .modal-title {
             font-size: 1.2em;
+        }
+    }
+
+    // added
+    .contact-intro {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+
+        .intro-text {
+            flex: 1 1 60%;
+            min-width: 250px;
+        }
+
+        .modal-buttons {
+            flex: 1 1 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 200px;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .contact-intro {
+            flex-direction: column;
+            align-items: center;
+        }
+        .modal-buttons {
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 10px;
         }
     }
 </style>
