@@ -1,127 +1,105 @@
 ---
 import { baseHost } from '../utils/utilities.ts';
-
-const cyclePaths = [
-    '/assets/img/2024/media/photos/1596/planting-rice_3658443428_o_large.jpg',
-    '/assets/img/2024/media/photos/1579/dsc_0010_3462687976_o_large.jpg',
-    '/assets/img/2024/media/photos/1567/dsc_0743-copy_3516763152_o_large.jpg',
-    '/assets/img/2024/media/photos/1555/volunteers_3946409006_o_large.jpg',
-    '/assets/img/2024/media/photos/215/p1050236_1jpg_1804387999_o_large.jpg',
-    '/assets/img/2024/media/photos/267/dsc_9041-copy_3994582679_o_large.jpg',
-    '/assets/img/2024/media/photos/191/p1050284_1jpg_1804426377_o_large.jpg',
-    '/assets/img/2024/media/photos/187/p1020923_1jpg_440526301_o_large.jpg',
-];
-
-const allImages = cyclePaths.map((path) => baseHost + path);
 ---
-
-<div class="landing-page-cards">
-    <div class="info-item">
-        <div class="image-container" data-card="0">
-            <img src={allImages[0]} alt="Beyond the Golden Route" class="info-image" id="card-0" />
-        </div>
-        <div class="dots"></div>
-        <h2>Destinations Just Off the Golden Route</h2>
-        <p>
-            Perhaps you've <span class="emph">already planned the Golden Route</span> - Kyoto, Tokyo, Osaka, maybe even Hakone,
-            Takayama, and Kanazawa. These places are great, and <span class="emph"
-                >there's a reason they're crowd favorites</span
-            >. But you've also wondered what it's like in <span class="emph">the places in between</span> - the quiet towns,
-            the back roads, <span class="emph">the parts most travelers miss</span>.
-        </p>
-    </div>
-
-    <div class="info-item">
-        <div class="image-container" data-card="1">
-            <img src={allImages[1]} alt="Journey Through Rural Japan" class="info-image" id="card-1" />
-        </div>
-        <div class="dots"></div>
-        <h2>A Journey Through Rural Japan, Designed for You</h2>
-        <p>
-            <span class="emph first-words">We design flexible countryside itineraries</span> - by bike, on foot, or a mix
-            of both - <span class="emph">tailored to your schedule, comfort, and curiosity</span>. Whether <span
-                class="emph">fully guided or just planning and logistics</span
-            >, we help turn the space between the famous stops into the <span class="emph">best part of the trip</span>.
-        </p>
-    </div>
-
-    <div class="info-item">
-        <div class="image-container" data-card="2">
-            <img src={allImages[2]} alt="Accessible Rural Japan" class="info-image" id="card-2" />
-        </div>
-        <div class="dots"></div>
-        <h2>Accessible Japan Countryside - Without a Car</h2>
-        <p>
-            Maybe you've been <span class="emph">told you need a car</span> to see the countryside, or in order to get "off
-            the beaten path". <span class="emph">You don't</span>. Many <span class="emph"
-                >rural towns are eager and ready for visitors</span
-            >, and more accessible than you think - <span class="emph"><em>if</em></span> you know <span class="emph"
-                >where to go, how to get there</span
-            > and you're willing to slow down.
-        </p>
-    </div>
-</div>
 
 <div class="editing-controls">
     <h3>Editing Card:</h3>
     <button id="edit-0" class="edit-button active">Card 1</button>
     <button id="edit-1" class="edit-button">Card 2</button>
     <button id="edit-2" class="edit-button">Card 3</button>
+    <button id="save-set" class="save-button">Save This Trio</button>
 </div>
 
-<div class="thumbnail-grid">
-    {
-        allImages.map((img, index) => (
-            <img src={img} class="thumbnail" data-img={img} data-index={index} alt={`Thumbnail ${index}`} />
-        ))
-    }
+<div class="thumbnail-scroll-container">
+    <div class="thumbnail-grid" id="thumbnail-grid"></div>
 </div>
 
 <div class="save-controls">
-    <button id="save-set" class="save-button">Save This Trio</button>
-    <div id="saved-sets"></div>
+    <textarea id="saved-json" readonly></textarea>
 </div>
-
 <script is:inline>
-    let activeCard = 0;
-    const assignedImages = [null, null, null];
-    const usageCount = {};
+    document.addEventListener('DOMContentLoaded', async () => {
+        // 🛑 Stop auto-scroll
+        if (window._landingPageCardIntervals) {
+            window._landingPageCardIntervals.forEach(clearInterval);
+            window._landingPageCardIntervals = [];
+            console.log('Auto-scroll stopped.');
+        }
 
-    document.querySelectorAll('.edit-button').forEach((btn, idx) => {
-        btn.addEventListener('click', () => {
-            activeCard = idx;
-            document.querySelectorAll('.edit-button').forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
-    });
+        const container = document.querySelector('.landing-page-cards');
+        const baseHost = container?.dataset.baseHost || '';
 
-    document.querySelectorAll('.thumbnail').forEach((thumb) => {
-        thumb.addEventListener('click', () => {
-            const imgSrc = thumb.dataset.img;
-            document.getElementById(`card-${activeCard}`).src = imgSrc;
-            assignedImages[activeCard] = imgSrc;
-            updateUsage(imgSrc);
-        });
-    });
-
-    document.getElementById('save-set').addEventListener('click', () => {
-        if (assignedImages.includes(null)) {
-            alert('Assign all three cards before saving.');
+        let imagePaths = [];
+        try {
+            const res = await fetch('/data/card-image-paths.json');
+            imagePaths = await res.json();
+        } catch (error) {
+            console.error('Failed to fetch card image paths:', error);
             return;
         }
-        const savedSets = document.getElementById('saved-sets');
-        const div = document.createElement('div');
-        div.className = 'saved-set';
-        div.textContent = assignedImages.join(', ');
-        savedSets.appendChild(div);
-    });
 
-    function updateUsage(imgSrc) {
-        usageCount[imgSrc] = (usageCount[imgSrc] || 0) + 1;
-        document.querySelectorAll(`.thumbnail[data-img="${imgSrc}"]`).forEach((t) => {
-            t.classList.toggle('used-twice', usageCount[imgSrc] > 1);
+        const allImages = imagePaths.map((path) => baseHost + path);
+        const thumbnailGrid = document.getElementById('thumbnail-grid');
+
+        allImages.forEach((img, index) => {
+            const thumb = document.createElement('img');
+            thumb.src = img;
+            thumb.className = 'thumbnail';
+            thumb.dataset.img = img;
+            thumb.dataset.index = index;
+            thumb.alt = `Thumbnail ${index}`;
+            thumb.width = 150;
+            thumb.height = 150;
+            thumb.style.objectFit = 'cover';
+
+            thumb.addEventListener('click', () => {
+                const imgEl = document.querySelector(`.image-container[data-card="${activeCard}"] img`);
+                if (imgEl) {
+                    imgEl.src = img;
+                    assignedImages[activeCard] = img;
+                    updateAllThumbnailStyles();
+                }
+            });
+
+            thumbnailGrid.appendChild(thumb);
         });
-    }
+
+        let activeCard = 0;
+        const assignedImages = [null, null, null];
+
+        document.querySelectorAll('.edit-button').forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+                activeCard = idx;
+                document.querySelectorAll('.edit-button').forEach((b) => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        document.getElementById('save-set').addEventListener('click', () => {
+            if (assignedImages.includes(null)) {
+                alert('Assign all three cards before saving.');
+                return;
+            }
+            const savedJson = JSON.stringify(assignedImages, null, 2);
+            document.getElementById('saved-json').value = savedJson;
+        });
+
+        function updateAllThumbnailStyles() {
+            const usageMap = {};
+
+            assignedImages.forEach((img) => {
+                if (img) usageMap[img] = (usageMap[img] || 0) + 1;
+            });
+
+            document.querySelectorAll('.thumbnail').forEach((thumb) => {
+                const imgSrc = thumb.dataset.img;
+                const count = usageMap[imgSrc] || 0;
+
+                thumb.classList.toggle('selected-once', count === 1);
+                thumb.classList.toggle('selected-twice', count > 1);
+            });
+        }
+    });
 </script>
 
 <style lang="scss">
@@ -131,7 +109,6 @@ const allImages = cyclePaths.map((path) => baseHost + path);
         margin: 20px 0;
         text-align: center;
     }
-
     .edit-button {
         margin: 0 5px;
         padding: 8px 12px;
@@ -144,30 +121,10 @@ const allImages = cyclePaths.map((path) => baseHost + path);
         color: #fff;
     }
 
-    .thumbnail-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .thumbnail {
-        width: 100%;
-        height: 100px;
-        object-fit: cover;
-        border: 2px solid transparent;
-        cursor: pointer;
-    }
-
-    .thumbnail.used-twice {
-        border-color: red;
-    }
-
     .save-controls {
-        margin-top: 30px;
+        margin-top: 20px;
         text-align: center;
     }
-
     .save-button {
         padding: 10px 20px;
         background: green;
@@ -176,9 +133,71 @@ const allImages = cyclePaths.map((path) => baseHost + path);
         cursor: pointer;
         margin-bottom: 10px;
     }
-
-    .saved-set {
+    #saved-json {
+        width: 90%;
+        height: 100px;
         margin-top: 10px;
+        font-family: monospace;
         font-size: 0.9rem;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .thumbnail-scroll-container {
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+    }
+
+    .thumbnail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+
+    .thumbnail {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border: 2px solid transparent;
+        cursor: pointer;
+        opacity: 1;
+        transition:
+            opacity 0.3s,
+            border-color 0.3s;
+    }
+
+    .thumbnail.selected-once {
+        opacity: 0.5;
+        border-color: transparent;
+    }
+
+    .thumbnail.selected-twice {
+        opacity: 0.5;
+        border-color: red;
+    }
+    .thumbnail {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border: 2px solid transparent;
+        cursor: pointer;
+        opacity: 1;
+        transition:
+            opacity 0.3s,
+            border-color 0.3s;
+    }
+
+    .thumbnail.selected-once {
+        opacity: 0.5;
+        border: 2px solid gray;
+    }
+
+    .thumbnail.selected-twice {
+        opacity: 0.5;
+        border: 2px solid red;
     }
 </style>
