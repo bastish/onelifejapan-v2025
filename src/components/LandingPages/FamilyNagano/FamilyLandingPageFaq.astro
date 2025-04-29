@@ -1,15 +1,14 @@
 ---
 // FaqToggleSection.astro
 
-import DifficultyContent from '../../components/modals/DifficultyContent.astro';
-import BaseGeneralModal from '../../components/modals/BaseGeneralModal.astro';
+import BaseGeneralModal from '../../../components/modals/BaseGeneralModal.astro';
 
 const { mode = 'collapsible' } = Astro.props; // 'collapsible' or 'static'
 let isStatic = mode === 'static';
 isStatic = false;
 ---
 
-<div class={`sample-days-section ${isStatic ? 'static' : 'collapsible'}`}>
+<div class={`faq-section ${isStatic ? 'static' : 'collapsible'}`}>
     <details open={isStatic}>
         <summary
             ><h3>Who is it for?</h3><span class="description"
@@ -279,9 +278,6 @@ isStatic = false;
 
     <style lang="scss">
         @use '../../styles/global' as *;
-        .sample-days-section {
-            text-align: left;
-        }
         details {
             margin-bottom: 30px;
         }
