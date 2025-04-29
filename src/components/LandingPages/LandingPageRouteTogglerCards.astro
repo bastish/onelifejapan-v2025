@@ -1,6 +1,6 @@
 ---
-import TagLineChanger from './TagLineChanger.astro';
-import { baseHost } from '../utils/utilities.ts';
+import TagLineChanger from '../TagLineChanger.astro';
+import { baseHost } from '../../utils/utilities.ts';
 
 type Route = {
     key: string;
@@ -60,7 +60,7 @@ const routes: Route[] = [
     },
     {
         key: 'kyoto-takayama',
-        label: 'Kyoto ↔︎ (Nakasendo) ↔︎ Takayama',
+        label: 'Kyoto ↔︎ Takayama  + The Nakasendo',
         images: [`${baseHost}/assets/img/2024/media/routes/115/366/kyoto-takayama-kyoto-takayama-example-medium.jpg`],
         stops: [
             'Biwako',
@@ -88,7 +88,7 @@ const routes: Route[] = [
 
     {
         key: 'nagoya-takayama',
-        label: 'Nagoya ↔︎ (Nakasendo) ↔︎ Takayama',
+        label: 'Nagoya ↔︎ Takayama + The Nakasendo',
         images: [`${baseHost}/assets/img/2024/media/routes/114/364/nagoya-takayama-kyoto-tottori-example-medium.jpg`],
         stops: [
             'Iwamura',
@@ -111,7 +111,7 @@ const routes: Route[] = [
     },
     {
         key: 'kyoto-matsumoto',
-        label: 'Kyoto ↔︎ Nakasendo ↔︎ Matsumoto',
+        label: 'Kyoto ↔︎ Matsumoto + The Nakasendo',
         images: [
             `${baseHost}/assets/img/2024/media/routes/109/359/kyoto-matsumoto-example-Kyoto-matsumoto-example-medium.jpg`,
         ],
@@ -178,17 +178,34 @@ const routes: Route[] = [
 ---
 
 <p>
-    If you've <span class="emph">already planned some major destinations</span> - Kyoto, Tokyo, Kanazawa, Osaka - maybe you've
-    also looked up the fastest way to get between them. But
-    <span class="emph">between those well-known hubs</span> are villages, coastlines, and mountain passes most travelers
-    never see.
+    If you've <span class="emph">already planned major stops</span> like Kyoto, Tokyo, Osaka, or Kanazawa, you've probably
+    looked up the fastest way to connect them.
 </p>
 <p>
-    Below are <span class="emph">just a few examples</span> of how what might otherwise be more travel time between well-known
-    destinations can <span class="emph">become a meaningful part of your trip</span> if you <span class="emph"
+    But
+    <span class="emph">between those well-known hubs</span> are villages, coastlines, and mountain passes <span
+        class="emph"
+    >
+        most travelers never even notice
+    </span>.
+</p>
+<p>
+    At One Life Japan, <span class="emph">we help you slow down and explore</span> these overlooked places - not as a detour,
+    but as a meaningful part of your trip.
+</p>
+<p>
+    Below are <span class="emph">just a few examples</span> of how what might otherwise be more travel time between popular
+    destinations can <span class="emph">become some of your favorite memories</span> if you <span class="emph"
         >don't just pass by</span
     >, but take the
     <span class="emph">opportunity to discover</span> what's in between.
+</p>
+
+<p>
+    These <span class="emph">aren't fixed routes or packaged tours</span> - they're starting points for developing a custom
+    trip together. We provide the planning and support so that you can <span class="emph"
+        >explore just a small section, travel the full route</span
+    >, or <span class="emph">combine train rides with cycling or walking</span> to fit your schedule.
 </p>
 
 <div class="carousel">
@@ -211,9 +228,11 @@ const routes: Route[] = [
                                 <span class="stop">{stop} | </span>
                             ))}
                         </div>
-                        <p class="fineprint">
-                            * Routes can follow train lines, allowing for partial rides to fit your schedule.
-                        </p>
+                        {/* <p class="fineprint">
+                                <span class="emph">
+                                    * Routes can follow train lines, allowing for partial rides to fit your schedule.
+                                </span>
+                            </p> */}
                     </div>
                 </div>
             ))
@@ -227,9 +246,29 @@ const routes: Route[] = [
     <button class="carousel-nav prev">&#8249;&#8249;</button>
     <button class="carousel-nav next">&#8250;&#8250;</button>
 </div>
+<div class="how-it-works">
+    <h3>How It Works</h3>
+    <p>Most bike tours and rentals <span class="emph">lock you into a fixed loop</span>: start, ride, return.</p>
 
+    <p>
+        <span class="emph">We do it differently</span>. At One Life Japan, we carry your bikes and luggage for you, so
+        the <span class="emph">transportation adapts to you</span> - not the other way around.
+    </p>
+    <p>
+        Start<span class="emph"> biking when you want</span>, stop when you want, <span class="emph"
+            >walk a trail, hop a train</span
+        > - you're free to move <span class="emph">however the day unfolds</span>. We quietly handle the bikes and bags
+        in the background.
+    </p>
+
+    <p>
+        It's not about squeezing your journey into the limits of the transportation. It's about <span class="emph">
+            adjusting the transportation to fit your journey
+        </span> - staying light, free, and able to enjoy wherever the road (or trail) leads.
+    </p>
+</div>
 <style lang="scss">
-    @use '../styles/global' as *;
+    @use '../../styles/global' as *;
     .carousel {
         position: relative;
         overflow: hidden;

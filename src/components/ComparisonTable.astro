@@ -1,0 +1,172 @@
+---
+// ComparisonTable.astro
+---
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+    }
+    th,
+    td {
+        border: 1px solid #ccc;
+        padding: 0.75rem;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+    th {
+        background-color: #f8f8f8;
+    }
+    td.included {
+        background-color: #e6f4ea; /* light green */
+        font-weight: bold;
+        color: #2e7d32;
+    }
+    td.not-included {
+        background-color: #f9e6e6; /* light red */
+        font-weight: bold;
+        color: #c62828;
+    }
+    caption {
+        caption-side: top;
+        text-align: left;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<table>
+    <caption>Service Feature Comparison (General Categories)</caption>
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Luxury Guided Hikes</th>
+            <th>Semi-Guided Trail Walks</th>
+            <th>Group Sightseeing Tours</th>
+            <th>Custom Travel Agencies</th>
+            <th>High-End Adventure Travel</th>
+            <th>One Life Japan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Custom trips</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Fixed routes</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+        </tr>
+        <tr>
+            <td>Group tours</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+        </tr>
+        <tr>
+            <td>Self-guided options</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Bike support</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Walking-focused</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Luggage transport</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Local immersion</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>High flexibility</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Cultural education</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Use of public transport</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Small-scale operation</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Premium pricing</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="not-included">&#10005;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003;</td>
+            <td class="included">&#10003; (starting from ¥10,000–30,000/day)</td>
+        </tr>
+    </tbody>
+</table>

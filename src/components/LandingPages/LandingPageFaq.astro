@@ -1,11 +1,10 @@
 ---
 // FaqToggleSection.astro
 
-import DifficultyContent from '../components/modals/DifficultyContent.astro';
-import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
+import DifficultyContent from '../../components/modals/DifficultyContent.astro';
+import BaseGeneralModal from '../../components/modals/BaseGeneralModal.astro';
 
 const { mode = 'collapsible' } = Astro.props; // 'collapsible' or 'static'
-import LandingPageSampleDay from '../components/LandingPageSampleDay.astro';
 let isStatic = mode === 'static';
 isStatic = false;
 ---
@@ -97,6 +96,54 @@ isStatic = false;
                     in the onsen you've got all the time you need.
                 </li>
             </ul>
+        </div>
+    </details>
+
+    <details open={isStatic}>
+        <summary
+            ><h3>How does it work if I want to mix biking and walking?</h3>
+            <span class="description"
+                >Bike when you want, walk when you want - we'll handle the bikes and bags and the logistics to make sure
+                you get to where you need to be at the end of the day.
+            </span></summary
+        >
+        <div class="answer">
+            <p>
+                For example, you might start the day on bike, ride to a small town to explore and take a break. Then, to
+                avoid a busy main road, or just to get into the forest, ditch the bikes and hike over a mountain pass to
+                a village in the next valley.
+            </p>
+            <p>
+                If its getting late, or there is a long stretch of uphill you want to avoid, you can cover that distnace
+                on a local train to a quieter town closer to the destination. Pick up the bikes we have waiting there,
+                and cruise the last bit down a rural backroad toward your evening's inn where your bags are already
+                waiting.
+            </p>
+            <p>
+                We plan flexible segments around the landscape and season, so you can travel light, move freely, and
+                experience the countryside naturally - without worrying about the logistics.
+            </p>
+        </div>
+    </details>
+
+    <details open={isStatic}>
+        <summary
+            ><h3>What about self-guided with a bike?</h3>
+            <span class="description"
+                >Self-guided trips offer full freedom. But if you want to use trains, you'll need to carry bikes in
+                special train bags ("rinko bags").
+            </span></summary
+        >
+        <div class="answer">
+            <p>
+                Japan's trains allow bikes, but only if they are bagged - a normal part of bike travel here. If you're
+                self-guided, we'll design your trip so that any train transfers are simple, optional, and easy to
+                manage. We'll provide the bags and show you how to pack the bikes quickly when needed.
+            </p>
+            <p>
+                If you'd prefer to avoid bagging altogether, we recommend a semi-guided, supported trip where we handle
+                the bikes for you.
+            </p>
         </div>
     </details>
 
@@ -231,7 +278,7 @@ isStatic = false;
     </details>
 
     <style lang="scss">
-        @use '../styles/global' as *;
+        @use '../../styles/global' as *;
         details {
             margin-bottom: 30px;
         }
@@ -298,7 +345,7 @@ isStatic = false;
         }
 
         summary {
-            border-top: 1px solid var(--bs-primary-dark);
+            //border-top: 1px solid var(--bs-primary-dark);
             padding-top: 5px;
             margin-bottom: 10px;
             font-size: 1.3em;

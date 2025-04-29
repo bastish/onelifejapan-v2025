@@ -1,0 +1,421 @@
+---
+interface LandingPageData {
+    card1Title: string;
+    card1Content: string;
+    card2Title: string;
+    card2Content: string;
+    card3Title: string;
+    card3Content: string;
+    slug: string;
+}
+
+interface Props {
+    landingPageData: LandingPageData;
+}
+
+const { landingPageData } = Astro.props;
+import { baseHost } from '../../utils/utilities.ts';
+
+const cards = [
+    { title: landingPageData?.card1Title, content: landingPageData?.card1Content },
+    { title: landingPageData?.card2Title, content: landingPageData?.card2Content },
+    { title: landingPageData?.card3Title, content: landingPageData?.card3Content },
+];
+---
+
+<div class="outer-container">
+    <div class="landing-page-cards" data-base-host={baseHost} data-json-file={landingPageData.slug}>
+        {
+            cards.map((card, idx) => (
+                <div class="info-item" data-card={idx}>
+                    <div class="image-container">
+                        <img
+                            src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                            alt={card.title}
+                            class="info-image"
+                        />
+                    </div>
+                    <div class="dots" />
+                    <h2>{card.title}</h2>
+                    <p>{card.content}</p>
+                </div>
+            ))
+        }
+    </div>
+
+    <div class="card-nav-buttons">
+        <button id="prev-group" class="nav-button nav-left">&laquo;</button>
+        <button id="next-group" class="nav-button nav-right">&raquo;</button>
+    </div>
+</div>
+
+<style lang="scss">
+    @use '../../styles/global' as *;
+
+    h2 {
+        color: var(--bs-primary-ultradark) !important;
+        margin-top: 10px;
+    }
+
+    .landing-page-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 40px;
+        width: 100%;
+        grid-auto-flow: row;
+
+        @include respond-to(large) {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            justify-items: center;
+            align-items: start;
+        }
+
+        @include respond-to(small) {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            justify-items: center;
+            align-items: start;
+        }
+    }
+
+    /* Info Card */
+    .info-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+    }
+
+    /* Image */
+    .image-container {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+
+        @include respond-to(large) {
+            height: 350px;
+        }
+
+        @include respond-to(small) {
+            height: 250px;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--next-image);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: 1;
+        }
+
+        &.fade::before {
+            opacity: 1;
+        }
+    }
+
+    .info-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        transition: opacity 0.6s ease;
+        position: relative;
+        z-index: 0;
+        opacity: 1;
+
+        @include respond-to(large) {
+            height: 350px;
+        }
+
+        @include respond-to(small) {
+            height: 240px;
+        }
+    }
+
+    /* Dots */
+    .dots {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 2;
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+
+            &.active {
+                background: rgba(0, 0, 0, 0.7);
+            }
+        }
+    }
+
+    /* Navigation Buttons */
+    .outer-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .card-nav-buttons {
+        position: absolute;
+        top: 125px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        pointer-events: none;
+        z-index: 10;
+
+        .nav-button {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 25px;
+            height: 40px;
+            border-radius: 5px;
+            margin: 2px;
+            padding: 4px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+</style>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.querySelector('.landing-page-cards');
+        if (!container) return;
+
+        const baseHost = container.dataset.baseHost || '';
+        const jsonFileSlug = container.dataset.jsonFile || '';
+        const cards = Array.from(container.querySelectorAll('.image-container'));
+        let allImagePaths = [];
+        let predefinedGroups = [];
+        let groups = [];
+        let currentGroupIndex = 0;
+        let scrollTime = 9000;
+
+        // Load combined JSON file
+        try {
+            const res = await fetch(`/data/cards-${jsonFileSlug}.json`);
+            if (!res.ok) throw new Error('Failed to load landing page cards JSON');
+            const data = await res.json();
+            allImagePaths = data.allPaths;
+            predefinedGroups = data.predefinedGroups || [];
+        } catch (error) {
+            console.error('Failed to load cards JSON:', error);
+            return;
+        }
+
+        // Normalize predefined groups
+        predefinedGroups = predefinedGroups.map((group) =>
+            group.map((url) => {
+                if (url.startsWith('/assets/')) {
+                    return url;
+                }
+                if (url.includes('/assets/')) {
+                    const idx = url.indexOf('/assets/');
+                    return url.slice(idx);
+                }
+                return '/assets/' + url;
+            }),
+        );
+
+        const predefinedFlat = predefinedGroups.flat();
+        const randomPool = allImagePaths.map((path) => path).filter((url) => !predefinedFlat.includes(url));
+        const shuffledRandom = shuffle([...randomPool]);
+
+        // Build groups
+        let visitCount = parseInt(localStorage.getItem('landingPageCardsVisitCount') || '0', 10);
+        visitCount++;
+        localStorage.setItem('landingPageCardsVisitCount', visitCount.toString());
+
+        if (visitCount <= 2) {
+            for (const group of predefinedGroups) {
+                if (group.length === 3) groups.push(group);
+            }
+        }
+
+        let available = [...shuffledRandom];
+        while (available.length >= 3) {
+            const trio = available.splice(0, 3);
+            groups.push(trio);
+        }
+
+        function fullUrl(path) {
+            if (baseHost && path.startsWith('/')) {
+                return baseHost + path;
+            }
+            return path;
+        }
+
+        function preloadGroup(index) {
+            const group = groups[index];
+            if (!group || group.length !== 3) return;
+            group.forEach((imgUrl) => {
+                const img = new Image();
+                img.src = fullUrl(imgUrl);
+            });
+        }
+
+        function showGroup(group) {
+            if (!group || group.length !== 3) return;
+            group.forEach((imgUrl, idx) => {
+                const imgEl = cards[idx]?.querySelector('.info-image');
+                if (imgEl) {
+                    imgEl.src = fullUrl(imgUrl);
+                    imgEl.style.opacity = 1;
+                }
+            });
+            preloadGroup(currentGroupIndex + 1);
+            preloadGroup(currentGroupIndex + 2);
+        }
+
+        function transitionGroup(group) {
+            if (!group || group.length !== 3) return;
+            cards.forEach((wrapper, idx) => {
+                const imgEl = wrapper.querySelector('.info-image');
+                if (!imgEl) return;
+
+                imgEl.style.transition = 'opacity 2s ease-out';
+                imgEl.style.opacity = 0;
+
+                imgEl.addEventListener(
+                    'transitionend',
+                    function onEnd(e) {
+                        if (e.propertyName !== 'opacity') return;
+                        imgEl.removeEventListener('transitionend', onEnd);
+
+                        const preload = new Image();
+                        preload.onload = () => {
+                            imgEl.src = fullUrl(group[idx]);
+                            imgEl.style.transition = 'opacity 0.5s ease-in';
+                            imgEl.style.opacity = 1;
+                        };
+                        preload.src = fullUrl(group[idx]);
+                    },
+                    { once: true },
+                );
+            });
+            preloadGroup(currentGroupIndex + 1);
+            preloadGroup(currentGroupIndex + 2);
+        }
+
+        function fadeToNext() {
+            currentGroupIndex++;
+            if (currentGroupIndex >= groups.length) {
+                rerandomizeAll();
+                currentGroupIndex = 0;
+            }
+            transitionGroup(groups[currentGroupIndex]);
+        }
+
+        function fadeToPrev() {
+            currentGroupIndex--;
+            if (currentGroupIndex < 0) {
+                currentGroupIndex = groups.length - 1;
+            }
+            transitionGroup(groups[currentGroupIndex]);
+        }
+
+        function startAutoScroll() {
+            const id = setInterval(fadeToNext, scrollTime);
+            window._landingPageCardIntervals.push(id);
+        }
+
+        function resetAutoScroll() {
+            window._landingPageCardIntervals.forEach(clearInterval);
+            window._landingPageCardIntervals = [];
+            const id = setInterval(fadeToNext, scrollTime);
+            window._landingPageCardIntervals.push(id);
+        }
+
+        function pauseAutoScrollAndResume() {
+            window._landingPageCardIntervals.forEach(clearInterval);
+            window._landingPageCardIntervals = [];
+            clearTimeout(autoResumeTimer);
+            autoResumeTimer = setTimeout(() => {
+                startAutoScroll();
+            }, scrollTime);
+        }
+
+        function rerandomizeAll() {
+            const combined = predefinedFlat.concat(randomPool);
+            let available = shuffle([...combined]);
+            groups = [];
+            while (available.length >= 3) {
+                const trio = available.splice(0, 3);
+                groups.push(trio);
+            }
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        document.getElementById('next-group')?.addEventListener('click', () => {
+            fadeToNext();
+            resetAutoScroll();
+        });
+        document.getElementById('prev-group')?.addEventListener('click', () => {
+            fadeToPrev();
+            resetAutoScroll();
+        });
+
+        window._landingPageCardIntervals = window._landingPageCardIntervals || [];
+        let autoResumeTimer = null;
+        showGroup(groups[currentGroupIndex]);
+        startAutoScroll();
+    });
+</script>

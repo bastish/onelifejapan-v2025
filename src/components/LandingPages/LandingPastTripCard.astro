@@ -1,0 +1,84 @@
+---
+const { link, title, image, description } = Astro.props;
+import { baseHost } from '../../utils/utilities.ts';
+---
+
+<div class="past-trip-card">
+    <a href={link} target="_blank" title=`Information about : ${title}` rel="noopener noreferrer">
+        <div class="thumbnail-img">
+            <img class="img-responsive" src={baseHost + image} alt={title} />
+            <div class="btn-more-container">
+                <span class="btn-more">Learn More ››</span>
+            </div>
+        </div>
+        <h3>{title}</h3>
+        <p>{description}</p>
+    </a>
+</div>
+
+<style lang="scss">
+    @use '../../styles/global' as *;
+
+    .past-trip-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+
+        h3 {
+            margin-top: 10px;
+            font-size: 1.4rem;
+            color: var(--bs-primary-ultradark);
+        }
+
+        p {
+            font-size: 1rem;
+            color: #666;
+            padding: 0 10px;
+            margin-top: 10px;
+        }
+    }
+
+    .thumbnail-img {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--bs-primary-light);
+        border-radius: 8px;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-more-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .btn-more {
+            background-color: var(--bs-primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        &:hover img {
+            transform: scale(1.05);
+        }
+        &:hover .btn-more {
+            background-color: var(--bs-primary-dark);
+        }
+    }
+</style>

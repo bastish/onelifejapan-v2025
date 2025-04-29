@@ -33,3 +33,6 @@ DummyComponents
 # server api endpoints private
 www
 _*
+
+# Except _build_process (negate the ignore)
+!_build_process

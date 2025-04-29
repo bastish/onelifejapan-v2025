@@ -1,0 +1,106 @@
+---
+// ComparisonTableLite.astro
+---
+
+<section class="comparison-table-wrapper">
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Luxury Guided Hikes</th>
+                <th>Semi-Guided Trail Walks</th>
+                <th>Group Sightseeing Tours</th>
+                <th>Custom Travel Agencies</th>
+                <th>One Life Japan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Custom Private Trips</td>
+                <td class="not-included">✗</td>
+                <td class="not-included">✗</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+                <td class="included">✓</td>
+            </tr>
+            <tr>
+                <td>Self-Guided Option</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+                <td class="included">✓</td>
+            </tr>
+            <tr>
+                <td>Logistics Support (Bikes & Bags)</td>
+                <td class="not-included">✗</td>
+                <td class="not-included">✗</td>
+                <td class="not-included">✗</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+            </tr>
+            <tr>
+                <td>Local Immersion Focus</td>
+                <td class="included">✓</td>
+                <td class="included">✓</td>
+                <td class="not-included">✗</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+            </tr>
+            <tr>
+                <td>Flexible Daily Plans</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+                <td class="not-included">✗</td>
+                <td class="included">✓</td>
+                <td class="included">✓</td>
+            </tr>
+            <tr>
+                <td>Pricing</td>
+                <td>¥300,000+ package</td>
+                <td>¥200,000–250,000 package</td>
+                <td>¥100,000–150,000 package</td>
+                <td>Custom per trip</td>
+                <td>Starting from ¥10,000–30,000/day</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<style lang="scss">
+    .comparison-table-wrapper {
+        overflow-x: auto;
+        margin-top: 2rem;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1rem;
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        thead th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+        }
+
+        .included {
+            background-color: #d4f4dd; /* light green */
+            color: green;
+            font-weight: bold;
+        }
+
+        .not-included {
+            background-color: #fddede; /* light red */
+            color: red;
+            font-weight: bold;
+        }
+    }
+</style>

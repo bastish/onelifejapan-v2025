@@ -1,0 +1,217 @@
+---
+import LandingPastTripCard from './LandingPastTripCard.astro';
+const trips = [
+    {
+        link: '/itinerary/8/one-month-across-japan/',
+        title: 'One Month Bike Across Japan',
+        image: '/assets/img/2024/media/photos/2514/Screenshot_2025-02-18_at_23.53.21_large.png',
+        description:
+            'An ambitious month-long journey through cities, islands, mountains, and hidden villages - filled with culture, castles, and diverse regional cuisine.',
+    },
+    {
+        link: '/itinerary/10/5-days-biwako-wakasa-coast/',
+        title: 'Kyoto to the Coast',
+        image: '/assets/img/2024/media/photos/2518/5day_Biwako__Wakasa_Bay_medium.png',
+        description: 'A 5-day ride around Lake Biwa, Wakasa Bay, and the northern Kyoto countryside.',
+    },
+    {
+        link: '/itinerary/9/one-week-in-noto/',
+        title: 'Family Journey Through Kanazawa & Noto',
+        image: '/assets/img/2024/media/photos/2517/10day_kanazawa_noto_zoom_out_2_medium.png',
+        description:
+            '10 days of slow-paced countryside exploration and coastal traditions, from Shirakawago to the Noto Peninsula.',
+    },
+    {
+        link: '/itinerary/1/family-japan-adventure/',
+        title: 'Family Japan Bike Adventure',
+        image: '/assets/img/2024/media/photos/172/foggini_family_4SCtGho_large.jpg',
+        description:
+            'Designed for families, enjoyed by all. We take care of everything so you can simply enjoy your family time exploring rural Nagano.',
+    },
+    {
+        link: '/itinerary/5/autumn-hike-and-bike-adventure/',
+        title: 'Autumn Hike & Bike',
+        image: '/assets/img/2024/media/photos/2265/dsc_7319_1jpg_1856822227_o_large.jpg',
+        description:
+            "Explore Japan's less crowded Red, Orange, and Golden Routes. Experience the beauty of Japan's countryside and mountains in autumn.",
+    },
+    {
+        link: '/itinerary/4/3-days-off-the-path/',
+        title: 'Three Day Rural Immersion',
+        image: '/assets/img/2024/media/photos/487/dsc_0062-copy_6058657104_o_medium.jpg',
+        description:
+            'Take a short break from your busy itinerary to slow down and discover another side of Japan - truly rural villages just two hours from Tokyo.',
+    },
+    {
+        link: '/itinerary/2/rural-japan-walk-and-photo-tour/',
+        title: 'Rural Japan Photography Walk',
+        image: '/assets/img/2024/media/photos/2523/4665877377_d268fc217d_1_large.jpg',
+        description:
+            "Slow down and put rural Japan into focus. Take in views you won't find on postcards - and bring your camera if you feel like it.",
+    },
+];
+
+// Duplicate first few to simulate infinite scroll
+let tripList = [...trips, ...trips];
+tripList = [...trips];
+---
+
+<div class="trip-outer-container">
+    <div class="trip-carousel-wrapper">
+        <button class="trip-carousel-nav trip-nav-left" id="trip-prev-btn">&#8249;&#8249;</button>
+
+        <div class="trip-carousel" id="trip-carousel">
+            <div class="trip-carousel-track" id="trip-carousel-track">
+                {
+                    tripList.map((trip) => (
+                        <div class="trip-slide">
+                            <LandingPastTripCard {...trip} />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+
+        <button class="trip-carousel-nav trip-nav-right" id="trip-next-btn">&#8250;&#8250;</button>
+    </div>
+</div>
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tripTrack = document.getElementById('trip-carousel-track');
+        const tripPrevBtn = document.getElementById('trip-prev-btn');
+        const tripNextBtn = document.getElementById('trip-next-btn');
+
+        let tripSlideWidth = tripTrack.querySelector('.trip-slide').offsetWidth + 20;
+        let tripCurrentIndex = 0;
+        const originalSlides = Array.from(tripTrack.children);
+
+        function moveTripTo(index, animate = true) {
+            tripTrack.style.transition = animate ? 'transform 0.5s ease' : 'none';
+            tripTrack.style.transform = `translateX(-${index * tripSlideWidth}px)`;
+        }
+
+        function cloneAllSlides() {
+            originalSlides.forEach((slide) => {
+                const clone = slide.cloneNode(true);
+                tripTrack.appendChild(clone);
+            });
+        }
+
+        function moveTripNext() {
+            const totalSlides = tripTrack.children.length;
+
+            // If near the end, clone all original slides again
+            if (tripCurrentIndex >= totalSlides - originalSlides.length) {
+                cloneAllSlides();
+            }
+
+            tripCurrentIndex++;
+            moveTripTo(tripCurrentIndex);
+        }
+
+        function moveTripPrev() {
+            if (tripCurrentIndex > 0) {
+                tripCurrentIndex--;
+                moveTripTo(tripCurrentIndex);
+            }
+        }
+
+        tripNextBtn.addEventListener('click', moveTripNext);
+        tripPrevBtn.addEventListener('click', moveTripPrev);
+
+        window.addEventListener('resize', () => {
+            tripSlideWidth = tripTrack.querySelector('.trip-slide').offsetWidth + 20;
+            moveTripTo(tripCurrentIndex, false);
+        });
+    });
+</script>
+
+<style lang="scss">
+    @use '../../styles/global' as *;
+
+    .trip-outer-container {
+        width: 99.9%;
+        overflow: hidden;
+        position: relative;
+        margin-top: 20px;
+    }
+
+    .trip-carousel-wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .trip-carousel {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .trip-carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+        gap: 20px; // Gap BETWEEN cards
+        padding: 0 10px; // Add some breathing space on edges
+        box-sizing: border-box;
+    }
+
+    .trip-slide {
+        flex: 0 0 calc((100% - 60px) / 4); // 3 gaps (20px x 3) = 60px
+        max-width: calc((100% - 60px) / 4);
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 900px) {
+        .trip-slide {
+            flex: 0 0 calc((100% - 20px) / 2); // 1 gap (20px)
+            max-width: calc((100% - 20px) / 2);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .trip-slide {
+            flex: 0 0 100%; // Single card
+            max-width: 100%;
+        }
+    }
+
+    .trip-carousel-nav {
+        position: absolute;
+        top: 50%;
+        top: 30%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 2rem;
+        padding: 5px 10px;
+        cursor: pointer;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .trip-carousel-wrapper:hover .trip-carousel-nav {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .trip-nav-left {
+        left: 0;
+    }
+
+    .trip-nav-right {
+        right: 0;
+    }
+
+    @media (max-width: 768px) {
+        .trip-carousel-nav {
+            opacity: 1;
+            pointer-events: auto;
+            top: 70%;
+        }
+    }
+</style>

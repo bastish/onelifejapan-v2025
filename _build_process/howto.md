@@ -66,7 +66,7 @@ cd onelifejapan.com-deployed
   cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
 
 git add .
-git commit -m "Deploy [image cahce breaker urls] for stage"
+git commit -m "Deploy [added exmaple trips slider / updated About page] for stage"
 git push origin stage
 
 - check it on vercel
@@ -77,7 +77,7 @@ git checkout master
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [larger images and image cahce breaker urls]"
+git commit -m " Update Production [added exmaple trips slider / updated About page]"
 git push origin master
 
 -- CLEAN UP

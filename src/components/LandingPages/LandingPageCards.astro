@@ -1,6 +1,6 @@
 ---
-import TagLineChanger from './TagLineChanger.astro';
-import { baseHost } from '../utils/utilities.ts';
+import TagLineChanger from '../TagLineChanger.astro';
+import { baseHost } from '../../utils/utilities.ts';
 ---
 
 <div class="outer-container">
@@ -79,7 +79,7 @@ import { baseHost } from '../utils/utilities.ts';
         let predefinedGroups = [];
         let groups = [];
         let currentGroupIndex = 0;
-        let scrollTime = 10000;
+        let scrollTime = 9000;
 
         // Load all images
         try {
@@ -266,7 +266,7 @@ import { baseHost } from '../utils/utilities.ts';
 </script>
 
 <style lang="scss">
-    @use '../styles/global' as *;
+    @use '../../styles/global' as *;
 
     h2 {
         color: var(--bs-primary-ultradark) !important;

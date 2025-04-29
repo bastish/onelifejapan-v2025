@@ -2,13 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GenericSlider from '../../components/GenericSlider.astro';
 import CustomerReviewsSlider from '../../components/CustomerReviewsSlider.astro';
-import LandingPageCards from '../../components/LandingPages/LandingPageCards.astro';
+import LandingPageHeroCards from '../../components/LandingPages/LandingPageHeroCards.astro';
 import LandingPastTripsCardsContainer from '../../components/LandingPages/LandingPastTripsCardsContainer.astro';
 import LandingPageWhyOneLifeJapan from '../../components/LandingPages/LandingPageWhyOneLifeJapan.astro';
 import LandingPageRouteTogglerCards from '../../components/LandingPages/LandingPageRouteTogglerCards.astro';
 import LandingPageFaq from '../../components/LandingPages/LandingPageFaq.astro';
-import ComparisonTable from '../../components/ComparisonTable.astro';
-import ComparisonTableLite from '../../components/ComparisonTableLite.astro';
+
+import { fetchLandingPage } from '../../utils/fetchLandingPage';
+const landingPageData = await fetchLandingPage(1); // ID 1 for Family Bike Nagano
+
 import { baseHost } from '../../utils/utilities.ts';
 import '../../styles/global.scss';
 const devOnly = false;
@@ -21,98 +23,148 @@ const description =
 <BaseLayout title={title} description={description} page="about" devOnly={devOnly}>
     <div class="custom-container simple-page-body">
         <div class="centered attention-catcher">
-            <!-- <h1>Japan Rural Sidetrack</h1> -->
-            <!-- <h1>Lose Yourself in Rural Japan</h1> -->
-            <h1>Get a Little Lost in Rural Japan</h1>
-            <h2>Custom countryside trips - by bike, on foot, or both</h2>
-            <h2>Flexible support - self-guided, semi-guided, or fully guided</h2>
-            <h2>From ¥10,000 / day</h2>
+            <h1>{landingPageData.title}</h1>
+            {
+                landingPageData.heroSubtitle
+                    ?.split('\n')
+                    .filter((line: string) => line.trim() !== '') // optional: ignore empty lines
+                    .map((line: string) => <h2>{line}</h2>)
+            }
         </div>
 
-        <!-- Landing Page Content -->
-        <LandingPageCards />
-        <!-- <LandingPageCardsEditorTool /> -->
+        <LandingPageHeroCards landingPageData={landingPageData} />
 
         <div class="cta-container">
             <p class="small-note">
-                There's plenty of advice online from tourists who have visited rural Japan - but if you want help from
-                someone who's lived it and guided visitors through it for nearly two decades, feel free to reach out for
-                a no-commitment consultation.
+                Ride, explore, relax. Take a countryside break from the busy cities and discover a hidden side of Japan.
+                Flexible support options to fit your family's style.
             </p>
-
-            <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
+            <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
         </div>
 
         <hr />
-        <section class="landing-testimonials">
-            <h2>Reflections from Our Guests</h2>
-            <div class="frame">
-                <GenericSlider sliderImageId={77} height={250} />
-            </div>
 
-            <!-- <h2>What Past Guests Say</h2> -->
+        <section class="landing-testimonials">
+            <h2>What Past Guests Say</h2>
             <CustomerReviewsSlider show={3} />
         </section>
 
         <hr />
+
         <section class="landing-routes">
-            <h2>The Destinations Between Your Destinations</h2>
-            <LandingPageRouteTogglerCards />
-        </section>
-        <div class="cta-container">
-            <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
-        </div>
-
-        <hr />
-        <div class="frame">
-            <GenericSlider sliderImageId={78} height={250} />
-        </div>
-
-        <section class="landing-faqs">
-            <h2>Q & A</h2>
-            <LandingPageFaq mode="static" />
+            <h2>Trip Highlights</h2>
+            <ul>
+                <li>Ride scenic country backroads through rice fields and small villages</li>
+                <li>Visit the famous Snow Monkeys (optional)</li>
+                <li>Stay at cozy farm inns and family-run ryokans</li>
+                <li>Experience traditional soba noodle making or rural life activities</li>
+                <li>Relax in natural hot spring baths after a day of riding</li>
+            </ul>
         </section>
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
+            <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
         </div>
 
         <hr />
+
         <section class="landing-faqs">
-            <h2>Why Journey with One Life Japan?</h2>
+            <h2>Sample 3-Day Itinerary</h2>
+            <p><strong>Day 1:</strong> Easy countryside ride, soba-making activity, soak in mountain onsen</p>
+            <p><strong>Day 2:</strong> Morning ride to Snow Monkey Park, explore Nozawa Onsen village</p>
+            <p><strong>Day 3:</strong> Lake and forest ride, local market stop, farewell BBQ dinner</p>
+            <p class="small-note">
+                Itineraries are flexible and can be customized based on ages, fitness levels, and seasonal events.
+            </p>
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
+        </div>
+
+        <hr />
+
+        <section class="landing-faqs">
+            <h2>Who It’s For</h2>
+            <p>
+                Families with kids aged 8+, groups of friends, or anyone seeking an active but relaxed countryside
+                adventure.
+            </p>
+            <p>
+                Basic biking ability recommended, but support available for varying fitness levels. E-bike upgrades
+                possible.
+            </p>
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
+        </div>
+
+        <hr />
+
+        <section class="landing-faqs">
+            <h2>How It Works</h2>
+            <p>
+                One Life Japan provides the bikes, route planning, luggage transfers, and cultural activity
+                arrangements. You explore at your pace. Activities like soba making or snow monkey visits are optional
+                and coordinated with trusted local partners.
+            </p>
+            <p class="small-note">*This is not a package tour. Each trip is custom-tailored to your group.</p>
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
+        </div>
+
+        <hr />
+
+        <section class="landing-faqs">
+            <h2>Trip Pricing Estimate</h2>
+            <p>Estimated Cost: ¥150,000 – ¥190,000 per person (based on group size and support options).</p>
+            <p>
+                Includes: Bikes, accommodations, breakfasts and dinners, basic luggage support, and cultural activities
+                listed.
+            </p>
+            <p>Excludes: Personal expenses, lunches, transport to/from start point, and travel insurance.</p>
+            <p class="small-note">
+                *Exact quote provided after inquiry based on group size, support level, and lodging preferences.
+            </p>
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
+        </div>
+
+        <hr />
+
+        <section class="landing-faqs">
+            <h2>Why Travel with One Life Japan?</h2>
             <LandingPageWhyOneLifeJapan />
         </section>
 
         <hr />
+
         <section class="past-trips">
             <h2>A Few Memorable Journeys</h2>
-            <p>
-                Explore a few <span class="emph">examples of past trips</span> - some built around favorite <span
-                    class="emph">routes we've refined over the years</span
-                > in rural Nagano, and others created as special custom requests <span class="emph"
-                    >outside our usual area</span
-                >, shaped by guests' existing plans, locations, and timing.
-            </p>
-
             <LandingPastTripsCardsContainer />
         </section>
+
         <hr />
+
         <section class="end-of-page">
-            <h2>See you soon...</h2>
+            <h2>See You Soon...</h2>
             <div class="centered attention-catcher">
                 <img
-                    src=`${baseHost}/assets/img/2024/media/photos/2067/fuji-from-akadake_298038257_o_large.jpg`
-                    alt="Kevin with guests"
+                    src={`${baseHost}/assets/img/2024/media/photos/2067/fuji-from-akadake_298038257_o_large.jpg`}
+                    alt="Family trip in rural Japan"
                     class="circle-img circle-img-2"
                     style="object-position: center 100%;"
                 />
             </div>
             <div class="cta-container">
-                <a href="/contact" class="cta-button">Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a>
+                <a href="/contact" class="cta-button">Inquire About This Trip ››</a>
             </div>
         </section>
-
-        <!-- <GenericSlider sliderImageId={1} height={250} /> -->
     </div>
 
     <style lang="scss">
