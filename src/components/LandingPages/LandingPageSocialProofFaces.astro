@@ -1,0 +1,223 @@
+---
+interface Props {
+    slug: string;
+}
+const { slug } = Astro.props;
+import { baseHost } from '../../utils/utilities.ts';
+---
+
+<div class="face-carousel-container" data-json-file={slug} data-base-host={baseHost}>
+    <!-- Desktop carousel (3 faces) -->
+    <div class="face-carousel face-carousel-desktop">
+        <div class="outer-mask"><div class="inner-container"><img class="face-img" /></div></div>
+        <div class="outer-mask"><div class="inner-container"><img class="face-img" /></div></div>
+        <div class="outer-mask"><div class="inner-container"><img class="face-img" /></div></div>
+    </div>
+
+    <!-- Mobile carousel (1 face) -->
+    <div class="face-carousel face-carousel-mobile">
+        <div class="outer-mask"><div class="inner-container"><img class="face-img-mobile" /></div></div>
+    </div>
+</div>
+
+<style lang="scss">
+    @use '../../styles/global' as *;
+    .face-carousel-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+    }
+
+    .face-carousel {
+        display: flex;
+        gap: 60px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 960px;
+    }
+
+    .outer-mask {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #fff;
+        border: 2px solid var(--bs-primary-light);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inner-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: visible; /* important */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .face-img,
+    .face-img-mobile {
+        width: auto;
+        height: auto;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: contain; /* <== change to contain */
+        object-position: center center;
+        transition:
+            opacity 1s ease-in-out,
+            transform 0.6s ease;
+        opacity: 1;
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    @media (max-width: 768px) {
+        .face-carousel {
+            gap: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+        .outer-mask {
+            width: 180px;
+            height: 180px;
+        }
+        .outer-mask:nth-child(2),
+        .outer-mask:nth-child(3) {
+            display: none;
+        }
+    }
+
+    .face-carousel-mobile {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .face-carousel-desktop {
+            display: none;
+        }
+        .face-carousel-mobile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+</style>
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.querySelector('.face-carousel-container');
+        if (!container) return;
+
+        const baseHost = container.dataset.baseHost || '';
+        const jsonSlug = container.dataset.jsonFile || '';
+        const facesDesktop = Array.from(container.querySelectorAll('.face-carousel-desktop .face-img'));
+        const faceMobile = container.querySelector('.face-carousel-mobile .face-img-mobile');
+
+        let faceData = [];
+        try {
+            const res = await fetch(`/data/${jsonSlug}-social-proof.json`);
+            if (!res.ok) throw new Error('Could not fetch social proof face data');
+            faceData = await res.json();
+        } catch (err) {
+            console.error('Error loading social proof faces:', err);
+            return;
+        }
+
+        let desktopIndex = 0;
+        let mobileIndex = 0;
+
+        function updateDesktopFaces() {
+            const group = faceData.slice(desktopIndex, desktopIndex + 3);
+            facesDesktop.forEach((el, i) => {
+                const data = group[i];
+                if (!data) return;
+
+                // 1. Fade out only opacity
+                el.style.transition = 'opacity 0.5s ease';
+                el.style.opacity = 0;
+
+                el.addEventListener(
+                    'transitionend',
+                    function handleFade(e) {
+                        if (e.propertyName !== 'opacity') return;
+                        el.removeEventListener('transitionend', handleFade);
+
+                        // 2. Update transform immediately (no transition)
+                        el.style.transition = 'none';
+                        const zoom = parseFloat(data.zoom || '1');
+                        const offsetX = parseFloat(data.offsetX || '0');
+                        const offsetY = parseFloat(data.offsetY || '0');
+                        el.src = baseHost + data.image;
+                        el.alt = data.alt || 'Guest photo';
+                        el.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`;
+
+                        // 3. Fade back in opacity
+                        requestAnimationFrame(() => {
+                            el.style.transition = 'opacity 0.6s ease';
+                            el.style.opacity = 1;
+                        });
+                    },
+                    { once: true },
+                );
+            });
+        }
+
+        function updateMobileFace() {
+            const data = faceData[mobileIndex];
+            if (!data) return;
+
+            // 1. Fade out only opacity
+            faceMobile.style.transition = 'opacity 0.5s ease';
+            faceMobile.style.opacity = 0;
+
+            faceMobile.addEventListener(
+                'transitionend',
+                function handleFade(e) {
+                    if (e.propertyName !== 'opacity') return;
+                    faceMobile.removeEventListener('transitionend', handleFade);
+
+                    // 2. Update transform immediately (no transition)
+                    faceMobile.style.transition = 'none';
+                    const zoom = parseFloat(data.zoom || '1');
+                    const offsetX = parseFloat(data.offsetX || '0');
+                    const offsetY = parseFloat(data.offsetY || '0');
+                    faceMobile.src = baseHost + data.image;
+                    faceMobile.alt = data.alt || 'Guest photo';
+                    faceMobile.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`;
+
+                    // 3. Fade back in opacity
+                    requestAnimationFrame(() => {
+                        faceMobile.style.transition = 'opacity 0.6s ease';
+                        faceMobile.style.opacity = 1;
+                    });
+                },
+                { once: true },
+            );
+        }
+
+        function advanceDesktop() {
+            desktopIndex += 3;
+            if (desktopIndex >= faceData.length) desktopIndex = 0;
+            updateDesktopFaces();
+        }
+
+        function advanceMobile() {
+            mobileIndex += 1;
+            if (mobileIndex >= faceData.length) mobileIndex = 0;
+            updateMobileFace();
+        }
+
+        updateDesktopFaces();
+        updateMobileFace();
+
+        setInterval(advanceDesktop, 15000);
+        setInterval(advanceMobile, 15000);
+    });
+</script>

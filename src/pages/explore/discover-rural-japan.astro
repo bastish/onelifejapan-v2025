@@ -121,6 +121,9 @@ const description =
         hr {
             margin: 50px 0;
             width: 100%;
+            @include respond-to(small) {
+                margin: 20px 0;
+            }
         }
         .small-note {
             font-size: 1em;

@@ -1,6 +1,7 @@
 ---
 import { baseHost } from '../../../utils/utilities.ts';
 
+const { landingPageData } = Astro.props;
 // imagePosition (background-position) guide:
 // - First value = horizontal alignment
 //   * left, center, or right
@@ -14,84 +15,25 @@ import { baseHost } from '../../../utils/utilities.ts';
 // Examples:
 //   'center 20%' → centered horizontally, focus 20% down from top
 //   'bottom 20%' → align right at bottom, but move 20% down from top (NOT 20% up from bottom)
-
-const days = [
-    {
-        day: 'Day 1',
-        title: 'Explore historic temples and craft your own soba noodles.',
-        image: '/assets/img/2024/media/photos/1596/planting-rice_3658443428_o_large.jpg',
-        imagePosition: 'center 20%',
-        imageSize: '100%',
-        checklist: [
-            'Warm-up ride through peaceful farm villages and rice fields.',
-            'Visit Iiyama’s tranquil temples and traditional Butsudan craft street.',
-            'Try your hand at making soba noodles with a local soba master.',
-            'Soak in an outdoor hot spring bath with sweeping mountain views.',
-            'Relax at a small farmhouse inn and experience genuine countryside hospitality.',
-        ],
-    },
-    {
-        day: 'Day 2',
-        title: 'Monkeys, mountains, and a hidden onsen village.',
-        image: '/assets/img/2024/media/photos/1163/DSC_0115_copy_large.jpg',
-        imagePosition: 'center 60%',
-        imageSize: '110%',
-        checklist: [
-            'Ride through forested hills toward Jigokudani Monkey Park.',
-            'Visit the famous snow monkeys soaking in natural hot springs.',
-            'Make traditional washi paper at a local countryside workshop (when available).',
-            'Stroll through the historic streets of Nozawa Onsen village in yukata.',
-            'Enjoy a traditional kaiseki-style dinner at a family-run ryokan.',
-        ],
-    },
-    {
-        day: 'Day 3',
-        title: 'One more ride, and a glimpse of daily life in rural Japan.',
-        image: '/assets/img/2024/media/photos/2648/Screenshot_2025-04-26_at_22.57.24_large.png',
-        imagePosition: 'center 50%',
-        imageSize: '100%',
-        checklist: [
-            'Leisurely ride along lake shores and forested backroads.',
-            'Explore a typical Japanese supermarket with local guidance.',
-            'Pick up ingredients for your own Japanese-style BBQ dinner.',
-            'Relax at a cozy countryside inn surrounded by rice fields and mountains.',
-            'Farewell ride and transport back to the station (or next destination).',
-        ],
-    },
-    {
-        day: 'Day 3',
-        title: 'One more ride, and a glimpse of daily life in rural Japan.',
-        image: '/assets/img/2024/media/photos/2648/Screenshot_2025-04-26_at_22.57.24_large.png',
-        imagePosition: 'center 50%',
-        imageSize: '100%',
-        checklist: [
-            'Leisurely ride along lake shores and forested backroads.',
-            'Explore a typical Japanese supermarket with local guidance.',
-            'Pick up ingredients for your own Japanese-style BBQ dinner.',
-            'Relax at a cozy countryside inn surrounded by rice fields and mountains.',
-            'Farewell ride and transport back to the station (or next destination).',
-        ],
-    },
-];
 ---
 
 <div class="day-cards-container">
     {
-        days.map((day) => (
+        landingPageData.days.map((day: any) => (
             <div class="day-card">
                 <div
                     class="day-card-image"
-                    style={`background-image: url(${baseHost + day.image}); background-position: ${day.imagePosition}; background-size: ${day.imageSize};`}
+                    style={`background-image: url(${baseHost + day.imageLink}); background-position: ${day.imagePosition}; background-size: ${day.imageSize};`}
                 />
                 <div class="day-card-header">
-                    <h3>{day.day}</h3>
+                    <h3>Day {day.dayNumber}</h3>
                     <p class="day-card-title">{day.title}</p>
                 </div>
-                <ul class="day-card-checklist">
-                    {day.checklist.map((item) => (
-                        <li>{item}</li>
-                    ))}
-                </ul>
+                <div class="day-card-description" set:html={day.description} />
+                <details class="day-card-collapsible">
+                    <summary class="day-card-summary">More Details ››</summary>
+                    <div class="day-card-description" set:html={day.descriptionDetails} />
+                </details>
             </div>
         ))
     }
@@ -106,6 +48,27 @@ const days = [
         gap: 20px;
         margin-top: 2rem;
         padding: 0 0rem;
+    }
+
+    // Force 2-column layout earlier — around when 3 would start wrapping
+    @media (max-width: 1400px) {
+        .day-cards-container {
+            grid-template-columns: repeat(2, auto); // don't stretch
+            justify-content: center; // center the grid itself
+            gap: 20px;
+        }
+
+        .day-card {
+            max-width: 450px;
+            width: 100%; // optional, keeps them responsive within max-width
+        }
+    }
+
+    // Then drop to 1 column on very small screens
+    @media (max-width: 500px) {
+        .day-cards-container {
+            grid-template-columns: 1fr;
+        }
     }
 
     .day-card {
@@ -141,12 +104,19 @@ const days = [
 
     .day-card-header {
         padding: 1rem;
+        padding-bottom: 0rem;
+        border-bottom: 1px solid var(--bs-primary-dark);
+        //border: 2px solid var(--bs-primary-dark);
+        margin-bottom: 1rem;
+        text-align: center;
     }
 
     .day-card-header h3 {
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         color: var(--bs-primary-dark);
+        font-weight: 800;
+        margin-top: 10px;
     }
 
     .day-card-title {
@@ -154,6 +124,13 @@ const days = [
         color: var(--text-dark);
         font-size: 1rem;
         font-weight: 500;
+    }
+    .day-card-description {
+        padding: 1rem;
+        font-size: 1rem;
+        color: var(--text-dark);
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
     }
 
     .day-card-checklist {
@@ -165,5 +142,40 @@ const days = [
     .day-card-checklist li {
         margin-bottom: 0.5rem;
         font-size: 1rem;
+    }
+    .day-card-collapsible {
+        padding: 0 0rem 0rem;
+        cursor: pointer;
+        border-top: 1px solid #eee;
+        margin-top: 0rem;
+
+        summary {
+            font-weight: 600;
+            color: var(--bs-primary-dark);
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            list-style: none;
+
+            padding: 0 1rem;
+            &::marker {
+                display: none;
+            }
+        }
+
+        // Optional: Smooth animation
+        &[open] .day-card-description {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     }
 </style>

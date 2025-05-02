@@ -27,7 +27,7 @@ const cards = [
     <div class="landing-page-cards" data-base-host={baseHost} data-json-file={landingPageData.slug}>
         {
             cards.map((card, idx) => (
-                <div class="info-item" data-card={idx}>
+                <div class="info-item reorder-on-small" data-card={idx}>
                     <div class="image-container">
                         <img
                             src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
@@ -37,7 +37,7 @@ const cards = [
                     </div>
                     <div class="dots" />
                     <h2>{card.title}</h2>
-                    <p>{card.content}</p>
+                    <div set:html={card.content} />
                 </div>
             ))
         }
@@ -155,6 +155,24 @@ const cards = [
 
         @include respond-to(small) {
             height: 240px;
+        }
+    }
+    @include respond-to(large) {
+        .landing-page-cards {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-item[data-card='1'] {
+            order: -1;
+        }
+
+        .info-item[data-card='0'] {
+            order: 0;
+        }
+
+        .info-item[data-card='2'] {
+            order: 1;
         }
     }
 

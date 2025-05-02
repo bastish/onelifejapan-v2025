@@ -1,0 +1,75 @@
+---
+// FamilyNaganoLandingSummaryModal.astro
+---
+
+<dialog id="summary-modal" class="summary-modal">
+    <div class="modal-content">
+        <button class="close-button" onclick="document.getElementById('summary-modal').close()">×</button>
+        <h2>Family Trip Summary – For Your Notes</h2>
+        <ul>
+            <li><strong>Trip:</strong> Japan Countryside Family Bike Adventure</li>
+            <li><strong>Location:</strong> Northern Nagano, Japan (2 hrs from Tokyo, 1 hr from Kanazawa)</li>
+            <li><strong>Recommended Duration:</strong> 4–7 days</li>
+            <li><strong>Best Season:</strong> April to November</li>
+            <li><strong>Estimated Cost:</strong> ¥150,000–¥190,000 / person (based on group size)</li>
+            <li><strong>Includes:</strong> Lodging, meals, bike rental, support vehicle, guide, cultural activities</li>
+            <li><strong>Private & Custom:</strong> Planned around your family’s pace, interests, and the season</li>
+            <li>
+                <strong>Website:</strong>
+                <a href="/explore/family-bike-rural-nagano/" target="_blank"
+                    >onelifejapan.com/explore/family-bike-rural-nagano/</a>
+            </li>
+        </ul>
+        <p>This is not a packaged tour — every trip is planned one-on-one, based on what excites you most.</p>
+    </div>
+</dialog>
+
+<a href="#" onclick="document.getElementById('summary-modal').showModal(); return false;" class="summary-link">
+    Summary for Your Notes
+</a>
+
+<style>
+    .summary-link {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: var(--bs-link-color);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .summary-modal::backdrop {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .summary-modal {
+        max-width: 90%;
+        width: 500px;
+        margin: auto;
+        border: none;
+        padding: 1rem;
+        border-radius: 10px;
+        background: white;
+        font-size: 0.95rem;
+        text-align: left;
+    }
+    .summary-modal .modal-content {
+        position: relative;
+    }
+    .summary-modal h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    .summary-modal ul {
+        padding-left: 1.25rem;
+        list-style: disc;
+        margin-bottom: 1rem;
+    }
+    .summary-modal .close-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.75rem;
+        border: none;
+        background: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+</style>

@@ -1,0 +1,179 @@
+---
+import TagLineChanger from '../../TagLineChanger.astro';
+import { baseHost } from '../../../utils/utilities.ts';
+---
+
+<div class="landing-page-cards" data-base-host={baseHost}>
+    <div class="info-item">
+        <img
+            src=`${baseHost}/assets/img/2024/media/photos/1356/p1050122_1jpg_458565109_o_large.jpg`
+            alt="Kevin farming"
+            class="circle-img"
+        />
+        <h2>Rooted in Rural Japan</h2>
+        <p>
+            I'm Kevin, the lead facilitator behind One Life Japan. Our home is a <span class="emph"
+                >small farming village</span
+            > in Nagano's Snow Country, where I've spent nearly <span class="emph">two decades</span> living as <span
+                class="emph">part of the rural community</span
+            > - from farming my own rice, to serving on the local tourism board, volunteering on the fire brigade, and just
+            foraging wild vegetables or sitting down for tea with neighbors.
+        </p>
+
+        <p>
+            That deep connection shapes how I plan each family trip. It's not just about the scenery - it's about
+            introducing you to a place that's real, personal, and welcoming, with the help of trusted local hosts who
+            know we're bringing good people to share something meaningful.
+        </p>
+
+        <p>
+            Whether you're here with kids, grandparents, or everyone in between, you'll feel the rhythm of real
+            countryside life - quiet roads, warm meals, seasonal traditions - and the kind of hospitality that comes
+            from being part of the community, not just passing through.
+        </p>
+    </div>
+
+    <div class="info-item">
+        <img
+            src=`${baseHost}/assets/img/2024/media/photos/402/dsc01203-copy_14668991320_o_large.jpg`
+            alt="Kevin soaking in bath"
+            class="circle-img circle-img-2"
+            style="object-position: center 100%;"
+        />
+
+        <h2>Custom, Personal & Family-Friendly - Since 2005</h2>
+
+        <p>
+            We've been organizing countryside trips in Japan since 2005 - always small, always custom. Every family is
+            different, and every trip reflects that: shaped around your pace, your kids' energy, and what the season
+            makes possible.
+        </p>
+
+        <p>
+            We've stayed intentionally small, working mostly through word of mouth - travelers sharing their experiences
+            with friends and family. That's allowed us to build deep relationships with local hosts and design each trip
+            one-on-one - because this kind of travel doesn't scale. As <span class="emph"
+                ><em>Fodor's Essential Japan</em></span
+            > puts it:
+        </p>
+
+        <blockquote class="featured-quote">
+            One Life Japan gives travelers an inside look at life in rural Japan. A small, independent outfit, it offers
+            a level of personal interaction and community involvement that larger tours have difficulty matching.
+        </blockquote>
+        <p>
+            That has always been our goal - especially for families looking for something more personal and meaningful
+            than just checking off famous sights.
+        </p>
+    </div>
+</div>
+
+<style lang="scss">
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .why-circles {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 100px;
+        flex-wrap: wrap;
+        margin: 3rem auto;
+        max-width: 1000px;
+    }
+
+    .circle-block {
+        text-align: center;
+        max-width: 300px;
+    }
+    .circle-img {
+        width: 280px;
+        height: 280px;
+        object-fit: cover;
+        object-position: center 0%; // <-- move image down to center your face
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        border: 3px solid #ccc;
+    }
+    .circle-img-2 {
+        //object-position: left center 100%; // <-- move image down to center your face
+        //object-position: right 50%;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        //    border: 3px solid red;
+    }
+</style>
+
+<style lang="scss">
+    .why-circles {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 100px;
+        flex-wrap: wrap;
+        margin: 3rem auto;
+        max-width: 1000px;
+    }
+
+    .circle-block {
+        text-align: center;
+        max-width: 300px;
+    }
+    .circle-img {
+        width: 280px;
+        height: 280px;
+        object-fit: cover;
+        object-position: center 0%;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        border: 3px solid #ccc;
+    }
+    .circle-img-2 {
+        border-radius: 50%;
+        margin-bottom: 1rem;
+    }
+
+    .landing-page-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .info-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex: 1 1 calc(33% - 30px);
+        min-width: 280px;
+    }
+
+    @media (max-width: 900px) {
+        .info-item {
+            flex: 1 1 calc(50% - 30px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .info-item {
+            flex: 1 1 100%;
+        }
+    }
+
+    .featured-quote {
+        margin-bottom: 20px;
+        border-radius: 5px;
+        //background: white;
+    }
+</style>

@@ -4,13 +4,15 @@ import GenericSlider from '../../components/GenericSlider.astro';
 import CustomerReviewsSlider from '../../components/CustomerReviewsSlider.astro';
 import LandingPageHeroCards from '../../components/LandingPages/LandingPageHeroCards.astro';
 import LandingPastTripsCardsContainer from '../../components/LandingPages/LandingPastTripsCardsContainer.astro';
-import LandingPageWhyOneLifeJapan from '../../components/LandingPages/LandingPageWhyOneLifeJapan.astro';
+import FamilyLandingPageWhyOneLifeJapan from '../../components/LandingPages/FamilyNagano/FamilyLandingPageWhyOneLifeJapan.astro';
 import LandingPageRouteTogglerCards from '../../components/LandingPages/LandingPageRouteTogglerCards.astro';
 import FamilyLandingPageFaq from '../../components/LandingPages/FamilyNagano/FamilyLandingPageFaq.astro';
+import FamilyLandingPagePricing from '../../components/LandingPages/FamilyNagano/FamilyLandingPagePricing.astro';
 import FamilyNaganoLandingSampleDays from '../../components/LandingPages/FamilyNagano/FamilyNaganoLandingSampleDays.astro';
 import { fetchLandingPage } from '../../utils/fetchLandingPage';
 const landingPageData = await fetchLandingPage(1); // ID 1 for Family Bike Nagano
-
+import LandingPageSocialProofFaces from '../../components/LandingPages/LandingPageSocialProofFaces.astro';
+import FamilyLandingPageSuammryModal from '../../components/LandingPages/FamilyNagano/FamilyLandingPageSuammryModal.astro';
 import { baseHost } from '../../utils/utilities.ts';
 import '../../styles/global.scss';
 const devOnly = false;
@@ -36,19 +38,22 @@ const description =
         <LandingPageHeroCards landingPageData={landingPageData} />
 
         <div class="cta-container">
-            <p class="small-note">
-                Ride, explore, relax. Take a countryside break from the busy cities and discover a hidden side of Japan.
-                Flexible support options to fit your family's style.
-            </p>
             <a href="/contact" class="cta-button">{ctaText}</a>
         </div>
 
         <hr />
 
         <section class="landing-routes">
-            <h2>Trip Highlights</h2>
+            <h2>Highlights of Rural Japan</h2>
+            <!-- <p class="centered sub-header">These are some of the <span class="emph">hands-on, family-friendly experiences</span> that past families remember most - and often say were their <span class="emph">favorite parts of the trip</span>. -->
+            <!-- <p class="centered sub-header toggle" data-togglename="highlightsub">These are just some of the experiences past guests have loved. Some take planning, some are seasonal, and some — because they aren't typical tourist attractions — depend on the schedule and goodwill of our local community. When we plan your trip, we'll talk through what excites you most and explore what's possible.</p>
+            <p class="centered sub-header toggle" data-togglename="highlightsub">Some of the seasonal and unique experiences past guests have loved. When we plan your trip, we'll talk through what excites you most and explore what's possible.</p> -->
+            <p class="centered sub-header toggle" data-togglename="highlightsub">
+                Some of the <span class="emph">seasonal and unique experiences</span> past guests have loved. Since these <span class="emph">aren't all typical tourist attractions</span>, a few depend on the daily schedule and <span class="emph">goodwill of our local community</span>. While it's impossible to fit them all in, when we plan your trip, we'll talk through what excites you most and <span class="emph">explore what's possible.</span>
+            </p>
+            
             <div class="frame">
-                <GenericSlider sliderImageId={77} height={250} />
+                <GenericSlider sliderImageId={77} height={210} />
             </div>
             <ul class="checklist" style="margin-top: 20px; font-size:1.1em;">
                 {
@@ -59,21 +64,21 @@ const description =
                 }
             </ul>
 
-            <p>
-                Want to dive deeper into the experience? Explore a full day-by-day sample itinerary, with stories,
-                activities, and glimpses into what rural Japan feels like when you slow down and ride through it.
-                <a href="/itinerary/1/family-japan-adventure/" target="_blank" rel="noopener noreferrer"
-                    >View a more Detailed Itinerary ››</a
-                >
-            </p>
         </section>
+
         <hr />
 
         <section class="landing-faqs">
-            <h2>Sample 4-Day Itinerary</h2>
-            <p>This is a sample of what four days might looks like.  We have found that four days is a sweet spot allowing ample time to slow down and relax, at the same time leaving time for the rest of Japan. The number of days is flexible to fit your scheduele.</p>
-            <FamilyNaganoLandingSampleDays />
+            <h2>A Flexible Four-Day Itinerary</h2>
+            <p class="centered sub-header">*A sample shaped by the <span class="emph">moments families remember most</span>. <br>No two trips are exaclty the same.</p>
+            <div style="margin-bottom: 20px;">
+                <FamilyNaganoLandingSampleDays landingPageData={landingPageData} />
+            </div>
+        <div class="centered-section">
+            <p class="footnote">* This itinerary is a <span class="emph">flexible example</span> of a typical trip - <span class="emph">not a pre-set package</span>. Each journey is shaped by the season, your family's pace, and <span class="emph">what's possible in the moment</span>. We're always happy to plan longer trips, but we encourage <span class="emph"> at least four days</span> - in our experience, that's just <span class="emph">enough time to slow down, connect</span>, and still fit comfortably into your overall Japan itinerary.</p>
 
+            <p class=" sub-header"><a href="/detailed-itinerary">See a more detailed day-by-day breakdown ››</a></p>
+        </div>
         </section>
 
         <div class="cta-container">
@@ -84,117 +89,81 @@ const description =
 
         <section class="landing-testimonials">
             <h2>Why Families Love One Life Japan's Rural Bike Trips</h2>
-            <div class="frame">
-                <GenericSlider sliderImageId={73} height={250} />
-            </div>
-            <p>Instead of sightseeing for kids or despite kids, our countryside trips make the whole journey part of the fun. Riding bikes, making soba noodles, soaking in hot springs, exploring small towns — everyone’s engaged naturally. No boredom, no bargaining, no “just one more temple.” Just real experiences shared together, at your family’s pace.</p>
-        </section>
 
-        <section class="landing-testimonials">
-            <h2>What Past Guests Say</h2>
-          
-            <div class="testimonial-faces">
-              <img id="face1" src={`${baseHost}/assets/img/2024/media/photos/1356/p1050122_1jpg_458565109_o_large.jpg`} alt="Family enjoying Japan" class="testimonial-face-img" />
-              <img id="face2"src={`${baseHost}/assets/img/2024/media/photos/1356/p1050122_1jpg_458565109_o_large.jpg`} alt="Family enjoying Japan" class="testimonial-face-img" />
-              <img id="face3" src={`${baseHost}/assets/img/2024/media/photos/1356/p1050122_1jpg_458565109_o_large.jpg`} alt="Family enjoying Japan" class="testimonial-face-img" />
-              <img id="face4" src={`${baseHost}/assets/img/2024/media/photos/1356/p1050122_1jpg_458565109_o_large.jpg`} alt="Family enjoying Japan" class="testimonial-face-img" />
-            </div>
-          
+
+            <LandingPageSocialProofFaces slug={landingPageData.slug}/>
+            <p class="centered sub-header">The <span class="emph">best memories</span> people leave Japan with aren’t just from seeing the same sights together—they’re from <span class="emph">what they did together</span>. One Life Japan’s rural trips are full of shared experiences - <span class="emph">trying new things</span>,<span class="emph"> meeting people</span>, and <span class="emph">sharing little surprises</span> along the way. It’s the kind of connection that stays with people long after the trip - something <span class="emph">real, shared, and unforgettable</span>.</p>
+
+            </p>
             <CustomerReviewsSlider show={3} />
-          </section>
-          
+        </section>
+        
 
 
         <div class="cta-container">
             <a href="/contact" class="cta-button">{ctaText}</a>
-
-            <hr />
-
-            <section class="landing-faqs">
-                <h2>Who It’s For</h2>
-                <p>
-                    Families with kids aged 8+, groups of friends, or anyone seeking an active but relaxed countryside
-                    adventure.
-                </p>
-                <p>
-                    Basic biking ability recommended, but support available for varying fitness levels. E-bike upgrades
-                    possible.
-                </p>
-            </section>
-
-            <div class="cta-container">
-                <a href="/contact" class="cta-button">{ctaText}</a>
-            </div>
-
-            <hr />
-
-            <section class="landing-faqs">
-                <h2>How It Works</h2>
-                <p>
-                    One Life Japan provides the bikes, route planning, luggage transfers, and cultural activity
-                    arrangements. You explore at your pace. Activities like soba making or snow monkey visits are
-                    optional and coordinated with trusted local partners.
-                </p>
-                <p class="small-note">*This is not a package tour. Each trip is custom-tailored to your group.</p>
-            </section>
-
-            <div class="cta-container">
-                <a href="/contact" class="cta-button">{ctaText}</a>
-            </div>
-
-            <hr />
-
-            <section class="landing-faqs">
-                <h2>Trip Pricing Estimate</h2>
-                <p>Estimated Cost: ¥150,000 – ¥190,000 per person (based on group size and support options).</p>
-                <p>
-                    Includes: Bikes, accommodations, breakfasts and dinners, basic luggage support, and cultural
-                    activities listed.
-                </p>
-                <p>Excludes: Personal expenses, lunches, transport to/from start point, and travel insurance.</p>
-                <p class="small-note">
-                    *Exact quote provided after inquiry based on group size, support level, and lodging preferences.
-                </p>
-            </section>
-
-            <div class="cta-container">
-                <a href="/contact" class="cta-button">{ctaText}</a>
-            </div>
-
-            <hr />
-
-            <section class="landing-faqs">
-                <h2>Why Travel with One Life Japan?</h2>
-                <LandingPageWhyOneLifeJapan />
-            </section>
-
-            <hr />
-
-            <section class="past-trips">
-                <h2>A Few Memorable Journeys</h2>
-                <LandingPastTripsCardsContainer />
-            </section>
-
-            <hr />
-
-            <section class="end-of-page">
-                <h2>See You Soon...</h2>
-                <div class="centered attention-catcher">
-                    <img
-                        src={`${baseHost}/assets/img/2024/media/photos/2067/fuji-from-akadake_298038257_o_large.jpg`}
-                        alt="Family trip in rural Japan"
-                        class="circle-img circle-img-2"
-                        style="object-position: center 100%;"
-                    />
-                </div>
-                <div class="cta-container">
-                    <a href="/contact" class="cta-button">{ctaText}</a>
-                </div>
-            </section>
         </div>
+        
+        <hr />
+
+        <section class="landing-faqs">
+            <h2>FAQ</h2>
+            <FamilyLandingPageFaq />       
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">{ctaText}</a>
+        </div>
+
+        <hr />
+
+        <section class="family-pricing-section">
+            <h2>Trip Pricing Estimate</h2> 
+            <p class="centered sub-header">
+                Every trip is <span class="emph">
+                    customized based on your family's
+                    interests</span>, the season, and what's happening locally. The prices below <span class="emph">aren't fixed packages</span>. They're very realistic estimates based
+                on our trips <span class="emph">similar the example above</span> that include lodging, meals, cultural activities, and full guided support.
+            </p>
+            <FamilyLandingPagePricing />
+            <div class="centered-section">
+                    <p class="footnote">
+                        We aim to keep your costs <span class="emph">within this range</span>. Actual prices may vary slightly depending on your final
+                        itinerary - but once we begin planning, we’ll provide a detailed quote - <span class="emph">no surprises</span>, and always with your
+                        needs in mind.
+                    </p>
+                    <p class="footnote">Want a <span class="emph">longer trip or different support</span> level? We’ll work with you to create something that fits.</p>
+            </div>
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">{ctaText}</a>
+        </div>
+
+        <hr />
+
+        <section class="landing-faqs">
+            <h2>Why Travel with One Life Japan?</h2>
+            <FamilyLandingPageWhyOneLifeJapan />
+        </section>
+
+        <div class="cta-container">
+            <a href="/contact" class="cta-button">{ctaText}</a>
+        </div>
+        <div class="centered" style="margin-bottom: 20px;">
+            <FamilyLandingPageSuammryModal />
+        </div>
+    
+            
+    </div>
 
         <style lang="scss">
             @use '../../styles/global' as *;
+            section {
+                @include respond-to(small) {
+                    //border: 1px solid blue;
+                }
+            }
             section p {
 
                 @include respond-to(small) {
@@ -207,16 +176,30 @@ const description =
                     margin-left:5px;
                 }
             }
+            .sub-header {
+                max-width: 1000px;
+                margin: 0 auto;
+                margin-bottom: 20px;
+            }
+            .centered-section {
+                max-width: 800px;
+                margin: 0 auto;
+                text-align: left;
+            }
             hr {
                 margin: 50px 0;
                 width: 100%;
+                @include respond-to(small) {
+                    margin: 20px 0;
+                }
             }
-            .small-note {
-                font-size: 1em;
+            .footnote {
+                font-size: 1.1em;
                 color: #777;
                 margin-top: 10px;
                 margin-bottom: 15px;
                 text-align: left;
+            //    border: 1px solid red;
             }
 
             .attention-catcher {
@@ -377,13 +360,48 @@ const description =
                 margin-bottom: 1rem;
                 //    border: 3px solid red;
             }
+
+            .checklist {
+                margin-top: 20px;
+                font-size: 1.1em;
+                list-style: none;
+                padding: 10px!important;
+                max-width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+                border: 2px solid var(--bs-primary-light);
+                border-radius: 8px;
+                background: rgba(189, 208, 159, 0.08); // or a themed light color
+                @include respond-to(medium) {
+                    // margin-left: 0px;
+                    // margin-right: 0px;
+                    padding: 5px!important;
+                    max-width: 100%;
+                }
+
+            }
+
+            .checklist li::before {
+                margin-right: 0.5em;
+                
+            }
+
+            @media (min-width: 768px) {
+                .checklist {
+                    columns: 2;
+                    column-gap: 2rem;
+                }
+            }
+//                 small: 480px,
+//   medium: 768px,
+//   large: 1024px
         </style>
 
 <style lang="scss">
     @use '../../styles/global' as *;
     .testimonial-faces {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-bottom: 2rem;
   width: 100%;
