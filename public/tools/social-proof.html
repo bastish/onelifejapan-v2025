@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Face Editor Tool</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                background: #f0f0f0;
+                padding: 2rem;
+            }
+
+            .face-set {
+                display: flex;
+                justify-content: center;
+                gap: 60px;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .outer-mask {
+                width: 250px;
+                height: 250px;
+                border-radius: 50%;
+                overflow: hidden;
+                background-color: #fff;
+                border: 2px solid #87bfff;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .inner-container {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: visible;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .face-img {
+                width: auto;
+                height: auto;
+                min-width: 100%;
+                min-height: 100%;
+                object-fit: contain;
+                object-position: center;
+                transition: transform 0.3s ease;
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            .controls {
+                margin-top: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+                font-size: 0.9rem;
+                align-items: center;
+            }
+
+            .face-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[type='range'] {
+                width: 140px;
+            }
+
+            .output-block {
+                text-align: center;
+                margin: 1rem auto 3rem;
+                max-width: 800px;
+            }
+
+            .output-block textarea {
+                width: 100%;
+                height: 180px;
+                font-family: monospace;
+                font-size: 0.85rem;
+                margin-top: 0.5rem;
+            }
+
+            .output-block button {
+                margin-top: 0.5rem;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+                background: #007acc;
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Face Carousel Editor</h1>
+        <div id="app">Loading...</div>
+
+        <script>
+            const basepath = 'http://192.168.128.123:3020/';
+            const jsonPath = '/data/family-bike-rural-nagano-social-proof.json';
+
+            fetch(jsonPath)
+                .then((res) => res.json())
+                .then((imageGroups) => {
+                    const app = document.getElementById('app');
+                    app.innerHTML = '';
+
+                    imageGroups.forEach((group, groupIndex) => {
+                        const faceSet = document.createElement('div');
+                        faceSet.className = 'face-set';
+
+                        const groupData = [];
+
+                        group.forEach((face, index) => {
+                            const container = document.createElement('div');
+                            container.className = 'face-container';
+
+                            const outer = document.createElement('div');
+                            outer.className = 'outer-mask';
+
+                            const inner = document.createElement('div');
+                            inner.className = 'inner-container';
+
+                            const img = document.createElement('img');
+                            img.className = 'face-img';
+                            img.src = basepath + face.image;
+                            img.alt = face.alt || '';
+                            face.zoom = face.zoom ?? 1;
+                            face.offsetX = face.offsetX ?? 0;
+                            face.offsetY = face.offsetY ?? 0;
+
+                            groupData.push(face); // Keep reference
+
+                            img.style.transform = `translate(${face.offsetX}px, ${face.offsetY}px) scale(${face.zoom})`;
+
+                            inner.appendChild(img);
+                            outer.appendChild(inner);
+                            container.appendChild(outer);
+
+                            const controls = document.createElement('div');
+                            controls.className = 'controls';
+
+                            controls.innerHTML = `
+                <label>Zoom <input type="range" min="0.5" max="3" step="0.1" value="${face.zoom}" data-type="zoom"></label>
+                <label>OffsetX <input type="range" min="-100" max="100" step="1" value="${face.offsetX}" data-type="offsetX"></label>
+                <label>OffsetY <input type="range" min="-100" max="100" step="1" value="${face.offsetY}" data-type="offsetY"></label>
+              `;
+
+                            controls.querySelectorAll('input').forEach((input) => {
+                                input.addEventListener('input', () => {
+                                    const type = input.dataset.type;
+                                    face[type] = parseFloat(input.value);
+                                    img.style.transform = `translate(${face.offsetX}px, ${face.offsetY}px) scale(${face.zoom})`;
+                                });
+                            });
+
+                            container.appendChild(controls);
+                            faceSet.appendChild(container);
+                        });
+
+                        const outputBlock = document.createElement('div');
+                        outputBlock.className = 'output-block';
+
+                        const textarea = document.createElement('textarea');
+                        textarea.placeholder = 'Click button to get JSON...';
+                        const button = document.createElement('button');
+                        button.textContent = 'Get JSON for This Set';
+                        button.addEventListener('click', () => {
+                            const json = JSON.stringify(groupData, null, 4);
+                            textarea.value = json;
+                        });
+
+                        outputBlock.appendChild(button);
+                        outputBlock.appendChild(textarea);
+
+                        app.appendChild(faceSet);
+                        app.appendChild(outputBlock);
+                    });
+                })
+                .catch((err) => {
+                    document.getElementById('app').textContent = 'Failed to load JSON: ' + err.message;
+                });
+        </script>
+    </body>
+</html>
+
+<!-- <!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Face Editor Tool</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                background: #f0f0f0;
+                padding: 2rem;
+            }
+
+            .face-set {
+                display: flex;
+                justify-content: center;
+                gap: 60px;
+                margin-bottom: 4rem;
+            }
+
+            .outer-mask {
+                width: 250px;
+                height: 250px;
+                border-radius: 50%;
+                overflow: hidden;
+                background-color: #fff;
+                border: 2px solid #87bfff;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .inner-container {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: visible;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .face-img {
+                width: auto;
+                height: auto;
+                min-width: 100%;
+                min-height: 100%;
+                object-fit: contain;
+                object-position: center;
+                transition: transform 0.3s ease;
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            .controls {
+                margin-top: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+                font-size: 0.9rem;
+                align-items: center;
+            }
+
+            .face-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[type='range'] {
+                width: 140px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Face Carousel Editor</h1>
+        <div id="app">Loading...</div>
+
+        <script>
+            const basepath = 'http://192.168.128.123:3020/';
+            const jsonPath = '/data/family-bike-rural-nagano-social-proof.json';
+
+            fetch(jsonPath)
+                .then((res) => res.json())
+                .then((imageGroups) => {
+                    const app = document.getElementById('app');
+                    app.innerHTML = '';
+
+                    imageGroups.forEach((group, groupIndex) => {
+                        const faceSet = document.createElement('div');
+                        faceSet.className = 'face-set';
+
+                        group.forEach((face, index) => {
+                            const container = document.createElement('div');
+                            container.className = 'face-container';
+
+                            const outer = document.createElement('div');
+                            outer.className = 'outer-mask';
+
+                            const inner = document.createElement('div');
+                            inner.className = 'inner-container';
+
+                            const img = document.createElement('img');
+                            img.className = 'face-img';
+                            img.src = basepath + face.image;
+                            img.alt = face.alt || '';
+                            face.zoom = face.zoom ?? 1;
+                            face.offsetX = face.offsetX ?? 0;
+                            face.offsetY = face.offsetY ?? 0;
+
+                            img.style.transform = `translate(${face.offsetX}px, ${face.offsetY}px) scale(${face.zoom})`;
+
+                            inner.appendChild(img);
+                            outer.appendChild(inner);
+                            container.appendChild(outer);
+
+                            const controls = document.createElement('div');
+                            controls.className = 'controls';
+
+                            controls.innerHTML = `
+                <label>Zoom <input type="range" min="0.5" max="3" step="0.1" value="${face.zoom}" data-type="zoom"></label>
+                <label>OffsetX <input type="range" min="-100" max="100" step="1" value="${face.offsetX}" data-type="offsetX"></label>
+                <label>OffsetY <input type="range" min="-100" max="100" step="1" value="${face.offsetY}" data-type="offsetY"></label>
+              `;
+
+                            controls.querySelectorAll('input').forEach((input) => {
+                                input.addEventListener('input', () => {
+                                    const type = input.dataset.type;
+                                    face[type] = parseFloat(input.value);
+                                    img.style.transform = `translate(${face.offsetX}px, ${face.offsetY}px) scale(${face.zoom})`;
+                                });
+                            });
+
+                            container.appendChild(controls);
+                            faceSet.appendChild(container);
+                        });
+
+                        app.appendChild(faceSet);
+                    });
+                })
+                .catch((err) => {
+                    document.getElementById('app').textContent = 'Failed to load JSON: ' + err.message;
+                });
+        </script>
+    </body>
+</html> -->

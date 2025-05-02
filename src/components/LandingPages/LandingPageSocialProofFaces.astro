@@ -86,8 +86,8 @@ import { baseHost } from '../../utils/utilities.ts';
             align-items: center;
         }
         .outer-mask {
-            width: 180px;
-            height: 180px;
+            width: 220px;
+            height: 220px;
         }
         .outer-mask:nth-child(2),
         .outer-mask:nth-child(3) {
@@ -120,26 +120,27 @@ import { baseHost } from '../../utils/utilities.ts';
         const facesDesktop = Array.from(container.querySelectorAll('.face-carousel-desktop .face-img'));
         const faceMobile = container.querySelector('.face-carousel-mobile .face-img-mobile');
 
-        let faceData = [];
+        let faceGroups = [];
         try {
             const res = await fetch(`/data/${jsonSlug}-social-proof.json`);
             if (!res.ok) throw new Error('Could not fetch social proof face data');
-            faceData = await res.json();
+            faceGroups = await res.json(); // this is now an array of arrays
         } catch (err) {
             console.error('Error loading social proof faces:', err);
             return;
         }
 
+        const allFacesFlat = faceGroups.flat();
+
         let desktopIndex = 0;
         let mobileIndex = 0;
 
         function updateDesktopFaces() {
-            const group = faceData.slice(desktopIndex, desktopIndex + 3);
+            const group = faceGroups[desktopIndex % faceGroups.length] || [];
             facesDesktop.forEach((el, i) => {
                 const data = group[i];
                 if (!data) return;
 
-                // 1. Fade out only opacity
                 el.style.transition = 'opacity 0.5s ease';
                 el.style.opacity = 0;
 
@@ -149,7 +150,6 @@ import { baseHost } from '../../utils/utilities.ts';
                         if (e.propertyName !== 'opacity') return;
                         el.removeEventListener('transitionend', handleFade);
 
-                        // 2. Update transform immediately (no transition)
                         el.style.transition = 'none';
                         const zoom = parseFloat(data.zoom || '1');
                         const offsetX = parseFloat(data.offsetX || '0');
@@ -158,7 +158,6 @@ import { baseHost } from '../../utils/utilities.ts';
                         el.alt = data.alt || 'Guest photo';
                         el.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`;
 
-                        // 3. Fade back in opacity
                         requestAnimationFrame(() => {
                             el.style.transition = 'opacity 0.6s ease';
                             el.style.opacity = 1;
@@ -170,10 +169,9 @@ import { baseHost } from '../../utils/utilities.ts';
         }
 
         function updateMobileFace() {
-            const data = faceData[mobileIndex];
+            const data = allFacesFlat[mobileIndex % allFacesFlat.length];
             if (!data) return;
 
-            // 1. Fade out only opacity
             faceMobile.style.transition = 'opacity 0.5s ease';
             faceMobile.style.opacity = 0;
 
@@ -183,7 +181,6 @@ import { baseHost } from '../../utils/utilities.ts';
                     if (e.propertyName !== 'opacity') return;
                     faceMobile.removeEventListener('transitionend', handleFade);
 
-                    // 2. Update transform immediately (no transition)
                     faceMobile.style.transition = 'none';
                     const zoom = parseFloat(data.zoom || '1');
                     const offsetX = parseFloat(data.offsetX || '0');
@@ -192,7 +189,6 @@ import { baseHost } from '../../utils/utilities.ts';
                     faceMobile.alt = data.alt || 'Guest photo';
                     faceMobile.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`;
 
-                    // 3. Fade back in opacity
                     requestAnimationFrame(() => {
                         faceMobile.style.transition = 'opacity 0.6s ease';
                         faceMobile.style.opacity = 1;
@@ -203,21 +199,21 @@ import { baseHost } from '../../utils/utilities.ts';
         }
 
         function advanceDesktop() {
-            desktopIndex += 3;
-            if (desktopIndex >= faceData.length) desktopIndex = 0;
+            desktopIndex += 1;
+            if (desktopIndex >= faceGroups.length) desktopIndex = 0;
             updateDesktopFaces();
         }
 
         function advanceMobile() {
             mobileIndex += 1;
-            if (mobileIndex >= faceData.length) mobileIndex = 0;
+            if (mobileIndex >= allFacesFlat.length) mobileIndex = 0;
             updateMobileFace();
         }
 
         updateDesktopFaces();
         updateMobileFace();
 
-        setInterval(advanceDesktop, 15000);
-        setInterval(advanceMobile, 15000);
+        setInterval(advanceDesktop, 13000);
+        setInterval(advanceMobile, 9000);
     });
 </script>

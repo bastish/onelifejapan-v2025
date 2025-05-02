@@ -14,6 +14,7 @@ const landingPageData = await fetchLandingPage(1); // ID 1 for Family Bike Nagan
 import LandingPageSocialProofFaces from '../../components/LandingPages/LandingPageSocialProofFaces.astro';
 import FamilyLandingPageSuammryModal from '../../components/LandingPages/FamilyNagano/FamilyLandingPageSuammryModal.astro';
 import { baseHost } from '../../utils/utilities.ts';
+import LandingPageCardsEditorTool from '../../components/LandingPages/LandingPageCardsEditorTool.astro';
 import '../../styles/global.scss';
 const devOnly = false;
 const ctaText = 'Start Planning Your Family Adventure ››';
@@ -40,20 +41,19 @@ const description =
         <div class="cta-container">
             <a href="/contact" class="cta-button">{ctaText}</a>
         </div>
-
         <hr />
 
         <section class="landing-routes">
             <h2>Highlights of Rural Japan</h2>
             <!-- <p class="centered sub-header">These are some of the <span class="emph">hands-on, family-friendly experiences</span> that past families remember most - and often say were their <span class="emph">favorite parts of the trip</span>. -->
-            <!-- <p class="centered sub-header toggle" data-togglename="highlightsub">These are just some of the experiences past guests have loved. Some take planning, some are seasonal, and some — because they aren't typical tourist attractions — depend on the schedule and goodwill of our local community. When we plan your trip, we'll talk through what excites you most and explore what's possible.</p>
+            <!-- <p class="centered sub-header toggle" data-togglename="highlightsub">These are just some of the experiences past guests have loved. Some take planning, some are seasonal, and some - because they aren't typical tourist attractions - depend on the schedule and goodwill of our local community. When we plan your trip, we'll talk through what excites you most and explore what's possible.</p>
             <p class="centered sub-header toggle" data-togglename="highlightsub">Some of the seasonal and unique experiences past guests have loved. When we plan your trip, we'll talk through what excites you most and explore what's possible.</p> -->
             <p class="centered sub-header toggle" data-togglename="highlightsub">
                 Some of the <span class="emph">seasonal and unique experiences</span> past guests have loved. Since these <span class="emph">aren't all typical tourist attractions</span>, a few depend on the daily schedule and <span class="emph">goodwill of our local community</span>. While it's impossible to fit them all in, when we plan your trip, we'll talk through what excites you most and <span class="emph">explore what's possible.</span>
             </p>
             
             <div class="frame">
-                <GenericSlider sliderImageId={77} height={210} />
+                <GenericSlider sliderImageId={79} height={210} />
             </div>
             <ul class="checklist" style="margin-top: 20px; font-size:1.1em;">
                 {
@@ -77,7 +77,7 @@ const description =
         <div class="centered-section">
             <p class="footnote">* This itinerary is a <span class="emph">flexible example</span> of a typical trip - <span class="emph">not a pre-set package</span>. Each journey is shaped by the season, your family's pace, and <span class="emph">what's possible in the moment</span>. We're always happy to plan longer trips, but we encourage <span class="emph"> at least four days</span> - in our experience, that's just <span class="emph">enough time to slow down, connect</span>, and still fit comfortably into your overall Japan itinerary.</p>
 
-            <p class=" sub-header"><a href="/detailed-itinerary">See a more detailed day-by-day breakdown ››</a></p>
+            <p class=" sub-header"><a href="/itinerary/1/family-japan-adventure/">See a more detailed day-by-day breakdown ››</a></p>
         </div>
         </section>
 
@@ -91,9 +91,9 @@ const description =
             <h2>Why Families Love One Life Japan's Rural Bike Trips</h2>
 
 
-            <LandingPageSocialProofFaces slug={landingPageData.slug}/>
             <p class="centered sub-header">The <span class="emph">best memories</span> people leave Japan with aren’t just from seeing the same sights together—they’re from <span class="emph">what they did together</span>. One Life Japan’s rural trips are full of shared experiences - <span class="emph">trying new things</span>,<span class="emph"> meeting people</span>, and <span class="emph">sharing little surprises</span> along the way. It’s the kind of connection that stays with people long after the trip - something <span class="emph">real, shared, and unforgettable</span>.</p>
 
+            <LandingPageSocialProofFaces slug={landingPageData.slug}/>
             </p>
             <CustomerReviewsSlider show={3} />
         </section>
@@ -116,6 +116,9 @@ const description =
         </div>
 
         <hr />
+        <div class="frame">
+            <GenericSlider sliderImageId={80} height={210} />
+        </div>
 
         <section class="family-pricing-section">
             <h2>Trip Pricing Estimate</h2> 
