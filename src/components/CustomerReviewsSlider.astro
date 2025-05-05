@@ -6,8 +6,14 @@ const spv = [1, 2, 3].includes(show) ? show : 3;
 const ids = Astro.props.ids as (number | string)[] | undefined;
 const tags = Astro.props.tags as (number | string)[] | undefined;
 const params = new URLSearchParams();
-if (ids && ids.length) params.set('ids', ids.join(','));
-else if (tags && tags.length) params.set('tags', tags.join(','));
+if (ids?.length) {
+    // always an array, so join
+    params.set('ids', ids.join(','));
+} else if (tags) {
+    // if tags is an array, join; if it’s already a string, use it as-is
+    const tagString = Array.isArray(tags) ? tags.join(',') : tags;
+    params.set('tags', tagString);
+}
 const url = `http://127.0.0.1:8011/api/quotation/${params.toString() ? '?' + params : ''}`;
 
 const res = await fetch(url);

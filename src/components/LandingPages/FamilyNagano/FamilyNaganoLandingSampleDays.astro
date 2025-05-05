@@ -1,30 +1,16 @@
 ---
 import { baseHost } from '../../../utils/utilities.ts';
-
 const { landingPageData } = Astro.props;
-// imagePosition (background-position) guide:
-// - First value = horizontal alignment
-//   * left, center, or right
-// - Second value = vertical alignment
-//   * top, center, bottom
-//   * OR a percentage from the top
-//     - 0% = top of the image
-//     - 50% = center of the image
-//     - 100% = bottom of the image
-//     - 20% = 20% down from the top
-// Examples:
-//   'center 20%' → centered horizontally, focus 20% down from top
-//   'bottom 20%' → align right at bottom, but move 20% down from top (NOT 20% up from bottom)
 ---
 
-<div class="day-cards-container">
+<div class="day-cards-container" data-basehost={baseHost}>
     {
-        landingPageData.days.map((day: any) => (
-            <div class="day-card">
-                <div
-                    class="day-card-image"
-                    style={`background-image: url(${baseHost + day.imageLink}); background-position: ${day.imagePosition}; background-size: ${day.imageSize};`}
-                />
+        landingPageData.days.map((day: any, index: number) => (
+            <div class="day-card" data-card-index={`card-${index}`}>
+                <div class="day-card-image-mask">
+                    <div class="day-card-image" />
+                </div>
+                <div class="day-card-image-dots" />
                 <div class="day-card-header">
                     <h3>Day {day.dayNumber}</h3>
                     <p class="day-card-title">{day.title}</p>
@@ -50,21 +36,18 @@ const { landingPageData } = Astro.props;
         padding: 0 0rem;
     }
 
-    // Force 2-column layout earlier — around when 3 would start wrapping
     @media (max-width: 1400px) {
         .day-cards-container {
-            grid-template-columns: repeat(2, auto); // don't stretch
-            justify-content: center; // center the grid itself
-            gap: 20px;
+            grid-template-columns: repeat(2, auto);
+            justify-content: center;
         }
 
         .day-card {
             max-width: 450px;
-            width: 100%; // optional, keeps them responsive within max-width
+            width: 100%;
         }
     }
 
-    // Then drop to 1 column on very small screens
     @media (max-width: 500px) {
         .day-cards-container {
             grid-template-columns: 1fr;
@@ -90,23 +73,34 @@ const { landingPageData } = Astro.props;
         }
     }
 
-    .day-card-image {
+    .day-card-image-mask {
         width: 100%;
-        height: 200px;
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+        background-color: #f8f8f8;
+        @include respond-to(small) {
+            height: 250px;
+        }
+    }
+
+    .day-card-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
-        background-color: #f8f8f8;
         transition:
             background-position 0.3s ease,
             background-size 0.3s ease;
     }
 
     .day-card-header {
-        padding: 1rem;
-        padding-bottom: 0rem;
+        padding: 1rem 1rem 0;
         border-bottom: 1px solid var(--bs-primary-dark);
-        //border: 2px solid var(--bs-primary-dark);
         margin-bottom: 1rem;
         text-align: center;
     }
@@ -125,6 +119,7 @@ const { landingPageData } = Astro.props;
         font-size: 1rem;
         font-weight: 500;
     }
+
     .day-card-description {
         padding: 1rem;
         font-size: 1rem;
@@ -133,16 +128,6 @@ const { landingPageData } = Astro.props;
         margin-bottom: 0.5rem;
     }
 
-    .day-card-checklist {
-        padding: 0 1rem 1rem;
-        list-style: disc;
-        padding-left: 1.5rem;
-    }
-
-    .day-card-checklist li {
-        margin-bottom: 0.5rem;
-        font-size: 1rem;
-    }
     .day-card-collapsible {
         padding: 0 0rem 0rem;
         cursor: pointer;
@@ -155,14 +140,13 @@ const { landingPageData } = Astro.props;
             cursor: pointer;
             margin-bottom: 0.5rem;
             list-style: none;
-
             padding: 0 1rem;
+
             &::marker {
                 display: none;
             }
         }
 
-        // Optional: Smooth animation
         &[open] .day-card-description {
             animation: fadeIn 0.3s ease-in-out;
         }
@@ -178,4 +162,141 @@ const { landingPageData } = Astro.props;
             }
         }
     }
+
+    .day-card-image-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 0.5rem;
+        min-height: 20px;
+    }
+    :global(.dot-wrapper) {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        @include respond-to(small) {
+            padding: 6px;
+        }
+    }
+    :global(.day-card-image-dot) {
+        width: 10px;
+        height: 10px;
+        background: #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        @include respond-to(small) {
+            padding: 6px;
+        }
+    }
+    :global(.day-card-image-dot.active) {
+        background: var(--bs-primary-dark);
+    }
 </style>
+
+<script is:inline>
+    const testImages = {
+        0: [
+            {
+                path: '/assets/img/2024/media/photos/2640/dsc_9776-copyjpg_2621277714_o_large.jpg',
+                size: '175%',
+                position: 'center 0%',
+            },
+            { path: '/assets/img/2024/media/photos/1153/DSC_0123_copy.jpg', size: '170%', position: 'center 10%' },
+
+            {
+                path: '/assets/img/2024/media/photos/1758/dsc_0241-copy_7439744254_o_large.jpg',
+                size: '100%',
+                position: 'center 85%',
+            },
+        ],
+        1: [
+            {
+                path: '/assets/img/2024/media/photos/339/dsc_3265_8257834588_o_large.jpg',
+                size: '105%',
+                position: 'top 50%',
+            },
+            {
+                path: '/assets/img/2024/media/photos/2580/dsc_9609_1jpg_2621257004_o_large.jpg',
+                size: '110%',
+                position: 'center 50%',
+            },
+        ],
+
+        2: [
+            { path: '/assets/img/2024/media/photos/1166/slider-image-7_large.jpg', size: '155%', position: 'left 20%' },
+
+            {
+                path: '/assets/img/2024/media/photos/1612/dsc_9005-copy_3995451902_o_large.jpg',
+                size: '100%',
+                position: 'center 30%',
+            },
+        ],
+        3: [
+            {
+                path: '/assets/img/2024/media/photos/1163/DSC_0115_copy_large.jpg',
+                size: '105%',
+                position: 'center 50%',
+            },
+            {
+                path: '/assets/img/2024/media/photos/253/akko-in-hakuba_1303346268_o_large.jpg',
+                size: '100%',
+                position: 'center center',
+            },
+            {
+                path: '/assets/img/2024/media/photos/446/dsc_4553-copy_6838835690_o_large.jpg',
+                size: '105%',
+                position: 'center 50%',
+            },
+        ],
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const baseHost = document.querySelector('.day-cards-container')?.dataset.basehost || '';
+
+        Object.entries(testImages).forEach(([index, images]) => {
+            const card = document.querySelector(`.day-card[data-card-index="card-${index}"]`);
+            if (!card) return;
+
+            const imageDiv = card.querySelector('.day-card-image');
+            const dotsContainer = card.querySelector('.day-card-image-dots');
+            console.log('dotsContainer', dotsContainer);
+            if (!imageDiv || !dotsContainer) return;
+
+            const showImage = (img) => {
+                imageDiv.style.backgroundImage = `url(${baseHost + img.path})`;
+                imageDiv.style.backgroundSize = img.size;
+                imageDiv.style.backgroundPosition = img.position;
+            };
+
+            showImage(images[0]);
+
+            images.forEach((img, i) => {
+                const dotWrapper = document.createElement('span');
+                dotWrapper.classList.add('dot-wrapper'); // makes it clickable
+                const dot = document.createElement('span');
+                dot.classList.add('day-card-image-dot');
+                if (i === 0) dot.classList.add('active');
+
+                dotWrapper.appendChild(dot);
+                dotWrapper.addEventListener('click', () => {
+                    showImage(img);
+                    dotsContainer.querySelectorAll('.day-card-image-dot').forEach((d) => d.classList.remove('active'));
+                    dot.classList.add('active');
+                });
+
+                dotsContainer.appendChild(dotWrapper);
+            });
+        });
+        // document.querySelectorAll('.day-card-image-dot').forEach((e) => {
+        //     e.style.display = 'inline-block';
+        //     e.style.padding = '10px';
+        //     e.style.background = 'yellow';
+        //     e.style.color = 'red';
+        //     e.style.fontSize = '16px';
+        // });
+    });
+</script>

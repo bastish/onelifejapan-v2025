@@ -20,8 +20,8 @@ const {
 <!doctype html>
 <html lang="en">
     <head>
-        {devOnly && <meta name="dev-only" content="true" />}
         <HeadComponent title={title} description={Astro.props.description} />
+        {devOnly && <meta name="dev-only" content="true" />}
         <slot name="head" />
     </head>
     <body>

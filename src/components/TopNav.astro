@@ -32,11 +32,42 @@ const isDev = import.meta.env.DEV;
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/explore/family-bike-rural-nagano/">Family</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/explore/discover-rural-japan/">Rural Japan</a>
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="exploreDropdown"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        Explore
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="exploreDropdown">
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                href="/explore/family-bike-rural-nagano/"
+                                title="Family Bike Trips in Rural Japan"
+                            >
+                                Family Trips
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                href="/explore/discover-rural-japan/"
+                                title="Custom Rural Trips in Japan"
+                            >
+                                Custom Trips
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/self-guided/" title="Self-Guided Rural Trips in Japan">
+                                Self-Guided Trips
+                            </a>
+                        </li>
+                        <!-- add more landing pages here as you create them -->
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a
@@ -46,12 +77,12 @@ const isDev = import.meta.env.DEV;
                         role="button"
                         aria-expanded="false"
                     >
-                        Adventures &amp; Tours
+                        Sample Itineraries
                     </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" href="/itinerary/1/family-japan-adventure/"
-                                >Japan Family Bike Adventures</a
+                                >Japan Family Bike Adventure</a
                             >
                         </li>
                         <li>
@@ -95,7 +126,6 @@ const isDev = import.meta.env.DEV;
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="/self-guided/">Self-Guided</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="/journeys/">Blog</a></li>
@@ -244,6 +274,13 @@ const isDev = import.meta.env.DEV;
         border: none; /* Remove item borders */
         padding-left: 15px; /* Optionally add extra left padding for text */
         /* You can also adjust font-size, color, etc., if needed */
+    }
+    .dropdown-item:active {
+        background-color: var(--bs-primary-light); // or your preferred active background
+        color: var(--bs-primary-dark) !important; // or your preferred text color
+    }
+    .nav-link:active {
+        color: var(--bs-primary-dark) !important;
     }
 </style>
 

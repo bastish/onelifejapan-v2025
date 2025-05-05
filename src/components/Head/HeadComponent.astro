@@ -2,6 +2,8 @@
 // HeadComponent.astro
 import SeoMetaTags from './SeoMetaTags.astro';
 import VercelTracker from './VercelTracker.astro';
+import GoogleTagmanager from './GoogleTagmanager.astro';
+import MetaPixel from './MetaPixel.astro';
 
 const { title, description } = Astro.props;
 const defaultCanonical = Astro.url.href;
@@ -10,6 +12,7 @@ const defaultDescription =
 ---
 
 <meta charset="UTF-8" />
+<GoogleTagmanager />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{title}</title>
 <meta name="description" content={description || defaultDescription} />
@@ -36,3 +39,5 @@ const defaultDescription =
 <slot name="head" />
 
 <script src="/js/toggle-elements.js" defer></script>
+
+<MetaPixel />

@@ -59,39 +59,51 @@ import json
 # -------------------------------
 # Function: Update JSON Files for WebP
 # -------------------------------
-def update_json_for_webp(manifest_entries, json_files):
+def update_json_for_webp(manifest_entries, root_dir):
     """
-    For each JSON file, searches for manifest entries and updates .jpg/.jpeg/.png paths to .webp.
+    Walk root_dir for every .json (skipping any with " copy" in the name),
+    then for each JSON:
+      1) load it
+      2) recursively replace any .jpg/.jpeg/.png entry with .webp?v=epoch_time
+      3) write it back only if it changed
     """
-    for json_path in json_files:
-        if not os.path.exists(json_path):
-            print(f"JSON file not found: {json_path}")
-            continue
-        
-        with open(json_path, 'r', encoding='utf-8') as f:
+    # 1) gather all JSON paths
+    json_files = []
+    for dirpath, _, files in os.walk(root_dir):
+        for fname in files:
+            if fname.lower().endswith('.json') and ' copy' not in fname:
+                json_files.append(os.path.join(dirpath, fname))
+
+    # 2) helper to recurse into lists, dicts, and strings
+    def recursive_update(obj):
+        if isinstance(obj, str):
+            for entry in manifest_entries:
+                # only originals ending in the image extensions
+                if entry.lower().endswith(('.jpg', '.jpeg', '.png')) and entry in obj:
+                    base = entry.rsplit('.', 1)[0]
+                    obj = obj.replace(entry, f"{base}.webp?v={epoch_time}")
+            return obj
+
+        if isinstance(obj, list):
+            return [recursive_update(item) for item in obj]
+
+        if isinstance(obj, dict):
+            return {k: recursive_update(v) for k, v in obj.items()}
+
+        return obj  # leave numbers, booleans, etc. untouched
+
+    # 3) process each file
+    for path in json_files:
+        print(f"# Process: {path}")
+        with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
-        original_data = json.dumps(data)  # serialize original to compare later
-
-        # Helper to recursively update nested lists or strings
-        def recursive_update(item):
-            if isinstance(item, list):
-                return [recursive_update(subitem) for subitem in item]
-            if isinstance(item, str):
-                for entry in manifest_entries:
-                    lower_entry = entry.lower()
-                    if lower_entry.endswith(('.jpg', '.jpeg', '.png', 'webp')) and entry in item:
-                        item = item.replace(entry, entry.rsplit('.', 1)[0] + '.webp?v=' + str(epoch_time))
-                return item
-            return item
-
-        updated_data = recursive_update(data)
-
-        # Only save if changes were made
-        if json.dumps(updated_data) != original_data:
-            with open(json_path, 'w', encoding='utf-8') as f:
-                json.dump(updated_data, f, ensure_ascii=False, indent=2)
-            print(f"Updated {json_path}")
+        updated = recursive_update(data)
+        # compare by serialized form; keys/order won’t change in your replace
+        if json.dumps(updated, ensure_ascii=False) != json.dumps(data, ensure_ascii=False):
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(updated, f, ensure_ascii=False, indent=2)
+            print(f"  ✅ Updated {os.path.basename(path)}")
 
 
 # -------------------------------
@@ -100,15 +112,15 @@ def update_json_for_webp(manifest_entries, json_files):
 if __name__ == '__main__':
     manifest_entries = load_manifest(manifest_file)
     print("Manifest entries loaded:")
-    for entry in manifest_entries:
-        print(entry)
+    # for entry in manifest_entries:
+    #     print(entry)
     update_html_for_webp(manifest_entries, dist_dir)
     
-    # NEW: Update your JSON files
-    json_files_to_update = [
-        '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist/data/card-images-pre-defined.json',
-        '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist/data/card-image-paths.json'
-    ]
-    update_json_for_webp(manifest_entries, json_files_to_update)
+    # # NEW: Update your JSON files
+    # json_files_to_update = [
+    #     '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist/data/card-images-pre-defined.json',
+    #     '/Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist/data/card-image-paths.json'
+    # ]
+    update_json_for_webp(manifest_entries, dist_dir)
 
     print("HTML and JSON update for WebP completed.")

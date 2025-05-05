@@ -19,9 +19,9 @@ import '../../styles/global.scss';
 const devOnly = false;
 const ctaText = 'Start Planning Your Family Adventure ››';
 const sliderText = "But there's a whole different side of Japan waiting  -  if you're willing to go a bit further.";
-const title = 'Discover Rural Japan Beyond the Golden Route - One Life Japan';
-const description =
-    'Already planning the Golden Route? Discover a deeper side of Japan with flexible countryside trips - bike, walk, or simply wander through quiet villages and hidden landscapes. Explore rural life with One Life Japan.';
+const title = 'Family Roots & Rides in Rural Japan | One Life Japan';
+const description = 
+  'Tailored for families—whether reconnecting with heritage or simply seeking space to roam. Bike quiet rice-field lanes, cook soba with locals, hunt for hidden shrines, and create memories beyond the Golden Route.';
 ---
 
 <BaseLayout title={title} description={description} page="about" devOnly={devOnly}>
@@ -39,7 +39,7 @@ const description =
         <LandingPageHeroCards landingPageData={landingPageData} />
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">{ctaText}</a>
+            <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
         <hr />
 
@@ -53,7 +53,7 @@ const description =
             </p>
             
             <div class="frame">
-                <GenericSlider sliderImageId={79} height={210} />
+                <GenericSlider sliderImageId={79} height={250} />
             </div>
             <ul class="checklist" style="margin-top: 20px; font-size:1.1em;">
                 {
@@ -77,12 +77,12 @@ const description =
         <div class="centered-section">
             <p class="footnote">* This itinerary is a <span class="emph">flexible example</span> of a typical trip - <span class="emph">not a pre-set package</span>. Each journey is shaped by the season, your family's pace, and <span class="emph">what's possible in the moment</span>. We're always happy to plan longer trips, but we encourage <span class="emph"> at least four days</span> - in our experience, that's just <span class="emph">enough time to slow down, connect</span>, and still fit comfortably into your overall Japan itinerary.</p>
 
-            <p class=" sub-header"><a href="/itinerary/1/family-japan-adventure/">See a more detailed day-by-day breakdown ››</a></p>
+            <p class=" sub-header"><a href="/itinerary/1/family-japan-adventure/" target="_blanK">See a more detailed day-by-day breakdown ››</a></p>
         </div>
         </section>
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">{ctaText}</a>
+            <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
 
         <hr />
@@ -95,13 +95,13 @@ const description =
 
             <LandingPageSocialProofFaces slug={landingPageData.slug}/>
             </p>
-            <CustomerReviewsSlider show={3} />
+            <CustomerReviewsSlider show={3} tags="family"/>
         </section>
         
 
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">{ctaText}</a>
+            <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
         
         <hr />
@@ -112,12 +112,12 @@ const description =
         </section>
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">{ctaText}</a>
+            <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
 
         <hr />
         <div class="frame">
-            <GenericSlider sliderImageId={80} height={210} />
+            <GenericSlider sliderImageId={80} height={250} />
         </div>
 
         <section class="family-pricing-section">
@@ -140,7 +140,7 @@ const description =
         </section>
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">{ctaText}</a>
+            <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
 
         <hr />
@@ -151,7 +151,7 @@ const description =
         </section>
 
         <div class="cta-container">
-            <a href="/contact" class="cta-button">{ctaText}</a>
+            <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
         <div class="centered" style="margin-bottom: 20px;">
             <FamilyLandingPageSuammryModal />

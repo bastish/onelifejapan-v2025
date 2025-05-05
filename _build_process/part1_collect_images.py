@@ -119,24 +119,42 @@ def load_additional_image_references():
     predefined_json_path = os.path.join(abs_path, 'public', 'data', 'card-images-pre-defined.json')
     paths_json_path = os.path.join(abs_path, 'public', 'data', 'card-image-paths.json')
 
-    if os.path.exists(predefined_json_path):
-        with open(predefined_json_path, 'r', encoding='utf-8') as f:
-            predefined_data = json.load(f)
-            for sublist in predefined_data:
-                for url in sublist:
-                    if '/assets/' in url:
-                        idx = url.find('/assets/')
-                        asset_url = url[idx:]
-                        additional_urls.add(asset_url)
+    additional_urls = set()
+    data_dir = os.path.join(abs_path, 'public', 'data')
 
-    if os.path.exists(paths_json_path):
-        with open(paths_json_path, 'r', encoding='utf-8') as f:
-            paths_data = json.load(f)
-            for path in paths_data:
-                if path.startswith('/assets/'):
-                    additional_urls.add(path)
+    # Recursively walk any nested lists/dicts and pull out asset URLs
+    def collect(obj):
+        if isinstance(obj, str):
+            if '/assets/' in obj:
+                idx = obj.find('/assets/')
+                additional_urls.add(obj[idx:])
+        elif isinstance(obj, list):
+            for item in obj:
+                collect(item)
+        elif isinstance(obj, dict):
+            for v in obj.values():
+                collect(v)
+
+    # Crawl every JSON under public/data
+    for root, _, files in os.walk(data_dir):
+        for fname in files:
+            lower = fname.lower()
+            if not lower.endswith('.json') or ' copy' in lower:
+                continue
+
+            path = os.path.join(root, fname)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            except Exception as e:
+                print(f"⚠️ Failed to load {path}: {e}")
+                continue
+
+            collect(data)
 
     return additional_urls
+
+
 #############################################
 # FUNCTION: copy_images
 # Main Responsibility: Copy image files from the external assets library to the

@@ -5,7 +5,8 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 <!-- Contact Page Markup --><!-- Use a Bootstrap Card for the Form Container -->
 <form id="contactForm" novalidate>
     <div class="contact-intro">
-        <div class="intro-text">
+        <div class="intro-text" id="contact-intro">
+            <!-- This will be replaced by JS based on the ?context= parameter -->
             <p>
                 Not sure where to start? <span class="emph">No problem</span>. Whether you already have an idea in mind
                 or you're just <span class="emph">curious what's possible</span>, feel free to reach out.
@@ -15,7 +16,7 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
                 relaxing. <span class="emph">We'll help shape a trip</span> that fits you.
             </p>
             <p>
-                <span class="emph">No pressure, no commitment</span> — just real advice from someone who knows rural Japan
+                <span class="emph">No pressure, no commitment</span> - just real advice from someone who knows rural Japan
                 really well.
             </p>
         </div>
@@ -26,6 +27,7 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
             <BaseGeneralModal show="modal" content="priceEstimate" trigger="link" />
         </div>
     </div>
+    <h3 style="margin-top: 20px; margin-bottom:20px;">Contact One Life Japan</h3>
     <p>
         You can reach me directly at
         <a
@@ -34,22 +36,69 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
             class="font-weight-bold text-decoration-none">kevin@onelifejapan.com</a
         >, including the following information, or <a href="#form">use the form below</a> - whichever you prefer.
     </p>
-    <!-- Suggested info list -->
+    <div class="info-form-flex mb-4">
+        <!-- Suggested info list -->
+        <div class="helpful-info">
+            <p class="text-muted mb-2">The more we know, the better we can tailor things to you:</p>
+            <ul class="checklist mb-3">
+                <li>When are you thinking of traveling?</li>
+                <li>Who’s coming along (ages, energy level, etc.)?</li>
+                <li>What else is already on your Japan itinerary?</li>
+            </ul>
 
-    <ul class="checklist" id="question-list">
-        <li class="mb-2">Potential Dates?</li>
-        <li class="mb-2">Participant Names, Ages &amp; General Desired Activity Level?</li>
-        <li class="mb-2">Which itinerary on the site is closest to your goals?</li>
-        <li class="mb-2">How long will you be in Japan before and after your trip with One Life Japan?</li>
-        <li class="mb-2">What places will you visit before and after?</li>
-        <li class="mb-2">How often/far do you walk, ride a bike or hike?</li>
-        <li class="mb-2">Do you have any physical conditions/concerns you would like us to consider?</li>
-        <li class="mb-2">Do you have any special requirements for accommodations?</li>
-        <li>Do you have any specific dietary restrictions or allergies?</li>
-    </ul>
-    <a id="form"></a>
-    <h3 style="margin-top: 20px; margin-bottom:20px;">Contact One Life Japan</h3>
-    <!-- Contact Form -->
+            <details class="mb-3 more-info-block">
+                <summary>More ... </summary>
+                <ul class="checklist mt-2">
+                    <li>Where will you be in Japan before and after?</li>
+                    <li>Anything on the site catch your eye?</li>
+                    <li>How active do you usually like to be?</li>
+                    <li>Any health or physical considerations?</li>
+                    <li>Accommodation preferences or needs?</li>
+                    <li>Food allergies or dietary restrictions?</li>
+                </ul>
+            </details>
+        </div>
+
+        <!-- Contact Form Intent Section -->
+        <div class="form-intent">
+            <label class="d-block mb-2">What are you reaching out for? (Check all that apply)</label><div
+                class="form-check"
+            >
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="intent[]"
+                    id="intent-curious"
+                    value="just-curious"
+                    checked
+                />
+                <label class="form-check-label" for="intent-curious">I’m curious about visiting rural Japan</label>
+            </div>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="intent[]"
+                    id="intent-advice"
+                    value="just-advice"
+                />
+                <label class="form-check-label" for="intent-advice"
+                    >I’m looking for advice about traveling in rural Japan
+                </label>
+            </div>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="intent[]"
+                    id="intent-plan"
+                    value="trip-planning"
+                />
+                <label class="form-check-label" for="intent-plan">I’m interested in planning a custom trip</label>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
         <label for="name" class="sr-only">Your Name</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required />
@@ -70,10 +119,25 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
             required
         />
     </div>
+    <div class="form-check form-group mt-3">
+        <input class="form-check-input" type="checkbox" name="joinMailingList" id="joinMailingList" />
+
+        <label class="form-check-label" for="joinMailingList">
+            I’d like you to let me know if anything comes up that might be relevant based on the plans I describe — like
+            a local event near my travel dates. No newsletters or mailing list, just a personal heads-up based on what I
+            share below.
+        </label>
+    </div>
+
     <div class="form-group">
         <label for="message" class="sr-only">Your Message</label>
-        <textarea class="form-control" name="message" id="message" rows="15" placeholder="Your Message" required
-        ></textarea>
+        <textarea
+            class="form-control"
+            name="message"
+            id="message"
+            rows="15"
+            placeholder="Tell us anything that might help — dates, interests, questions… (or see the list above)"
+            required></textarea>
     </div>
     <!-- Other form fields as needed -->
 
@@ -86,9 +150,9 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
                 const listItems = questionList.querySelectorAll('li');
                 const questions = Array.from(listItems).map((item) => `* ${item.textContent?.trim()}`);
                 const defaultContent = '\n\n\n' + questions.join('\n\n');
-                textarea.value = defaultContent;
+                //textarea.value = defaultContent;
                 // Store the default value on a data attribute for later comparison.
-                textarea.dataset.defaultValue = defaultContent;
+                //textarea.dataset.defaultValue = defaultContent;
             }
         });
     </script>
@@ -178,6 +242,41 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
             flex-direction: row;
             justify-content: center;
             margin-top: 10px;
+        }
+    }
+    .checklist li {
+        margin-top: 5px;
+    }
+    .helpful-info {
+        border: 1px solid var(--bs-primary-dark);
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    .info-form-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: flex-start;
+
+        .helpful-info,
+        .form-intent {
+            flex: 1 1 300px;
+            min-width: 250px;
+        }
+
+        .checklist {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .more-info-block summary {
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--bs-link-color);
+            margin-top: 0.5rem;
         }
     }
 </style>
@@ -272,4 +371,48 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
             }
         });
     });
+</script>
+<script>
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        const context = params.get('context');
+
+        const introEl = document.getElementById('contact-intro');
+        const defaultH1 = document.querySelector('.default-h1');
+        const mobileH1 = document.querySelector('.mobile-h1');
+
+        let introHTML = '';
+        let titleText = 'Planning to Visit Rural Japan? Let’s Talk'; // set default
+
+        switch (context) {
+            case 'family':
+                titleText = 'Let’s Start Planning Your Family Trip';
+                introHTML = `
+<p>Curious what’s possible? Whether you’ve got ideas or not, we’re here to help.</p>
+<p>Just share your dates, kids’ ages, or anything you’re hoping for — we’ll shape suggestions around your pace and style.</p>
+<p><span class="emph">No pressure</span> — just real input from someone who’s helped families explore rural Japan.</p>
+`;
+
+                break;
+
+            case 'custom':
+                titleText = 'Need Help Adding Rural Japan to Your Trip?';
+                introHTML = `
+        <p>Looking for a rural Japan experience tailored to your interests?</p>
+        <p>Whether you're biking, hiking, relaxing, or mixing it up - we can help shape a trip around your travel plans.</p>
+        <p><span class="emph">Just ask anything</span> - we'll get back with practical ideas and local insight.</p>
+      `;
+                break;
+            // no default anymore
+        }
+
+        // Always apply titleText
+        if (defaultH1) defaultH1.textContent = titleText;
+        if (mobileH1) mobileH1.textContent = titleText;
+
+        // Only update intro text if context-specific HTML was set
+        if (introHTML && introEl) {
+            introEl.innerHTML = introHTML;
+        }
+    })();
 </script>

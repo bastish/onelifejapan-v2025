@@ -66,7 +66,7 @@ cd onelifejapan.com-deployed
   cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
 
 git add .
-git commit -m "Deploy [added exmaple trips slider / updated About page] for stage"
+git commit -m "Deploy [added family landing and google tag] for stage"
 git push origin stage
 
 - check it on vercel
@@ -77,7 +77,7 @@ git checkout master
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [added exmaple trips slider / updated About page]"
+git commit -m " Update Production [added family landing and google tag]"
 git push origin master
 
 -- CLEAN UP
