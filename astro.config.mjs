@@ -14,3 +14,8 @@ export default defineConfig({
         },
     },
 });
+
+// sitemap({
+//     // Exclude /tools or any unwanted paths
+//     exclude: ['/tools', '/route-accordian', '/highlight-points', '/data'],
+// }),

@@ -1,0 +1,193 @@
+---
+import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
+---
+
+<section class="pricing-section section-inner">
+    <div class="pricing-flex">
+        <!-- Fully-Guided Hero Column -->
+        <div class="pricing-column hero">
+            <h3>
+                Estimated Cost<br />
+                <span class="sub">4-Day Fully-Guided Family Trip</span>
+            </h3>
+            <ul class="estimate-list">
+                <li><strong>3–4 People:</strong> ¥150,000 / person</li>
+                <li><strong>5–6 People:</strong> ¥140,000 / person</li>
+                <li><strong>Other sizes:</strong> Contact us</li>
+            </ul>
+            <a href="/contact/" class="btn btn-primary w-100 mb-3">Start Planning</a>
+            <p class="note">Includes bikes, inns, meals, support, and activities.</p>
+        </div>
+
+        <!-- What's Included Column -->
+        <div class="pricing-column">
+            <h3>Estimate Includes</h3>
+
+            <details class="pricing-item">
+                <summary>3 nights’ accommodation in traditional inns or farmhouse stays</summary>
+                <p>
+                    Stay in family-run ryokan and farmhouses—accommodation is part of the cultural exchange, not just a
+                    place to sleep.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>3 breakfasts &amp; dinners with local hosts</summary>
+                <p>
+                    Handcrafted kaiseki breakfasts, home-style dinners, plus a hands-on soba-making lesson—meals you
+                    won’t find in any hotel buffet.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>All listed cultural activities</summary>
+                <p>
+                    Every workshop and visit on the itinerary—mochi-pounding, papermaking, temple tours, communal baths.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Complete bike &amp; gear package</summary>
+                <p>
+                    E-bike or cross-bike rental plus helmet, phone mount, rain gear, panniers—everything you need to
+                    ride.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Seamless logistics</summary>
+                <p>Luggage transfers and support-vehicle shuttle rides as needed—so you pedal light and carefree.</p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Dedicated English-speaking guide</summary>
+                <p>
+                    On-hand from morning to evening—route tweaks, snack stops, onsen detours, and post-dinner
+                    conversation facilitation.
+                </p>
+            </details>
+        </div>
+    </div>
+
+    <!-- Secondary Support Options (collapsed) -->
+    <details class="other-support mt-4">
+        <summary>Other support options</summary>
+        <ul class="list-unstyled ms-3">
+            <li>
+                <strong>Self-Guided Support:</strong> ¥85,000 / pp<br />
+                Custom route planning &amp; remote on-call guidance only.
+            </li>
+            <li class="mt-2">
+                <strong>Partial Support:</strong> ¥125,000 / pp<br />
+                Onsite guide daytime only (after breakfast–before dinner), own meals &amp; evenings.
+            </li>
+        </ul>
+    </details>
+
+    <!-- Optional deeper value modal trigger -->
+    <div class="text-center mt-4">
+        <WhyItsWorthItModal />
+    </div>
+</section>
+
+<style lang="scss">
+    .pricing-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+    }
+    .pricing-column {
+        flex: 1 1 280px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    .hero {
+        border-color: var(--bs-primary);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .hero .badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: var(--bs-primary);
+        color: #fff;
+        padding: 0.25em 0.6em;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+    .estimate-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+    .estimate-list li {
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+    }
+    .sub {
+        font-weight: normal;
+        font-size: 0.95rem;
+        display: block;
+        margin-top: 0.25rem;
+        color: #555;
+    }
+    .note {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: #666;
+    }
+
+    /* Pricing-item details styling (from earlier) */
+    details summary::-webkit-details-marker {
+        display: none;
+    }
+    .pricing-item summary {
+        position: relative;
+        padding-left: 1.5em;
+        cursor: pointer;
+        margin-bottom: 0.5em;
+        font-weight: 500;
+    }
+    .pricing-item summary::before {
+        content: '\f058';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 400;
+        position: absolute;
+        left: 0;
+        top: 0.1em;
+        color: var(--bs-primary-ultradark);
+    }
+    .pricing-item summary::after {
+        content: '\f078';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        position: absolute;
+        right: 0;
+        top: 0.1em;
+        transition: transform 0.2s;
+    }
+    .pricing-item[open] summary::after {
+        transform: rotate(180deg);
+    }
+    .pricing-item p {
+        margin: 0.5em 1em 1em;
+        color: #555;
+        line-height: 1.4;
+    }
+
+    /* Other-support collapsed section */
+    .other-support summary {
+        cursor: pointer;
+        font-weight: 500;
+    }
+    .other-support ul li {
+        margin-bottom: 0.75rem;
+        color: #444;
+    }
+</style>

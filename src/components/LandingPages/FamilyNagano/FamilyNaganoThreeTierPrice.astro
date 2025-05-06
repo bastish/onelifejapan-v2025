@@ -1,0 +1,181 @@
+<section id="price-estimates">
+    <h3>Choose Your Level of Support</h3>
+    <div class="tier-cards">
+        <!-- Self-Guided -->
+        <div class="tier-card">
+            <h4>Self-Guided</h4>
+            <p class="price">¥85,000<span>/pp (4 people)</span></p>
+            <ul>
+                <li>Route planning & remote advice</li>
+                <li>Bike & gear recs</li>
+                <li>On-call support</li>
+            </ul>
+            <details class="group-pricing">
+                <summary>Group pricing details ▼</summary>
+                <ul>
+                    <li>3 people: ¥90,000 pp</li>
+                    <li>4 people: ¥85,000 pp</li>
+                    <li>5 people: ¥80,000 pp</li>
+                    <li>6 people: ¥78,000 pp</li>
+                </ul>
+            </details>
+            <button class="btn btn-outline">Get Estimate</button>
+        </div>
+
+        <!-- Fully Guided (Hero) -->
+        <div class="tier-card hero">
+            <div class="badge">Most Popular</div>
+            <h4>Fully Guided</h4>
+            <p class="price">¥150,000<span>/pp (4 people)</span></p>
+            <ul>
+                <li>All Self-Guided benefits, plus:</li>
+                <li>On-ground guide & support vehicle</li>
+                <li>Meals, lodging & activities</li>
+            </ul>
+            <details class="group-pricing">
+                <summary>Group pricing details ▼</summary>
+                <ul>
+                    <li>3 people: ¥160,000 pp</li>
+                    <li>4 people: ¥150,000 pp</li>
+                    <li>5 people: ¥140,000 pp</li>
+                    <li>6 people: ¥135,000 pp</li>
+                </ul>
+            </details>
+            <button class="btn btn-primary">Book Full Support</button>
+        </div>
+
+        <!-- Partial Support -->
+        <div class="tier-card">
+            <h4>Partial Support</h4>
+            <p class="price">¥125,000<span>/pp (4 people)</span></p>
+            <ul>
+                <li>Daytime guide (breakfast–dinner)</li>
+                <li>Bike & gear included</li>
+                <li>Own your evenings</li>
+            </ul>
+            <details class="group-pricing">
+                <summary>Group pricing details ▼</summary>
+                <ul>
+                    <li>3 people: ¥130,000 pp</li>
+                    <li>4 people: ¥125,000 pp</li>
+                    <li>5 people: ¥120,000 pp</li>
+                    <li>6 people: ¥115,000 pp</li>
+                </ul>
+            </details>
+            <button class="btn btn-outline">Learn More</button>
+        </div>
+    </div>
+</section>
+
+<!-- <section id="price-estimates">
+    <h3>Estimate Your Level of Support</h3>
+    <div class="tier-cards">
+        <div class="tier-card">
+            <h4>Self-Guided</h4>
+            <p class="price">¥85,000<span>/pp</span></p>
+            <ul>
+                <li>Custom route planning & remote support</li>
+                <li>Bike & gear recommendations</li>
+                <li>On-call guide by phone/email</li>
+            </ul>
+            <button class="btn btn-outline-primary">Request Estimate</button>
+        </div>
+
+        <div class="tier-card hero">
+            <div class="badge">Most Popular</div>
+            <h4>Fully Guided</h4>
+            <p class="price">¥150,000<span>/pp</span></p>
+            <ul>
+                <li>Everything in Self-Guided, plus:</li>
+                <li>On-ground guide with support vehicle</li>
+                <li>All meals, lodging & activities</li>
+                <li>Seamless luggage & transfer logistics</li>
+            </ul>
+            <button class="btn btn-primary">Book Full Support</button>
+        </div>
+
+        
+        <div class="tier-card">
+            <h4>Partial Support</h4>
+            <p class="price">¥125,000<span>/pp</span></p>
+            <ul>
+                <li>Daytime guide (after breakfast → before dinner)</li>
+                <li>Bike & gear included</li>
+                <li>Evening & meal planning on your own</li>
+            </ul>
+            <button class="btn btn-outline-primary">Learn More</button>
+        </div>
+    </div>
+
+    <p class="add-on">
+        <em>Want your guide riding beside you whenever possible?</em><br />
+        <strong>“Side-by-Side Guide”</strong> is available as an add-on for <strong>+¥30,000 per person</strong>—two
+        guides on the road, double the company.
+    </p>
+</section> -->
+
+<style lang="scss">
+    @use '../../../styles/global' as *;
+    #price-estimates {
+        text-align: center;
+        margin: 2rem 0;
+    }
+    .tier-cards {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .tier-card {
+        flex: 1;
+        min-width: 220px;
+        max-width: 280px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        background: #fff;
+        text-align: left;
+    }
+    .tier-card h4 {
+        margin-bottom: 0.5rem;
+    }
+    .tier-card .price {
+        font-size: 2rem;
+        margin: 0.5rem 0 1rem;
+    }
+    .tier-card .price span {
+        font-size: 1rem;
+        color: #666;
+    }
+    .tier-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1rem;
+    }
+    .tier-card ul li {
+        margin-bottom: 0.5rem;
+    }
+    .tier-card .btn {
+        width: 100%;
+    }
+
+    /* Hero (Full Support) styling */
+    .tier-card.hero {
+        transform: scale(1.05);
+        border-color: var(--bs-primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+    }
+    .tier-card.hero .badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: var(--bs-primary);
+        color: #fff;
+        padding: 0.25em 0.6em;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+</style>

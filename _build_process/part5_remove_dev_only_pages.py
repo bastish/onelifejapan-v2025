@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import os
+import shutil
 
 # -------------------------------
 # Configuration
@@ -46,7 +47,7 @@ def get_dev_only_canonicals(dist_dir):
 # -------------------------------
 # Function: Remove <url> Elements from Sitemap Tree
 # -------------------------------
-def remove_urls_from_sitemap(dev_canonicals, sitemap_path):
+def remove_urls_from_sitemap(dev_canonicals, sitemap_path, paths_to_remove):
     """
     Parse the sitemap XML tree and remove any <url> elements
     whose <loc> text matches one of the dev-only canonical URLs.
@@ -78,7 +79,15 @@ def remove_urls_from_sitemap(dev_canonicals, sitemap_path):
                         urls_to_remove.append(url)
                         print(f"Marking for removal: {loc.text.strip()}")
                         break
-        
+                
+                # Additionally, remove URLs containing any of the paths in paths_to_remove.
+                for path in paths_to_remove:
+                    if path in loc.text.strip():
+                        urls_to_remove.append(url)
+                        print(f"Marking for removal (extra path): {loc.text.strip()}")
+                        break
+
+
         # Remove the identified <url> elements.
         for url in urls_to_remove:
             root.remove(url)
@@ -89,11 +98,29 @@ def remove_urls_from_sitemap(dev_canonicals, sitemap_path):
     except Exception as e:
         print(f"Error updating sitemap: {e}")
 
+
+# -------------------------------
+# Function: Remove /tools Directory
+# -------------------------------
+def remove_tools_directory(dist_dir):
+    """
+    Remove the /tools directory from the dist folder if it exists.
+    """
+    tools_dir = os.path.join(dist_dir, 'tools')
+    if os.path.exists(tools_dir):
+        shutil.rmtree(tools_dir)
+        print(f"Removed /tools directory: {tools_dir}")
+    else:
+        print(f"/tools directory does not exist or was already removed.")
+
 # -------------------------------
 # MAIN EXECUTION
 # -------------------------------
 if __name__ == '__main__':
-    # 1. Collect dev-only canonical URLs and delete the corresponding HTML files.
+    # 1. Remove the /tools directory from the build.
+    remove_tools_directory(dist_dir)
+
+    # 2. Collect dev-only canonical URLs and delete the corresponding HTML files.
     dev_canonicals = get_dev_only_canonicals(dist_dir)
     print("")
     print("")
@@ -103,12 +130,11 @@ if __name__ == '__main__':
             print(url)
     else:
         print("No dev-only pages found.")
-    
-    # 2. Remove the corresponding <url> entries from the sitemap.
-    if dev_canonicals:
-        remove_urls_from_sitemap(dev_canonicals, sitemap_path)
-    else:
-        print("No changes needed in the sitemap.")
-    
+
+    extra_paths_to_remove = ['/route-accordian', '/highlight-points']
+
+    # 3. Remove dev-only and /tools URLs from the sitemap.
+    remove_urls_from_sitemap(dev_canonicals, sitemap_path, extra_paths_to_remove)
+
     print("")
     print("")

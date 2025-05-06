@@ -13,15 +13,18 @@ import { fetchLandingPage } from '../../utils/fetchLandingPage';
 const landingPageData = await fetchLandingPage(1); // ID 1 for Family Bike Nagano
 import LandingPageSocialProofFaces from '../../components/LandingPages/LandingPageSocialProofFaces.astro';
 import FamilyLandingPageSuammryModal from '../../components/LandingPages/FamilyNagano/FamilyLandingPageSuammryModal.astro';
+import FamilyNaganoThreeTierPrice from '../../components/LandingPages/FamilyNagano/FamilyNaganoThreeTierPrice.astro'
+import FamilyNaganoPriorityPricing from '../../components/LandingPages/FamilyNagano/FamilyNaganoPriorityPricing.astro'
+
 import { baseHost } from '../../utils/utilities.ts';
 import LandingPageCardsEditorTool from '../../components/LandingPages/LandingPageCardsEditorTool.astro';
 import '../../styles/global.scss';
 const devOnly = false;
 const ctaText = 'Start Planning Your Family Adventure ››';
 const sliderText = "But there's a whole different side of Japan waiting  -  if you're willing to go a bit further.";
-const title = 'Family Roots & Rides in Rural Japan | One Life Japan';
-const description = 
-  'Tailored for families—whether reconnecting with heritage or simply seeking space to roam. Bike quiet rice-field lanes, cook soba with locals, hunt for hidden shrines, and create memories beyond the Golden Route.';
+const title = 'Custom Family Bike Tours & Cultural Stays in Rural Japan | One Life Japan';
+const description =
+  'Discover rural Japan as a family—pedal through rice fields, stay with farmhouse hosts, handcraft soba, and explore hidden shrines on a tailor-made bike adventure beyond the Golden Route.';
 ---
 
 <BaseLayout title={title} description={description} page="about" devOnly={devOnly}>
@@ -128,6 +131,8 @@ const description =
                     interests</span>, the season, and what's happening locally. The prices below <span class="emph">aren't fixed packages</span>. They're very realistic estimates based
                 on our trips <span class="emph">similar the example above</span> that include lodging, meals, cultural activities, and full guided support.
             </p>
+            <!-- <FamilyNaganoPriorityPricing /> -->
+            <!-- <FamilyNaganoThreeTierPrice /> -->
             <FamilyLandingPagePricing />
             <div class="centered-section">
                     <p class="footnote">
