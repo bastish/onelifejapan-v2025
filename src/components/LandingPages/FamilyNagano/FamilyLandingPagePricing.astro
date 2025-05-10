@@ -5,12 +5,35 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
 <div class="section-inner">
     <div class="pricing-flex">
         <div class="pricing-column">
-            <h3>Estimated Cost<br /><span class="sub">for a 4-Day Family Trip</span></h3>
+            <h3>Estimated Cost<span class="sub">( Guided 4-Day Family Trip)</span></h3>
             <ul class="estimate-list">
                 <li><strong>3 - 4 People:</strong> ¥150,000 / person</li>
                 <li><strong>5 - 6 People:</strong> ¥140,000 / person</li>
                 <li><strong>Other group sizes:</strong> Contact us</li>
             </ul>
+            <hr />
+            <h3><span class="sub">Self Guided</span></h3>
+            <ul class="estimate-list">
+                <li class="self-guided-flag">
+                    <strong>Self-Guided Available</strong>
+                    <button class="btn-link small" type="button" data-bs-toggle="collapse" data-bs-target="#sg-details">
+                        details ▼
+                    </button>
+                </li>
+            </ul>
+            <div class="collapse" id="sg-details">
+                <p class="small text-muted">
+                    <strong>Self-Guided Planning Fee:</strong> ¥80,000 per booking<br />
+                    <em>Plus on-ground costs (~¥15,000 pp/day):</em><br />
+                    • Accommodation (~¥10k/night)<br />
+                    • Meals (~¥5k/meal)<br />
+                    • Bike & gear (~¥5k/day)<br />
+                    • Workshops & transfers (~¥5–8k/day)<br />
+                    <br />
+                    Includes your custom route plan, bookings held, GPX files, insider notes & remote support.
+                </p>
+            </div>
+
             <aside class="other-options">
                 <details>
                     <summary><strong>Self-Guided vs. Fully Guided</strong></summary>
@@ -69,103 +92,7 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
                 </details>
             </aside>
 
-            <!-- Alternate Support Levels -->
-            <aside class="other-options">
-                <details>
-                    <summary><strong>Prefer more independence?</strong></summary>
-                    <p class="small text-muted">
-                        Our Self-Guided and Partial Support options are perfect if you love the DIY spirit. With Full
-                        Support, however, you get:
-                    </p>
-                    <ul class="list-unstyled ms-3">
-                        <li>
-                            <strong>A true on-trip concierge:</strong> We quietly handle every detail—gear, meals, timing,
-                            even last-minute needs.
-                        </li>
-                        <li>
-                            <strong>Zero-friction family time:</strong> No lining up, no paperwork, no map-reading—just ride,
-                            explore, and connect.
-                        </li>
-                        <li>
-                            <strong>Seamless day-to-day flow:</strong> Snacks, sunscreen, photo stops, and comfort breaks—all
-                            managed for you.
-                        </li>
-                        <li>
-                            <strong>Insider cultural moments:</strong> Translation, introductions, and authentic village
-                            encounters that you can’t DIY.
-                        </li>
-                    </ul>
-                    <p class="small">
-                        <strong>Self-Guided</strong> gives you the planning pack and phone backup.
-                        <strong>Partial Support</strong> adds daytime guide presence—then you enjoy your own evenings.
-                    </p>
-                </details>
-            </aside>
-
-            <aside class="other-options">
-                <details>
-                    <summary><strong>Other support options</strong></summary>
-                    <p class="small text-muted">
-                        Every family has its own rhythm. If you’d rather go at your own pace, here’s what you’ll gain
-                        when you choose Self-Guided or Partial Support—and what you add to your trip by going Fully
-                        Guided:
-                    </p>
-                    <ul>
-                        <li>
-                            <strong>Instant “ready to ride” service:</strong>
-                            With a guide, your bikes and gear are pre-fitted the moment you arrive.
-                        </li>
-                        <li>
-                            <strong>Family time, not map time:</strong>
-                            We handle route changes, snack stops, and timing—so you focus on each other.
-                        </li>
-                        <li>
-                            <strong>Local host introductions:</strong>
-                            Dinner with a farming family becomes a living history lesson, with translation and context.
-                        </li>
-                        <li>
-                            <strong>On-demand support vehicle:</strong>
-                            Flat tire or extra luggage? We’re right there—no detours back to town.
-                        </li>
-                    </ul>
-                    <p class="small">
-                        <strong>Self-Guided Support (¥85k pp)</strong> gives you the planning pack, insider tips, and phone
-                        backup.
-                        <strong>Partial Support (¥125k pp)</strong> adds daytime guide presence—then you enjoy your own evenings.
-                    </p>
-                </details>
-            </aside>
-            <aside class="other-options">
-                <details>
-                    <summary><strong>Prefer less support?</strong></summary>
-                    <p class="small text-muted">
-                        If you’d rather handle your own adventure, Self-Guided and Partial Support are here for you. But
-                        with Full Support, we become your on-trip butler—every detail from snacks to spare batteries is
-                        handled, so your only job is to relax and enjoy.
-                    </p>
-                    <ul class="list-unstyled ms-3">
-                        <li>
-                            <strong>Total peace of mind:</strong> You never have to ask twice or wonder “where do we get…?”
-                        </li>
-                        <li>
-                            <strong>Your personal trip butler:</strong> Extra towels, mid-ride picnic setups, last-minute
-                            detours—our pleasure.
-                        </li>
-                        <li>
-                            <strong>Zero logistics stress:</strong> Luggage, meals, gear, transfers—even pharmacy runs in
-                            the boonies.
-                        </li>
-                        <li>
-                            <strong>True family freedom:</strong> Kids need a bath? Want more photo stops? We make it happen—no
-                            questions asked.
-                        </li>
-                    </ul>
-                </details>
-            </aside>
-
             <!-- <WhyItsWorthItModal /> -->
-
-            <p class="note">Includes bikes, inns, meals, support, and activities.</p>
         </div>
         <div class="pricing-column">
             <h3>Estimate Includes</h3>
@@ -227,147 +154,130 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
                 </p>
             </details>
         </div>
-
-        <!-- <div class="pricing-column">
-            <h3>Estimate Includes</h3>
-            <ul class="checklist">
-                <li>3 nights’ locally owned inns (farmhouse stays, family-run small inns)</li>
-                <li>
-                    3 breakfasts & 3 dinners (Elaborate Kaiseke, homemade everyday meals, soba noodles you make
-                    yourself)
-                </li>
-                <li>Bike rental (e-bike or cross bike)</li>
-                <li>Bike gear (helmet, phone mount, rain gear)</li>
-                <li>Cultural activities listed in itinerary</li>
-                <li>Luggage transport & local transfers</li>
-                <li>English-speaking guide</li>
-                <li>Child seat included (if needed)</li>
-            </ul>
-        </div> -->
     </div>
-</div>
 
-<style lang="scss">
-    @use '../../../styles/global' as *;
+    <style lang="scss">
+        @use '../../../styles/global' as *;
 
-    .section-inner {
-        //        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 1rem;
-        text-align: left;
-    }
-
-    h2 {
-        text-align: center;
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .intro {
-        text-align: left;
-        max-width: 900px;
-        max-width: 100%;
-        margin: 0 auto 2rem;
-    }
-
-    .pricing-flex {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        justify-content: center;
-    }
-
-    .pricing-column {
-        flex: 1 1 300px;
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        @include respond-to(small) {
-            margin-left: 0px;
+        .section-inner {
+            //        max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: left;
         }
-    }
-    .estimate-list {
-        //border: 1px solid #ddd;
-        padding-left: 15px;
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
 
-    .estimate-list li,
-    .checklist li {
-        margin-bottom: 0.75rem;
-        font-size: 1rem;
-    }
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
 
-    .sub {
-        font-weight: normal;
-        font-size: 0.95rem;
-        display: block;
-        margin-top: 0.25rem;
-        color: #555;
-    }
+        .intro {
+            text-align: left;
+            max-width: 900px;
+            max-width: 100%;
+            margin: 0 auto 2rem;
+        }
 
-    .note {
-        margin-top: 2rem;
-        text-align: left;
-        font-size: 0.95rem;
-        color: #666;
-    }
-</style>
-<style>
-    /* 1) Hide the browser’s default triangle marker */
-    details summary::-webkit-details-marker {
-        display: none;
-    }
+        .pricing-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
 
-    /* 2) Style the summary like your checklist */
-    .pricing-item summary {
-        position: relative;
-        padding-left: 1.5em; /* room for the check */
-        cursor: pointer;
-        list-style: none;
-        margin-bottom: 0.5em;
-    }
+        .pricing-column {
+            flex: 1 1 300px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            @include respond-to(small) {
+                margin-left: 0px;
+            }
+        }
+        .estimate-list {
+            //border: 1px solid #ddd;
+            padding-left: 15px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    /* 3) Outline check-circle on the left */
-    .pricing-item summary::before {
-        content: '\f058'; /* FontAwesome check-circle */
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 400; /* regular = outline */
-        position: absolute;
-        left: 0;
-        top: 0.1em;
-        color: var(--bs-primary-ultradark);
-        font-size: 1em;
-    }
+        .estimate-list li,
+        .checklist li {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-size: 1.3rem;
+        }
 
-    /* 4) Chevron on the right */
-    .pricing-item summary::after {
-        content: '\f078'; /* FontAwesome chevron-down */
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900; /* solid chevron */
-        position: absolute;
-        right: 0;
-        top: 0.1em;
-        transition: transform 0.2s ease;
-    }
-    .pricing-item[open] summary::after {
-        transform: rotate(180deg); /* chevron-up when open */
-    }
+        .sub {
+            //font-weight: normal;
+            font-size: 1.5rem;
+            display: block;
+            margin-top: 0.25rem;
+            //color: #555;
+        }
 
-    /* 5) Expanded content styling */
-    .pricing-item p {
-        margin: 0.5em 1em 1em;
-        color: #555;
-        line-height: 1.4;
-        font-size: 1em;
-    }
-</style>
+        .note {
+            margin-top: 2rem;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #666;
+        }
+    </style>
+    <style>
+        /* 1) Hide the browser’s default triangle marker */
+        details summary::-webkit-details-marker {
+            display: none;
+        }
 
-<!-- <details>
+        /* 2) Style the summary like your checklist */
+        .pricing-item summary {
+            position: relative;
+            padding-left: 1.5em; /* room for the check */
+            cursor: pointer;
+            list-style: none;
+            margin-bottom: 0.5em;
+        }
+
+        /* 3) Outline check-circle on the left */
+        .pricing-item summary::before {
+            content: '\f058'; /* FontAwesome check-circle */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 400; /* regular = outline */
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+            color: var(--bs-primary-ultradark);
+            font-size: 1em;
+        }
+
+        /* 4) Chevron on the right */
+        .pricing-item summary::after {
+            content: '\f078'; /* FontAwesome chevron-down */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900; /* solid chevron */
+            position: absolute;
+            right: 0;
+            top: 0.1em;
+            transition: transform 0.2s ease;
+        }
+        .pricing-item[open] summary::after {
+            transform: rotate(180deg); /* chevron-up when open */
+        }
+
+        /* 5) Expanded content styling */
+        .pricing-item p {
+            margin: 0.5em 1em 1em;
+            color: #555;
+            line-height: 1.4;
+            font-size: 1em;
+        }
+    </style>
+
+    <!-- <details>
     <summary>
         <h3>What’s the price & what’s included?</h3>
         <span class="description">Estimate for a 4-day private family trip, fully supported and guided.</span>
@@ -412,3 +322,4 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
         </p>
     </div>
 </details> -->
+</div>

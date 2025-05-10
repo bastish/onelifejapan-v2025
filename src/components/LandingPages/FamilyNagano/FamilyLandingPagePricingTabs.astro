@@ -1,0 +1,347 @@
+---
+import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
+---
+
+<section class="section-inner">
+    <!-- Tab buttons -->
+    <div class="tab-buttons">
+        <button id="btn-guided" class="active">Fully Guided</button>
+        <button id="btn-self">Self-Guided</button>
+    </div>
+
+    <!-- Fully Guided content -->
+    <div id="guided-content" class="two-columns">
+        <div class="pricing-column">
+            <h3>Estimated Cost<br /><span class="sub">(Fully Guided 4-Day Family Trip)</span></h3>
+            <ul class="estimate-list">
+                <li><strong>3–4 People:</strong> ¥150,000 / person</li>
+                <li><strong>5–6 People:</strong> ¥140,000 / person</li>
+                <li><strong>Other group sizes:</strong> Contact us</li>
+            </ul>
+            <p class="note">
+                We aim to keep your costs within this range. Once planning begins, we’ll lock in a detailed quote—no
+                surprises.
+            </p>
+        </div>
+        <div class="pricing-column">
+            <h3>Estimate Includes</h3>
+
+            <details class="pricing-item">
+                <summary>3 nights’ accommodation in traditional inns or farmhouse stays</summary>
+                <p>
+                    Stay in family-run ryokan, farmhouses, and small inns—where lodging is part of the cultural
+                    experience, not just a place to sleep. We select each property for its authentic local character.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>3 breakfasts &amp; dinners with local hosts</summary>
+                <p>
+                    Savor handcrafted kaiseki breakfasts and dinners, plus a hands-on soba-making lesson. Meals blend
+                    traditional Japanese fare with familiar options—no buffet lines here.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>All listed cultural activities</summary>
+                <p>
+                    Enjoy every workshop and visit in your itinerary: soba-making, mochi-pounding, papermaking, museum
+                    tours, and communal baths. Optional extras like rafting or mountain biking are available at
+                    additional cost.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Complete bike rental package</summary>
+                <p>
+                    Choose an e-bike or cross-bike, complete with helmet, phone mount, rain gear, panniers, and rack. We
+                    also provide shared-use gear—rubber boots, gloves, trekking poles—so you’re ready for any route.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Family-friendly gear</summary>
+                <p>
+                    Child seats are included; bike trailers can be added for a small fee—so even the littlest riders
+                    explore safely and comfortably.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Seamless logistics</summary>
+                <p>
+                    We handle luggage transfers between inns and offer support-vehicle shuttle rides when needed— you
+                    travel light and stress-free.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Dedicated English-speaking guide</summary>
+                <p>
+                    Your guide is on call from morning until evening—route tweaks, snack stops, onsen detours, and
+                    post-dinner conversation facilitation ensure a smooth, personalized adventure.
+                </p>
+            </details>
+        </div>
+    </div>
+
+    <!-- Self-Guided content -->
+    <div id="self-content" class="two-columns" style="display:none;">
+        <div class="pricing-column">
+            <h3>Self-Guided Planning Fee</h3>
+            <p><strong>¥80,000 per booking</strong></p>
+            <h4>On-Ground Costs<br /><small>(paid directly)</small></h4>
+            <ul class="checklist">
+                <li>Accommodation: ~¥10,000 / night / person</li>
+                <li>Meals: ~¥5,000 / meal / person</li>
+                <li>Bike & gear rental: ~¥5,000 / day / person</li>
+                <li>Workshops & transfers: ~¥5,000–¥8,000 / day / person</li>
+            </ul>
+            <p class="small text-muted">Expect ~¥15,000 pp/day on top of the planning fee.</p>
+
+            <p class="small text-muted">
+                Includes your custom 4-day route plan, bookings held, GPX files, insider notes & remote support.
+            </p><div class="tab-buttons">
+                <aside class="other-options">
+                    <details>
+                        <summary><strong>Self-Guided vs. Fully Guided</strong></summary>
+
+                        <p class="small text-muted">
+                            This itinerary was created with a guide in mind—Fully Guided and Self-Guided both work, but
+                            they offer very different experiences:
+                        </p>
+
+                        <ul class="list-unstyled ms-3">
+                            <li>
+                                <strong>Day-to-day flexibility:</strong><br />
+                                <em>Fully Guided:</em> On-the-fly route tweaks, timing checks, and support-vehicle backup
+                                let you stop or detour whenever you wish.<br />
+                                <em>Self-Guided:</em> You follow a pre-planned route and keep your own schedule—ideal if
+                                you enjoy self-navigation and exploration.
+                            </li>
+
+                            <li>
+                                <strong>Logistics & bookings:</strong><br />
+                                <em>Fully Guided:</em> Bikes, gear, luggage transfers, meals, and workshop reservations are
+                                all arranged—just show up and ride.<br />
+                                <em>Self-Guided:</em> You pay inns (~¥10,000/night pp), meals (~¥5,000/meal pp), bike rental
+                                (~¥5,000/day pp) and activities directly—while we handle all the pre-trip planning.
+                            </li>
+
+                            <li>
+                                <strong>Cultural connections:</strong><br />
+                                <em>Fully Guided:</em> We handle introductions to homestay hosts, hands-on workshops, and
+                                off-menu local experiences.<br />
+                                <em>Self-Guided:</em> You receive insider tips and contact details—but arrange and pay for
+                                each experience yourself.
+                            </li>
+
+                            <li>
+                                <strong>Time investment:</strong><br />
+                                <em>Fully Guided:</em> No lines, no paperwork—every minute is bike time or family time.<br
+                                />
+                                <em>Self-Guided:</em> Expect to spend 30–45 minutes per rental shop visit, plus check-in
+                                times at each inn.
+                            </li>
+                        </ul>
+
+                        <p class="small">
+                            <strong>Self-Guided Planning Fee:</strong> ¥80,000 per booking<br />
+                            <em>Plus on-ground costs*:</em> ~¥15,000 per person, per day (accommodation, meals, bikes, workshops
+                            & transfers)<br />
+                            <strong>Fully Guided:</strong> ¥150,000 per person (all logistics, meals, lodging, activities
+                            & guide included)
+                        </p>
+
+                        <p class="small text-muted">
+                            *Actual on-ground costs vary by season and choices made; the ¥15,000/day figure is a
+                            reasonable average.
+                        </p>
+                    </details>
+                </aside>
+            </div>
+        </div>
+        <div class="pricing-column">
+            <h3>Estimate Includes</h3>
+
+            <details class="pricing-item">
+                <summary>3 nights’ accommodation in traditional inns or farmhouse stays</summary>
+                <p>
+                    Stay in family-run ryokan, farmhouses, and small inns—where lodging is part of the cultural
+                    experience, not just a place to sleep. We select each property for its authentic local character.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>3 breakfasts &amp; dinners with local hosts</summary>
+                <p>
+                    Savor handcrafted kaiseki breakfasts and dinners, plus a hands-on soba-making lesson. Meals blend
+                    traditional Japanese fare with familiar options—no buffet lines here.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>All listed cultural activities</summary>
+                <p>
+                    Enjoy every workshop and visit in your itinerary: soba-making, mochi-pounding, papermaking, museum
+                    tours, and communal baths. Optional extras like rafting or mountain biking are available at
+                    additional cost.
+                </p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    const btnGuided = document.getElementById('btn-guided');
+    const btnSelf = document.getElementById('btn-self');
+    const guided = document.getElementById('guided-content');
+    const selfTab = document.getElementById('self-content');
+
+    btnGuided.addEventListener('click', () => {
+        btnGuided.classList.add('active');
+        btnSelf.classList.remove('active');
+        guided.style.display = 'flex';
+        selfTab.style.display = 'none';
+    });
+
+    btnSelf.addEventListener('click', () => {
+        btnSelf.classList.add('active');
+        btnGuided.classList.remove('active');
+        guided.style.display = 'none';
+        selfTab.style.display = 'flex';
+    });
+</script>
+
+<style lang="scss">
+    .section-inner {
+        margin: 0 auto;
+        padding: 1rem;
+        max-width: 1000px;
+    }
+
+    /* Tabs */
+    .tab-buttons {
+        display: flex; /* make it a flex container */
+        justify-content: center; /* center items horizontally */
+        align-items: center; /* center items vertically if they ever grow taller */
+        gap: 1rem; /* your existing gap */
+        margin-bottom: 1.5rem; /* your existing bottom margin */
+        /* you can drop width/margin:auto/border if you don’t need them */
+    }
+    .tab-buttons button {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        background: #f7f7f7;
+        cursor: pointer;
+        font-weight: 600;
+        border-radius: 4px;
+    }
+    .tab-buttons button.active {
+        background: var(--bs-primary);
+        color: #fff;
+        border-color: var(--bs-primary);
+    }
+
+    /* Two-column layout */
+    .two-columns {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+    .pricing-column {
+        flex: 1 1 300px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Headings & lists */
+    .pricing-column h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .pricing-column .sub {
+        font-size: 1rem;
+        color: #555;
+        display: block;
+    }
+    .estimate-list,
+    .checklist {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+    }
+    .estimate-list li,
+    .checklist li {
+        position: relative;
+        padding-left: 1.5em;
+        margin-bottom: 0.75rem;
+    }
+    .checklist li::before {
+        content: '\f058';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--bs-primary);
+    }
+    .note {
+        margin-top: 1rem;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    /* Details styling */
+    details summary::-webkit-details-marker {
+        display: none;
+    }
+    .pricing-item summary {
+        position: relative;
+        padding-left: 1.5em;
+        cursor: pointer;
+        margin-bottom: 0.5em;
+    }
+    .pricing-item summary::before {
+        content: '\f058';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 400;
+        position: absolute;
+        left: 0;
+        top: 0.1em;
+        color: var(--bs-primary-ultradark);
+    }
+    .pricing-item summary::after {
+        content: '\f078';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        position: absolute;
+        right: 0;
+        top: 0.1em;
+        transition: transform 0.2s;
+    }
+    .pricing-item[open] summary::after {
+        transform: rotate(180deg);
+    }
+    .pricing-item p {
+        margin: 0.5em 1em 1em;
+        color: #555;
+        line-height: 1.4;
+    }
+    /* ensure wrapping by default */
+    .two-columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    /* on small screens, stack the columns */
+    @media (max-width: 768px) {
+        .two-columns {
+            flex-direction: column;
+        }
+    }
+</style>
