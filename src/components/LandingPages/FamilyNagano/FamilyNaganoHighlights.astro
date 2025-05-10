@@ -2,89 +2,56 @@
 const { landingPageData } = Astro.props;
 ---
 
-<!-- <ul class="checklist" style="margin-top: 20px; font-size:1.1em;">
-                {
-                    landingPageData.tripHighlights
-                        ?.split('\n')
-                        .filter((line: string) => line.trim() !== '') // optional: ignore empty lines
-                        .map((line: string) => <li set:html={line}} />)
-                }
-            </ul> --><!-- <section class="trip-highlights">
-    <h4>Outdoor Adventures</h4>
-    <ul class="checklist highlight-list">
-        <li>Family rides through rural backroads &amp; rice fields</li>
-        <li>Fun, easy hikes (with optional challenging trails)</li>
-        <li>Mountain-view hot-spring soaks</li>
-        <li>River play &amp; swimming or gentle rafting</li>
-        <li>Snow monkeys in their natural hot spring</li>
-        <li>Mountain biking on quiet country roads</li>
-    </ul>
-
-    <h4>Cultural Experiences</h4>
-    <ul class="checklist highlight-list">
-        <li>Soba-noodle making</li>
-        <li>Mochi pounding</li>
-        <li>Onigiri lunch workshop</li>
-        <li>Washi-paper crafting</li>
-        <li>Natural-dyeing demonstrations</li>
-        <li>Wara-straw sandal weaving</li>
-        <li>Traditional Japanese games</li>
-        <li>Shrine etiquette &amp; rituals</li>
-        <li>Join a village or regional festival</li>
-    </ul>
-
-    <h4>Farm &amp; Flavors</h4>
-    <ul class="checklist highlight-list">
-        <li>Farmhouse stays with homestyle meals</li>
-        <li>Rice-planting &amp; harvest helping</li>
-        <li>Wild-vegetable foraging (spring)</li>
-        <li>Seasonal apple picking at local orchards</li>
-        <li>Supermarket scavenger hunt</li>
-        <li>Miso-factory tour &amp; tastings</li>
-        <li>Sake tasting at a small brewery</li>
-        <li>Grilled wild game sampling</li>
-        <li>Onsen-tamago (egg cooked in hot springs)</li>
-    </ul>
-</section> -->
 <h4>Adventure</h4>
 <ul class="checklist highlight-list">
-    <li>Family rides through rural backroads &amp; rice fields</li>
-    <li>Fun, easy hikes (with optional challenging trails)</li>
-    <li>Mountain biking on quiet country roads</li>
-    <li>River play &amp; swimming or gentle rafting</li>
-    <li>Snow monkeys in their natural hot spring</li>
+    <li><span class="emph">Family rides</span> through rural backroads &amp; rice fields</li>
+    <li>Fun, <span class="emph">easy hikes</span> (with optional challenging trails)</li>
+    <li><span class="emph">Mountain biking</span> on at Nozawa Onsen Ski Resort</li>
+    <li>River play - swimming, <span class="emph">shower climbing, or rafting</span></li>
+    <li><span class="emph">Snow monkeys</span> in their natural hot spring</li>
+    <li>Japanese <span class="emph">culture bingo</span></li>
 </ul>
 
 <h4>Family Time</h4>
 <ul class="checklist highlight-list">
-    <li>Farmhouse stays with homestyle meals</li>
-    <li>Ryokan stays — sleep on tatami mats &amp; lounge in yukata</li>
-    <li>Rice-planting &amp; harvest helping</li>
-    <li>Wild-vegetable foraging (spring)</li>
-    <li>Seasonal apple picking at local orchards</li>
-    <li>Supermarket scavenger hunt</li>
+    <li><span class="emph">Farmhouse stays</span> with homestyle meals</li>
+    <li><span class="emph">Ryokan stays</span> — sleep on tatami mats &amp; lounge in yukata</li>
+    <li><span class="emph">Get muddy planting rice</span> or help with the harvest</li>
+    <li><span class="emph">Foraging</span> for wild vegetabels (spring)</li>
+    <li>Seasonal <span class="emph">apple picking</span> at local orchards</li>
+    <li><span class="emph">Supermarket shoppiung spree</span> & scavenger hunt</li>
 </ul>
 
 <h4>Food</h4>
 <ul class="checklist highlight-list">
-    <li>Soba-noodle making</li>
-    <li>Mochi pounding</li>
-    <li>Onigiri-lunch workshop</li>
-    <li>Miso-factory tour &amp; tastings</li>
-    <li>Sake tasting at a small brewery</li>
-    <li>Grilled wild game sampling</li>
-    <li>Onsen-tamago (egg cooked in hot springs)</li>
+    <li>Elaborate <span class="emph"><em>kaiseki</em> dinner</span></li>
+    <li>Simple <span class="emph">everyday homecooked dinner & breakfast</span></li>
+    <li>Private <span class="emph">soba-noodle making class</span></li>
+    <li><span class="emph">Mochi</span> rice cake pounding</li>
+    <li>Make your own <span class="emph">onigiri & bento</span> lunch</li>
+    <li><span class="emph">Miso-factory</span> tour &amp; tastings</li>
+    <li><span class="emph">Sake tasting</span> at a small brewery</li>
+    <li><span class="emph">Grilled bear</span> or native wild game</li>
+    <li>Make <span class="emph">onsen-tamago</span> (egg cooked in hot springs)</li>
+    <li>Seasonal <span class="emph">local specialities</span></li>
 </ul>
 
 <h4>Culture</h4>
 <ul class="checklist highlight-list">
-    <li>Washi-paper crafting</li>
-    <li>Natural-dyeing demonstrations</li>
-    <li>Wara-straw sandal weaving</li>
-    <li>Traditional Japanese games</li>
-    <li>Shrine etiquette &amp; rituals</li>
-    <li>Join a village or regional festival</li>
-    <li>Elementary-school visit (when possible)</li>
+    <li><span class="emph">Washi-paper</span> crafting</li>
+    <li>Try traditional <span class="emph">natural-dyeing</span></li>
+    <li><span class="emph">Wara-straw sandal</span> & craft weaving</li>
+    <li>Learn <span class="emph">traditional Japanese games</span></li>
+    <li>Practice <span class="emph">shrine etiquette</span> &amp; rituals</li>
+    <li>Join a village <span class="emph">local festival</span></li>
+    <li><span class="emph">Elementary-school visit</span> (when possible)</li>
+    <li>Paint traditional <span class="emph">e-tegami</span> picture post-cards</li>
+    <li>Learn - and <span class="emph"><em>use</em> Japanese</span> phrases with locals</li>
+    <li>
+        Learn what <span class="emph">your name</span> means & how to write it with <span class="emph"
+            >Japaense caligraphy</span
+        >
+    </li>
 </ul>
 
 <style lang="scss">
@@ -142,10 +109,12 @@ const { landingPageData } = Astro.props;
     }
     .attention-catcher h2,
     h4 {
-        opacity: 0;
-        animation: fadeIn 4s forwards;
+        // opacity: 0;
+        // animation: fadeIn 4s forwards;
         animation-timing-function: ease-out;
         position: relative;
+        font-weight: 600;
+        //font-size: 1.2em;
     }
     .attention-catcher h1 {
         font-size: 2.3em;

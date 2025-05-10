@@ -9,6 +9,7 @@ import LandingPageRouteTogglerCards from '../../components/LandingPages/LandingP
 import LandingPageFaq from '../../components/LandingPages/LandingPageFaq.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import ComparisonTableLite from '../../components/ComparisonTableLite.astro';
+import GoogleCustomRuralJapanV1 from '../../components/Head/Analytics/GoogleCustomRuralJapanV1.astro';
 import { baseHost } from '../../utils/utilities.ts';
 import '../../styles/global.scss';
 const devOnly = false;
@@ -19,6 +20,7 @@ const description =
 ---
 
 <BaseLayout title={title} description={description} page="about" devOnly={devOnly}>
+    <GoogleCustomRuralJapanV1 />
     <div class="custom-container simple-page-body">
         <div class="centered attention-catcher">
             <!-- <h1>Japan Rural Sidetrack</h1> -->

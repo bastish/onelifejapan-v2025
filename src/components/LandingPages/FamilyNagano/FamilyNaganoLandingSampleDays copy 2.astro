@@ -7,19 +7,15 @@ const { landingPageData } = Astro.props;
     {
         landingPageData.days.map((day: any, index: number) => (
             <div class="day-card" data-card-index={`card-${index}`}>
-                <div class="day-card-image-wrapper">
-                    <img class="day-card-img" data-index={index} alt={`Day ${day.dayNumber}`} />
+                <div class="day-card-image-mask">
+                    <div class="day-card-image" />
                 </div>
-
-                <div class="day-card-image-dots" data-index={index} />
-
+                <div class="day-card-image-dots" />
                 <div class="day-card-header">
                     <h3>Day {day.dayNumber}</h3>
                     <p class="day-card-title">{day.title}</p>
                 </div>
-
                 <div class="day-card-description" set:html={day.description} />
-
                 <details class="day-card-collapsible">
                     <summary class="day-card-summary">More Details ››</summary>
                     <div class="day-card-description" set:html={day.descriptionDetails} />
@@ -101,6 +97,7 @@ const { landingPageData } = Astro.props;
             background-position 0.3s ease,
             background-size 0.3s ease;
     }
+
     .day-card-header {
         padding: 1rem 1rem 0;
         border-bottom: 1px solid var(--bs-primary-dark);
@@ -213,42 +210,6 @@ const { landingPageData } = Astro.props;
     }
 </style>
 
-<style lang="scss">
-    @use '../../../styles/global' as *;
-
-    .day-card-image-wrapper {
-        width: 100%;
-        aspect-ratio: 4 / 3; // or 1 / 1 for square cards
-        overflow: hidden;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .day-card-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center 30%; // tweak as needed for portrait bias
-        display: block;
-    }
-    @media (max-width: 768px) {
-        .day-card-image-wrapper {
-            aspect-ratio: 3 / 4; // more vertical space for portrait on mobile
-        }
-    }
-    .day-card-image-wrapper {
-        width: 100%;
-        aspect-ratio: 4 / 3; // standard shape
-        overflow: hidden;
-        border-bottom: 1px solid #ddd;
-    }
-
-    @media (max-width: 768px) {
-        .day-card-image-wrapper {
-            aspect-ratio: 3 / 2; // shorter image on small screens
-        }
-    }
-</style>
-
 <script is:inline>
     const testImages = {
         0: [
@@ -310,21 +271,25 @@ const { landingPageData } = Astro.props;
         const baseHost = document.querySelector('.day-cards-container')?.dataset.basehost || '';
 
         Object.entries(testImages).forEach(([index, images]) => {
-            const imgEl = document.querySelector(`.day-card-img[data-index="${index}"]`);
-            const dotsContainer = document.querySelector(`.day-card-image-dots[data-index="${index}"]`);
-            if (!imgEl || !dotsContainer) return;
+            const card = document.querySelector(`.day-card[data-card-index="card-${index}"]`);
+            if (!card) return;
+
+            const imageDiv = card.querySelector('.day-card-image');
+            const dotsContainer = card.querySelector('.day-card-image-dots');
+            console.log('dotsContainer', dotsContainer);
+            if (!imageDiv || !dotsContainer) return;
 
             const showImage = (img) => {
-                imgEl.src = baseHost + img.path;
-                imgEl.style.objectPosition = img.position;
+                imageDiv.style.backgroundImage = `url(${baseHost + img.path})`;
+                imageDiv.style.backgroundSize = img.size;
+                imageDiv.style.backgroundPosition = img.position;
             };
 
             showImage(images[0]);
 
             images.forEach((img, i) => {
                 const dotWrapper = document.createElement('span');
-                dotWrapper.classList.add('dot-wrapper');
-
+                dotWrapper.classList.add('dot-wrapper'); // makes it clickable
                 const dot = document.createElement('span');
                 dot.classList.add('day-card-image-dot');
                 if (i === 0) dot.classList.add('active');
@@ -339,5 +304,12 @@ const { landingPageData } = Astro.props;
                 dotsContainer.appendChild(dotWrapper);
             });
         });
+        // document.querySelectorAll('.day-card-image-dot').forEach((e) => {
+        //     e.style.display = 'inline-block';
+        //     e.style.padding = '10px';
+        //     e.style.background = 'yellow';
+        //     e.style.color = 'red';
+        //     e.style.fontSize = '16px';
+        // });
     });
 </script>

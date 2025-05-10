@@ -12,24 +12,36 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
     <!-- Fully Guided content -->
     <div id="guided-content" class="two-columns">
         <div class="pricing-column">
-            <h3>Estimated Cost<br /><span class="sub">(Fully Guided 4-Day Family Trip)</span></h3>
-            <ul class="estimate-list">
-                <li><strong>3–4 People:</strong> ¥150,000 / person</li>
-                <li><strong>5–6 People:</strong> ¥140,000 / person</li>
-                <li><strong>Other group sizes:</strong> Contact us</li>
+            <h3>Fully Guided Estimate *</h3>
+            <h4>3 day 4 Night</h4>
+
+            <ul class="estimate-list reformatted">
+                <li>
+                    <div class="estimate-group">3~4 People</div>
+                    <div class="estimate-price">¥150,000</div>
+                    <div class="estimate-label">per person</div>
+                </li>
+                <li>
+                    <div class="estimate-group">5~6 People</div>
+                    <div class="estimate-price">¥140,000</div>
+                    <div class="estimate-label">per person</div>
+                </li>
+                <li>
+                    <a href="/contact/?context=family">Contact us</a> for a longer trip or larger group.
+                </li>
             </ul>
-            <p class="note">
-                We aim to keep your costs within this range. Once planning begins, we’ll lock in a detailed quote—no
-                surprises.
+            <p class="note small text-muted">
+                * Every trip is differnet - usually within this range. Once planning begins, we'll lock in a detailed
+                quote if it changed - no surprises.
             </p>
         </div>
         <div class="pricing-column">
             <h3>Estimate Includes</h3>
 
             <details class="pricing-item">
-                <summary>3 nights’ accommodation in traditional inns or farmhouse stays</summary>
+                <summary>3 nights' accommodation in traditional inns or farmhouse stays</summary>
                 <p>
-                    Stay in family-run ryokan, farmhouses, and small inns—where lodging is part of the cultural
+                    Stay in family-run ryokan, farmhouses, and small inns - where lodging is part of the cultural
                     experience, not just a place to sleep. We select each property for its authentic local character.
                 </p>
             </details>
@@ -38,7 +50,7 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
                 <summary>3 breakfasts &amp; dinners with local hosts</summary>
                 <p>
                     Savor handcrafted kaiseki breakfasts and dinners, plus a hands-on soba-making lesson. Meals blend
-                    traditional Japanese fare with familiar options—no buffet lines here.
+                    traditional Japanese fare with familiar options - no buffet lines here.
                 </p>
             </details>
 
@@ -55,14 +67,14 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
                 <summary>Complete bike rental package</summary>
                 <p>
                     Choose an e-bike or cross-bike, complete with helmet, phone mount, rain gear, panniers, and rack. We
-                    also provide shared-use gear—rubber boots, gloves, trekking poles—so you’re ready for any route.
+                    also provide shared-use gear - rubber boots, gloves, trekking poles - so you're ready for any route.
                 </p>
             </details>
 
             <details class="pricing-item">
                 <summary>Family-friendly gear</summary>
                 <p>
-                    Child seats are included; bike trailers can be added for a small fee—so even the littlest riders
+                    Child seats are included; bike trailers can be added for a small fee - so even the littlest riders
                     explore safely and comfortably.
                 </p>
             </details>
@@ -70,7 +82,7 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
             <details class="pricing-item">
                 <summary>Seamless logistics</summary>
                 <p>
-                    We handle luggage transfers between inns and offer support-vehicle shuttle rides when needed— you
+                    We handle luggage transfers between inns and offer support-vehicle shuttle rides when needed - you
                     travel light and stress-free.
                 </p>
             </details>
@@ -78,7 +90,7 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
             <details class="pricing-item">
                 <summary>Dedicated English-speaking guide</summary>
                 <p>
-                    Your guide is on call from morning until evening—route tweaks, snack stops, onsen detours, and
+                    Your guide is on call from morning until evening - route tweaks, snack stops, onsen detours, and
                     post-dinner conversation facilitation ensure a smooth, personalized adventure.
                 </p>
             </details>
@@ -88,115 +100,205 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
     <!-- Self-Guided content -->
     <div id="self-content" class="two-columns" style="display:none;">
         <div class="pricing-column">
-            <h3>Self-Guided Planning Fee</h3>
-            <p><strong>¥80,000 per booking</strong></p>
-            <h4>On-Ground Costs<br /><small>(paid directly)</small></h4>
-            <ul class="checklist">
-                <li>Accommodation: ~¥10,000 / night / person</li>
-                <li>Meals: ~¥5,000 / meal / person</li>
-                <li>Bike & gear rental: ~¥5,000 / day / person</li>
-                <li>Workshops & transfers: ~¥5,000–¥8,000 / day / person</li>
+            <h3>Self-Guided</h3>
+            <h4>3 day 4 Night</h4>
+
+            <ul class="estimate-list reformatted">
+                <li>
+                    <div class="estimate-price">¥80,000</div>
+                    <div class="estimate-label">per family</div>
+                    <div class="estimate-subtext">(4 day / 3 night)</div>
+                </li>
+                <li>
+                    <a href="/contact/?context=family">Contact us</a> for a longer trip.
+                </li>
             </ul>
-            <p class="small text-muted">Expect ~¥15,000 pp/day on top of the planning fee.</p>
 
-            <p class="small text-muted">
-                Includes your custom 4-day route plan, bookings held, GPX files, insider notes & remote support.
-            </p><div class="tab-buttons">
-                <aside class="other-options">
-                    <details>
-                        <summary><strong>Self-Guided vs. Fully Guided</strong></summary>
-
-                        <p class="small text-muted">
-                            This itinerary was created with a guide in mind—Fully Guided and Self-Guided both work, but
-                            they offer very different experiences:
-                        </p>
-
-                        <ul class="list-unstyled ms-3">
-                            <li>
-                                <strong>Day-to-day flexibility:</strong><br />
-                                <em>Fully Guided:</em> On-the-fly route tweaks, timing checks, and support-vehicle backup
-                                let you stop or detour whenever you wish.<br />
-                                <em>Self-Guided:</em> You follow a pre-planned route and keep your own schedule—ideal if
-                                you enjoy self-navigation and exploration.
-                            </li>
-
-                            <li>
-                                <strong>Logistics & bookings:</strong><br />
-                                <em>Fully Guided:</em> Bikes, gear, luggage transfers, meals, and workshop reservations are
-                                all arranged—just show up and ride.<br />
-                                <em>Self-Guided:</em> You pay inns (~¥10,000/night pp), meals (~¥5,000/meal pp), bike rental
-                                (~¥5,000/day pp) and activities directly—while we handle all the pre-trip planning.
-                            </li>
-
-                            <li>
-                                <strong>Cultural connections:</strong><br />
-                                <em>Fully Guided:</em> We handle introductions to homestay hosts, hands-on workshops, and
-                                off-menu local experiences.<br />
-                                <em>Self-Guided:</em> You receive insider tips and contact details—but arrange and pay for
-                                each experience yourself.
-                            </li>
-
-                            <li>
-                                <strong>Time investment:</strong><br />
-                                <em>Fully Guided:</em> No lines, no paperwork—every minute is bike time or family time.<br
-                                />
-                                <em>Self-Guided:</em> Expect to spend 30–45 minutes per rental shop visit, plus check-in
-                                times at each inn.
-                            </li>
-                        </ul>
-
-                        <p class="small">
-                            <strong>Self-Guided Planning Fee:</strong> ¥80,000 per booking<br />
-                            <em>Plus on-ground costs*:</em> ~¥15,000 per person, per day (accommodation, meals, bikes, workshops
-                            & transfers)<br />
-                            <strong>Fully Guided:</strong> ¥150,000 per person (all logistics, meals, lodging, activities
-                            & guide included)
-                        </p>
-
-                        <p class="small text-muted">
-                            *Actual on-ground costs vary by season and choices made; the ¥15,000/day figure is a
-                            reasonable average.
-                        </p>
-                    </details>
-                </aside>
+            <div id="self-guided-note" class="self-guided-note hidden">
+                <div class="self-guided-note text-center">
+                    <button class="self-guided-modal-trigger">Note: Self-Guided vs. Fully Guided </button>
+                </div>
             </div>
         </div>
         <div class="pricing-column">
-            <h3>Estimate Includes</h3>
+            <h3>Includes</h3>
 
             <details class="pricing-item">
-                <summary>3 nights’ accommodation in traditional inns or farmhouse stays</summary>
+                <summary>Itinerary Planning</summary>
                 <p>
-                    Stay in family-run ryokan, farmhouses, and small inns—where lodging is part of the cultural
-                    experience, not just a place to sleep. We select each property for its authentic local character.
+                    We help you build a custom rural experience that fits smoothly into your broader Japan trip. You'll
+                    receive a suggested route with seasonal highlights, travel connections, and advice on where to start
+                    and finish.
                 </p>
             </details>
 
             <details class="pricing-item">
-                <summary>3 breakfasts &amp; dinners with local hosts</summary>
+                <summary>Navigation Routes</summary>
                 <p>
-                    Savor handcrafted kaiseki breakfasts and dinners, plus a hands-on soba-making lesson. Meals blend
-                    traditional Japanese fare with familiar options—no buffet lines here.
+                    You'll get GPS-ready routes (GPX files) for use on your phone or device, with alternate options if
+                    you'd like more or less challenge. We also include public transport maps and update your plan if
+                    weather or delays require a change.
                 </p>
             </details>
 
             <details class="pricing-item">
-                <summary>All listed cultural activities</summary>
+                <summary>Logistics Help</summary>
                 <p>
-                    Enjoy every workshop and visit in your itinerary: soba-making, mochi-pounding, papermaking, museum
-                    tours, and communal baths. Optional extras like rafting or mountain biking are available at
-                    additional cost.
+                    Before your trip begins, we prepare detailed instructions and check in with inns or activity
+                    providers so they're expecting you. During your trip, we're available for questions and can help
+                    with last-minute changes if needed.
                 </p>
             </details>
+
+            <details class="pricing-item">
+                <summary>Reservation Support</summary>
+                <p>
+                    We'll suggest accommodations that match your needs and help you book, as well as help communicate
+                    preferences like meals or arrival times.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Remote Support</summary>
+                <p>
+                    You'll have a mobile info portal with all maps, highlights, and alerts in one place. If anything
+                    comes up - route issues, inn check-ins, or questions - we're available to help, usually via message
+                    or phone.
+                </p>
+            </details>
+            <br />
+            <h3>Other Cost Estimates *</h3>
+
+            <details class="pricing-item">
+                <summary>Accommodation </summary>
+                <p>
+                    (¥10,000 ~ / night / person) You'll stay in local farmhouses or traditional Japanese inns. We'll
+                    suggest friendly hosts we trust from our guided trips, and they're happy to welcome visitors even if
+                    we're not there in person to help with communication.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Meals</summary>
+                <p>
+                    Dinners and breakfasts are usually included at the inn - either homemade or multi-course kaiseki.
+                    Lunch is flexible: expect about ¥1,000 ~ if eating out or just grab something from a convenience
+                    store or local shop.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Bike & Gear Rental </summary>
+                <p>
+                    (~¥5,000 / day / person) If your plan includes biking, we'll help arrange rental bikes and make sure
+                    they're ready when you arrive. Some extra gear like pannier bags may incur a small shipping fee, as
+                    they're not always available at local shops.
+                </p>
+            </details>
+
+            <details class="pricing-item">
+                <summary>Activities & Transfers</summary>
+                <p>
+                    Basic admissions (museums, hot springs, monkey park, etc.) follow standard prices (~¥600–¥1,000 /
+                    person). Hands-on activities like soba-making may cost more. If needed, we'll help arrange luggage
+                    transfers, taxis, or local transport - or suggest options like coin lockers for lighter travel days.
+                </p>
+            </details>
+            <p class="note small text-muted">
+                *These costs are paid directly on-site (not included in the planning fee). Expect around ¥15,000 per
+                person, per day depending on your choices.
+            </p>
         </div>
     </div>
 </section>
+
+<!-- <summary class="guided-note-link">Note: Self-Guided vs. Fully Guided</summary> -->
+<div id="self-guided-modal" class="self-guided-modal hidden">
+    <div class="self-guided-modal-content">
+        <button class="self-guided-modal-close top">×</button>
+        <h3 class="centered">Self-Guided vs Fully Guided</h3>
+        <p class="text-muted">
+            This itinerary was originally created with a guide in mind to help families get fully immersed.
+        </p>
+        <p>
+            Both Fully Guided and Self-Guided work, but they offer different kinds of experiences. With a guide, it’s
+            easier to stay in the moment - we handle the logistics, bridge the language gap, and help you notice things
+            you might otherwise miss.
+        </p>
+
+        <ul class="checklist self-guidednotes">
+            <li>
+                <span class="title">Day-to-day flexibility:</span>
+                <p>
+                    <strong>Fully Guided:</strong> On-the-fly tweaks, timing checks, and support-vehicle backup let you stop
+                    or detour anytime without worrying about the schedule.
+                </p>
+                <p>
+                    <strong>Self-Guided:</strong> You follow a pre-planned route and set your own pace - ideal if you enjoy
+                    self-navigation and exploring independently. Routes may be designed as loops or local circuits to simplify
+                    luggage and logistics.
+                </p>
+            </li>
+
+            <li>
+                <span class="title">Logistics & bookings:</span>
+                <p>
+                    <strong>Fully Guided:</strong> Let us worry about bikes, gear, luggage transfers, meals, and activities
+                    - we keep things running smoothly so you don't have to think about timing or directions.
+                </p>
+                <p>
+                    <strong>Self-Guided:</strong> We help with planning and booking, but you'll manage the day-to-day on
+                    your own. It may mean fewer activities per day or more time between stops to avoid rushing - especially
+                    if you're new to rural travel timing.
+                </p>
+            </li>
+
+            <li>
+                <span class="title">Cultural connections:</span>
+                <p>
+                    <strong>Fully Guided:</strong> We introduce you directly to hosts, translate, and share local context
+                    as you go. That often leads to deeper conversations, games with kids, impromptu language lessons, or
+                    insights you might not find on your own.
+                </p>
+                <p>
+                    <strong>Self-Guided:</strong> You'll get tips and contact info for each stop, and you can explore at
+                    your own pace. Google Translate will come in handy - it's a different kind of fun, and still rewarding
+                    in its own way.
+                </p>
+            </li>
+
+            <li>
+                <span class="title">Time investment:</span>
+                <p>
+                    <strong>Fully Guided:</strong> You will have maps, but you don't need to pay much atteniton to them.
+                    No check-ins to manage - just focus on the trip while we keep things moving in the background and make
+                    sure you are not lost (unless you want to be).
+                </p>
+                <p>
+                    <strong>Self-Guided:</strong> Renting bikes, checking in, or finding your next stop can take more time.
+                    Some families enjoy the independence; others prefer to hand it off.
+                </p>
+            </li>
+        </ul>
+
+        <button class="self-guided-modal-close bottom">Close</button>
+    </div>
+</div>
 
 <script is:inline>
     const btnGuided = document.getElementById('btn-guided');
     const btnSelf = document.getElementById('btn-self');
     const guided = document.getElementById('guided-content');
     const selfTab = document.getElementById('self-content');
+    const selfNote = document.getElementById('self-guided-note');
+
+    btnGuided.addEventListener('click', () => {
+        selfNote.classList.add('hidden');
+    });
+
+    btnSelf.addEventListener('click', () => {
+        selfNote.classList.remove('hidden');
+    });
 
     btnGuided.addEventListener('click', () => {
         btnGuided.classList.add('active');
@@ -212,12 +314,71 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
         selfTab.style.display = 'flex';
     });
 </script>
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modalTrigger = document.querySelector('.self-guided-modal-trigger');
+        const modal = document.getElementById('self-guided-modal');
+        const closeBtn = modal.querySelector('.self-guided-modal-close');
+        const closeButtons = modal.querySelectorAll('.self-guided-modal-close');
+
+        if (modalTrigger && modal && closeBtn) {
+            modalTrigger.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+            closeButtons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
+            });
+        }
+    });
+</script>
 
 <style lang="scss">
+    @use '../../../styles/global' as *;
+
     .section-inner {
         margin: 0 auto;
         padding: 1rem;
         max-width: 1000px;
+    }
+    .self-guided-note {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        //margin-bottom: 1.5rem;
+    }
+    .guided-note-link {
+        font-weight: bold;
+        color: var(--bs-link-color);
+    }
+    .guided-note {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .guided-note summary {
+        text-align: center;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        list-style: disclosure-closed;
+    }
+
+    .guided-note[open] summary {
+        list-style: disclosure-open;
+        margin-bottom: 1rem;
+    }
+
+    .guided-note > *:not(summary) {
+        text-align: left;
+        max-width: 800px;
     }
 
     /* Tabs */
@@ -227,7 +388,7 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
         align-items: center; /* center items vertically if they ever grow taller */
         gap: 1rem; /* your existing gap */
         margin-bottom: 1.5rem; /* your existing bottom margin */
-        /* you can drop width/margin:auto/border if you don’t need them */
+        /* you can drop width/margin:auto/border if you don't need them */
     }
     .tab-buttons button {
         padding: 0.5rem 1rem;
@@ -260,8 +421,16 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
 
     /* Headings & lists */
     .pricing-column h3 {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         margin-bottom: 0.75rem;
+        width: 100%;
+        text-align: center;
+    }
+    .pricing-column h4 {
+        font-size: 1.4rem;
+        margin-bottom: 0.75rem;
+        width: 100%;
+        text-align: center;
     }
     .pricing-column .sub {
         font-size: 1rem;
@@ -279,6 +448,19 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
         position: relative;
         padding-left: 1.5em;
         margin-bottom: 0.75rem;
+    }
+    .estimate-list {
+        border: 1px solid var(--bs-primary-dark);
+        border-radius: 8px;
+        padding: 10px;
+        background: var(--bs-primary-light-opaque);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+    .estimate-list li {
+        font-size: 1.3em;
+        //border: 1px solid red;
+        padding-left: 0px;
+        margin-left: 0px;
     }
     .checklist li::before {
         content: '\f058';
@@ -299,37 +481,14 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
     details summary::-webkit-details-marker {
         display: none;
     }
-    .pricing-item summary {
-        position: relative;
-        padding-left: 1.5em;
-        cursor: pointer;
-        margin-bottom: 0.5em;
-    }
-    .pricing-item summary::before {
-        content: '\f058';
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 400;
-        position: absolute;
-        left: 0;
-        top: 0.1em;
-        color: var(--bs-primary-ultradark);
-    }
-    .pricing-item summary::after {
-        content: '\f078';
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        position: absolute;
-        right: 0;
-        top: 0.1em;
-        transition: transform 0.2s;
-    }
-    .pricing-item[open] summary::after {
-        transform: rotate(180deg);
+    .pricing-item summary::-webkit-details-marker {
+        display: none;
     }
     .pricing-item p {
         margin: 0.5em 1em 1em;
         color: #555;
         line-height: 1.4;
+        font-size: 1em;
     }
     /* ensure wrapping by default */
     .two-columns {
@@ -343,5 +502,186 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
         .two-columns {
             flex-direction: column;
         }
+    }
+
+    .pricing-item p {
+        border: 1px solid var(--bs-primary-light);
+        border-top: 0px;
+        padding: 1em;
+        margin: 0px;
+    }
+    .pricing-item summary {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        padding: 0.75em 1em 0.75em 2em;
+        font-weight: 600;
+        font-size: 1.05rem;
+        color: var(--bs-body-color);
+        background: #fff;
+        border: 1px solid var(--bs-primary-light);
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 0.5em;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        list-style: none;
+        transition: background 0.2s;
+    }
+
+    .pricing-item summary:hover {
+        background-color: #f5f5f5;
+    }
+
+    .pricing-item summary::before {
+        content: '\f058'; /* hollow check-circle */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 400;
+        position: absolute;
+        left: 0.75em;
+        top: 0.8em; /* tweak this if you want better vertical alignment */
+        font-size: 1rem;
+        color: var(--bs-primary-ultradark);
+        //border: 1px solid red;
+        //margin-right: 20px;
+    }
+
+    .pricing-item summary::after {
+        content: '\f078'; /* chevron-down */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 0.9rem;
+        transition: transform 0.2s ease;
+        color: var(--bs-link-color);
+        margin-left: 1rem;
+    }
+
+    .pricing-item[open] summary::after {
+        transform: rotate(180deg);
+    }
+</style>
+
+<style lang="scss">
+    @use '../../../styles/global' as *;
+
+    .self-guidednotes span.title {
+        //border: 1px solid red;
+        font-size: 1.2em;
+        font-weight: 800;
+        margin-top: 0px;
+        color: var(--bs-primary-ultradark);
+    }
+    .self-guided-modal-trigger {
+        border: 1px solid var(--bs-link-color);
+        border-radius: 5px;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        color: var(--bs-link-color);
+        background: var(--bs-button-color);
+
+        background: var(--bs-primary);
+        color: #fff;
+        border-color: var(--bs-primary);
+    }
+    .self-guided-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem; // ensures spacing on small screens
+        @include respond-to(small) {
+            top: 100px;
+            padding-bottom: 10px;
+        }
+        .checklist li span.emph {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+    }
+
+    .self-guided-modal-content {
+        background: #fff;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 700px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        padding: 2rem 1.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-body {
+        padding-bottom: 2rem;
+    }
+
+    /* Close buttons */
+    .self-guided-modal-close {
+        font-size: 2rem;
+        font-weight: bold;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #333;
+        display: inline-block;
+    }
+
+    .self-guided-modal-close.top {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1;
+    }
+
+    .self-guided-modal-close.bottom {
+        display: block;
+        margin: 2rem auto 0;
+        padding: 0.75rem 1.5rem;
+        background: var(--bs-primary);
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<style lang="scss">
+    @use '../../../styles/global' as *;
+    .estimate-list.reformatted {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .estimate-list.reformatted li {
+        margin-bottom: 1.5rem;
+        font-size: 1em;
+    }
+
+    .estimate-group {
+        font-weight: bold;
+        font-size: 1rem;
+        color: var(--bs-body-color);
+    }
+
+    .estimate-price {
+        font-size: 2.5rem;
+        font-weight: 550;
+        color: var(--bs-primary-ultradark);
+        margin-top: 0.25rem;
+    }
+
+    .estimate-label {
+        font-size: 0.9rem;
+        color: #666;
     }
 </style>

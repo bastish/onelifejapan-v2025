@@ -17,6 +17,7 @@ import FamilyLandingPageSuammryModal from '../../components/LandingPages/FamilyN
 import FamilyNaganoThreeTierPrice from '../../components/LandingPages/FamilyNagano/FamilyNaganoThreeTierPrice.astro';
 import FamilyNaganoPriorityPricing from '../../components/LandingPages/FamilyNagano/FamilyNaganoPriorityPricing.astro';
 import FamilyLandingPagePricingTabs from '../../components/LandingPages/FamilyNagano/FamilyLandingPagePricingTabs.astro';
+import FamilyNaganoLandingAnchorMenu from '../../components/LandingPages/FamilyNagano/FamilyNaganoLandingAnchorMenu.astro';
 import { baseHost } from '../../utils/utilities.ts';
 import LandingPageCardsEditorTool from '../../components/LandingPages/LandingPageCardsEditorTool.astro';
 import '../../styles/global.scss';
@@ -30,6 +31,7 @@ const description =
 
 <BaseLayout title={title} description={description} page="about" devOnly={devOnly}>
     <div class="custom-container simple-page-body">
+        <!-- <FamilyNaganoLandingAnchorMenu /> -->
         <div class="centered attention-catcher">
             <h1>{landingPageData.title}</h1>
             {
@@ -47,7 +49,8 @@ const description =
         </div>
         <hr />
 
-        <section class="landing-routes">
+        <FamilyNaganoLandingAnchorMenu current="highlights" />
+        <section id="highlights" class="landing-routes">
             <h2>Highlights of Rural Japan</h2>
             <!-- <p class="centered sub-header">These are some of the <span class="emph">hands-on, family-friendly experiences</span> that past families remember most - and often say were their <span class="emph">favorite parts of the trip</span>. -->
             <!-- <p class="centered sub-header toggle" data-togglename="highlightsub">These are just some of the experiences past guests have loved. Some take planning, some are seasonal, and some - because they aren't typical tourist attractions - depend on the schedule and goodwill of our local community. When we plan your trip, we'll talk through what excites you most and explore what's possible.</p>
@@ -60,15 +63,16 @@ const description =
                 most and <span class="emph">explore what's possible.</span>
             </p>
 
-            <div>
+            <section class="trip-highlights">
                 <div class="frame">
                     <GenericSlider sliderImageId={79} height={250} />
                 </div>
                 <FamilyNaganoHighlights landingPageData={landingPageData} />
-            </div>
+            </section>
             <hr />
 
-            <section class="landing-faqs">
+            <FamilyNaganoLandingAnchorMenu current="itinerary" />
+            <section id="itinerary" class="landing-faqs">
                 <h2>A Flexible Four-Day Itinerary</h2>
                 <p class="centered sub-header">
                     *A sample shaped by the <span class="emph">moments families remember most</span>. <br />No two trips
@@ -130,7 +134,9 @@ const description =
 
         <hr />
 
-        <section class="landing-faqs">
+        <FamilyNaganoLandingAnchorMenu current="faq" />
+
+        <section id="faq" class="landing-faqs">
             <h2>FAQ</h2>
             <FamilyLandingPageFaq />
         </section>
@@ -144,7 +150,8 @@ const description =
             <GenericSlider sliderImageId={80} height={250} />
         </div>
 
-        <section class="family-pricing-section">
+        <FamilyNaganoLandingAnchorMenu current="pricing" />
+        <section id="pricing" class="family-pricing-section">
             <h2>Trip Pricing Estimate</h2>
             <p class="centered sub-header">
                 Every trip is <span class="emph"> customized based on your family's interests</span>, the season, and
@@ -156,17 +163,14 @@ const description =
             <!-- <FamilyNaganoThreeTierPrice /> -->
             <!-- <FamilyLandingPagePricing /> -->
             <FamilyLandingPagePricingTabs />
-            <div class="centered-section">
+            <!-- <div class="centered-section">
                 <p class="footnote">
                     We aim to keep your costs <span class="emph">within this range</span>. Actual prices may vary
                     slightly depending on your final itinerary - but once we begin planning, we’ll provide a detailed
                     quote - <span class="emph">no surprises</span>, and always with your needs in mind.
                 </p>
-                <p class="footnote">
-                    Want a <span class="emph">longer trip or different support</span> level? We’ll work with you to create
-                    something that fits.
-                </p>
-            </div>
+            
+            </div> -->
         </section>
 
         <div class="cta-container">
@@ -175,7 +179,8 @@ const description =
 
         <hr />
 
-        <section class="landing-faqs">
+        <FamilyNaganoLandingAnchorMenu current="about" />
+        <section id="about" class="landing-faqs">
             <h2>Why Travel with One Life Japan?</h2>
             <FamilyLandingPageWhyOneLifeJapan />
         </section>
@@ -183,9 +188,9 @@ const description =
         <div class="cta-container">
             <a href="/contact/?context=family" class="cta-button">{ctaText}</a>
         </div>
-        <div class="centered" style="margin-bottom: 20px;">
+        <!-- <div class="centered" style="margin-bottom: 20px;">
             <FamilyLandingPageSuammryModal />
-        </div>
+        </div> -->
     </div>
 
     <style lang="scss">
@@ -467,4 +472,42 @@ const description =
             }
         }
     </style>
+    <!-- 
+    <style lang="scss">
+        @use '../../styles/global' as *;
+        .anchor-menu {
+            text-align: center;
+            margin: 20px 0;
+
+            ul {
+                display: inline-flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                @include respond-to(small) {
+                    gap: 0.5rem;
+                    border: 1px solid red;
+                    font-size: 0.9em;
+                }
+            }
+
+            a {
+                font-weight: 600;
+                color: var(--bs-link-color);
+                text-decoration: none;
+                padding: 0.5rem 0.75rem;
+                border-radius: 4px;
+                transition: background 0.2s ease;
+
+                &:hover {
+                    background-color: var(--bs-primary-light);
+                }
+                @include respond-to(small) {
+                    padding: 0.5rem 0.25rem;
+                }
+            }
+        }
+    </style> -->
 </BaseLayout>

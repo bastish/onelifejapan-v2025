@@ -15,7 +15,7 @@ const monthCounts = await response.json();
     <ul id="month-archive-list" style="list-style: none; padding: 0;">
         {
             monthCounts.length > 0 ? (
-                monthCounts.map(({ month, count }) => (
+                monthCounts.map(({ month, count }: { month: string; count: number }) => (
                     <li>
                         <a
                             href={`/journeys/month/${month.toLowerCase()}/`}

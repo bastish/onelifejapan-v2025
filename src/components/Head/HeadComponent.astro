@@ -1,9 +1,9 @@
 ---
 // HeadComponent.astro
 import SeoMetaTags from './SeoMetaTags.astro';
-import VercelTracker from './VercelTracker.astro';
-import GoogleTagmanager from './GoogleTagmanager.astro';
-import MetaPixel from './MetaPixel.astro';
+import VercelTracker from './Analytics/VercelTracker.astro';
+import GoogleTagmanager from './Analytics/GoogleTagmanager.astro';
+import MetaPixel from './Analytics/MetaPixel.astro';
 
 const { title, description } = Astro.props;
 const defaultCanonical = Astro.url.href;

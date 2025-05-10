@@ -1,0 +1,79 @@
+---
+const { current } = Astro.props;
+
+const links = [
+    { id: 'highlights', label: 'Highlights' },
+    { id: 'itinerary', label: 'Itinerary' },
+    { id: 'pricing', label: 'Pricing' },
+    { id: 'about', label: 'Why One Life' },
+    { id: 'faq', label: 'FAQ' },
+];
+---
+
+<nav class="anchor-menu">
+    <ul>
+        {
+            links.map((link) => {
+                if (current === link.id) {
+                    return (
+                        <li class="current desktop-only">
+                            <span>{link.label}</span>
+                        </li>
+                    );
+                } else {
+                    return (
+                        <li>
+                            <a href={`#${link.id}`}>{link.label}</a>
+                        </li>
+                    );
+                }
+            })
+        }
+    </ul>
+</nav>
+
+<style lang="scss">
+    @use '../../../styles/global' as *;
+    .anchor-menu {
+        margin: 2rem auto 1.5rem;
+        text-align: center;
+
+        ul {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        li {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--bs-link-color);
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.15rem;
+            transition: border 0.2s;
+
+            &:hover {
+                border-color: var(--bs-link-color);
+            }
+        }
+
+        .current {
+            color: var(--bs-primary);
+            cursor: default;
+        }
+
+        .desktop-only {
+            @media (max-width: 640px) {
+                display: none;
+            }
+        }
+    }
+</style>
