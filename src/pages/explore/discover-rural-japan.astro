@@ -10,6 +10,9 @@ import LandingPageFaq from '../../components/LandingPages/LandingPageFaq.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import ComparisonTableLite from '../../components/ComparisonTableLite.astro';
 import GoogleCustomRuralJapanV1 from '../../components/Head/Analytics/GoogleCustomRuralJapanV1.astro';
+import FamilyNaganoLandingAnchorMenu from '../../components/LandingPages/FamilyNagano/FamilyNaganoLandingAnchorMenu.astro';
+import CustomLandingPagePricingTabs from '../../components/LandingPages/CustomLandingPagePricingTabs.astro';
+
 import { baseHost } from '../../utils/utilities.ts';
 import '../../styles/global.scss';
 const devOnly = false;
@@ -84,7 +87,16 @@ const description =
                 >Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a
             >
         </div>
-
+        <section id="pricing" class="family-pricing-section">
+            <h2>Trip Pricing Estimate</h2>
+            <p class="centered sub-header">
+                Every trip is <span class="emph"> customized based on your family's interests</span>, the season, and
+                what's happening locally. The prices below <span class="emph">aren't fixed packages</span>. They're very
+                realistic estimates based on our trips <span class="emph">similar the example above</span> that include lodging,
+                meals, cultural activities, and full guided support.
+            </p>
+            <!-- <CustomLandingPagePricingTabs /> -->
+        </section>
         <hr />
         <section class="landing-faqs">
             <h2>Why Journey with One Life Japan?</h2>

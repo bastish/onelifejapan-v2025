@@ -284,6 +284,8 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
 <!-- TypeScript for AJAX submission, reactive response, and content replacement -->
 <script>
     declare const bootstrap: any;
+    declare function gtag(command: string, eventName: string, params?: Record<string, any>): void;
+
     document.addEventListener('DOMContentLoaded', () => {
         const formRenderTime = Date.now();
         let userTyped = false;
@@ -349,6 +351,7 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
                     body: formData,
                 });
                 const json = await response.json();
+
                 if (response.ok && json.success) {
                     // Hide the form.
                     form.style.display = 'none';
@@ -362,6 +365,9 @@ import BaseGeneralModal from '../components/modals/BaseGeneralModal.astro';
                     if (successDiv) {
                         successDiv.innerHTML = json.message;
                     }
+                    gtag('event', 'conversion', {
+                        send_to: 'AW-1002351511/pmFQCILVhoEZEJfX-t0D',
+                    });
                 } else {
                     showErrorModal(json.message || 'Submission error. Please try again.');
                 }

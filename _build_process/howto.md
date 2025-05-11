@@ -49,39 +49,58 @@ A dedicated branch for deployment purposes. It can be the same as stage or a sep
 production (or live):
 Sometimes used interchangeably with main, but in some workflows, it's a separate branch reflecting the live site. -->
 
-##cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deployed-site
+## (ONE TIME ONLY)
 
-open /Users/kevincameron/Documents/OLJDevProjects/OLJVercelDeploy
-git clone https://github.com/bastish/onelifejapan.com-deployed.git
-cd onelifejapan.com-deployed
+## cd /Users/kevincameron/Documents/onelifejapan_static_2023/onelifejapan.com-deployed-site
 
-- cd onelifejapan.com-deployed
+## open /Users/kevincameron/Documents/OLJDevProjects/OLJVercelDeploy
+
+## git clone https://github.com/bastish/onelifejapan.com-deployed.git
+
+## 👆 Only do this once. After that, re-use the local clone!
+
+cd /Users/kevincameron/Documents/OLJDevProjects/OLJVercelDeploy/onelifejapan.com-deployed
+
+# ✅ Update the local repo instead of recloning
+
+git checkout stage
+git pull origin stage
 
 - checkout stage
   git checkout stage
 
-- delete dist dir #
-  rm -rf dist
-- cp new dist into it
-  cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
+# 🧹 Clean old dist dir
 
-git add .
-git commit -m "Deploy [added family landing and google tag] for stage"
+rm -rf dist
+
+# 📁 Copy new dist
+
+cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
+
+# 🔄 Commit and push to stage
+
+git add dist
+git commit -m "Deploy [updated family landing google day 2] for stage"
 git push origin stage
 
-- check it on vercel
-  https://vercel.com/kevin-camerons-projects/onelifejapan-com-deployed/deployments
-  If most recent stage OK
+# 🔎 Check Vercel
+
+# https://vercel.com/kevin-camerons-projects/onelifejapan-com-deployed/deployments
+
+# 🚀 Promote to production
 
 git checkout master
+git pull origin master # ✅ add this just in case master was updated elsewhere
+
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [added family landing and google tag]"
+git commit -m " Update Production [updated family landing google day 2]"
 git push origin master
 
--- CLEAN UP
-git gc --prune=now --aggressive
+# 🧽 Optional clean up (safe but slow)
+
+# git gc --prune=now --aggressive
 
 ####################
 ####################
