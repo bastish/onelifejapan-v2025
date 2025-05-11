@@ -76,34 +76,6 @@ const { itinerary, dayItinerary } = Astro.props;
 </div>
 
 <DaySampleItineraryModal dayItinerary={dayItinerary} />
-<!-- 
-{
-    dayItinerary.routes?.map((route: any, index: number) =>
-        route.sliderImages && route.sliderImages.length > 0 ? (
-            <BootstrapSliderModal
-                id={`routeImagesBootStrapSliderModal-${route.id}`}
-                title={`${route.title} Images`}
-                sliderImages={route.sliderImages}
-            />
-        ) : (
-            <div>No images available for this route.</div>
-        )
-    )
-}
-
-{
-    dayItinerary.routes_optional?.map((route: any, index: number) =>
-        route.sliderImages && route.sliderImages.length > 0 ? (
-            <BootstrapSliderModal
-                id={`routeImagesBootStrapSliderModal-${route.id}`}
-                title={`${route.title} Images`}
-                sliderImages={route.sliderImages}
-            />
-        ) : (
-            <div>No images available for this route.</div>
-        )
-    )
-} -->
 
 <style lang="scss">
     @use '../styles/global' as *;

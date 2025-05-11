@@ -80,7 +80,7 @@ cp -r /Users/kevincameron/Documents/OLJDevProjects/onelifejapan-v2025/dist dist
 # 🔄 Commit and push to stage
 
 git add dist
-git commit -m "Deploy [updated family landing google day 2] for stage"
+git commit -m "Deploy [added price to custom page] for stage"
 git push origin stage
 
 # 🔎 Check Vercel
@@ -95,7 +95,7 @@ git pull origin master # ✅ add this just in case master was updated elsewhere
 rm -rf dist/
 git checkout stage -- dist/
 git add dist/
-git commit -m " Update Production [updated family landing google day 2]"
+git commit -m " Update Production [added price to custom page]"
 git push origin master
 
 # 🧽 Optional clean up (safe but slow)

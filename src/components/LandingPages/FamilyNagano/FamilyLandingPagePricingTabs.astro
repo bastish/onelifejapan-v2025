@@ -393,6 +393,8 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
     .tab-buttons button {
         padding: 0.5rem 1rem;
         border: 1px solid #ddd;
+        border: 1px solid var(--bs-primary-dark);
+
         background: #f7f7f7;
         cursor: pointer;
         font-weight: 600;
@@ -401,7 +403,10 @@ import WhyItsWorthItModal from './WhyItsWorthItModal.astro';
     .tab-buttons button.active {
         background: var(--bs-primary);
         color: #fff;
-        border-color: var(--bs-primary);
+        font-weight: 500;
+        padding: 0.6rem 1.1rem;
+        font-size: 1.4em;
+        border: 2px solid var(--bs-primary-dark);
     }
 
     /* Two-column layout */

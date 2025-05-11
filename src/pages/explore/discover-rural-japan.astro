@@ -23,11 +23,9 @@ const description =
 ---
 
 <BaseLayout title={title} description={description} page="about" devOnly={devOnly}>
-    <GoogleCustomRuralJapanV1 />
+    <!-- <GoogleCustomRuralJapanV1 /> -->
     <div class="custom-container simple-page-body">
         <div class="centered attention-catcher">
-            <!-- <h1>Japan Rural Sidetrack</h1> -->
-            <!-- <h1>Lose Yourself in Rural Japan</h1> -->
             <h1>Get a Little Lost in Rural Japan</h1>
             <h2>Custom countryside trips - by bike, on foot, or both</h2>
             <h2>Flexible support - self-guided, semi-guided, or fully guided</h2>
@@ -51,6 +49,7 @@ const description =
         </div>
 
         <hr />
+        <FamilyNaganoLandingAnchorMenu />
         <section class="landing-testimonials">
             <h2>Reflections from Our Guests</h2>
             <div class="frame">
@@ -62,7 +61,8 @@ const description =
         </section>
 
         <hr />
-        <section class="landing-routes">
+        <FamilyNaganoLandingAnchorMenu current="highlights" />
+        <section id="highlights" class="landing-routes">
             <h2>The Destinations Between Your Destinations</h2>
             <LandingPageRouteTogglerCards />
         </section>
@@ -77,8 +77,10 @@ const description =
             <GenericSlider sliderImageId={78} height={250} />
         </div>
 
-        <section class="landing-faqs">
-            <h2>Q & A</h2>
+        <FamilyNaganoLandingAnchorMenu current="faq" />
+
+        <section id="faq" class="landing-faqs">
+            <h2>FAQ</h2>
             <LandingPageFaq mode="static" />
         </section>
 
@@ -87,6 +89,8 @@ const description =
                 >Get Help Planning Your Trip in Rural Japan &#8250;&#8250;</a
             >
         </div>
+        <hr />
+        <FamilyNaganoLandingAnchorMenu current="pricing" />
         <section id="pricing" class="family-pricing-section">
             <h2>Trip Pricing Estimate</h2>
             <p class="centered sub-header">
@@ -95,16 +99,18 @@ const description =
                 realistic estimates based on our trips <span class="emph">similar the example above</span> that include lodging,
                 meals, cultural activities, and full guided support.
             </p>
-            <!-- <CustomLandingPagePricingTabs /> -->
+            <CustomLandingPagePricingTabs />
         </section>
         <hr />
-        <section class="landing-faqs">
+        <FamilyNaganoLandingAnchorMenu current="about" />
+        <section id="about" class="landing-faqs">
             <h2>Why Journey with One Life Japan?</h2>
             <LandingPageWhyOneLifeJapan />
         </section>
 
         <hr />
-        <section class="past-trips">
+        <FamilyNaganoLandingAnchorMenu current="itinerary" />
+        <section id="itinerary" class="past-trips">
             <h2>A Few Memorable Journeys</h2>
             <p>
                 Explore a few <span class="emph">examples of past trips</span> - some built around favorite <span
@@ -164,7 +170,7 @@ const description =
         .attention-catcher h2,
         h4 {
             opacity: 0;
-            animation: fadeIn 4s forwards;
+            animation: fadeIn 2s forwards;
             animation-timing-function: ease-out;
             position: relative;
         }
@@ -181,14 +187,9 @@ const description =
         }
         .attention-catcher h2 {
             font-size: 1.5em;
-            margin: 10px 0 0; /* Add a bit of space between h1 and h2 */
+            margin: 10px 0 0;
         }
-        // .attention-catcher h2 {
-        //     font-size: 1.7em;
-        // }
-        // .attention-catcher h2 span {
-        //     font-size: 1em;
-        // }
+
         @keyframes fadeIn {
             0% {
                 opacity: 0;

@@ -1,77 +1,136 @@
 ---
-
+import CustomLandingPricingChartModal from './CustomLandingPricingChartModal.astro';
 ---
 
 <!-- Tab buttons -->
 <div class="tab-buttons">
-    <button id="btn-guided" class="active">Fully Guided</button>
-    <button id="btn-semi">Semi-Guided</button>
     <button id="btn-self">Self-Guided</button>
+    <button id="btn-semi" class="active">Semi-Guided</button>
+    <button id="btn-guided">Fully Guided</button>
 </div>
-
-<!-- Fully Guided content -->
-<div id="guided-content" class="two-columns">
+<!-- <CustomLandingPricingChartModal /> -->
+<!-- Self-Guided content -->
+<div id="self-content" class="two-columns" style="display:none;">
     <div class="pricing-column">
-        <h3>Fully Guided Estimate *</h3>
-        <h4>4 Day / 3 Night Trip</h4>
+        <h3>Self-Guided</h3>
+        <h4>1 ~ 30 Days</h4>
         <ul class="estimate-list reformatted">
             <li>
-                <div class="estimate-group">2–4 Travelers</div><div class="estimate-price">¥130,000–¥160,000</div><div
-                    class="estimate-label"
-                >
-                    per person
+                <div class="estimate-group">Starting From</div>
+                <div class="estimate-price">¥10,000</div><div class="estimate-label">
+                    per person / per day (planning & support)
                 </div>
             </li>
-            <li><a href="/contact/?context=custom">Contact us</a> for longer trips or solo options.</li>
+            <li><a href="/contact/?context=custom">Get an estimate</a> based on your route and interests.</li>
         </ul>
+    </div>
+    <div class="pricing-column">
+        <h3>What's Included</h3>
+
+        <details class="pricing-item">
+            <summary>Itinerary Planning</summary>
+            <p>
+                We design a custom countryside experience that fits naturally into your overall Japan trip - including
+                when and where to start, seasonal highlights, and smooth transitions between destinations.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Navigation Routes</summary>
+            <p>
+                You'll receive GPS-ready routes (GPX files) with options for easier or more challenging segments. We
+                also include public transit connections and adapt the plan if weather or delays require a change.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Logistics Help</summary>
+            <p>
+                Before your trip begins, we prepare detailed instructions and check in with inns or activity providers
+                so they're expecting you. During your trip, we're available for questions and can help with last-minute
+                changes if needed.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Reservation Support</summary>
+            <p>
+                We'll suggest accommodations that match your needs and help you book, as well as help communicate
+                preferences like meals or arrival times.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Remote Support</summary>
+            <p>
+                You'll have a mobile info portal with all maps, highlights, and alerts in one place. If anything comes
+                up - route changes, inn check-ins, or quick questions - we're just a message or call away.
+            </p>
+        </details>
+        <br />
+        <h3>Other Cost Estimates *</h3>
+
+        <details class="pricing-item">
+            <summary>Accommodation </summary>
+            <p>
+                <span class="emph">[¥8,000+ / night / person]</span> (may include dinner & breakfast) We like local farmhouses
+                or traditional Japanese inns. Since all trips are custom in terms of destination, distances and budget, a
+                more western style hotel may be a more appropriate fit. <br /><br />We will research what best fits into
+                the itinerary and we can build the itinerary to fit the best accommodations, or fit the available
+                accommodations to fit the route.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Meals</summary>
+            <p>
+                <span class="emph">[¥1,000 ~ ¥3,000]</span> In many countryside inns, breakfast and dinner are included —
+                sometimes even homemade or multi-course kaiseki meals. If not, we make sure there are local places to eat
+                nearby. Expect ¥1,000+ per meal when eating out or grabbing food at a local shop or convenience store.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Bike & Gear Rental </summary>
+            <p>
+                <span class="emph">[¥5,000 / day / person]</span> If your plan includes biking, we'll help arrange rental
+                bikes and make sure they're ready when you arrive. Some extra gear like pannier bags may incur a small shipping
+                fee, as they're not always available at local shops. Bicycle price will depend on what is available near
+                where you start the trip.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Transit & Transfers</summary>
+            <p>
+                We'll assist with luggage transfers, taxis, and public transport. If you're covering long distances, we
+                can design semi-guided segments where we handle the bikes and bags while you ride, walk, or take the
+                train - focusing your energy on the best parts.
+            </p>
+        </details>
+        <details class="pricing-item">
+            <summary>Activities</summary>
+            <p>
+                <span class="emph">[¥600 ~ ¥1000]</span>Basic admissions (museums, hot springs, etc.) range from
+                ¥600–¥1,000. Hands-on experiences like soba-making or craft workshops may cost more. We'll recommend
+                what's available and help with reservations if needed.
+            </p>
+        </details>
         <p class="note small text-muted">
-            * Estimate varies by location and season. We’ll confirm a final quote before booking.
+            *These costs are paid directly on-site (not included in the planning fee). Expect around ¥15,000 per person,
+            per day depending on your choices.
         </p>
     </div>
-    <div class="pricing-column">
-        <h3>Estimate Includes</h3>
-        <details class="pricing-item">
-            <summary>3 nights' local accommodation</summary><p>
-                Stay in hand-picked ryokan, guesthouses, or farm inns chosen for atmosphere and authenticity.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>Local meals</summary><p>
-                Multi-course dinners and traditional breakfasts served by your hosts. We accommodate dietary needs with
-                advance notice.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>Full-time guide and logistics support</summary><p>
-                Your local guide travels with you, handling route changes, cultural interpretation, and keeping the
-                journey smooth and spontaneous.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>Complete bike & gear package</summary><p>
-                E-bike or cross-bike, helmet, bags, rain gear, and more. Trail-ready and luggage-free travel.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>All cultural activities listed in itinerary</summary><p>
-                Includes entrance fees, workshop costs, and special arrangements with local hosts.
-            </p>
-        </details>
-    </div>
 </div>
-
 <!-- Semi-Guided content -->
-<div id="semi-content" class="two-columns" style="display:none;">
+<div id="semi-content" class="two-columns" style="display:flex;">
     <div class="pricing-column">
         <h3>Semi-Guided Estimate *</h3>
-        <h4>4 Day / 3 Night Trip</h4>
+        <h4>3 ~ 30 Days</h4>
         <ul class="estimate-list reformatted">
             <li>
-                <div class="estimate-group">2–4 Travelers</div><div class="estimate-price">¥90,000–¥120,000</div><div
-                    class="estimate-label"
-                >
-                    per person
-                </div>
+                <div class="estimate-group">Starting From</div>
+                <div class="estimate-price">¥20,000</div><div class="estimate-label">per person / per day</div>
             </li>
             <li><a href="/contact/?context=custom">Contact us</a> for longer trips or large groups.</li>
         </ul>
@@ -80,94 +139,192 @@
         </p>
     </div>
     <div class="pricing-column">
+        <h3>What's Included</h3>
+        <details class="pricing-item">
+            <summary>Itinerary Planning</summary>
+            <p>
+                We design a custom countryside journey that fits naturally into your broader Japan trip - including
+                start and end locations, seasonal highlights, and smooth transitions between destinations.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Navigation Routes</summary>
+            <p>
+                You'll receive GPS-ready routes (GPX files) with options for different challenge levels. We also include
+                public transport alternatives and adjust your plan if needed due to weather or changes.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Logistics & Reservations</summary>
+            <p>
+                We suggest accommodations that suit your needs and help with booking and special requests (e.g., meals
+                or arrival times). We also coordinate with inns or activity providers in advance. During your trip,
+                we're available to assist with checkins, questions or changes.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Bike & Gear Rental</summary>
+            <p>
+                <span class="emph">[¥5,000 / day / person]</span> Your rental includes a comfortable bike (hybrid, cross,
+                or e-bike depending on location), helmet, panniers, phone mount, and any extra gear needed for your route.
+                We bring the bikes to the start, so it's ready to go when you are.
+            </p>
+        </details>
+        <details class="pricing-item">
+            <summary>Luggage & Bike Transfers</summary>
+            <p>
+                We meet you at the starting point - hotel or nearby station - to exchange your luggage for bikes and
+                gear. During the day, we transport your luggage to your next accommodation and move bikes if you take a
+                train or switch to walking. You travel light, and your gear is always waiting for you where it needs to
+                be.
+            </p>
+        </details>
+        <details class="pricing-item">
+            <summary>Guided Support</summary>
+            <p>
+                We're nearby throughout the day - sometimes ahead of you, sometimes following behind - ready to help if
+                anything comes up. If you want help navigating a tricky segment, context at a cultural site, or company
+                over dinner, we're there. But we'll never intrude - support is available when you want it, not when you
+                don't.
+            </p>
+        </details>
+
+        <br />
+        <h3>Other Cost Estimates *</h3>
+
+        <details class="pricing-item">
+            <summary>Accommodation</summary>
+            <p>
+                <span class="emph">[¥8,000+ / night / person]</span> May include dinner and breakfast. We usually recommend
+                local farmhouses or traditional inns, but can also arrange Western-style hotels if preferred. <br /><br
+                />
+                Since you're not limited to looped routes or set packages, we can build the itinerary around the best available
+                lodging - or choose lodging that fits your ideal route and travel pace.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Meals</summary>
+            <p>
+                <span class="emph">[¥1,000 ~ ¥3,000]</span> Many countryside inns include hearty home-cooked meals or traditional
+                multi-course kaiseki dinners. If meals aren't included, we'll point you to local options - from family-run
+                restaurants to simple shops. <br /><br />
+                If you're in the mood for company, we're happy to join you for dinner and conversation. Or we can simply
+                make the reservation and leave you to enjoy a quiet evening - it's up to you.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Public Transit</summary>
+            <p>
+                We carry your luggage and bikes between accommodations and checkpoints as part of the support. If you
+                decide to skip a segment by train or taxi to cover more ground or avoid busy roads, we'll adjust your
+                gear drop-off accordingly and make sure everything is waiting for you at the next start point. <br /><br
+                />
+                While we handle the logistics, any public transportation fares (train, taxi, etc.) are paid by you directly.
+                We'll help coordinate the best and simplest options - and design your route to make those transitions smooth.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Activities</summary>
+            <p>
+                <span class="emph">[¥600 ~ ¥1,000+]</span> Standard admissions for things like hot springs, museums, and
+                gardens are usually modest. Hands-on activities (like soba-making, paper crafts, or workshops) may cost more.
+                <br /><br />
+                We'll recommend what's available along your route and help with reservations. In some cases, we can also
+                join you as a cultural guide if you'd like context or translation - just note that entry fees for the guide
+                may apply.
+            </p>
+        </details>
+
+        <p class="note small text-muted">
+            *These costs are paid directly on-site (not included in the planning fee). Expect around ¥15,000 per person,
+            per day depending on your choices.
+        </p>
+    </div>
+</div>
+<!-- Fully Guided content -->
+<div id="guided-content" class="two-columns" style="display: none;">
+    <div class="pricing-column">
+        <h3>Fully Guided Estimate *</h3>
+        <h4>3 ~ 30 Days</h4>
+        <ul class="estimate-list reformatted">
+            <li>
+                <div class="estimate-group">Starting From</div>
+                <div class="estimate-price">¥35,000</div>
+                <div class="estimate-label">per person / per day</div>
+            </li>
+            <li><a href="/contact/?context=custom">Contact us</a> for longer trips or solo options.</li>
+        </ul>
+        <p class="note small text-muted">
+            * This is a realistic starting per-day estimate based on past fully guided trips. It reflects typical costs
+            for lodging, meals, cultural activities, gear, and full-time guide support - all coordinated as part of your
+            custom itinerary. Final pricing depends on your route, season, and group size. We'll work with you to fit
+            your budget and provide a final quote after planning together.
+        </p>
+    </div>
+
+    <div class="pricing-column">
         <h3>Estimate Includes</h3>
         <details class="pricing-item">
-            <summary>Custom itinerary & accommodation suggestions</summary><p>
-                We help match your trip route with places to stay, including support with reservations.
+            <summary>Custom planning, navigation & logistics</summary>
+            <p>
+                We build your route around your travel dates, interests, and comfort level - including where to start,
+                where to stay, and what to see along the way. You'll receive GPS-ready maps with flexible options, and
+                we stay in touch throughout your trip to help smooth transitions, adapt plans if needed, assist with
+                reservations, and make sure accommodations and activity providers are expecting you.
             </p>
         </details>
+
         <details class="pricing-item">
-            <summary>Luggage & bike transfers</summary><p>
-                We move your gear while you explore freely—travel light without doubling back.
+            <summary>Local Accommodation</summary>
+            <p>
+                Your accommodations are part of this estimate - whether in family-run inns, guesthouses, or practical
+                hotels depending on your route. We choose stays that fit your itinerary, comfort level, and group size.
             </p>
         </details>
+
         <details class="pricing-item">
-            <summary>Gear rental & roadside support</summary><p>
-                Includes bikes, bags, tools, and assistance if something goes wrong mid-journey.
+            <summary>Meals</summary>
+            <p>
+                Most dinners and breakfasts are provided through your inns. In other cases, we help coordinate simple,
+                local meals or eat alongside you depending on your preferences. These costs are included in the
+                estimate.
             </p>
         </details>
+
         <details class="pricing-item">
-            <summary>Optional guide for key meals or activities</summary><p>
-                A guide joins select portions—such as a local hike, cultural visit, or dinner conversation—by request.
+            <summary>Cultural activities</summary>
+            <p>
+                We include a range of local experiences in the trip plan - from workshops to onsen to scenic stops —
+                chosen based on the season and your interests. Entry fees and reservations are covered unless otherwise
+                noted.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Bike & gear rental</summary>
+            <p>
+                Includes a well-fitted e-bike or cross-bike with helmet, panniers, rain gear, and other essentials.
+                Everything is prepped for comfort and ready to ride - you stay light and supported.
+            </p>
+        </details>
+
+        <details class="pricing-item">
+            <summary>Full-time guide support</summary>
+            <p>
+                Your guide is with you throughout the journey - riding or walking when possible, adjusting plans on the
+                fly, helping with check-ins, and ensuring smooth transitions. Behind the scenes, we also manage gear and
+                luggage so you can focus on the experience.
             </p>
         </details>
     </div>
 </div>
 
-<!-- Self-Guided content -->
-<div id="self-content" class="two-columns" style="display:none;">
-    <div class="pricing-column">
-        <h3>Self-Guided</h3>
-        <h4>4 Day / 3 Night Trip</h4>
-        <ul class="estimate-list reformatted">
-            <li>
-                <div class="estimate-price">¥40,000–¥60,000</div><div class="estimate-label">
-                    per person (planning & support)
-                </div>
-            </li>
-            <li><a href="/contact/?context=custom">Get an estimate</a> based on your route and interests.</li>
-        </ul>
-        <div id="self-guided-note" class="self-guided-note hidden">
-            <div class="self-guided-note text-center">
-                <button class="self-guided-modal-trigger">Note: Self-Guided vs. Fully Guided </button>
-            </div>
-        </div>
-    </div>
-    <div class="pricing-column">
-        <h3>Includes</h3>
-        <details class="pricing-item">
-            <summary>Custom route planning</summary><p>
-                Tailored to your dates, interests, and logistics. We'll help choose a route that fits smoothly into your
-                broader Japan plans.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>GPS & navigation files</summary><p>
-                Includes route maps with key highlights, optional add-ons, and safety notes for rural travel.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>Logistics coordination</summary><p>
-                We confirm your stays, flag language needs, and provide notes for accessing each area smoothly.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>Remote support</summary><p>
-                If something changes mid-trip (weather, train delay, etc.), we’re a call or message away to help you
-                adapt.
-            </p>
-        </details>
-        <br />
-        <h3>Estimated Additional Costs *</h3>
-        <details class="pricing-item">
-            <summary>Accommodation</summary><p>¥10,000–¥15,000 per person/night depending on location and room type.</p>
-        </details>
-        <details class="pricing-item">
-            <summary>Meals</summary><p>
-                Dinner & breakfast often included at inns. Budget ¥1,000–¥2,000/day for lunch.
-            </p>
-        </details>
-        <details class="pricing-item">
-            <summary>Bike rental</summary><p>
-                ~¥5,000/day for high-quality bikes. We'll help reserve and prep them in advance.
-            </p>
-        </details>
-        <p class="note small text-muted">
-            * Paid on-site. Self-guided travelers can expect to spend ~¥15,000–¥20,000/day total, including meals,
-            stays, and activities.
-        </p>
-    </div>
-</div>
 <script is:inline>
     const btnGuided = document.getElementById('btn-guided');
     const btnSemi = document.getElementById('btn-semi');
@@ -213,6 +370,27 @@
         selfTab.style.display = 'flex';
 
         selfNote.classList.remove('hidden');
+    });
+</script>
+
+<script is:inline>
+    const STORAGE_KEY = 'olj_custom_trip_pricing_tab';
+
+    // Restore previous tab from localStorage
+    const savedTab = localStorage.getItem(STORAGE_KEY);
+    if (savedTab === 'self') btnSelf.click();
+    else if (savedTab === 'semi') btnSemi.click();
+    else if (savedTab === 'guided') btnGuided.click(); // default fallback
+
+    // Save selection to localStorage when tab is clicked
+    btnGuided.addEventListener('click', () => {
+        localStorage.setItem(STORAGE_KEY, 'guided');
+    });
+    btnSemi.addEventListener('click', () => {
+        localStorage.setItem(STORAGE_KEY, 'semi');
+    });
+    btnSelf.addEventListener('click', () => {
+        localStorage.setItem(STORAGE_KEY, 'self');
     });
 </script>
 
@@ -270,7 +448,7 @@
     }
     .tab-buttons button {
         padding: 0.5rem 1rem;
-        border: 1px solid #ddd;
+        border: 1px solid var(--bs-primary-dark);
         background: #f7f7f7;
         cursor: pointer;
         font-weight: 600;
@@ -279,7 +457,10 @@
     .tab-buttons button.active {
         background: var(--bs-primary);
         color: #fff;
-        border-color: var(--bs-primary);
+        font-weight: 500;
+        padding: 0.6rem 1.1rem;
+        font-size: 1.4em;
+        border: 2px solid var(--bs-primary-dark);
     }
 
     /* Two-column layout */

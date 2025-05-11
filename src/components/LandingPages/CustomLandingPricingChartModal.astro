@@ -1,0 +1,213 @@
+<style lang="scss">
+    .custom-trip-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .custom-trip-modal-content {
+        background: #fff;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        padding: 2rem 1.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .custom-trip-modal-close {
+        font-size: 2rem;
+        font-weight: bold;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .custom-trip-modal-close.bottom {
+        display: block;
+        margin: 2rem auto 0;
+        padding: 0.75rem 1.5rem;
+        background: var(--bs-primary);
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: none;
+    }
+
+    .custom-trip-comparison-table {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .custom-trip-comparison-table table {
+        min-width: 600px;
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        border: 2px solid #888;
+    }
+
+    .custom-trip-comparison-table th,
+    .custom-trip-comparison-table td {
+        border: 1px solid #888;
+        padding: 0.75rem;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #222;
+    }
+
+    .custom-trip-comparison-table th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    .custom-trip-comparison-table td {
+        background-color: #fff;
+    }
+
+    .custom-trip-comparison-table .included {
+        background-color: #e6f9ec;
+    }
+
+    .custom-trip-comparison-table .not-included {
+        background-color: #fbeaea;
+    }
+
+    .custom-trip-comparison-table .partial {
+        background-color: #fff9e6;
+    }
+
+    #custom-trip-modal.hidden {
+        display: none;
+    }
+
+    @media (max-width: 600px) {
+        .custom-trip-modal-content {
+            padding: 1rem;
+        }
+
+        .custom-trip-comparison-table table {
+            font-size: 0.85rem;
+        }
+
+        .custom-trip-comparison-table th,
+        .custom-trip-comparison-table td {
+            padding: 0.5rem;
+        }
+    }
+</style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<!-- Modal Trigger -->
+<div id="custom-trip-note" class="custom-trip-note">
+    <div class="custom-trip-note text-center">
+        <button class="custom-trip-modal-trigger">Compare Options</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="custom-trip-modal" class="custom-trip-modal hidden">
+    <div class="custom-trip-modal-content">
+        <button class="custom-trip-modal-close top">&times;</button>
+        <h3 class="centered">Compare Custom Trip Options</h3>
+        <div class="custom-trip-comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>What's Included</th>
+                        <th>Self-Guided</th>
+                        <th>Semi-Guided</th>
+                        <th>Fully Guided</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Custom Route & Itinerary</td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                    </tr>
+                    <tr>
+                        <td>GPS Navigation Files</td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>+ Guide Help</div></td>
+                    </tr>
+                    <tr>
+                        <td>Accommodation Support</td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Assist Only</div></td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Assist Only</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                    </tr>
+                    <tr>
+                        <td>Bike & Gear Rental</td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Optional</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                    </tr>
+                    <tr>
+                        <td>Luggage / Gear Transfers</td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Not Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Included</div></td>
+                    </tr>
+                    <tr>
+                        <td>Support Vehicle</td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Not Included</div></td>
+                        <td class="partial"><i class="fa-solid fa-circle-exclamation"></i><div>On Call</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>With Group</div></td>
+                    </tr>
+                    <tr>
+                        <td>Guide Presence</td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Not Included</div></td>
+                        <td class="partial"><i class="fa-solid fa-circle-exclamation"></i><div>As Needed</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Full-Time</div></td>
+                    </tr>
+                    <tr>
+                        <td>Meals & Cultural Activities</td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Optional</div></td>
+                        <td class="not-included"><i class="fa-solid fa-circle-xmark"></i><div>Optional</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>In Estimate</div></td>
+                    </tr>
+                    <tr>
+                        <td>Flexibility During Trip</td>
+                        <td class="partial"><i class="fa-solid fa-circle-exclamation"></i><div>Remote Support</div></td>
+                        <td class="partial"><i class="fa-solid fa-circle-exclamation"></i><div>On-Call Help</div></td>
+                        <td class="included"><i class="fa-solid fa-circle-check"></i><div>Guide Adjusted</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="custom-trip-modal-close bottom">Close</button>
+    </div>
+</div>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modalTrigger = document.querySelector('.custom-trip-modal-trigger');
+        const modal = document.getElementById('custom-trip-modal');
+        const closeButtons = modal.querySelectorAll('.custom-trip-modal-close');
+
+        if (modalTrigger && modal) {
+            modalTrigger.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+
+            closeButtons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
+            });
+        }
+    });
+</script>
